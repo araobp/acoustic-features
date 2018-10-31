@@ -1,7 +1,5 @@
 # Acoustic Event Detection (AED) with TensorFlow
 
-In development.
-
 ## Motivation
 
 I want to develop the cheapest (and low-power-consumption) edge device of ML (for [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) and so on) with a MEMS mic, so I use **ARM Cortex-M4 and CMSIS-DSP** to calculate **Mel-scale spectrogram and MFCCs** on the edge in realtime, and to transfer **the compressed data** to an IoT cloud. It is a kind of CODEC for ML, since it uses FFT and DCT via a filter bank for compressing data. In future, I will use a ML processor or FPGA for NN deployment.
