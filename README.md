@@ -27,7 +27,7 @@ Sound/voice ))) [MEMS mic]-[ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
 
 So samplig frequency of MFCC streamer should be around 20kHz: 20kHz/2 = 10kHz.
 
-## DFSDM settings
+## Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
 
 - System clock: 80MHz
 - Clock divider: 128
@@ -44,10 +44,10 @@ So samplig frequency of MFCC streamer should be around 20kHz: 20kHz/2 = 10kHz.
 
 ```
 26.3msec         stride
-[b0|a1]            1a --> 12 MFCCs
-   [a1|b1]         1b --> 12 MFCCs
-      [b1|a2]      2a --> 12 MFCCs
-         [a2|b2]   2b --> 12 MFCCs
+[b0|a1]            1a --> mel-scale spectrogram via filter bank or 12 MFCCs
+   [a1|b1]         1b --> mel-scale spectrogram via filter bank or 12 MFCCs
+      [b1|a2]      2a --> mel-scale spectrogram via filter bank or 12 MFCCs
+         [a2|b2]   2b --> mel-scale spectrogram via filter bank or 12 MFCCs
             :
 ```
 ## Filter banks
@@ -55,7 +55,7 @@ So samplig frequency of MFCC streamer should be around 20kHz: 20kHz/2 = 10kHz.
 Mel-scale spectrogram is used for training CNN
 
 - Mel-scale: 40 filters (512 samples divided by (40 + 1))
-- Linear-scale: 255 filters (512 samples divide by (255 + 2))
+- Linear-scale: 255 filters (512 samples divide by (255 + 1))
 
 ## Processing time (actual measurement)
 
