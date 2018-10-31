@@ -1,24 +1,26 @@
 # Acoustic Event Detection (AED) with TensorFlow
 
-In development.
-
 ## Motivation
 
-I want to develop the cheapest (and low-power-consumption) edge device of ML (for [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) and so on) with a MEMS mic, so I use ARM Cortex-M4L DSP to calculate MFCCs in realtime, and to transfer Mel-scale spectrogram or MFCCs to an IoT cloud. It is a kind of CODEC for ML, since it uses FFT and DCT via a filter bank for compressing data. In future, I will use a ML processor or FPGA for NN deployment.
+I want to develop the cheapest (and low-power-consumption) edge device of ML (for [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) and so on) with a MEMS mic, so I use **ARM Cortex-M4 and CMSIS-DSP** to calculate **Mel-scale spectrogram and MFCCs** on the edge in realtime, and to transfer **the compressed data** to an IoT cloud. It is a kind of CODEC for ML, since it uses FFT and DCT via a filter bank for compressing data. In future, I will use a ML processor or FPGA for NN deployment.
 
 ## IoT network
 
 ```
-Sound/voice ))) [MEMS mic]-[MFCC streamer(STM32L4)]--Bluetooth/LPWA/CAN---+
-                                                                          |
-Sound/voice ))) [MEMS mic]-[MFCC streamer(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT cloud
-                                                                          |
-Sound/voice ))) [MEMS mic]-[MFCC streamer(STM32L4)]--Bluetooth/LPWA/CAN---+
-                                  |
-                              USB serial
-                                  |
-                           [Oscilloscope GUI]
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
+                                                                                 |
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT cloud
+                                                                                 |
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
+                                     |           [DAC]
+                                     |             |
+                                 USB serial     [Analog filter] --> head phone for monitoring sound from mic
+                                     |
+                                     v
+                           [Oscilloscope GUI(Tk)]
 ```
+
+Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tree/master/analog_filter
 
 ## Sampling frequency
 
@@ -27,7 +29,7 @@ Sound/voice ))) [MEMS mic]-[MFCC streamer(STM32L4)]--Bluetooth/LPWA/CAN---+
 
 So samplig frequency of MFCC streamer should be around 20kHz: 20kHz/2 = 10kHz.
 
-## DFSDM settings
+## Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
 
 - System clock: 80MHz
 - Clock divider: 128
@@ -44,10 +46,10 @@ So samplig frequency of MFCC streamer should be around 20kHz: 20kHz/2 = 10kHz.
 
 ```
 26.3msec         stride
-[b0|a1]            1a --> 12 MFCCs
-   [a1|b1]         1b --> 12 MFCCs
-      [b1|a2]      2a --> 12 MFCCs
-         [a2|b2]   2b --> 12 MFCCs
+[b0|a1]            1a --> mel-scale spectrogram via filter bank or 12 MFCCs
+   [a1|b1]         1b --> mel-scale spectrogram via filter bank or 12 MFCCs
+      [b1|a2]      2a --> mel-scale spectrogram via filter bank or 12 MFCCs
+         [a2|b2]   2b --> mel-scale spectrogram via filter bank or 12 MFCCs
             :
 ```
 ## Filter banks
@@ -55,7 +57,7 @@ So samplig frequency of MFCC streamer should be around 20kHz: 20kHz/2 = 10kHz.
 Mel-scale spectrogram is used for training CNN
 
 - Mel-scale: 40 filters (512 samples divided by (40 + 1))
-- Linear-scale: 255 filters (512 samples divide by (255 + 2))
+- Linear-scale: 255 filters (512 samples divide by (255 + 1))
 
 ## Processing time (actual measurement)
 
