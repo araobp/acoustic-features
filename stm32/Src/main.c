@@ -72,10 +72,6 @@ volatile bool printing = false;
 volatile mode output_mode = FILTERED_MEL;
 mode filter_type = FILTERED_MEL;
 
-// Spectrogram output
-const int8_t delim = -128;
-const int8_t end = -127;
-
 // UART input
 uint8_t rxbuf[1];
 

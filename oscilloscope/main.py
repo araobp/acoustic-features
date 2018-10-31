@@ -9,6 +9,7 @@ import sys
 import tkinter as Tk
 import dsp
 from datetime import datetime
+import time
 
 import matplotlib.pyplot as plt
 plt.style.use('dark_background')
@@ -50,6 +51,8 @@ cnt = 0
 class_label_ = ''
 counter.configure(text='({})'.format(str(0)))
 
+repeat_action = False
+
 def df_save(df, step):
     global class_label_, cnt
     class_label = entry.get()
@@ -63,6 +66,10 @@ def df_save(df, step):
         cnt += 1
         counter.configure(text='({})'.format(str(cnt)))
 
+def repeat(func):
+    if repeat_action:
+        root.after(100, func)
+
 def raw_wave():
     dsp.range_waveform = int(range_amplitude.get())
     ax.clear()
@@ -71,6 +78,7 @@ def raw_wave():
     dsp.plot_aed(ax, df, dsp.RAW_WAVE)
     canvas.draw()
     df_save(df, 'waveform')
+    repeat(raw_wave)
 
 def psd():
     ax.clear()
@@ -79,6 +87,7 @@ def psd():
     dsp.plot_aed(ax, df, dsp.PSD)
     canvas.draw()
     df_save(df, 'psd')
+    repeat(psd)
 
 def filtered_mel():
     dsp.range_filtered = int(range_filtered.get())
@@ -88,6 +97,7 @@ def filtered_mel():
     dsp.plot_aed(ax, df, dsp.FILTERED_MEL)
     canvas.draw()
     df_save(df, 'melpsd')
+    repeat(filtered_mel)
 
 def filtered_linear():
     dsp.range_filtered = int(range_filtered_l.get())
@@ -97,6 +107,7 @@ def filtered_linear():
     dsp.plot_aed(ax, df, dsp.FILTERED_LINEAR)
     canvas.draw()
     df_save(df, 'linearpsd')
+    repeat(filtered_linear)
 
 def mfcc():
     dsp.range_mfcc = int(range_mfcc.get())
@@ -106,7 +117,15 @@ def mfcc():
     dsp.plot_aed(ax, df, dsp.MFCC)
     canvas.draw()
     df_save(df, 'mfcc')
+    repeat(mfcc)
 
+def repeat_toggle():
+    global repeat_action
+    if repeat_action == True:
+        repeat_action = False
+    else:
+        repeat_action = True
+    
 def on_key_event(event):
     print('you pressed %s' % event.key)
     key = event.key
@@ -137,6 +156,7 @@ button_psd = Tk.Button(master=root, text='FFT', command=psd, bg='lightblue', act
 button_filtered_linear = Tk.Button(master=root, text='Spectrogram', command=filtered_linear, bg='lightblue', activebackground='grey')
 button_filtered_mel = Tk.Button(master=root, text='Spectrogram(mel)', command=filtered_mel, bg='pink', activebackground='grey')
 button_mfcc = Tk.Button(master=root, text='MFCCs', command=mfcc, bg='yellowgreen', activebackground='grey')
+button_repeat = Tk.Button(master=root, text='Repeat', command=repeat_toggle, bg='lightblue', activebackground='grey')
 button_quit = Tk.Button(master=root, text='Quit', command=_quit, bg='yellow', activebackground='grey')
 
 # Class label entry
@@ -178,6 +198,11 @@ label_seperator6.pack(side=Tk.LEFT, padx=1)
 # CMAP
 label_cmap.pack(side=Tk.LEFT, padx=1)
 cmap.pack(side=Tk.LEFT, padx=1)
+label_seperator6 = Tk.Label(master=root, text=' ')
+label_seperator6.pack(side=Tk.LEFT, padx=1)
+
+# Repeat
+button_repeat.pack(side=Tk.LEFT, padx=1)
 
 # Quit
 button_quit.pack(side=Tk.LEFT, padx=15)

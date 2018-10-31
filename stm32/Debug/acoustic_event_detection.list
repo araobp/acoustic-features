@@ -23,27 +23,27 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   9 .ARM.attributes 00000030  00000000  00000000  000301e4  2**0
                   CONTENTS, READONLY
- 10 .debug_info   0001c7cf  00000000  00000000  00030214  2**0
+ 10 .debug_info   0001c778  00000000  00000000  00030214  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_abbrev 0000458b  00000000  00000000  0004c9e3  2**0
+ 11 .debug_abbrev 0000457a  00000000  00000000  0004c98c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000f172  00000000  00000000  00050f6e  2**0
+ 12 .debug_loc    0000f172  00000000  00000000  00050f06  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_aranges 00001248  00000000  00000000  000600e0  2**3
+ 13 .debug_aranges 00001248  00000000  00000000  00060078  2**3
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_ranges 00001560  00000000  00000000  00061328  2**3
+ 14 .debug_ranges 00001560  00000000  00000000  000612c0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_line   0000a932  00000000  00000000  00062888  2**0
+ 15 .debug_line   0000a932  00000000  00000000  00062820  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_str    0000724d  00000000  00000000  0006d1ba  2**0
+ 16 .debug_str    00007226  00000000  00000000  0006d152  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .comment      000000ea  00000000  00000000  00074407  2**0
+ 17 .comment      000000ea  00000000  00000000  00074378  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  00004668  00000000  00000000  000744f4  2**2
+ 18 .debug_frame  00004668  00000000  00000000  00074464  2**2
                   CONTENTS, READONLY, DEBUGGING
- 19 .stab         00000084  00000000  00000000  00078b5c  2**2
+ 19 .stab         00000084  00000000  00000000  00078acc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 20 .stabstr      00000117  00000000  00000000  00078be0  2**0
+ 20 .stabstr      00000117  00000000  00000000  00078b50  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -4282,7 +4282,7 @@ static HAL_StatusTypeDef RCC_SetFlashLatencyFromMSIRange(uint32_t msirange)
  8002044:	d9f5      	bls.n	8002032 <HAL_RCC_OscConfig+0x292>
  8002046:	e748      	b.n	8001eda <HAL_RCC_OscConfig+0x13a>
  8002048:	40021000 	.word	0x40021000
- 800204c:	0800a2a3 	.word	0x0800a2a3
+ 800204c:	0800a2a2 	.word	0x0800a2a2
  8002050:	2000000c 	.word	0x2000000c
     if(HAL_IS_BIT_CLR(RCC->APB1ENR1, RCC_APB1ENR1_PWREN))
  8002054:	6da3      	ldr	r3, [r4, #88]	; 0x58
@@ -4629,7 +4629,7 @@ static HAL_StatusTypeDef RCC_SetFlashLatencyFromMSIRange(uint32_t msirange)
  80022fe:	e793      	b.n	8002228 <HAL_RCC_ClockConfig+0x3c>
  8002300:	40022000 	.word	0x40022000
  8002304:	40021000 	.word	0x40021000
- 8002308:	0800a2a3 	.word	0x0800a2a3
+ 8002308:	0800a2a2 	.word	0x0800a2a2
  800230c:	2000000c 	.word	0x2000000c
 
 08002310 <HAL_RCC_GetHCLKFreq>:
@@ -4654,7 +4654,7 @@ static HAL_StatusTypeDef RCC_SetFlashLatencyFromMSIRange(uint32_t msirange)
  8002330:	40d8      	lsrs	r0, r3
  8002332:	4770      	bx	lr
  8002334:	40021000 	.word	0x40021000
- 8002338:	0800a2b3 	.word	0x0800a2b3
+ 8002338:	0800a2b2 	.word	0x0800a2b2
  800233c:	2000000c 	.word	0x2000000c
 
 08002340 <HAL_RCC_GetPCLK2Freq>:
@@ -4671,7 +4671,7 @@ static HAL_StatusTypeDef RCC_SetFlashLatencyFromMSIRange(uint32_t msirange)
  8002354:	40d8      	lsrs	r0, r3
  8002356:	4770      	bx	lr
  8002358:	40021000 	.word	0x40021000
- 800235c:	0800a2b3 	.word	0x0800a2b3
+ 800235c:	0800a2b2 	.word	0x0800a2b2
  8002360:	2000000c 	.word	0x2000000c
 
 08002364 <RCCEx_PLLSAI1_Config>:
@@ -9236,14 +9236,14 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
  8004090:	2001247c 	.word	0x2001247c
  8004094:	20012480 	.word	0x20012480
  8004098:	20012484 	.word	0x20012484
- 800409c:	0800a2a0 	.word	0x0800a2a0
+ 800409c:	0800a29f 	.word	0x0800a29f
  80040a0:	2001248c 	.word	0x2001248c
  80040a4:	200136dc 	.word	0x200136dc
  80040a8:	2000022c 	.word	0x2000022c
- 80040ac:	0800a29c 	.word	0x0800a29c
- 80040b0:	0800a29e 	.word	0x0800a29e
- 80040b4:	0800a297 	.word	0x0800a297
- 80040b8:	0800a299 	.word	0x0800a299
+ 80040ac:	0800a29b 	.word	0x0800a29b
+ 80040b0:	0800a29d 	.word	0x0800a29d
+ 80040b4:	0800a296 	.word	0x0800a296
+ 80040b8:	0800a298 	.word	0x0800a298
  80040bc:	40590000 	.word	0x40590000
 
 080040c0 <dsp>:
@@ -17065,7 +17065,7 @@ Infinite_Loop:
  8008af0:	0801e220 	.word	0x0801e220
  8008af4:	c7efffff 	.word	0xc7efffff
  8008af8:	fff00000 	.word	0xfff00000
- 8008afc:	0800a29b 	.word	0x0800a29b
+ 8008afc:	0800a29a 	.word	0x0800a29a
 
 08008b00 <pow>:
  8008b00:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
@@ -17689,7 +17689,7 @@ Infinite_Loop:
  80091b0:	8800759c 	.word	0x8800759c
  80091b4:	7e37e43c 	.word	0x7e37e43c
  80091b8:	7ff00000 	.word	0x7ff00000
- 80091bc:	0800a29b 	.word	0x0800a29b
+ 80091bc:	0800a29a 	.word	0x0800a29a
  80091c0:	433fffff 	.word	0x433fffff
  80091c4:	3fefffff 	.word	0x3fefffff
  80091c8:	3ff00000 	.word	0x3ff00000
@@ -19218,7 +19218,7 @@ Infinite_Loop:
  800a238:	601a      	str	r2, [r3, #0]
  800a23a:	4770      	bx	lr
  800a23c:	20013494 	.word	0x20013494
- 800a240:	0800a296 	.word	0x0800a296
+ 800a240:	20013758 	.word	0x20013758
 
 0800a244 <_init>:
  800a244:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
