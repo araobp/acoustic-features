@@ -9,15 +9,15 @@ I want to develop the cheapest (and low-power-consumption) edge device of ML (fo
 ## IoT network
 
 ```
-Sound/voice ))) [MEMS mic]-[MFCC streamer(STM32L4)]--Bluetooth/LPWA/CAN---+
+Sound/voice ))) [MEMS mic]-[ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
                                                                           |
-Sound/voice ))) [MEMS mic]-[MFCC streamer(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT cloud
+Sound/voice ))) [MEMS mic]-[ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT cloud
                                                                           |
-Sound/voice ))) [MEMS mic]-[MFCC streamer(STM32L4)]--Bluetooth/LPWA/CAN---+
+Sound/voice ))) [MEMS mic]-[ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
                                   |
                               USB serial
                                   |
-                           [Oscilloscope GUI]
+                         [Oscilloscope GUI(Tk)]
 ```
 
 ## Sampling frequency
