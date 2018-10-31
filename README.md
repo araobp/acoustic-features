@@ -20,6 +20,8 @@ Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN--
                            [Oscilloscope GUI(Tk)]
 ```
 
+Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tree/master/analog_filter
+
 ## Sampling frequency
 
 - The highest frequency on a piano is 4186Hz, but it generate overtones: ~10kHz.
