@@ -2,7 +2,7 @@
 
 import glob
 
-FOLDER = './data/63_mel_filters/'
+FOLDER = './data/'
 
 class_labels = ['piano',
                 'classical_guitar',
