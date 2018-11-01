@@ -28,20 +28,22 @@ cmap = 'hot'
 def serial_read(cmd):
     ser = serial.Serial(PORT, BAUD_RATE)
     data = []
-    id = 0
+    id_ = 0
     n = 0
     
     ser.write(cmd)
     while True:
         line = ser.readline().decode('ascii')
-        if line == 'e\n':
-            break
-        elif line == 'd\n':
-            id += 1
-            n = 0
-        if line != 'e\n' and line != 'd\n':
-            data.append((int(id), int(n), int(line.rstrip('\n'))))
+        records = line[:-3].split(',')  # exclude the last ','
+        delim = line[-2]  # exclude '\n'
+        for r in records:
+            data.append((id_, n, int(r)))
             n += 1
+        if delim == 'e':
+            break
+        elif delim == 'd':
+            id_ += 1
+            n = 0
     ser.close()
 
     labels = ['id', 'n', 'magnitude']

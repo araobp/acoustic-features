@@ -90,6 +90,16 @@ UART baudrate: 921600bps
            |------ data output ------>|
            |                          |
 
+
+Data is send in ASCII characters, and the data format is as follows:
+
+d: data delimiter
+e: data transmission end
+
+1,2,3,4,d,...,5,6,7,8,d\n
+9,10,11,12,d,...,13,14,15,16,d\n
+17,18,19,20,d,...,21,22,23,24,e\n
+
 ```
 
 |cmd|description     | output size             | purpose               |
@@ -101,6 +111,7 @@ UART baudrate: 921600bps
 |4  | MFCC           | NUM_FILTERS x 200       | Input to ML           |
 |5  | MFCC_STREAMING | NUM_FILTERS x 07fffffff | (for testing)         |
 |6  | FILTERED_LINEAR| NUM_FILTERS x 200       | Input to ML           |
+
 
 ## Oscilloscope GUI
 

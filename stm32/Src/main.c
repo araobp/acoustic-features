@@ -153,7 +153,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   } else {   // dump time-series signal
 
     for (int n = 0; n < length; n++) {
-      idx += sprintf(&uart_buf[idx], "%ld\n", (int32_t) in[n]);
+      idx += sprintf(&uart_buf[idx], "%ld,", (int32_t) in[n]);
     }
 
     if (--cnt == 0) {

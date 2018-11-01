@@ -18,22 +18,23 @@ matplotlib.use('TkAgg')
 
 CMAP_LIST = ['hot',
              'ocean',
-             'binary',
-             'cubehelix',
              'magma',
              'viridis',
+             'cubehelix',
+             'cool',
              'winter',
              'summer',
-             'cool',
+             'binary',
              'gray']
 
 root = Tk.Tk()
 root.wm_title("Oscilloscope")
 
-f = Figure(figsize=(9, 4), dpi=100)
-ax = f.add_subplot(111)
+fig = Figure(figsize=(9, 4), dpi=100)
+ax = fig.add_subplot(111)
+fig.subplots_adjust(bottom=0.15)
 
-canvas = FigureCanvasTkAgg(f, master=root)
+canvas = FigureCanvasTkAgg(fig, master=root)
 canvas.show()
 canvas.get_tk_widget().pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
 
@@ -53,13 +54,17 @@ counter.configure(text='({})'.format(str(0)))
 
 repeat_action = False
 
+filename = None
+
 def df_save(df, step):
-    global class_label_, cnt
+    global class_label_, cnt, filename
     class_label = entry.get()
-    if class_label != '':
-        dt = datetime.today().strftime('%Y%m%d%H%M%S')
-        filename = '{}-{}-{}.csv'.format(entry.get(), step, dt)
-        df.to_csv('./data/' + filename, index=False)
+    dt = datetime.today().strftime('%Y%m%d%H%M%S')
+    if class_label == '':
+        filename = './data/{}-{}'.format(step, dt)
+    else:
+        filename = './data/{}-{}-{}'.format(entry.get(), step, dt)
+        df.to_csv(filename+'.csv', index=False)
         if (class_label_ != class_label):
             class_label_ = class_label
             cnt = 0
@@ -68,7 +73,7 @@ def df_save(df, step):
 
 def repeat(func):
     if repeat_action:
-        root.after(100, func)
+        root.after(50, func)
 
 def raw_wave():
     dsp.range_waveform = int(range_amplitude.get())
@@ -80,13 +85,13 @@ def raw_wave():
     df_save(df, 'waveform')
     repeat(raw_wave)
 
-def psd():
+def fft():
     ax.clear()
     ax.grid(True, alpha=0.3)
     df = dsp.serial_read(dsp.PSD)
     dsp.plot_aed(ax, df, dsp.PSD)
     canvas.draw()
-    df_save(df, 'psd')
+    df_save(df, 'fft')
     repeat(psd)
 
 def filtered_mel():
@@ -96,7 +101,7 @@ def filtered_mel():
     df = dsp.serial_read(dsp.FILTERED_MEL)
     dsp.plot_aed(ax, df, dsp.FILTERED_MEL)
     canvas.draw()
-    df_save(df, 'melpsd')
+    df_save(df, 'mel_spectrogram')
     repeat(filtered_mel)
 
 def filtered_linear():
@@ -106,7 +111,7 @@ def filtered_linear():
     df = dsp.serial_read(dsp.FILTERED_LINEAR)
     dsp.plot_aed(ax, df, dsp.FILTERED_LINEAR)
     canvas.draw()
-    df_save(df, 'linearpsd')
+    df_save(df, 'spectrogram')
     repeat(filtered_linear)
 
 def mfcc():
@@ -123,8 +128,15 @@ def repeat_toggle():
     global repeat_action
     if repeat_action == True:
         repeat_action = False
+        button_repeat.configure(bg='lightblue')
     else:
         repeat_action = True
+        button_repeat.configure(bg='red')
+        
+def savefig():
+    global filename
+    if filename:
+        fig.savefig(filename+'.png')
     
 def on_key_event(event):
     print('you pressed %s' % event.key)
@@ -152,11 +164,12 @@ label_class = Tk.Label(master=root, text='Class label:')
 label_cmap = Tk.Label(master=root, text='cmap:')
 
 button_waveform = Tk.Button(master=root, text='Wave', command=raw_wave, bg='lightblue', activebackground='grey')
-button_psd = Tk.Button(master=root, text='FFT', command=psd, bg='lightblue', activebackground='grey')
+button_psd = Tk.Button(master=root, text='FFT', command=fft, bg='lightblue', activebackground='grey')
 button_filtered_linear = Tk.Button(master=root, text='Spectrogram', command=filtered_linear, bg='lightblue', activebackground='grey')
 button_filtered_mel = Tk.Button(master=root, text='Spectrogram(mel)', command=filtered_mel, bg='pink', activebackground='grey')
 button_mfcc = Tk.Button(master=root, text='MFCCs', command=mfcc, bg='yellowgreen', activebackground='grey')
 button_repeat = Tk.Button(master=root, text='Repeat', command=repeat_toggle, bg='lightblue', activebackground='grey')
+button_savefig = Tk.Button(master=root, text='Savefig', command=savefig, bg='lightblue', activebackground='grey')
 button_quit = Tk.Button(master=root, text='Quit', command=_quit, bg='yellow', activebackground='grey')
 
 # Class label entry
@@ -203,6 +216,7 @@ label_seperator6.pack(side=Tk.LEFT, padx=1)
 
 # Repeat
 button_repeat.pack(side=Tk.LEFT, padx=1)
+button_savefig.pack(side=Tk.LEFT, padx=1)
 
 # Quit
 button_quit.pack(side=Tk.LEFT, padx=15)
