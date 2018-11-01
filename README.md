@@ -22,6 +22,19 @@ Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN--
 
 Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tree/master/analog_filter
 
+## Making use of DMA
+
+ARM Cortex-M4 supports "DMA half-completed callback" that is very useful to implemente ring-buffer-like buffering for real-time processing.
+
+I splitted buffers for DMA into two segments: segment A and segment B.
+
+```
+Sound/voice ))) [MEMS mic]-PDM->[DFSDM]-DMA->[A|B]->[ARM Cortex-M4]
+                                                    [ARM Cortex-M4]->[A|B]->DMA->[UART] --- > PC(pyserial)
+                                                    [ARM Cortex-M4]->[A|B]->DMA->[DAC] ))) Sound/Voice
+
+```
+
 ## Sampling frequency
 
 - The highest frequency on a piano is 4186Hz, but it generate overtones: ~10kHz.
