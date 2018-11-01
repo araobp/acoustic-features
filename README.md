@@ -24,7 +24,7 @@ Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tr
 
 ## Making use of DMA
 
-ARM Cortex-M4 supports "DMA half-completed callback" that is very useful to implemente ring-buffer-like buffering for real-time processing.
+STMicro's HAL library supports "HAL_DFSDM_FilterRegConvHalfCpltCallback" that is very useful to implemente ring-buffer-like buffering for real-time processing.
 
 I splitted buffers for DMA into two segments: segment A and segment B.
 
@@ -34,6 +34,8 @@ Sound/voice ))) [MEMS mic]-PDM->[DFSDM]-DMA->[A|B]->[ARM Cortex-M4]
                                                     [ARM Cortex-M4]->[A|B]->DMA->[DAC] ))) Sound/Voice
 
 ```
+
+All the DMAs are synchronized, because their master clock is the system clock.
 
 ## Sampling frequency
 
