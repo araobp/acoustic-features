@@ -33,17 +33,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  14 .debug_ranges 000015a0  00000000  00000000  00063480  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_line   0000af5a  00000000  00000000  00064a20  2**0
+ 15 .debug_line   0000af56  00000000  00000000  00064a20  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_str    0000735e  00000000  00000000  0006f97a  2**0
+ 16 .debug_str    0000735e  00000000  00000000  0006f976  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .comment      000000ea  00000000  00000000  00076cd8  2**0
+ 17 .comment      000000ea  00000000  00000000  00076cd4  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  00004794  00000000  00000000  00076dc4  2**2
+ 18 .debug_frame  00004794  00000000  00000000  00076dc0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 19 .stab         00000084  00000000  00000000  0007b558  2**2
+ 19 .stab         00000084  00000000  00000000  0007b554  2**2
                   CONTENTS, READONLY, DEBUGGING
- 20 .stabstr      00000117  00000000  00000000  0007b5dc  2**0
+ 20 .stabstr      00000117  00000000  00000000  0007b5d8  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -2489,7 +2489,7 @@ static void DFSDM_RegConvStart(DFSDM_Filter_HandleTypeDef *hdfsdm_filter)
  8001572:	d15f      	bne.n	8001634 <HAL_DFSDM_ChannelInit+0xd8>
   HAL_DFSDM_ChannelMspInit(hdfsdm_channel);
  8001574:	4620      	mov	r0, r4
- 8001576:	f002 f8b7 	bl	80036e8 <HAL_DFSDM_ChannelMspInit>
+ 8001576:	f002 f8b9 	bl	80036ec <HAL_DFSDM_ChannelMspInit>
   v_dfsdm1ChannelCounter++;
  800157a:	4b30      	ldr	r3, [pc, #192]	; (800163c <HAL_DFSDM_ChannelInit+0xe0>)
  800157c:	681a      	ldr	r2, [r3, #0]
@@ -2642,7 +2642,7 @@ static void DFSDM_RegConvStart(DFSDM_Filter_HandleTypeDef *hdfsdm_filter)
  800166a:	6523      	str	r3, [r4, #80]	; 0x50
   HAL_DFSDM_FilterMspInit(hdfsdm_filter);
  800166c:	4620      	mov	r0, r4
- 800166e:	f001 ffcd 	bl	800360c <HAL_DFSDM_FilterMspInit>
+ 800166e:	f001 ffcf 	bl	8003610 <HAL_DFSDM_FilterMspInit>
   hdfsdm_filter->Instance->FLTCR1 &= ~(DFSDM_FLTCR1_RSYNC);
  8001672:	6823      	ldr	r3, [r4, #0]
   if (hdfsdm_filter->Init.InjectedParam.ScanMode == ENABLE)
@@ -7562,9 +7562,9 @@ void MX_DFSDM1_Init(void)
 {
 
   hdfsdm1_filter0.Instance = DFSDM1_Filter0;
- 8003578:	481e      	ldr	r0, [pc, #120]	; (80035f4 <MX_DFSDM1_Init+0x7c>)
+ 8003578:	481f      	ldr	r0, [pc, #124]	; (80035f8 <MX_DFSDM1_Init+0x80>)
   hdfsdm1_filter0.Init.RegularParam.Trigger = DFSDM_FILTER_SW_TRIGGER;
- 800357a:	4a1f      	ldr	r2, [pc, #124]	; (80035f8 <MX_DFSDM1_Init+0x80>)
+ 800357a:	4a20      	ldr	r2, [pc, #128]	; (80035fc <MX_DFSDM1_Init+0x84>)
 {
  800357c:	b508      	push	{r3, lr}
   hdfsdm1_filter0.Init.RegularParam.Trigger = DFSDM_FILTER_SW_TRIGGER;
@@ -7578,13 +7578,13 @@ void MX_DFSDM1_Init(void)
  8003588:	2301      	movs	r3, #1
   hdfsdm1_filter0.Init.FilterParam.SincOrder = DFSDM_FILTER_SINC3_ORDER;
  800358a:	61c2      	str	r2, [r0, #28]
-  hdfsdm1_filter0.Init.FilterParam.Oversampling = 32;
- 800358c:	2220      	movs	r2, #32
+  hdfsdm1_filter0.Init.FilterParam.Oversampling = 64;
+ 800358c:	2240      	movs	r2, #64	; 0x40
   hdfsdm1_filter0.Init.RegularParam.FastMode = ENABLE;
  800358e:	7203      	strb	r3, [r0, #8]
   hdfsdm1_filter0.Init.RegularParam.DmaMode = ENABLE;
  8003590:	7243      	strb	r3, [r0, #9]
-  hdfsdm1_filter0.Init.FilterParam.Oversampling = 32;
+  hdfsdm1_filter0.Init.FilterParam.Oversampling = 64;
  8003592:	6202      	str	r2, [r0, #32]
   hdfsdm1_filter0.Init.FilterParam.IntOversampling = 1;
  8003594:	6243      	str	r3, [r0, #36]	; 0x24
@@ -7594,549 +7594,549 @@ void MX_DFSDM1_Init(void)
   {
     _Error_Handler(__FILE__, __LINE__);
  800359c:	2143      	movs	r1, #67	; 0x43
- 800359e:	4817      	ldr	r0, [pc, #92]	; (80035fc <MX_DFSDM1_Init+0x84>)
+ 800359e:	4818      	ldr	r0, [pc, #96]	; (8003600 <MX_DFSDM1_Init+0x88>)
  80035a0:	f001 f83e 	bl	8004620 <_Error_Handler>
   }
 
   hdfsdm1_channel2.Instance = DFSDM1_Channel2;
- 80035a4:	4816      	ldr	r0, [pc, #88]	; (8003600 <MX_DFSDM1_Init+0x88>)
- 80035a6:	4b17      	ldr	r3, [pc, #92]	; (8003604 <MX_DFSDM1_Init+0x8c>)
+ 80035a4:	4817      	ldr	r0, [pc, #92]	; (8003604 <MX_DFSDM1_Init+0x8c>)
+ 80035a6:	4b18      	ldr	r3, [pc, #96]	; (8003608 <MX_DFSDM1_Init+0x90>)
  80035a8:	6003      	str	r3, [r0, #0]
   hdfsdm1_channel2.Init.OutputClock.Activation = ENABLE;
   hdfsdm1_channel2.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
-  hdfsdm1_channel2.Init.OutputClock.Divider = 128;
- 80035aa:	2280      	movs	r2, #128	; 0x80
+  hdfsdm1_channel2.Init.OutputClock.Divider = 64;
+ 80035aa:	2240      	movs	r2, #64	; 0x40
   hdfsdm1_channel2.Init.OutputClock.Activation = ENABLE;
  80035ac:	2301      	movs	r3, #1
-  hdfsdm1_channel2.Init.OutputClock.Divider = 128;
- 80035ae:	60c2      	str	r2, [r0, #12]
+ 80035ae:	7103      	strb	r3, [r0, #4]
+  hdfsdm1_channel2.Init.OutputClock.Divider = 64;
+ 80035b0:	60c2      	str	r2, [r0, #12]
+  hdfsdm1_channel2.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
+ 80035b2:	2300      	movs	r3, #0
   hdfsdm1_channel2.Init.Input.Multiplexer = DFSDM_CHANNEL_EXTERNAL_INPUTS;
   hdfsdm1_channel2.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
   hdfsdm1_channel2.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
   hdfsdm1_channel2.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
   hdfsdm1_channel2.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
- 80035b0:	2204      	movs	r2, #4
-  hdfsdm1_channel2.Init.OutputClock.Activation = ENABLE;
- 80035b2:	7103      	strb	r3, [r0, #4]
-  hdfsdm1_channel2.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
- 80035b4:	6202      	str	r2, [r0, #32]
+ 80035b4:	2204      	movs	r2, #4
   hdfsdm1_channel2.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
- 80035b6:	2300      	movs	r3, #0
-  hdfsdm1_channel2.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
-  hdfsdm1_channel2.Init.Awd.Oversampling = 10;
- 80035b8:	220a      	movs	r2, #10
-  hdfsdm1_channel2.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
- 80035ba:	6083      	str	r3, [r0, #8]
+ 80035b6:	6083      	str	r3, [r0, #8]
   hdfsdm1_channel2.Init.Input.Multiplexer = DFSDM_CHANNEL_EXTERNAL_INPUTS;
- 80035bc:	6103      	str	r3, [r0, #16]
+ 80035b8:	6103      	str	r3, [r0, #16]
   hdfsdm1_channel2.Init.Input.DataPacking = DFSDM_CHANNEL_STANDARD_MODE;
- 80035be:	6143      	str	r3, [r0, #20]
+ 80035ba:	6143      	str	r3, [r0, #20]
   hdfsdm1_channel2.Init.Input.Pins = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
- 80035c0:	6183      	str	r3, [r0, #24]
+ 80035bc:	6183      	str	r3, [r0, #24]
   hdfsdm1_channel2.Init.SerialInterface.Type = DFSDM_CHANNEL_SPI_RISING;
- 80035c2:	61c3      	str	r3, [r0, #28]
+ 80035be:	61c3      	str	r3, [r0, #28]
+  hdfsdm1_channel2.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
+ 80035c0:	6202      	str	r2, [r0, #32]
   hdfsdm1_channel2.Init.Awd.FilterOrder = DFSDM_CHANNEL_FASTSINC_ORDER;
- 80035c4:	6243      	str	r3, [r0, #36]	; 0x24
+ 80035c2:	6243      	str	r3, [r0, #36]	; 0x24
   hdfsdm1_channel2.Init.Awd.Oversampling = 10;
- 80035c6:	6282      	str	r2, [r0, #40]	; 0x28
+ 80035c4:	220a      	movs	r2, #10
   hdfsdm1_channel2.Init.Offset = 0;
- 80035c8:	62c3      	str	r3, [r0, #44]	; 0x2c
-  hdfsdm1_channel2.Init.RightBitShift = 0;
- 80035ca:	6303      	str	r3, [r0, #48]	; 0x30
+ 80035c6:	62c3      	str	r3, [r0, #44]	; 0x2c
+  hdfsdm1_channel2.Init.RightBitShift = 3;
+ 80035c8:	2303      	movs	r3, #3
+  hdfsdm1_channel2.Init.Awd.Oversampling = 10;
+ 80035ca:	6282      	str	r2, [r0, #40]	; 0x28
+  hdfsdm1_channel2.Init.RightBitShift = 3;
+ 80035cc:	6303      	str	r3, [r0, #48]	; 0x30
   if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel2) != HAL_OK)
- 80035cc:	f7fd ffc6 	bl	800155c <HAL_DFSDM_ChannelInit>
- 80035d0:	b118      	cbz	r0, 80035da <MX_DFSDM1_Init+0x62>
+ 80035ce:	f7fd ffc5 	bl	800155c <HAL_DFSDM_ChannelInit>
+ 80035d2:	b118      	cbz	r0, 80035dc <MX_DFSDM1_Init+0x64>
   {
     _Error_Handler(__FILE__, __LINE__);
- 80035d2:	2155      	movs	r1, #85	; 0x55
- 80035d4:	4809      	ldr	r0, [pc, #36]	; (80035fc <MX_DFSDM1_Init+0x84>)
- 80035d6:	f001 f823 	bl	8004620 <_Error_Handler>
+ 80035d4:	2155      	movs	r1, #85	; 0x55
+ 80035d6:	480a      	ldr	r0, [pc, #40]	; (8003600 <MX_DFSDM1_Init+0x88>)
+ 80035d8:	f001 f822 	bl	8004620 <_Error_Handler>
   }
 
   if (HAL_DFSDM_FilterConfigRegChannel(&hdfsdm1_filter0, DFSDM_CHANNEL_2, DFSDM_CONTINUOUS_CONV_ON) != HAL_OK)
- 80035da:	2201      	movs	r2, #1
- 80035dc:	490a      	ldr	r1, [pc, #40]	; (8003608 <MX_DFSDM1_Init+0x90>)
- 80035de:	4805      	ldr	r0, [pc, #20]	; (80035f4 <MX_DFSDM1_Init+0x7c>)
- 80035e0:	f7fe f8a2 	bl	8001728 <HAL_DFSDM_FilterConfigRegChannel>
- 80035e4:	b128      	cbz	r0, 80035f2 <MX_DFSDM1_Init+0x7a>
+ 80035dc:	2201      	movs	r2, #1
+ 80035de:	490b      	ldr	r1, [pc, #44]	; (800360c <MX_DFSDM1_Init+0x94>)
+ 80035e0:	4805      	ldr	r0, [pc, #20]	; (80035f8 <MX_DFSDM1_Init+0x80>)
+ 80035e2:	f7fe f8a1 	bl	8001728 <HAL_DFSDM_FilterConfigRegChannel>
+ 80035e6:	b128      	cbz	r0, 80035f4 <MX_DFSDM1_Init+0x7c>
   {
     _Error_Handler(__FILE__, __LINE__);
- 80035e6:	215a      	movs	r1, #90	; 0x5a
- 80035e8:	4804      	ldr	r0, [pc, #16]	; (80035fc <MX_DFSDM1_Init+0x84>)
+ 80035e8:	215a      	movs	r1, #90	; 0x5a
+ 80035ea:	4805      	ldr	r0, [pc, #20]	; (8003600 <MX_DFSDM1_Init+0x88>)
   }
 
 }
- 80035ea:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+ 80035ec:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
     _Error_Handler(__FILE__, __LINE__);
- 80035ee:	f001 b817 	b.w	8004620 <_Error_Handler>
- 80035f2:	bd08      	pop	{r3, pc}
- 80035f4:	20013544 	.word	0x20013544
- 80035f8:	40016100 	.word	0x40016100
- 80035fc:	0800a8ce 	.word	0x0800a8ce
- 8003600:	200135e0 	.word	0x200135e0
- 8003604:	40016040 	.word	0x40016040
- 8003608:	00020004 	.word	0x00020004
+ 80035f0:	f001 b816 	b.w	8004620 <_Error_Handler>
+ 80035f4:	bd08      	pop	{r3, pc}
+ 80035f6:	bf00      	nop
+ 80035f8:	20013544 	.word	0x20013544
+ 80035fc:	40016100 	.word	0x40016100
+ 8003600:	0800a8ce 	.word	0x0800a8ce
+ 8003604:	200135e0 	.word	0x200135e0
+ 8003608:	40016040 	.word	0x40016040
+ 800360c:	00020004 	.word	0x00020004
 
-0800360c <HAL_DFSDM_FilterMspInit>:
+08003610 <HAL_DFSDM_FilterMspInit>:
 static uint32_t HAL_RCC_DFSDM1_CLK_ENABLED=0;
 
 static uint32_t DFSDM1_Init = 0;
 
 void HAL_DFSDM_FilterMspInit(DFSDM_Filter_HandleTypeDef* dfsdm_filterHandle)
 {
- 800360c:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+ 8003610:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
 
   GPIO_InitTypeDef GPIO_InitStruct;
   if(DFSDM1_Init == 0)
- 8003610:	4c2d      	ldr	r4, [pc, #180]	; (80036c8 <HAL_DFSDM_FilterMspInit+0xbc>)
- 8003612:	6823      	ldr	r3, [r4, #0]
+ 8003614:	4c2d      	ldr	r4, [pc, #180]	; (80036cc <HAL_DFSDM_FilterMspInit+0xbc>)
+ 8003616:	6823      	ldr	r3, [r4, #0]
 {
- 8003614:	b086      	sub	sp, #24
- 8003616:	4605      	mov	r5, r0
+ 8003618:	b086      	sub	sp, #24
+ 800361a:	4605      	mov	r5, r0
   if(DFSDM1_Init == 0)
- 8003618:	2b00      	cmp	r3, #0
- 800361a:	d12e      	bne.n	800367a <HAL_DFSDM_FilterMspInit+0x6e>
+ 800361c:	2b00      	cmp	r3, #0
+ 800361e:	d12e      	bne.n	800367e <HAL_DFSDM_FilterMspInit+0x6e>
   {
   /* USER CODE BEGIN DFSDM1_MspInit 0 */
 
   /* USER CODE END DFSDM1_MspInit 0 */
     /* DFSDM1 clock enable */
     HAL_RCC_DFSDM1_CLK_ENABLED++;
- 800361c:	4a2b      	ldr	r2, [pc, #172]	; (80036cc <HAL_DFSDM_FilterMspInit+0xc0>)
- 800361e:	6813      	ldr	r3, [r2, #0]
- 8003620:	3301      	adds	r3, #1
+ 8003620:	4a2b      	ldr	r2, [pc, #172]	; (80036d0 <HAL_DFSDM_FilterMspInit+0xc0>)
+ 8003622:	6813      	ldr	r3, [r2, #0]
+ 8003624:	3301      	adds	r3, #1
     if(HAL_RCC_DFSDM1_CLK_ENABLED==1){
- 8003622:	2b01      	cmp	r3, #1
+ 8003626:	2b01      	cmp	r3, #1
     HAL_RCC_DFSDM1_CLK_ENABLED++;
- 8003624:	6013      	str	r3, [r2, #0]
+ 8003628:	6013      	str	r3, [r2, #0]
     if(HAL_RCC_DFSDM1_CLK_ENABLED==1){
- 8003626:	d109      	bne.n	800363c <HAL_DFSDM_FilterMspInit+0x30>
+ 800362a:	d109      	bne.n	8003640 <HAL_DFSDM_FilterMspInit+0x30>
       __HAL_RCC_DFSDM1_CLK_ENABLE();
- 8003628:	4b29      	ldr	r3, [pc, #164]	; (80036d0 <HAL_DFSDM_FilterMspInit+0xc4>)
- 800362a:	6e1a      	ldr	r2, [r3, #96]	; 0x60
- 800362c:	f042 7280 	orr.w	r2, r2, #16777216	; 0x1000000
- 8003630:	661a      	str	r2, [r3, #96]	; 0x60
- 8003632:	6e1b      	ldr	r3, [r3, #96]	; 0x60
- 8003634:	f003 7380 	and.w	r3, r3, #16777216	; 0x1000000
- 8003638:	9300      	str	r3, [sp, #0]
- 800363a:	9b00      	ldr	r3, [sp, #0]
+ 800362c:	4b29      	ldr	r3, [pc, #164]	; (80036d4 <HAL_DFSDM_FilterMspInit+0xc4>)
+ 800362e:	6e1a      	ldr	r2, [r3, #96]	; 0x60
+ 8003630:	f042 7280 	orr.w	r2, r2, #16777216	; 0x1000000
+ 8003634:	661a      	str	r2, [r3, #96]	; 0x60
+ 8003636:	6e1b      	ldr	r3, [r3, #96]	; 0x60
+ 8003638:	f003 7380 	and.w	r3, r3, #16777216	; 0x1000000
+ 800363c:	9300      	str	r3, [sp, #0]
+ 800363e:	9b00      	ldr	r3, [sp, #0]
     GPIO_InitStruct.Pin = GPIO_PIN_2;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
- 800363c:	4825      	ldr	r0, [pc, #148]	; (80036d4 <HAL_DFSDM_FilterMspInit+0xc8>)
+ 8003640:	4825      	ldr	r0, [pc, #148]	; (80036d8 <HAL_DFSDM_FilterMspInit+0xc8>)
     GPIO_InitStruct.Pin = GPIO_PIN_2;
- 800363e:	2304      	movs	r3, #4
+ 8003642:	2304      	movs	r3, #4
     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 8003640:	2600      	movs	r6, #0
+ 8003644:	2600      	movs	r6, #0
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
- 8003642:	eb0d 0103 	add.w	r1, sp, r3
+ 8003646:	eb0d 0103 	add.w	r1, sp, r3
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
- 8003646:	f04f 0802 	mov.w	r8, #2
+ 800364a:	f04f 0802 	mov.w	r8, #2
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
- 800364a:	2706      	movs	r7, #6
+ 800364e:	2706      	movs	r7, #6
     GPIO_InitStruct.Pin = GPIO_PIN_2;
- 800364c:	9301      	str	r3, [sp, #4]
+ 8003650:	9301      	str	r3, [sp, #4]
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
- 800364e:	f8cd 8008 	str.w	r8, [sp, #8]
+ 8003652:	f8cd 8008 	str.w	r8, [sp, #8]
     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 8003652:	9603      	str	r6, [sp, #12]
+ 8003656:	9603      	str	r6, [sp, #12]
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
- 8003654:	9604      	str	r6, [sp, #16]
+ 8003658:	9604      	str	r6, [sp, #16]
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
- 8003656:	9705      	str	r7, [sp, #20]
+ 800365a:	9705      	str	r7, [sp, #20]
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
- 8003658:	f7fe f9e6 	bl	8001a28 <HAL_GPIO_Init>
+ 800365c:	f7fe f9e4 	bl	8001a28 <HAL_GPIO_Init>
 
     GPIO_InitStruct.Pin = GPIO_PIN_14;
- 800365c:	f44f 4380 	mov.w	r3, #16384	; 0x4000
+ 8003660:	f44f 4380 	mov.w	r3, #16384	; 0x4000
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
- 8003660:	a901      	add	r1, sp, #4
- 8003662:	481d      	ldr	r0, [pc, #116]	; (80036d8 <HAL_DFSDM_FilterMspInit+0xcc>)
+ 8003664:	a901      	add	r1, sp, #4
+ 8003666:	481d      	ldr	r0, [pc, #116]	; (80036dc <HAL_DFSDM_FilterMspInit+0xcc>)
     GPIO_InitStruct.Pin = GPIO_PIN_14;
- 8003664:	9301      	str	r3, [sp, #4]
+ 8003668:	9301      	str	r3, [sp, #4]
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
- 8003666:	f8cd 8008 	str.w	r8, [sp, #8]
+ 800366a:	f8cd 8008 	str.w	r8, [sp, #8]
     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 800366a:	9603      	str	r6, [sp, #12]
+ 800366e:	9603      	str	r6, [sp, #12]
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
- 800366c:	9604      	str	r6, [sp, #16]
+ 8003670:	9604      	str	r6, [sp, #16]
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
- 800366e:	9705      	str	r7, [sp, #20]
+ 8003672:	9705      	str	r7, [sp, #20]
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
- 8003670:	f7fe f9da 	bl	8001a28 <HAL_GPIO_Init>
+ 8003674:	f7fe f9d8 	bl	8001a28 <HAL_GPIO_Init>
 
   /* USER CODE BEGIN DFSDM1_MspInit 1 */
 
   /* USER CODE END DFSDM1_MspInit 1 */
   DFSDM1_Init++;
- 8003674:	6823      	ldr	r3, [r4, #0]
- 8003676:	3301      	adds	r3, #1
- 8003678:	6023      	str	r3, [r4, #0]
+ 8003678:	6823      	ldr	r3, [r4, #0]
+ 800367a:	3301      	adds	r3, #1
+ 800367c:	6023      	str	r3, [r4, #0]
   }
   
     /* DFSDM1 DMA Init */
     /* DFSDM1_FLT0 Init */
   if(dfsdm_filterHandle->Instance == DFSDM1_Filter0){
- 800367a:	682a      	ldr	r2, [r5, #0]
- 800367c:	4b17      	ldr	r3, [pc, #92]	; (80036dc <HAL_DFSDM_FilterMspInit+0xd0>)
- 800367e:	429a      	cmp	r2, r3
- 8003680:	d11e      	bne.n	80036c0 <HAL_DFSDM_FilterMspInit+0xb4>
+ 800367e:	682a      	ldr	r2, [r5, #0]
+ 8003680:	4b17      	ldr	r3, [pc, #92]	; (80036e0 <HAL_DFSDM_FilterMspInit+0xd0>)
+ 8003682:	429a      	cmp	r2, r3
+ 8003684:	d11e      	bne.n	80036c4 <HAL_DFSDM_FilterMspInit+0xb4>
     hdma_dfsdm1_flt0.Instance = DMA1_Channel4;
- 8003682:	4c17      	ldr	r4, [pc, #92]	; (80036e0 <HAL_DFSDM_FilterMspInit+0xd4>)
+ 8003686:	4c17      	ldr	r4, [pc, #92]	; (80036e4 <HAL_DFSDM_FilterMspInit+0xd4>)
     hdma_dfsdm1_flt0.Init.Request = DMA_REQUEST_0;
     hdma_dfsdm1_flt0.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_dfsdm1_flt0.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_dfsdm1_flt0.Init.MemInc = DMA_MINC_ENABLE;
- 8003684:	2280      	movs	r2, #128	; 0x80
+ 8003688:	2280      	movs	r2, #128	; 0x80
     hdma_dfsdm1_flt0.Instance = DMA1_Channel4;
- 8003686:	f503 431f 	add.w	r3, r3, #40704	; 0x9f00
+ 800368a:	f503 431f 	add.w	r3, r3, #40704	; 0x9f00
     hdma_dfsdm1_flt0.Init.MemInc = DMA_MINC_ENABLE;
- 800368a:	6122      	str	r2, [r4, #16]
+ 800368e:	6122      	str	r2, [r4, #16]
     hdma_dfsdm1_flt0.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
- 800368c:	f44f 7200 	mov.w	r2, #512	; 0x200
+ 8003690:	f44f 7200 	mov.w	r2, #512	; 0x200
     hdma_dfsdm1_flt0.Instance = DMA1_Channel4;
- 8003690:	3344      	adds	r3, #68	; 0x44
+ 8003694:	3344      	adds	r3, #68	; 0x44
     hdma_dfsdm1_flt0.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
- 8003692:	6162      	str	r2, [r4, #20]
+ 8003696:	6162      	str	r2, [r4, #20]
     hdma_dfsdm1_flt0.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
- 8003694:	f44f 6200 	mov.w	r2, #2048	; 0x800
+ 8003698:	f44f 6200 	mov.w	r2, #2048	; 0x800
     hdma_dfsdm1_flt0.Instance = DMA1_Channel4;
- 8003698:	6023      	str	r3, [r4, #0]
+ 800369c:	6023      	str	r3, [r4, #0]
     hdma_dfsdm1_flt0.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
- 800369a:	61a2      	str	r2, [r4, #24]
+ 800369e:	61a2      	str	r2, [r4, #24]
     hdma_dfsdm1_flt0.Init.Request = DMA_REQUEST_0;
- 800369c:	2300      	movs	r3, #0
+ 80036a0:	2300      	movs	r3, #0
     hdma_dfsdm1_flt0.Init.Mode = DMA_CIRCULAR;
- 800369e:	2220      	movs	r2, #32
+ 80036a2:	2220      	movs	r2, #32
     hdma_dfsdm1_flt0.Init.Priority = DMA_PRIORITY_LOW;
     if (HAL_DMA_Init(&hdma_dfsdm1_flt0) != HAL_OK)
- 80036a0:	4620      	mov	r0, r4
+ 80036a4:	4620      	mov	r0, r4
     hdma_dfsdm1_flt0.Init.Request = DMA_REQUEST_0;
- 80036a2:	6063      	str	r3, [r4, #4]
+ 80036a6:	6063      	str	r3, [r4, #4]
     hdma_dfsdm1_flt0.Init.Direction = DMA_PERIPH_TO_MEMORY;
- 80036a4:	60a3      	str	r3, [r4, #8]
+ 80036a8:	60a3      	str	r3, [r4, #8]
     hdma_dfsdm1_flt0.Init.PeriphInc = DMA_PINC_DISABLE;
- 80036a6:	60e3      	str	r3, [r4, #12]
+ 80036aa:	60e3      	str	r3, [r4, #12]
     hdma_dfsdm1_flt0.Init.Mode = DMA_CIRCULAR;
- 80036a8:	61e2      	str	r2, [r4, #28]
+ 80036ac:	61e2      	str	r2, [r4, #28]
     hdma_dfsdm1_flt0.Init.Priority = DMA_PRIORITY_LOW;
- 80036aa:	6223      	str	r3, [r4, #32]
+ 80036ae:	6223      	str	r3, [r4, #32]
     if (HAL_DMA_Init(&hdma_dfsdm1_flt0) != HAL_OK)
- 80036ac:	f7fe f8aa 	bl	8001804 <HAL_DMA_Init>
- 80036b0:	b118      	cbz	r0, 80036ba <HAL_DFSDM_FilterMspInit+0xae>
+ 80036b0:	f7fe f8a8 	bl	8001804 <HAL_DMA_Init>
+ 80036b4:	b118      	cbz	r0, 80036be <HAL_DFSDM_FilterMspInit+0xae>
     {
       _Error_Handler(__FILE__, __LINE__);
- 80036b2:	2198      	movs	r1, #152	; 0x98
- 80036b4:	480b      	ldr	r0, [pc, #44]	; (80036e4 <HAL_DFSDM_FilterMspInit+0xd8>)
- 80036b6:	f000 ffb3 	bl	8004620 <_Error_Handler>
+ 80036b6:	2198      	movs	r1, #152	; 0x98
+ 80036b8:	480b      	ldr	r0, [pc, #44]	; (80036e8 <HAL_DFSDM_FilterMspInit+0xd8>)
+ 80036ba:	f000 ffb1 	bl	8004620 <_Error_Handler>
     }
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
     __HAL_LINKDMA(dfsdm_filterHandle,hdmaInj,hdma_dfsdm1_flt0);
- 80036ba:	62a5      	str	r5, [r4, #40]	; 0x28
- 80036bc:	62ec      	str	r4, [r5, #44]	; 0x2c
+ 80036be:	62a5      	str	r5, [r4, #40]	; 0x28
+ 80036c0:	62ec      	str	r4, [r5, #44]	; 0x2c
     __HAL_LINKDMA(dfsdm_filterHandle,hdmaReg,hdma_dfsdm1_flt0);
- 80036be:	62ac      	str	r4, [r5, #40]	; 0x28
+ 80036c2:	62ac      	str	r4, [r5, #40]	; 0x28
   }
 
 }
- 80036c0:	b006      	add	sp, #24
- 80036c2:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
- 80036c6:	bf00      	nop
- 80036c8:	20000224 	.word	0x20000224
- 80036cc:	20000228 	.word	0x20000228
- 80036d0:	40021000 	.word	0x40021000
- 80036d4:	48000800 	.word	0x48000800
- 80036d8:	48000400 	.word	0x48000400
- 80036dc:	40016100 	.word	0x40016100
- 80036e0:	20013598 	.word	0x20013598
- 80036e4:	0800a8ce 	.word	0x0800a8ce
+ 80036c4:	b006      	add	sp, #24
+ 80036c6:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+ 80036ca:	bf00      	nop
+ 80036cc:	20000224 	.word	0x20000224
+ 80036d0:	20000228 	.word	0x20000228
+ 80036d4:	40021000 	.word	0x40021000
+ 80036d8:	48000800 	.word	0x48000800
+ 80036dc:	48000400 	.word	0x48000400
+ 80036e0:	40016100 	.word	0x40016100
+ 80036e4:	20013598 	.word	0x20013598
+ 80036e8:	0800a8ce 	.word	0x0800a8ce
 
-080036e8 <HAL_DFSDM_ChannelMspInit>:
+080036ec <HAL_DFSDM_ChannelMspInit>:
 
 void HAL_DFSDM_ChannelMspInit(DFSDM_Channel_HandleTypeDef* dfsdm_channelHandle)
 {
- 80036e8:	b5f0      	push	{r4, r5, r6, r7, lr}
+ 80036ec:	b5f0      	push	{r4, r5, r6, r7, lr}
 
   GPIO_InitTypeDef GPIO_InitStruct;
   if(DFSDM1_Init == 0)
- 80036ea:	4c19      	ldr	r4, [pc, #100]	; (8003750 <HAL_DFSDM_ChannelMspInit+0x68>)
- 80036ec:	6823      	ldr	r3, [r4, #0]
+ 80036ee:	4c19      	ldr	r4, [pc, #100]	; (8003754 <HAL_DFSDM_ChannelMspInit+0x68>)
+ 80036f0:	6823      	ldr	r3, [r4, #0]
 {
- 80036ee:	b087      	sub	sp, #28
+ 80036f2:	b087      	sub	sp, #28
   if(DFSDM1_Init == 0)
- 80036f0:	2b00      	cmp	r3, #0
- 80036f2:	d12b      	bne.n	800374c <HAL_DFSDM_ChannelMspInit+0x64>
+ 80036f4:	2b00      	cmp	r3, #0
+ 80036f6:	d12b      	bne.n	8003750 <HAL_DFSDM_ChannelMspInit+0x64>
   {
   /* USER CODE BEGIN DFSDM1_MspInit 0 */
 
   /* USER CODE END DFSDM1_MspInit 0 */
     /* DFSDM1 clock enable */
     HAL_RCC_DFSDM1_CLK_ENABLED++;
- 80036f4:	4a17      	ldr	r2, [pc, #92]	; (8003754 <HAL_DFSDM_ChannelMspInit+0x6c>)
- 80036f6:	6813      	ldr	r3, [r2, #0]
- 80036f8:	3301      	adds	r3, #1
+ 80036f8:	4a17      	ldr	r2, [pc, #92]	; (8003758 <HAL_DFSDM_ChannelMspInit+0x6c>)
+ 80036fa:	6813      	ldr	r3, [r2, #0]
+ 80036fc:	3301      	adds	r3, #1
     if(HAL_RCC_DFSDM1_CLK_ENABLED==1){
- 80036fa:	2b01      	cmp	r3, #1
+ 80036fe:	2b01      	cmp	r3, #1
     HAL_RCC_DFSDM1_CLK_ENABLED++;
- 80036fc:	6013      	str	r3, [r2, #0]
+ 8003700:	6013      	str	r3, [r2, #0]
     if(HAL_RCC_DFSDM1_CLK_ENABLED==1){
- 80036fe:	d109      	bne.n	8003714 <HAL_DFSDM_ChannelMspInit+0x2c>
+ 8003702:	d109      	bne.n	8003718 <HAL_DFSDM_ChannelMspInit+0x2c>
       __HAL_RCC_DFSDM1_CLK_ENABLE();
- 8003700:	4b15      	ldr	r3, [pc, #84]	; (8003758 <HAL_DFSDM_ChannelMspInit+0x70>)
- 8003702:	6e1a      	ldr	r2, [r3, #96]	; 0x60
- 8003704:	f042 7280 	orr.w	r2, r2, #16777216	; 0x1000000
- 8003708:	661a      	str	r2, [r3, #96]	; 0x60
- 800370a:	6e1b      	ldr	r3, [r3, #96]	; 0x60
- 800370c:	f003 7380 	and.w	r3, r3, #16777216	; 0x1000000
- 8003710:	9300      	str	r3, [sp, #0]
- 8003712:	9b00      	ldr	r3, [sp, #0]
+ 8003704:	4b15      	ldr	r3, [pc, #84]	; (800375c <HAL_DFSDM_ChannelMspInit+0x70>)
+ 8003706:	6e1a      	ldr	r2, [r3, #96]	; 0x60
+ 8003708:	f042 7280 	orr.w	r2, r2, #16777216	; 0x1000000
+ 800370c:	661a      	str	r2, [r3, #96]	; 0x60
+ 800370e:	6e1b      	ldr	r3, [r3, #96]	; 0x60
+ 8003710:	f003 7380 	and.w	r3, r3, #16777216	; 0x1000000
+ 8003714:	9300      	str	r3, [sp, #0]
+ 8003716:	9b00      	ldr	r3, [sp, #0]
     GPIO_InitStruct.Pin = GPIO_PIN_2;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
- 8003714:	4811      	ldr	r0, [pc, #68]	; (800375c <HAL_DFSDM_ChannelMspInit+0x74>)
+ 8003718:	4811      	ldr	r0, [pc, #68]	; (8003760 <HAL_DFSDM_ChannelMspInit+0x74>)
     GPIO_InitStruct.Pin = GPIO_PIN_2;
- 8003716:	2304      	movs	r3, #4
+ 800371a:	2304      	movs	r3, #4
     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 8003718:	2500      	movs	r5, #0
+ 800371c:	2500      	movs	r5, #0
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
- 800371a:	eb0d 0103 	add.w	r1, sp, r3
+ 800371e:	eb0d 0103 	add.w	r1, sp, r3
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
- 800371e:	2702      	movs	r7, #2
+ 8003722:	2702      	movs	r7, #2
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
- 8003720:	2606      	movs	r6, #6
+ 8003724:	2606      	movs	r6, #6
     GPIO_InitStruct.Pin = GPIO_PIN_2;
- 8003722:	9301      	str	r3, [sp, #4]
+ 8003726:	9301      	str	r3, [sp, #4]
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
- 8003724:	9702      	str	r7, [sp, #8]
+ 8003728:	9702      	str	r7, [sp, #8]
     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 8003726:	9503      	str	r5, [sp, #12]
+ 800372a:	9503      	str	r5, [sp, #12]
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
- 8003728:	9504      	str	r5, [sp, #16]
+ 800372c:	9504      	str	r5, [sp, #16]
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
- 800372a:	9605      	str	r6, [sp, #20]
+ 800372e:	9605      	str	r6, [sp, #20]
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
- 800372c:	f7fe f97c 	bl	8001a28 <HAL_GPIO_Init>
+ 8003730:	f7fe f97a 	bl	8001a28 <HAL_GPIO_Init>
 
     GPIO_InitStruct.Pin = GPIO_PIN_14;
- 8003730:	f44f 4380 	mov.w	r3, #16384	; 0x4000
+ 8003734:	f44f 4380 	mov.w	r3, #16384	; 0x4000
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
- 8003734:	a901      	add	r1, sp, #4
- 8003736:	480a      	ldr	r0, [pc, #40]	; (8003760 <HAL_DFSDM_ChannelMspInit+0x78>)
+ 8003738:	a901      	add	r1, sp, #4
+ 800373a:	480a      	ldr	r0, [pc, #40]	; (8003764 <HAL_DFSDM_ChannelMspInit+0x78>)
     GPIO_InitStruct.Pin = GPIO_PIN_14;
- 8003738:	9301      	str	r3, [sp, #4]
+ 800373c:	9301      	str	r3, [sp, #4]
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
- 800373a:	9702      	str	r7, [sp, #8]
+ 800373e:	9702      	str	r7, [sp, #8]
     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 800373c:	9503      	str	r5, [sp, #12]
+ 8003740:	9503      	str	r5, [sp, #12]
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
- 800373e:	9504      	str	r5, [sp, #16]
+ 8003742:	9504      	str	r5, [sp, #16]
     GPIO_InitStruct.Alternate = GPIO_AF6_DFSDM1;
- 8003740:	9605      	str	r6, [sp, #20]
+ 8003744:	9605      	str	r6, [sp, #20]
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
- 8003742:	f7fe f971 	bl	8001a28 <HAL_GPIO_Init>
+ 8003746:	f7fe f96f 	bl	8001a28 <HAL_GPIO_Init>
 
   /* USER CODE BEGIN DFSDM1_MspInit 1 */
 
   /* USER CODE END DFSDM1_MspInit 1 */
   DFSDM1_Init++;
- 8003746:	6823      	ldr	r3, [r4, #0]
- 8003748:	3301      	adds	r3, #1
- 800374a:	6023      	str	r3, [r4, #0]
+ 800374a:	6823      	ldr	r3, [r4, #0]
+ 800374c:	3301      	adds	r3, #1
+ 800374e:	6023      	str	r3, [r4, #0]
   }
 }
- 800374c:	b007      	add	sp, #28
- 800374e:	bdf0      	pop	{r4, r5, r6, r7, pc}
- 8003750:	20000224 	.word	0x20000224
- 8003754:	20000228 	.word	0x20000228
- 8003758:	40021000 	.word	0x40021000
- 800375c:	48000800 	.word	0x48000800
- 8003760:	48000400 	.word	0x48000400
+ 8003750:	b007      	add	sp, #28
+ 8003752:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 8003754:	20000224 	.word	0x20000224
+ 8003758:	20000228 	.word	0x20000228
+ 800375c:	40021000 	.word	0x40021000
+ 8003760:	48000800 	.word	0x48000800
+ 8003764:	48000400 	.word	0x48000400
 
-08003764 <MX_DMA_Init>:
+08003768 <MX_DMA_Init>:
   * Enable DMA controller clock
   */
 void MX_DMA_Init(void) 
 {
   /* DMA controller clock enable */
   __HAL_RCC_DMA1_CLK_ENABLE();
- 8003764:	4b1b      	ldr	r3, [pc, #108]	; (80037d4 <MX_DMA_Init+0x70>)
+ 8003768:	4b1b      	ldr	r3, [pc, #108]	; (80037d8 <MX_DMA_Init+0x70>)
 {
- 8003766:	b507      	push	{r0, r1, r2, lr}
+ 800376a:	b507      	push	{r0, r1, r2, lr}
   __HAL_RCC_DMA1_CLK_ENABLE();
- 8003768:	6c9a      	ldr	r2, [r3, #72]	; 0x48
- 800376a:	f042 0201 	orr.w	r2, r2, #1
- 800376e:	649a      	str	r2, [r3, #72]	; 0x48
- 8003770:	6c9a      	ldr	r2, [r3, #72]	; 0x48
- 8003772:	f002 0201 	and.w	r2, r2, #1
- 8003776:	9200      	str	r2, [sp, #0]
- 8003778:	9a00      	ldr	r2, [sp, #0]
+ 800376c:	6c9a      	ldr	r2, [r3, #72]	; 0x48
+ 800376e:	f042 0201 	orr.w	r2, r2, #1
+ 8003772:	649a      	str	r2, [r3, #72]	; 0x48
+ 8003774:	6c9a      	ldr	r2, [r3, #72]	; 0x48
+ 8003776:	f002 0201 	and.w	r2, r2, #1
+ 800377a:	9200      	str	r2, [sp, #0]
+ 800377c:	9a00      	ldr	r2, [sp, #0]
   __HAL_RCC_DMA2_CLK_ENABLE();
- 800377a:	6c9a      	ldr	r2, [r3, #72]	; 0x48
- 800377c:	f042 0202 	orr.w	r2, r2, #2
- 8003780:	649a      	str	r2, [r3, #72]	; 0x48
- 8003782:	6c9b      	ldr	r3, [r3, #72]	; 0x48
+ 800377e:	6c9a      	ldr	r2, [r3, #72]	; 0x48
+ 8003780:	f042 0202 	orr.w	r2, r2, #2
+ 8003784:	649a      	str	r2, [r3, #72]	; 0x48
+ 8003786:	6c9b      	ldr	r3, [r3, #72]	; 0x48
 
   /* DMA interrupt init */
   /* DMA1_Channel3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
- 8003784:	2200      	movs	r2, #0
+ 8003788:	2200      	movs	r2, #0
   __HAL_RCC_DMA2_CLK_ENABLE();
- 8003786:	f003 0302 	and.w	r3, r3, #2
+ 800378a:	f003 0302 	and.w	r3, r3, #2
   HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
- 800378a:	4611      	mov	r1, r2
+ 800378e:	4611      	mov	r1, r2
   __HAL_RCC_DMA2_CLK_ENABLE();
- 800378c:	9301      	str	r3, [sp, #4]
+ 8003790:	9301      	str	r3, [sp, #4]
   HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
- 800378e:	200d      	movs	r0, #13
+ 8003792:	200d      	movs	r0, #13
   __HAL_RCC_DMA2_CLK_ENABLE();
- 8003790:	9b01      	ldr	r3, [sp, #4]
+ 8003794:	9b01      	ldr	r3, [sp, #4]
   HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
- 8003792:	f7fd fcb9 	bl	8001108 <HAL_NVIC_SetPriority>
+ 8003796:	f7fd fcb7 	bl	8001108 <HAL_NVIC_SetPriority>
   HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
- 8003796:	200d      	movs	r0, #13
- 8003798:	f7fd fcea 	bl	8001170 <HAL_NVIC_EnableIRQ>
+ 800379a:	200d      	movs	r0, #13
+ 800379c:	f7fd fce8 	bl	8001170 <HAL_NVIC_EnableIRQ>
   /* DMA1_Channel4_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 0, 0);
- 800379c:	2200      	movs	r2, #0
- 800379e:	4611      	mov	r1, r2
- 80037a0:	200e      	movs	r0, #14
- 80037a2:	f7fd fcb1 	bl	8001108 <HAL_NVIC_SetPriority>
+ 80037a0:	2200      	movs	r2, #0
+ 80037a2:	4611      	mov	r1, r2
+ 80037a4:	200e      	movs	r0, #14
+ 80037a6:	f7fd fcaf 	bl	8001108 <HAL_NVIC_SetPriority>
   HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
- 80037a6:	200e      	movs	r0, #14
- 80037a8:	f7fd fce2 	bl	8001170 <HAL_NVIC_EnableIRQ>
+ 80037aa:	200e      	movs	r0, #14
+ 80037ac:	f7fd fce0 	bl	8001170 <HAL_NVIC_EnableIRQ>
   /* DMA1_Channel7_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel7_IRQn, 0, 0);
- 80037ac:	2200      	movs	r2, #0
- 80037ae:	4611      	mov	r1, r2
- 80037b0:	2011      	movs	r0, #17
- 80037b2:	f7fd fca9 	bl	8001108 <HAL_NVIC_SetPriority>
+ 80037b0:	2200      	movs	r2, #0
+ 80037b2:	4611      	mov	r1, r2
+ 80037b4:	2011      	movs	r0, #17
+ 80037b6:	f7fd fca7 	bl	8001108 <HAL_NVIC_SetPriority>
   HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
- 80037b6:	2011      	movs	r0, #17
- 80037b8:	f7fd fcda 	bl	8001170 <HAL_NVIC_EnableIRQ>
+ 80037ba:	2011      	movs	r0, #17
+ 80037bc:	f7fd fcd8 	bl	8001170 <HAL_NVIC_EnableIRQ>
   /* DMA2_Channel5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Channel5_IRQn, 0, 0);
- 80037bc:	2200      	movs	r2, #0
- 80037be:	4611      	mov	r1, r2
- 80037c0:	203c      	movs	r0, #60	; 0x3c
- 80037c2:	f7fd fca1 	bl	8001108 <HAL_NVIC_SetPriority>
+ 80037c0:	2200      	movs	r2, #0
+ 80037c2:	4611      	mov	r1, r2
+ 80037c4:	203c      	movs	r0, #60	; 0x3c
+ 80037c6:	f7fd fc9f 	bl	8001108 <HAL_NVIC_SetPriority>
   HAL_NVIC_EnableIRQ(DMA2_Channel5_IRQn);
- 80037c6:	203c      	movs	r0, #60	; 0x3c
- 80037c8:	f7fd fcd2 	bl	8001170 <HAL_NVIC_EnableIRQ>
+ 80037ca:	203c      	movs	r0, #60	; 0x3c
+ 80037cc:	f7fd fcd0 	bl	8001170 <HAL_NVIC_EnableIRQ>
 
 }
- 80037cc:	b003      	add	sp, #12
- 80037ce:	f85d fb04 	ldr.w	pc, [sp], #4
- 80037d2:	bf00      	nop
- 80037d4:	40021000 	.word	0x40021000
+ 80037d0:	b003      	add	sp, #12
+ 80037d2:	f85d fb04 	ldr.w	pc, [sp], #4
+ 80037d6:	bf00      	nop
+ 80037d8:	40021000 	.word	0x40021000
 
-080037d8 <hann>:
+080037dc <hann>:
 
 // Half sample shifter
 float32_t half_sample_shifter[NUM_FILTERS * 2] = { 0.0f };
 
 // hann window generation
 void hann(int num) {
- 80037d8:	b570      	push	{r4, r5, r6, lr}
+ 80037dc:	b570      	push	{r4, r5, r6, lr}
   arm_fill_f32(0.0f, hann_window, NN);
- 80037da:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 80037de:	f44f 7100 	mov.w	r1, #512	; 0x200
 void hann(int num) {
- 80037de:	ed2d 8b02 	vpush	{d8}
- 80037e2:	4605      	mov	r5, r0
+ 80037e2:	ed2d 8b02 	vpush	{d8}
+ 80037e6:	4605      	mov	r5, r0
   arm_fill_f32(0.0f, hann_window, NN);
- 80037e4:	ed9f 0a12 	vldr	s0, [pc, #72]	; 8003830 <hann+0x58>
- 80037e8:	4812      	ldr	r0, [pc, #72]	; (8003834 <hann+0x5c>)
- 80037ea:	4e12      	ldr	r6, [pc, #72]	; (8003834 <hann+0x5c>)
- 80037ec:	f001 f884 	bl	80048f8 <arm_fill_f32>
+ 80037e8:	ed9f 0a12 	vldr	s0, [pc, #72]	; 8003834 <hann+0x58>
+ 80037ec:	4812      	ldr	r0, [pc, #72]	; (8003838 <hann+0x5c>)
+ 80037ee:	4e12      	ldr	r6, [pc, #72]	; (8003838 <hann+0x5c>)
+ 80037f0:	f001 f882 	bl	80048f8 <arm_fill_f32>
   float32_t scale = 2.0f * PI / (float32_t) num;
- 80037f0:	ee07 5a90 	vmov	s15, r5
- 80037f4:	ed9f 7a10 	vldr	s14, [pc, #64]	; 8003838 <hann+0x60>
- 80037f8:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+ 80037f4:	ee07 5a90 	vmov	s15, r5
+ 80037f8:	ed9f 7a10 	vldr	s14, [pc, #64]	; 800383c <hann+0x60>
+ 80037fc:	eef8 7ae7 	vcvt.f32.s32	s15, s15
   for (int n = 0; n < num; n++) {
- 80037fc:	2400      	movs	r4, #0
+ 8003800:	2400      	movs	r4, #0
   float32_t scale = 2.0f * PI / (float32_t) num;
- 80037fe:	eec7 8a27 	vdiv.f32	s17, s14, s15
+ 8003802:	eec7 8a27 	vdiv.f32	s17, s14, s15
     hann_window[n] = 0.5f - 0.5f * arm_cos_f32((float) n * scale);
- 8003802:	eeb6 8a00 	vmov.f32	s16, #96	; 0x3f000000  0.5
+ 8003806:	eeb6 8a00 	vmov.f32	s16, #96	; 0x3f000000  0.5
   for (int n = 0; n < num; n++) {
- 8003806:	42ac      	cmp	r4, r5
- 8003808:	db02      	blt.n	8003810 <hann+0x38>
+ 800380a:	42ac      	cmp	r4, r5
+ 800380c:	db02      	blt.n	8003814 <hann+0x38>
   }
 }
- 800380a:	ecbd 8b02 	vpop	{d8}
- 800380e:	bd70      	pop	{r4, r5, r6, pc}
+ 800380e:	ecbd 8b02 	vpop	{d8}
+ 8003812:	bd70      	pop	{r4, r5, r6, pc}
     hann_window[n] = 0.5f - 0.5f * arm_cos_f32((float) n * scale);
- 8003810:	ee07 4a90 	vmov	s15, r4
- 8003814:	eeb8 0ae7 	vcvt.f32.s32	s0, s15
+ 8003814:	ee07 4a90 	vmov	s15, r4
+ 8003818:	eeb8 0ae7 	vcvt.f32.s32	s0, s15
   for (int n = 0; n < num; n++) {
- 8003818:	3401      	adds	r4, #1
+ 800381c:	3401      	adds	r4, #1
     hann_window[n] = 0.5f - 0.5f * arm_cos_f32((float) n * scale);
- 800381a:	ee20 0a28 	vmul.f32	s0, s0, s17
- 800381e:	f002 fa27 	bl	8005c70 <arm_cos_f32>
- 8003822:	eef0 7a48 	vmov.f32	s15, s16
- 8003826:	eee0 7a48 	vfms.f32	s15, s0, s16
- 800382a:	ece6 7a01 	vstmia	r6!, {s15}
- 800382e:	e7ea      	b.n	8003806 <hann+0x2e>
- 8003830:	00000000 	.word	0x00000000
- 8003834:	20010470 	.word	0x20010470
- 8003838:	40c90fdb 	.word	0x40c90fdb
+ 800381e:	ee20 0a28 	vmul.f32	s0, s0, s17
+ 8003822:	f002 fa25 	bl	8005c70 <arm_cos_f32>
+ 8003826:	eef0 7a48 	vmov.f32	s15, s16
+ 800382a:	eee0 7a48 	vfms.f32	s15, s0, s16
+ 800382e:	ece6 7a01 	vstmia	r6!, {s15}
+ 8003832:	e7ea      	b.n	800380a <hann+0x2e>
+ 8003834:	00000000 	.word	0x00000000
+ 8003838:	20010470 	.word	0x20010470
+ 800383c:	40c90fdb 	.word	0x40c90fdb
 
-0800383c <log10_approx>:
+08003840 <log10_approx>:
  *
  *  reference: https://community.arm.com/tools/f/discussions/4292/cmsis-dsp-new-functionality-proposal
  */
 const float32_t C[4] = {1.23149591368684f, -4.11852516267426f, 6.02197014179219f, -3.13396450166353f};
 const float32_t LOG10_2 = log10(2.0f);
 float32_t log10_approx(float32_t x) {
- 800383c:	b507      	push	{r0, r1, r2, lr}
+ 8003840:	b507      	push	{r0, r1, r2, lr}
   float32_t f;
   int e;
   f = frexpf(fabsf(x), &e);
- 800383e:	eeb0 0ac0 	vabs.f32	s0, s0
- 8003842:	a801      	add	r0, sp, #4
- 8003844:	f003 fb52 	bl	8006eec <frexpf>
+ 8003842:	eeb0 0ac0 	vabs.f32	s0, s0
+ 8003846:	a801      	add	r0, sp, #4
+ 8003848:	f003 fb50 	bl	8006eec <frexpf>
   return LOG10_2 * (C[0]*f*f*f + C[1]*f*f + C[2]*f + C[3] + e);
- 8003848:	eddf 7a11 	vldr	s15, [pc, #68]	; 8003890 <log10_approx+0x54>
- 800384c:	ed9f 7a11 	vldr	s14, [pc, #68]	; 8003894 <log10_approx+0x58>
- 8003850:	ee60 7a27 	vmul.f32	s15, s0, s15
- 8003854:	ee20 7a07 	vmul.f32	s14, s0, s14
- 8003858:	ee67 7a80 	vmul.f32	s15, s15, s0
- 800385c:	ee27 7a00 	vmul.f32	s14, s14, s0
- 8003860:	eee0 7a07 	vfma.f32	s15, s0, s14
- 8003864:	ed9f 7a0c 	vldr	s14, [pc, #48]	; 8003898 <log10_approx+0x5c>
- 8003868:	eee0 7a07 	vfma.f32	s15, s0, s14
- 800386c:	ed9f 0a0b 	vldr	s0, [pc, #44]	; 800389c <log10_approx+0x60>
- 8003870:	ed9d 7a01 	vldr	s14, [sp, #4]
- 8003874:	ee77 7ac0 	vsub.f32	s15, s15, s0
- 8003878:	eeb8 0ac7 	vcvt.f32.s32	s0, s14
- 800387c:	ee77 7a80 	vadd.f32	s15, s15, s0
+ 800384c:	eddf 7a11 	vldr	s15, [pc, #68]	; 8003894 <log10_approx+0x54>
+ 8003850:	ed9f 7a11 	vldr	s14, [pc, #68]	; 8003898 <log10_approx+0x58>
+ 8003854:	ee60 7a27 	vmul.f32	s15, s0, s15
+ 8003858:	ee20 7a07 	vmul.f32	s14, s0, s14
+ 800385c:	ee67 7a80 	vmul.f32	s15, s15, s0
+ 8003860:	ee27 7a00 	vmul.f32	s14, s14, s0
+ 8003864:	eee0 7a07 	vfma.f32	s15, s0, s14
+ 8003868:	ed9f 7a0c 	vldr	s14, [pc, #48]	; 800389c <log10_approx+0x5c>
+ 800386c:	eee0 7a07 	vfma.f32	s15, s0, s14
+ 8003870:	ed9f 0a0b 	vldr	s0, [pc, #44]	; 80038a0 <log10_approx+0x60>
+ 8003874:	ed9d 7a01 	vldr	s14, [sp, #4]
+ 8003878:	ee77 7ac0 	vsub.f32	s15, s15, s0
+ 800387c:	eeb8 0ac7 	vcvt.f32.s32	s0, s14
+ 8003880:	ee77 7a80 	vadd.f32	s15, s15, s0
 }
- 8003880:	ed9f 0a07 	vldr	s0, [pc, #28]	; 80038a0 <log10_approx+0x64>
- 8003884:	ee27 0a80 	vmul.f32	s0, s15, s0
- 8003888:	b003      	add	sp, #12
- 800388a:	f85d fb04 	ldr.w	pc, [sp], #4
- 800388e:	bf00      	nop
- 8003890:	c083caf5 	.word	0xc083caf5
- 8003894:	3f9da1a8 	.word	0x3f9da1a8
- 8003898:	40c0b3fb 	.word	0x40c0b3fb
- 800389c:	404892e0 	.word	0x404892e0
- 80038a0:	3e9a209b 	.word	0x3e9a209b
- 80038a4:	00000000 	.word	0x00000000
+ 8003884:	ed9f 0a07 	vldr	s0, [pc, #28]	; 80038a4 <log10_approx+0x64>
+ 8003888:	ee27 0a80 	vmul.f32	s0, s15, s0
+ 800388c:	b003      	add	sp, #12
+ 800388e:	f85d fb04 	ldr.w	pc, [sp], #4
+ 8003892:	bf00      	nop
+ 8003894:	c083caf5 	.word	0xc083caf5
+ 8003898:	3f9da1a8 	.word	0x3f9da1a8
+ 800389c:	40c0b3fb 	.word	0x40c0b3fb
+ 80038a0:	404892e0 	.word	0x404892e0
+ 80038a4:	3e9a209b 	.word	0x3e9a209b
 
 080038a8 <hz2mel>:
 
@@ -8684,7 +8684,7 @@ void init_dsp(float32_t sampling_frequency) {
  8003cf2:	b083      	sub	sp, #12
  8003cf4:	eeb0 8a40 	vmov.f32	s16, s0
   hann(NN);
- 8003cf8:	f7ff fd6e 	bl	80037d8 <hann>
+ 8003cf8:	f7ff fd70 	bl	80037dc <hann>
   fs = sampling_frequency;
  8003cfc:	4b0e      	ldr	r3, [pc, #56]	; (8003d38 <init_dsp+0x50>)
   arm_rfft_fast_init_f32(&S, NN);
@@ -8843,7 +8843,7 @@ void apply_psd_logscale(float32_t *inout) {
     inout[n] = 20.0 * log10_approx(signal_buf[n]);
  8003e14:	eeb3 8a04 	vmov.f32	s16, #52	; 0x41a00000  20.0
  8003e18:	ecb5 0a01 	vldmia	r5!, {s0}
- 8003e1c:	f7ff fd0e 	bl	800383c <log10_approx>
+ 8003e1c:	f7ff fd10 	bl	8003840 <log10_approx>
  8003e20:	ee20 0a08 	vmul.f32	s0, s0, s16
  8003e24:	eca4 0a01 	vstmia	r4!, {s0}
   for (int n = 0; n < NN / 2; n++) {
@@ -9609,7 +9609,7 @@ void SystemClock_Config(void)
   MX_GPIO_Init();
  80042d8:	f7ff fe36 	bl	8003f48 <MX_GPIO_Init>
   MX_DMA_Init();
- 80042dc:	f7ff fa42 	bl	8003764 <MX_DMA_Init>
+ 80042dc:	f7ff fa44 	bl	8003768 <MX_DMA_Init>
   MX_USART2_UART_Init();
  80042e0:	f000 fa74 	bl	80047cc <MX_USART2_UART_Init>
   MX_DFSDM1_Init();

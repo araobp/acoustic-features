@@ -82,7 +82,7 @@ def plot_aed(ax, df, cmd):
         ax.plot(freq, df['magnitude'])
         ax.set_xlabel('Frequency [Hz]')
         ax.set_ylabel('PSD [dB]')
-        ax.set_ylim([-20, 110])
+        ax.set_ylim([-40, 120])
 
     elif cmd == FILTERBANK:
         filterbank = df['magnitude'].values.reshape(NUM_FILTERS,int(FRAME_LENGTH/6))
