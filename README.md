@@ -148,7 +148,9 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, PSD, MFCCs etc.
 - [Bulerias played by a famous framenco guitarist is ultra fast!](./oscilloscope/images/framenco_guitar_bulerias_mel_scale.png)
 - [Hevy metal is like white noise of higher amplitude](./oscilloscope/images/hevy_metal_mel_scale.png)
 
-## CNN on TensorFlow
+## CNN experiments on TensorFlow
+
+I use the edge device above to obtain a lot of Mel-scale spectrograms for each class label, then I feed the data into CNN on Colab with GPU acceleration for training.
 
 ![](./tensorflow/filterd_spectrogram.png)
 
