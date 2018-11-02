@@ -2,7 +2,7 @@
 
 ![](./oscilloscope/screenshots/spectrogram(psd).jpg)
 
-Tin whislte music
+Framenco (Bulerias)
 
 ## Motivation
 
