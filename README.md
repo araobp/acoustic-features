@@ -129,6 +129,9 @@ e: data transmission end
 |3  | FILTERED_MEL   | NUM_FILTERS x 200       | Input to ML           |
 |4  | MFCC           | NUM_FILTERS x 200       | Input to ML           |
 |5  | MFCC_STREAMING | NUM_FILTERS x 07fffffff | (for testing)         |
+
+|cmd|description     | output size             | purpose               |
+|---|----------------|-------------------------|-----------------------|
 |6  | FILTERED_LINEAR| NUM_FILTERS x 200       | Input to ML           |
 |P  | Enable pre-emphasis |                    |                       |
 |p  | Disable pre-emphasis |                   |                       |
