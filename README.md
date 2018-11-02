@@ -134,19 +134,13 @@ e: data transmission end
 
 ## Oscilloscope GUI
 
-I use Tkinter with matplotlib to draw graph of waveform, FFT, PSD, MFCCs etc.
+I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs etc.
 
 ![](./oscilloscope/screenshots/waveform.jpg)
 
 ![](./oscilloscope/screenshots/fft(psd).jpg)
 
 - [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
-- [Wave form and PSD of some music](./oscilloscope/images)
-
-### Some interesting findings
-
-- [Bulerias played by a famous framenco guitarist is ultra fast!](./oscilloscope/images/framenco_guitar_bulerias_mel_scale.png)
-- [Hevy metal is like white noise of higher amplitude](./oscilloscope/images/hevy_metal_mel_scale.png)
 
 ## CNN experiments on TensorFlow
 
