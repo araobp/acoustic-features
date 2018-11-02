@@ -51,10 +51,11 @@ So samplig frequency of MFCC streamer should be around 20kHz: 20kHz/2 = 10kHz.
 ## Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
 
 - System clock: 80MHz
-- Clock divider: 128
-- FOSR/decimation: 32
+- Clock divider: 64
+- FOSR/decimation: 64
 - sinc filter: sinc3
-- Sampling frequency: 80_000_000/128/32 = 19.5kHz
+- right bit shift: 3 (2 * 64^3 = 2^19, so 3bit-right-shift is required to output 16bit PCM)
+- Sampling frequency: 80_000_000/64/64 = 19.5kHz
 
 ## Frame/stride/overlap
 
