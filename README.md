@@ -1,6 +1,6 @@
 # Acoustic Event Detection with STM32L4 and TensorFlow
 
-![](https://drive.google.com/file/d/11zvRxoTDNPAZZQ8gwmEQ3lgNqwErYn4u/)
+![](./oscilloscope/screenshots/spectrogram(psd).jpg)
 
 Tin whislte music
 
@@ -13,7 +13,7 @@ I want to develop the cheapest (and low-power-consumption) edge device of ML (fo
 ```
 Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
                                                                                  |
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT cloud
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT application on the cloud
                                                                                  |
 Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
                                      |           [DAC]
@@ -21,7 +21,7 @@ Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN--
                                  USB serial     [Analog filter] --> head phone for monitoring sound from mic
                                      |
                                      v
-                           [Oscilloscope GUI(Tk)]
+                           [Oscilloscope GUI(Tk)] ----------------------> Google Drive --> Google Colab for training CNN
 ```
 
 Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tree/master/analog_filter
@@ -134,67 +134,18 @@ e: data transmission end
 
 ## Oscilloscope GUI
 
-I use Tkinter with matplotlib to draw graph of waveform, FFT, PSD, MFCCs etc.
+I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs etc.
 
 ![](./oscilloscope/screenshots/waveform.jpg)
 
 ![](./oscilloscope/screenshots/fft(psd).jpg)
 
-![](./oscilloscope/screenshots/spectrogram(psd).jpg)
-
 - [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
-- [Wave form and PSD of some music](./oscilloscope/images)
 
-### Some interesting findings
+## CNN experiments on TensorFlow
 
-- [Bulerias played by a famous framenco guitarist is ultra fast!](./oscilloscope/images/framenco_guitar_bulerias_mel_scale.png)
-- [Hevy metal is like white noise of higher amplitude](./oscilloscope/images/hevy_metal_mel_scale.png)
+I use the edge device above to obtain a lot of Mel-scale spectrograms for each class label, then I feed the data into CNN on Colab with GPU acceleration for training.
 
-## CNN test on TensorFlow
+![](./tensorflow/filterd_spectrogram.png)
 
-### Preliminary test (Oct 28, 2018)
-
-I tested the following setup on Google's Colab with GPU acceleration:
-
-```
-Classes:
-- piano music
-- classial guitar music
-- framenco guitar music
-- blues harp music
-- tin whistle music
-
-Conditions:
-- Pre emphasis enabled on the raw data.
-
-I split each 40 mel-filters x 200 strides data into three 40 x 100 data: array of [0:8000]
-=> Arrays of [0:4000], [2000:6000] and [4000:].
-
-Training data set: 48 mel-scale spectrograms (40 filters x 100 strides) for each class
-Test data set: 24 mel-scale spectrograms (40 filters x 100 strides) for each class
-
-In -> Conv1 -cutoff-> Pool1 -> Conv2 -cutoff-> Pool2 -> Fully conncted (three hidden layers) -dropout-> Softmax
-      128 filters      1/2     256 filters  1/2         4096/ReLu x 4096/ReLu x 4096/tanh
-40 x 100             20 x 50              10 x 25
-```
-
-Due to the limited amount of GPU resource, I could not test any CNN with a larger scale than the above.
-
-The accuracy rate is around 80% ~ 90%. It is not so bad, since I have not made any optimization for its input data...
-
-### Second test (Oct 30, 2018)
-
-I retried the CNN model with 63 filters in the filter bank. The result is worse than the test on Oct 28:
-- the CNN model above is still the best one I have ever tried (I have also tried other models).
-- the test with 40 filters showed a better result that the test with 63 filters today.
-
-### Third test (Oct 31, 2018)
-
-- I added ReLu to cutoff negative output from the convolution layers.
-- I also added dropout layer to avoid overfitting.
-
-The result is still the same: the 40-filter data set beats the 63-filter data set.
-
-## TODO
-
-- Correlation filters for detecting music instruments: bandpass filter for extracting A4(440Hz) or A5(880Hz) from sound of various music instruments.
+- [Experiments on Colab with GPU acceleration](./tensorflow)
