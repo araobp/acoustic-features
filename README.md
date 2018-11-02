@@ -1,6 +1,6 @@
 # Acoustic Event Detection with STM32L4 and TensorFlow
 
-![](https://drive.google.com/file/d/11zvRxoTDNPAZZQ8gwmEQ3lgNqwErYn4u/view?usp=sharing)
+![](https://drive.google.com/file/d/11zvRxoTDNPAZZQ8gwmEQ3lgNqwErYn4u/)
 
 Tin whislte music
 
