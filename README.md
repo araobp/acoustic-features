@@ -148,11 +148,9 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, PSD, MFCCs etc.
 - [Bulerias played by a famous framenco guitarist is ultra fast!](./oscilloscope/images/framenco_guitar_bulerias_mel_scale.png)
 - [Hevy metal is like white noise of higher amplitude](./oscilloscope/images/hevy_metal_mel_scale.png)
 
-## CNN test on TensorFlow
+## CNN on TensorFlow
 
-### Preliminary test (Oct 28, 2018)
-
-I tested the following setup on Google's Colab with GPU acceleration:
+- [Experiments](./tensorflow)
 
 ```
 Classes:
@@ -175,23 +173,6 @@ In -> Conv1 -cutoff-> Pool1 -> Conv2 -cutoff-> Pool2 -> Fully conncted (three hi
       128 filters      1/2     256 filters  1/2         4096/ReLu x 4096/ReLu x 4096/tanh
 40 x 100             20 x 50              10 x 25
 ```
-
-Due to the limited amount of GPU resource, I could not test any CNN with a larger scale than the above.
-
-The accuracy rate is around 80% ~ 90%. It is not so bad, since I have not made any optimization for its input data...
-
-### Second test (Oct 30, 2018)
-
-I retried the CNN model with 63 filters in the filter bank. The result is worse than the test on Oct 28:
-- the CNN model above is still the best one I have ever tried (I have also tried other models).
-- the test with 40 filters showed a better result that the test with 63 filters today.
-
-### Third test (Oct 31, 2018)
-
-- I added ReLu to cutoff negative output from the convolution layers.
-- I also added dropout layer to avoid overfitting.
-
-The result is still the same: the 40-filter data set beats the 63-filter data set.
 
 ## TODO
 
