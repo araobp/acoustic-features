@@ -88,6 +88,7 @@ void generate_mel_scale_filters(void) {
   float32_t mel_freq_low;
   float32_t mel_freq_high;
   float32_t mel_delta;
+  float32_t divider;
 
   clear_filterbank();
   mel_freq_low = 0.0f;
@@ -106,15 +107,16 @@ void generate_mel_scale_filters(void) {
     freq_m_minus_1 = n2hz(left_n);
     freq_m = n2hz(center_n);
     freq_m_plus_1 = n2hz(right_n);
+    divider = (float32_t)(right_n - left_n);
 
     for (int n = left_n; n < center_n; n++) {
-      filterbank[m][n - left_n] = (n2hz(n) - freq_m_minus_1)/(freq_m - freq_m_minus_1);
+      filterbank[m][n - left_n] = (n2hz(n) - freq_m_minus_1)/(freq_m - freq_m_minus_1)/divider;
     }
 
-    filterbank[m][center_n - left_n] = 1.0f;
+    filterbank[m][center_n - left_n] = 1.0f/divider;
 
     for (int n= center_n + 1; n <= right_n; n++) {
-      filterbank[m][n - left_n] = (freq_m_plus_1 - n2hz(n))/(freq_m_plus_1 - freq_m);
+      filterbank[m][n - left_n] = (freq_m_plus_1 - n2hz(n))/(freq_m_plus_1 - freq_m)/divider;
     }
   }
 }
