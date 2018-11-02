@@ -13,7 +13,7 @@ I want to develop the cheapest (and low-power-consumption) edge device of ML (fo
 ```
 Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
                                                                                  |
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT cloud
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT application on the cloud
                                                                                  |
 Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
                                      |           [DAC]
@@ -21,7 +21,7 @@ Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN--
                                  USB serial     [Analog filter] --> head phone for monitoring sound from mic
                                      |
                                      v
-                           [Oscilloscope GUI(Tk)]
+                           [Oscilloscope GUI(Tk)] ----------------------> Google Drive --> Google Colab for training CNN
 ```
 
 Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tree/master/analog_filter
