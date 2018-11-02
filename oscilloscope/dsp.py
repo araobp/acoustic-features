@@ -50,6 +50,22 @@ def serial_read(cmd):
     df = pd.DataFrame(data, columns=labels)
     return df
 
+def enable_pre_emphasis(enable):
+    ser = serial.Serial(PORT, BAUD_RATE)
+    if enable:
+        ser.write(b'P')
+    else:
+        ser.write(b'p')
+    ser.close()
+
+def enable_mean_normalization(enable):
+    ser = serial.Serial(PORT, BAUD_RATE)
+    if enable:
+        ser.write(b'M')
+    else:
+        ser.write(b'm')
+    ser.close()
+
 def plot_aed(ax, df, cmd):
     
     if cmd == RAW_WAVE:

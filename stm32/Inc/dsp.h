@@ -34,6 +34,10 @@ float32_t log10_approx(float32_t x);
 
 void apply_pre_emphasis(float32_t *inout);
 
+void apply_mean_normalization(float32_t *inout);
+
+void apply_ac_coupling(float32_t *inout);
+
 void apply_hann(float32_t *inout);
 
 void apply_fft(float32_t *inout);

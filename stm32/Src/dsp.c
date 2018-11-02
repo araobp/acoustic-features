@@ -197,6 +197,18 @@ void apply_pre_emphasis(float32_t *inout) {
   arm_fir_f32(&S_PRE, inout, inout, NN);
 }
 
+void apply_mean_normalization(float32_t *inout) {
+  float32_t mean;
+  arm_mean_f32(inout, NN/2, &mean);
+  arm_offset_f32(inout, -mean, inout, NN/2);
+}
+
+void apply_ac_coupling(float32_t *inout) {
+  float32_t mean;
+  arm_mean_f32(inout, NN, &mean);
+  arm_offset_f32(inout, -mean, inout, NN);
+}
+
 void apply_hann(float32_t *inout) {
   arm_mult_f32(inout, hann_window, inout, NN);
 }

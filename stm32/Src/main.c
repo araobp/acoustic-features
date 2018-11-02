@@ -75,6 +75,10 @@ mode filter_type = FILTERED_MEL;
 // UART input
 uint8_t rxbuf[1];
 
+// Pre-emphasis toggle
+volatile bool enable_pre_emphasis = false;
+volatile bool enable_mean_normalization = false;
+
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -184,6 +188,9 @@ void dsp(float32_t *s1, mode mode) {
   uint32_t end = 0;
   if (p)
     start = HAL_GetTick();
+
+  apply_ac_coupling(s1);
+
   switch (mode) {
 
   case RAW_WAVE:
@@ -191,14 +198,17 @@ void dsp(float32_t *s1, mode mode) {
 
   case MFCC:
   case FILTERED_MEL:
-#ifdef PRE_EMPHASIS
-    apply_pre_emphasis(s1);
-#endif
   case FILTERED_LINEAR:
   case PSD:
+    if (enable_pre_emphasis) {
+      apply_pre_emphasis(s1);
+    }
     apply_hann(s1);
     apply_fft(s1);
     apply_psd_logscale(s1);
+    if (enable_mean_normalization) {
+      apply_mean_normalization(s1);
+    }
     switch (mode) {
     case PSD:
       break;
@@ -489,8 +499,26 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-  output_mode = (mode) (rxbuf[0] - 0x30);
-  printing = true;
+  char cmd;
+  cmd = rxbuf[0];
+  switch(cmd) {
+  case 'P':
+    enable_pre_emphasis = true;
+    break;
+  case 'p':
+    enable_pre_emphasis = false;
+    break;
+  case 'M':
+    enable_mean_normalization = true;
+    break;
+  case 'm':
+    enable_mean_normalization = false;
+    break;
+  default:
+    output_mode = (mode) (cmd - 0x30);
+    printing = true;
+    break;
+  }
   HAL_UART_Receive_IT(&huart2, rxbuf, 1);
 }
 
