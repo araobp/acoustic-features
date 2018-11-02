@@ -131,6 +131,12 @@ e: data transmission end
 |5  | MFCC_STREAMING | NUM_FILTERS x 07fffffff | (for testing)         |
 |6  | FILTERED_LINEAR| NUM_FILTERS x 200       | Input to ML           |
 
+|cmd|description     | output size             | purpose               |
+|---|----------------|-------------------------|-----------------------|
+|P  | Enable pre-emphasis |                    |                       |
+|p  | Disable pre-emphasis |                   |                       |
+|M  | Enable mean-normalization |              |                       |
+|m  | Disable mean-normalization |             |                       |
 
 ## Oscilloscope GUI
 
