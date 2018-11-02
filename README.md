@@ -1,6 +1,6 @@
 # Acoustic Event Detection with STM32L4 and TensorFlow
 
-![](https://drive.google.com/file/d/11zvRxoTDNPAZZQ8gwmEQ3lgNqwErYn4u/)
+![](./oscilloscope/screenshots/spectrogram(psd).jpg)
 
 Tin whislte music
 
@@ -139,8 +139,6 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, PSD, MFCCs etc.
 ![](./oscilloscope/screenshots/waveform.jpg)
 
 ![](./oscilloscope/screenshots/fft(psd).jpg)
-
-![](./oscilloscope/screenshots/spectrogram(psd).jpg)
 
 - [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
 - [Wave form and PSD of some music](./oscilloscope/images)
