@@ -98,20 +98,22 @@ I tried 80_000_000(Hz)/128(clock divider)/32(FOSR), but I observed quantization 
          |
   float32_t data
          |
-         |
-  [ AC coupling  ]-----+
+         |                .... CMSIS-DSP APIs() .........................................
+  [ AC coupling  ]-----+  arm_mean_f32(), arm_offset_f32
          |             |
-  [ Pre-emphasis ]-----+
+  [ Pre-emphasis ]-----+  arm_fir_f32()
          |             |
-  [   Real FFT   ]     |
+[Overlapping frames]   |  arm_copy_f32()
          |             |
-  [     PSD      ]-----+
+  [Windowins(hann)]    |  arm_mult_f32()
          |             |
-  [Mel-filterbank]     | 
+  [   Real FFT   ]     |  arm_rfft_fast_f32()
          |             |
-  [Mel-spectrogram]----+
+  [     PSD      ]-----+  arm_cmplx_mag_f32(), arm_scale_f32()
          |             |
- [DCT Type-II(MFCCs)]  |
+  [Mel-spectrogram]----+  arm_dot_prod_f32()
+         |             |
+ [DCT Type-II(MFCCs)]  |  arm_rfft_fast_f32(), arm_scale_f32(), arm_cmplx_mult_cmplx_f32()
          |             |
          +<------------+
          |
