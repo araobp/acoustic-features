@@ -32,7 +32,7 @@ I already developed an analog filter (LPF and AC couping) to monitor sound from 
 
 - STMicro's CubeMX and TrueSTUDIO(Eclipse/GCC/GDB) for firmware development.
 - Jupyter Notebook for simulation.
-- IDLE and numpy/pandas/matplotlib for developing Oscilloscope GUI.
+- IDLE and numpy/pandas/matplotlib/Tkinter for developing Oscilloscope GUI.
 - Google's Colab to train CNN.
 
 ## IoT network
