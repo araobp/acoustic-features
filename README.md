@@ -8,13 +8,32 @@ Framenco (Bulerias)
 
 Although AI is booming, most of AI researchers use open data on the web for training a neural network. However, I focus on special AED(Acoustic Event Detection) use cases for myself, and I need to collect a lot of data by myself. It is a very time-consuming work, so I need to develop a data collecting device that satisfies the following requirements:
 
-- visualize sound in real time: raw wave, FFT, spectrogram/mel-spectrogram and MFCCs.
+- visualize sound in real-time: raw wave, FFT, spectrogram/mel-spectrogram and MFCCs.
 - optimize MEMS mic parameters to obtain the best sound image (mel-spectrogram) for training convolution layers of CNN.
 - perform pre-processing on the edge: low-pass filtering, pre-emphasis and mel-spectorgram.
 - collect data/image as an input to CNN.
 - use the data collection device as an IoT edge device for deploying a trained CNN.
 - low power consumption and small size.
 - free development tools avaiable for developing the edge device.
+
+## Platform and tool chain
+
+### Platform
+
+STMicro STM32L4 (ARM Cortex-M4 with DFSDM, DAC, UART etc) is an all-in-one MCU that satisfies all the requirements above:
+- STMicro NUCLEO-L476RG: STM32L4 development board
+- STMicro X-NUCLEO-CCA02M1: MEMS mic evaluation board
+
+In addition, I use Knowles MEMS mics to add extra mics to the platform above (for beam forming etc).
+
+I already developed an analog filter (LPF and AC couping) to monitor sound from DAC in real-time.
+
+### Tool chain
+
+- STMicro's CubeMX and TrueSTUDIO(Eclipse/GCC/GDB) for firmware development.
+- Jupyter Notebook for simulation.
+- IDLE and numpy/pandas/matplotlib for developing Oscilloscope GUI.
+- Google's Colab to train CNN.
 
 ## IoT network
 
