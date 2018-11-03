@@ -136,8 +136,6 @@ e: data transmission end
 |---|----------------|-------------------------|-----------------------|
 |P  | Enable pre-emphasis |                    |                       |
 |p  | Disable pre-emphasis |                   |                       |
-|M  | Enable mean-normalization |              |                       |
-|m  | Disable mean-normalization |             |                       |
 
 ## Oscilloscope GUI
 
