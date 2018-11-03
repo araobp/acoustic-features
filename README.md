@@ -26,7 +26,7 @@ STMicro STM32L4 (ARM Cortex-M4 with DFSDM, DAC, UART etc) is an all-in-one MCU t
 
 In addition, I use Knowles MEMS mics to add extra mics to the platform above (for beam forming etc).
 
-I already developed an analog filter (LPF and AC couping) to monitor sound from DAC in real-time.
+I already developed [an analog filter (LPF and AC couping)](https://github.com/araobp/stm32-mcu/tree/master/analog_filter) to monitor sound from DAC in real-time.
 
 ### Tool chain
 
