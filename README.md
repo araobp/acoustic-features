@@ -84,6 +84,38 @@ So samplig frequency of MFCC streamer should be around 20kHz: 20kHz/2 = 10kHz.
 - right bit shift: 3 (2 * 64^3 = 2^19, so 3bit-right-shift is required to output 16bit PCM)
 - Sampling frequency: 80_000_000/64/64 = 19.5kHz
 
+I tried 80_000_000(Hz)/128(clock divider)/32(FOSR), but I observed quantization noise (high-frequency noise) that was not good for obtaining color-balanced images of mel-spectrogram.
+
+## Pre-processing
+
+```
+      MEMS mic
+         |
+         V
+       DFSDM
+         |
+  [16bit PCM data] --> DAC for montoring the sound with a headset
+         |
+  [ Pre-emphasis ]
+         |
+  [   Real FFT   ]
+         |
+  [     PSD      ]
+         |
+  [Mel-filterbank]
+         |
+  [Mel-spectrogram]
+         |
+         V
+        UART
+         |
+         V
+Oscilloscope GUI/IoT gateway
+```
+
+- My conclusion is that 80_000_000(Hz)/64(clock divider)/64(FOSR) with pre-emphasis(HPF) is the best setting for obtaining the best images of mel-spectrogram.
+- I use a triangler filter bank to obtain mel-spectrogram, and I make each triangle filter having a same amount of area.
+
 ## Frame/stride/overlap
 
 - number of samples per frame: 512
