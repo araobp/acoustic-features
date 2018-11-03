@@ -149,7 +149,11 @@ Mel-scale spectrogram is used for training CNN
 - Mel-scale: 40 filters (512 samples divided by (40 + 1))
 - Linear-scale: 255 filters (512 samples divide by (255 + 1))
 
-## Processing time (actual measurement)
+## log10 processing time issue
+
+PSD caliculation uses log10 math function, but CMSIS-DSP does not support log10. log10 on the standard "math.h" is too slow. I tried math.h log10, and the time required for caluculating log10(x) does not fit into the time slot of sound frame, so I decided to adopt [log10 approximation](./ipynb/log10%20fast%20approximation.ipynb). The approximation has been working perfect so far.
+
+#### Processing time (actual measurement)
 
 In case of 1024 samples per frame:
 - fir (cfft/mult/cifft/etc * 2 times): 17msec
@@ -160,10 +164,6 @@ In case of 1024 samples per frame:
 Note: log10(x) = log10(2) * log2(x)
 
 Reference: https://community.arm.com/tools/f/discussions/4292/cmsis-dsp-new-functionality-proposal
-
-## log10 processing time issue
-
-log10 of math.h is too slow for audio signal processing, but CMSIS DSP does not support log10. I decided to adopt [log10 approximation](./ipynb/log10%20fast%20approximation.ipynb).
 
 ## Command over UART (USB-serial)
 
