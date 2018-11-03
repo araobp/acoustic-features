@@ -141,14 +141,6 @@ def pre_emphasis_toggle():
         button_pre_emphasis.configure(bg='lightblue')
         dsp.enable_pre_emphasis(False)
         
-def mean_normalization_toggle():
-    if button_mean_normalization.cget('bg') == 'lightblue':
-        button_mean_normalization.configure(bg='red')
-        dsp.enable_mean_normalization(True)
-    else:       
-        button_mean_normalization.configure(bg='lightblue')
-        dsp.enable_mean_normalization(False)
-        
 def savefig():
     global filename
     if filename:
@@ -185,9 +177,8 @@ button_filtered_linear = Tk.Button(master=root, text='Spec', command=filtered_li
 button_filtered_mel = Tk.Button(master=root, text='Mel spec', command=filtered_mel, bg='pink', activebackground='grey')
 button_mfcc = Tk.Button(master=root, text='MFCCs', command=mfcc, bg='yellowgreen', activebackground='grey')
 button_repeat = Tk.Button(master=root, text='Repeat', command=repeat_toggle, bg='lightblue', activebackground='grey')
-button_savefig = Tk.Button(master=root, text='Savefig', command=savefig, bg='lightblue', activebackground='grey')
 button_pre_emphasis = Tk.Button(master=root, text='Emphasis', command=pre_emphasis_toggle, bg='lightblue', activebackground='grey')
-button_mean_normalization = Tk.Button(master=root, text='Norm', command=mean_normalization_toggle, bg='lightblue', activebackground='grey')
+button_savefig = Tk.Button(master=root, text='Savefig', command=savefig, bg='lightblue', activebackground='grey')
 button_quit = Tk.Button(master=root, text='Quit', command=_quit, bg='yellow', activebackground='grey')
 
 # Class label entry
@@ -234,9 +225,8 @@ label_seperator6.pack(side=Tk.LEFT, padx=1)
 
 # Repeat
 button_repeat.pack(side=Tk.LEFT, padx=1)
-button_savefig.pack(side=Tk.LEFT, padx=1)
 button_pre_emphasis.pack(side=Tk.LEFT, padx=1)
-button_mean_normalization.pack(side=Tk.LEFT, padx=1)
+button_savefig.pack(side=Tk.LEFT, padx=1)
 
 # Quit
 button_quit.pack(side=Tk.LEFT, padx=15)

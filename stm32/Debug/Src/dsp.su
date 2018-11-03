@@ -10,10 +10,9 @@ dsp.c:164:6:generate_filters	0	static
 dsp.c:172:6:generate_half_sample_shifter	40	static
 dsp.c:186:6:init_dsp	24	static
 dsp.c:198:6:apply_pre_emphasis	0	static
-dsp.c:202:6:apply_mean_normalization	16	static
-dsp.c:208:6:apply_ac_coupling	16	static
-dsp.c:214:6:apply_hann	0	static
-dsp.c:218:6:apply_fft	16	static
-dsp.c:223:6:apply_psd_logscale	24	static
-dsp.c:231:6:apply_filterbank	40	static
-dsp.c:252:6:apply_dct2	656	static
+dsp.c:202:6:apply_ac_coupling	16	static
+dsp.c:208:6:apply_hann	0	static
+dsp.c:212:6:apply_fft	16	static
+dsp.c:217:6:apply_psd_logscale	24	static
+dsp.c:225:6:apply_filterbank	40	static
+dsp.c:246:6:apply_dct2	656	static

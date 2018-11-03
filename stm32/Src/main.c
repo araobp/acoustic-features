@@ -77,7 +77,6 @@ uint8_t rxbuf[1];
 
 // Pre-emphasis toggle
 volatile bool enable_pre_emphasis = false;
-volatile bool enable_mean_normalization = false;
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -206,9 +205,6 @@ void dsp(float32_t *s1, mode mode) {
     apply_hann(s1);
     apply_fft(s1);
     apply_psd_logscale(s1);
-    if (enable_mean_normalization) {
-      apply_mean_normalization(s1);
-    }
     switch (mode) {
     case PSD:
       break;
@@ -507,12 +503,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     break;
   case 'p':
     enable_pre_emphasis = false;
-    break;
-  case 'M':
-    enable_mean_normalization = true;
-    break;
-  case 'm':
-    enable_mean_normalization = false;
     break;
   default:
     output_mode = (mode) (cmd - 0x30);
