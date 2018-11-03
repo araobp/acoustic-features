@@ -86,7 +86,7 @@ So samplig frequency of MFCC streamer should be around 20kHz: 20kHz/2 = 10kHz.
 
 I tried 80_000_000(Hz)/128(clock divider)/32(FOSR), but I observed quantization noise (high-frequency noise) that was not good for obtaining color-balanced images of mel-spectrogram.
 
-## Pre-processing
+## Pre-processing on STM32L4/CMSIS-DSP
 
 ```
       MEMS mic
