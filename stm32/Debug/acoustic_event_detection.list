@@ -7578,13 +7578,13 @@ void MX_DFSDM1_Init(void)
  8003588:	2301      	movs	r3, #1
   hdfsdm1_filter0.Init.FilterParam.SincOrder = DFSDM_FILTER_SINC3_ORDER;
  800358a:	61c2      	str	r2, [r0, #28]
-  hdfsdm1_filter0.Init.FilterParam.Oversampling = 64;
- 800358c:	2240      	movs	r2, #64	; 0x40
+  hdfsdm1_filter0.Init.FilterParam.Oversampling = 128;
+ 800358c:	2280      	movs	r2, #128	; 0x80
   hdfsdm1_filter0.Init.RegularParam.FastMode = ENABLE;
  800358e:	7203      	strb	r3, [r0, #8]
   hdfsdm1_filter0.Init.RegularParam.DmaMode = ENABLE;
  8003590:	7243      	strb	r3, [r0, #9]
-  hdfsdm1_filter0.Init.FilterParam.Oversampling = 64;
+  hdfsdm1_filter0.Init.FilterParam.Oversampling = 128;
  8003592:	6202      	str	r2, [r0, #32]
   hdfsdm1_filter0.Init.FilterParam.IntOversampling = 1;
  8003594:	6243      	str	r3, [r0, #36]	; 0x24
@@ -7604,12 +7604,12 @@ void MX_DFSDM1_Init(void)
  80035a8:	6003      	str	r3, [r0, #0]
   hdfsdm1_channel2.Init.OutputClock.Activation = ENABLE;
   hdfsdm1_channel2.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
-  hdfsdm1_channel2.Init.OutputClock.Divider = 64;
- 80035aa:	2240      	movs	r2, #64	; 0x40
+  hdfsdm1_channel2.Init.OutputClock.Divider = 32;
+ 80035aa:	2220      	movs	r2, #32
   hdfsdm1_channel2.Init.OutputClock.Activation = ENABLE;
  80035ac:	2301      	movs	r3, #1
  80035ae:	7103      	strb	r3, [r0, #4]
-  hdfsdm1_channel2.Init.OutputClock.Divider = 64;
+  hdfsdm1_channel2.Init.OutputClock.Divider = 32;
  80035b0:	60c2      	str	r2, [r0, #12]
   hdfsdm1_channel2.Init.OutputClock.Selection = DFSDM_CHANNEL_OUTPUT_CLOCK_SYSTEM;
  80035b2:	2300      	movs	r3, #0
@@ -7637,11 +7637,11 @@ void MX_DFSDM1_Init(void)
  80035c4:	220a      	movs	r2, #10
   hdfsdm1_channel2.Init.Offset = 0;
  80035c6:	62c3      	str	r3, [r0, #44]	; 0x2c
-  hdfsdm1_channel2.Init.RightBitShift = 3;
- 80035c8:	2303      	movs	r3, #3
+  hdfsdm1_channel2.Init.RightBitShift = 6;
+ 80035c8:	2306      	movs	r3, #6
   hdfsdm1_channel2.Init.Awd.Oversampling = 10;
  80035ca:	6282      	str	r2, [r0, #40]	; 0x28
-  hdfsdm1_channel2.Init.RightBitShift = 3;
+  hdfsdm1_channel2.Init.RightBitShift = 6;
  80035cc:	6303      	str	r3, [r0, #48]	; 0x30
   if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel2) != HAL_OK)
  80035ce:	f7fd ffc5 	bl	800155c <HAL_DFSDM_ChannelInit>
