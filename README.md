@@ -4,9 +4,17 @@
 
 Framenco (Bulerias)
 
-## Motivation
+## Background and motivation
 
-I want to develop the cheapest (and low-power-consumption) edge device of ML (for [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) and so on) with a MEMS mic, so I use **ARM Cortex-M4 and CMSIS-DSP** to calculate **Mel-scale spectrogram and MFCCs** on the edge in realtime, and to transfer **the compressed data** to an IoT cloud. It is a kind of CODEC for ML, since it uses FFT and DCT via a filter bank for compressing data. In future, I will use a ML processor or FPGA for NN deployment.
+Although AI is booming, most of AI researchers use open data on the web for training a neural network. However, I focus on special AED use cases for myself, and I need to collect a lot of data by myself. It is a very time-consuming work, so I need to develop a data collecting device that satisfies the following requirements:
+
+- visualize sound in real time: raw wave, FFT, spectrogram/mel-spectrogram and MFCCs.
+- optimize MEMS mic parameters to obtain the best sound image (mel-spectrogram) for training convolution layers of CNN.
+- perform pre-processing on the edge: low-pass filtering, pre-emphasis and mel-spectorgram.
+- collect data/image as an input to CNN.
+- use the data collection device as an IoT edge device for deploying a trained CNN.
+- low power consumption and small size.
+- free development tools avaiable for developing the edge device.
 
 ## IoT network
 
