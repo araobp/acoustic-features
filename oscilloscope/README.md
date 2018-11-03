@@ -1,4 +1,4 @@
-# GUI test
+# Testing the oscilloscope
 
 ## Linear chirp spectrogram
 
