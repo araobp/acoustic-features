@@ -6,7 +6,7 @@ Framenco (Bulerias)
 
 ## Background and motivation
 
-Although AI is booming, most of AI researchers use open data on the web for training a neural network. However, I focus on special AED use cases for myself, and I need to collect a lot of data by myself. It is a very time-consuming work, so I need to develop a data collecting device that satisfies the following requirements:
+Although AI is booming, most of AI researchers use open data on the web for training a neural network. However, I focus on special AED(Acoustic Event Detection) use cases for myself, and I need to collect a lot of data by myself. It is a very time-consuming work, so I need to develop a data collecting device that satisfies the following requirements:
 
 - visualize sound in real time: raw wave, FFT, spectrogram/mel-spectrogram and MFCCs.
 - optimize MEMS mic parameters to obtain the best sound image (mel-spectrogram) for training convolution layers of CNN.
