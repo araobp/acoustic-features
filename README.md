@@ -9,7 +9,7 @@ Framenco (Bulerias)
 Although AI is booming, most of AI researchers use open data on the web for training a neural network. However, I focus on special AED(Acoustic Event Detection) use cases for myself, and I need to collect a lot of data by myself. It is a very time-consuming work, so I need to develop a data collecting device that satisfies the following requirements:
 
 - visualize sound in real-time: raw wave, FFT, spectrogram/mel-spectrogram and MFCCs.
-- optimize MEMS mic parameters to obtain the best sound image (mel-spectrogram) for training convolution layers of CNN.
+- optimize parameters of MEMS mic parameters (DFSDM parameters) and filter/transform functions to obtain the best sound image (mel-spectrogram) for training convolution layers of CNN.
 - perform pre-processing on the edge: low-pass filtering, pre-emphasis and mel-spectorgram.
 - collect data/image as an input to CNN.
 - use the data collection device as an IoT edge device for deploying a trained CNN.
