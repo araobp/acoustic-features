@@ -98,15 +98,22 @@ I tried 80_000_000(Hz)/128(clock divider)/32(FOSR), but I observed quantization 
          |
   float32_t data
          |
-  [ Pre-emphasis ]
          |
-  [   Real FFT   ]
-         |
-  [     PSD      ]
-         |
-  [Mel-filterbank]
-         |
-  [Mel-spectrogram]
+  [ AC coupling  ]-----+
+         |             |
+  [ Pre-emphasis ]-----+
+         |             |
+  [   Real FFT   ]     |
+         |             |
+  [     PSD      ]-----+
+         |             |
+  [Mel-filterbank]     | 
+         |             |
+  [Mel-spectrogram]----+
+         |             |
+ [DCT Type-II(MFCCs)]  |
+         |             |
+         +<------------+
          |
  data the size of int8_t (in ASCII)
          |
