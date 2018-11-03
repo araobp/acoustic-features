@@ -92,9 +92,11 @@ I tried 80_000_000(Hz)/128(clock divider)/32(FOSR), but I observed quantization 
       MEMS mic
          |
          V
-       DFSDM
+   DFSDM w/ DMA
          |
-  [16bit PCM data] --> DAC for montoring the sound with a headset
+  [16bit PCM data] --> DAC w/ DMA for montoring the sound with a headset
+         |
+  float32_t data
          |
   [ Pre-emphasis ]
          |
@@ -106,8 +108,10 @@ I tried 80_000_000(Hz)/128(clock divider)/32(FOSR), but I observed quantization 
          |
   [Mel-spectrogram]
          |
+ data the size of int8_t (in ASCII)
+         |
          V
-        UART
+    UART w/ DMA
          |
          V
 Oscilloscope GUI/IoT gateway
