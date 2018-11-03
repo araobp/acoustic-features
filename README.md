@@ -73,7 +73,7 @@ All the DMAs are synchronized, because their master clock is the system clock.
 - The highest frequency on a piano is 4186Hz, but it generate overtones: ~10kHz.
 - Human voice also generates overtones: ~ 10kHz.
 
-So the samplig frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency))
+So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency))
 
 ## Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
 
