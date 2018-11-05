@@ -150,15 +150,15 @@ def on_key_event(event):
     print('you pressed %s' % event.key)
     key = event.key
     m = None
-    if (key == '1'):
+    if (key == 'w'):
         raw_wave()
-    elif (key == '2'):
-        psd()
-    elif (key == '3'):
+    elif (key == 'f'):
+        fft()
+    elif (key == 'm'):
         filtered_mel()
-    elif (key == '4'):
+    elif (key == 's'):
         filtered_linear()
-    elif (key == '5'):
+    elif (key == 'c'):
         mfcc()
     key_press_handler(event, canvas)
 
@@ -177,7 +177,7 @@ button_filtered_linear = Tk.Button(master=root, text='Spec', command=filtered_li
 button_filtered_mel = Tk.Button(master=root, text='Mel spec', command=filtered_mel, bg='pink', activebackground='grey')
 button_mfcc = Tk.Button(master=root, text='MFCCs', command=mfcc, bg='yellowgreen', activebackground='grey')
 button_repeat = Tk.Button(master=root, text='Repeat', command=repeat_toggle, bg='lightblue', activebackground='grey')
-button_pre_emphasis = Tk.Button(master=root, text='Emphasis', command=pre_emphasis_toggle, bg='lightblue', activebackground='grey')
+button_pre_emphasis = Tk.Button(master=root, text='Emphasis', command=pre_emphasis_toggle, bg='red', activebackground='grey')
 button_savefig = Tk.Button(master=root, text='Savefig', command=savefig, bg='lightblue', activebackground='grey')
 button_quit = Tk.Button(master=root, text='Quit', command=_quit, bg='yellow', activebackground='grey')
 

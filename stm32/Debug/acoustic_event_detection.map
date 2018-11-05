@@ -2304,12 +2304,12 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../l
  .text.apply_fft
                 0x08003dac       0x2c Src\dsp.o
                 0x08003dac                apply_fft
- .text.apply_psd_logscale
-                0x08003dd8       0x50 Src\dsp.o
-                0x08003dd8                apply_psd_logscale
  .text.apply_filterbank
-                0x08003e28       0x88 Src\dsp.o
-                0x08003e28                apply_filterbank
+                0x08003dd8       0x88 Src\dsp.o
+                0x08003dd8                apply_filterbank
+ .text.apply_psd_logscale
+                0x08003e60       0x50 Src\dsp.o
+                0x08003e60                apply_psd_logscale
  .text.apply_dct2
                 0x08003eb0       0x84 Src\dsp.o
                 0x08003eb0                apply_dct2
@@ -3001,13 +3001,16 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../l
  .data.fir_coefficients
                 0x20000000        0x8 Src\dsp.o
                 0x20000000                fir_coefficients
- .data.filter_type
+ .data.enable_pre_emphasis
                 0x20000008        0x1 Src\main.o
-                0x20000008                filter_type
- .data.output_mode
+                0x20000008                enable_pre_emphasis
+ .data.filter_type
                 0x20000009        0x1 Src\main.o
-                0x20000009                output_mode
- *fill*         0x2000000a        0x2 
+                0x20000009                filter_type
+ .data.output_mode
+                0x2000000a        0x1 Src\main.o
+                0x2000000a                output_mode
+ *fill*         0x2000000b        0x1 
  .data.SystemCoreClock
                 0x2000000c        0x4 Src\system_stm32l4xx.o
                 0x2000000c                SystemCoreClock
@@ -3030,7 +3033,7 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../l
  .igot.plt      0x200001e4        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu/crtbegin.o
                 0x200001e4                . = ALIGN (0x4)
 
-.bss            0x200001e4    0x13578 load address 0x0801ea84
+.bss            0x200001e4    0x13574 load address 0x0801ea84
                 0x200001e4                _sbss = .
                 0x200001e4                __bss_start__ = _sbss
  *(.bss)
@@ -3068,72 +3071,68 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../l
                 0x20011c78                state_buf
  .bss.cnt.12562
                 0x2001247c        0x4 Src\main.o
- .bss.enable_pre_emphasis
-                0x20012480        0x1 Src\main.o
-                0x20012480                enable_pre_emphasis
- *fill*         0x20012481        0x3 
  .bss.idx.12564
-                0x20012484        0x4 Src\main.o
+                0x20012480        0x4 Src\main.o
  .bss.length.12563
-                0x20012488        0x4 Src\main.o
+                0x20012484        0x4 Src\main.o
  .bss.new_pcm_data_a
-                0x2001248c        0x1 Src\main.o
-                0x2001248c                new_pcm_data_a
+                0x20012488        0x1 Src\main.o
+                0x20012488                new_pcm_data_a
  .bss.new_pcm_data_b
-                0x2001248d        0x1 Src\main.o
-                0x2001248d                new_pcm_data_b
- .bss.p.12590   0x2001248e        0x1 Src\main.o
- .bss.printing  0x2001248f        0x1 Src\main.o
-                0x2001248f                printing
+                0x20012489        0x1 Src\main.o
+                0x20012489                new_pcm_data_b
+ .bss.p.12590   0x2001248a        0x1 Src\main.o
+ .bss.printing  0x2001248b        0x1 Src\main.o
+                0x2001248b                printing
  .bss.uart_buf.12565
-                0x20012490     0x1000 Src\main.o
+                0x2001248c     0x1000 Src\main.o
  .bss.__malloc_free_list
-                0x20013490        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-mallocr.o)
-                0x20013490                __malloc_free_list
+                0x2001348c        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-mallocr.o)
+                0x2001348c                __malloc_free_list
  .bss.__malloc_sbrk_start
-                0x20013494        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-mallocr.o)
-                0x20013494                __malloc_sbrk_start
+                0x20013490        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-mallocr.o)
+                0x20013490                __malloc_sbrk_start
  .bss.heap_end.5239
-                0x20013498        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libnosys.a(sbrk.o)
+                0x20013494        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libnosys.a(sbrk.o)
  *(COMMON)
- COMMON         0x2001349c        0x4 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
-                0x2001349c                uwTick
- COMMON         0x200134a0       0xa4 Src\dac.o
-                0x200134a0                hdac1
-                0x200134b4                hdma_dac_ch1
-                0x200134fc                hdma_dac_ch2
- COMMON         0x20013544       0xd4 Src\dfsdm.o
-                0x20013544                hdfsdm1_filter0
-                0x20013598                hdma_dfsdm1_flt0
-                0x200135e0                hdfsdm1_channel2
- COMMON         0x20013618       0x3c Src\dsp.o
-                0x20013618                S_DCT
-                0x20013630                S
-                0x20013648                S_PRE
- COMMON         0x20013654        0x1 Src\main.o
-                0x20013654                rxbuf
- *fill*         0x20013655        0x3 
- COMMON         0x20013658       0x40 Src\tim.o
-                0x20013658                htim6
- COMMON         0x20013698       0xc0 Src\usart.o
-                0x20013698                hdma_usart2_tx
-                0x200136e0                huart2
- COMMON         0x20013758        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-reent.o)
-                0x20013758                errno
-                0x2001375c                . = ALIGN (0x4)
-                0x2001375c                _ebss = .
-                0x2001375c                __bss_end__ = _ebss
+ COMMON         0x20013498        0x4 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
+                0x20013498                uwTick
+ COMMON         0x2001349c       0xa4 Src\dac.o
+                0x2001349c                hdac1
+                0x200134b0                hdma_dac_ch1
+                0x200134f8                hdma_dac_ch2
+ COMMON         0x20013540       0xd4 Src\dfsdm.o
+                0x20013540                hdfsdm1_filter0
+                0x20013594                hdma_dfsdm1_flt0
+                0x200135dc                hdfsdm1_channel2
+ COMMON         0x20013614       0x3c Src\dsp.o
+                0x20013614                S_DCT
+                0x2001362c                S
+                0x20013644                S_PRE
+ COMMON         0x20013650        0x1 Src\main.o
+                0x20013650                rxbuf
+ *fill*         0x20013651        0x3 
+ COMMON         0x20013654       0x40 Src\tim.o
+                0x20013654                htim6
+ COMMON         0x20013694       0xc0 Src\usart.o
+                0x20013694                hdma_usart2_tx
+                0x200136dc                huart2
+ COMMON         0x20013754        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.0.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-reent.o)
+                0x20013754                errno
+                0x20013758                . = ALIGN (0x4)
+                0x20013758                _ebss = .
+                0x20013758                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x2001375c      0x600 load address 0x0801ea84
-                0x2001375c                . = ALIGN (0x4)
-                0x2001375c                PROVIDE (end, .)
+                0x20013758      0x600 load address 0x0801ea84
+                0x20013758                . = ALIGN (0x4)
+                0x20013758                PROVIDE (end, .)
                 [!provide]                PROVIDE (_end, .)
-                0x2001395c                . = (. + _Min_Heap_Size)
- *fill*         0x2001375c      0x200 
-                0x20013d5c                . = (. + _Min_Stack_Size)
- *fill*         0x2001395c      0x400 
-                0x20013d5c                . = ALIGN (0x4)
+                0x20013958                . = (. + _Min_Heap_Size)
+ *fill*         0x20013758      0x200 
+                0x20013d58                . = (. + _Min_Stack_Size)
+ *fill*         0x20013958      0x400 
+                0x20013d58                . = ALIGN (0x4)
 
 /DISCARD/
  libc.a(*)

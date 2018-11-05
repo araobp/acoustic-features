@@ -32,18 +32,13 @@ void generate_filters(mode mode);
 
 float32_t log10_approx(float32_t x);
 
+// DSP pipeline functions
 void apply_pre_emphasis(float32_t *inout);
-
 void apply_ac_coupling(float32_t *inout);
-
 void apply_hann(float32_t *inout);
-
 void apply_fft(float32_t *inout);
-
-void apply_psd_logscale(float32_t *inout);
-
 void apply_filterbank(float32_t *inout, mode mode);
-
+void apply_psd_logscale(float32_t *inout);
 void apply_dct2(float32_t *inout);
 
 #endif /* DSP_H_ */

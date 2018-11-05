@@ -195,6 +195,8 @@ void init_dsp(float32_t sampling_frequency) {
   generate_half_sample_shifter();
 }
 
+//--- DSP pipeline functions -----------------------------//
+
 void apply_pre_emphasis(float32_t *inout) {
   arm_fir_f32(&S_PRE, inout, inout, NN);
 }
@@ -212,14 +214,6 @@ void apply_hann(float32_t *inout) {
 void apply_fft(float32_t *inout) {
   arm_rfft_fast_f32(&S, inout, signal_buf, 0);
   arm_copy_f32(signal_buf, inout, NN);
-}
-
-void apply_psd_logscale(float32_t *inout) {
-  arm_cmplx_mag_f32(inout, signal_buf, NN / 2);
-  arm_scale_f32(inout, RECIPROCAL_NN, inout, NN / 2);
-  for (int n = 0; n < NN / 2; n++) {
-    inout[n] = 20.0 * log10_approx(signal_buf[n]);
-  }
 }
 
 void apply_filterbank(float32_t *inout, mode mode) {
@@ -243,6 +237,14 @@ void apply_filterbank(float32_t *inout, mode mode) {
   arm_copy_f32(signal_buf, inout, num_filters);
 }
 
+void apply_psd_logscale(float32_t *inout) {
+  arm_cmplx_mag_f32(inout, signal_buf, NN / 2);
+  arm_scale_f32(inout, RECIPROCAL_NN, inout, NN / 2);
+  for (int n = 0; n < NN / 2; n++) {
+    inout[n] = 20.0 * log10_approx(signal_buf[n]);
+  }
+}
+
 void apply_dct2(float32_t *inout) {
   float32_t in[NUM_FILTERS*2] = { 0.0f };
   float32_t out[NUM_FILTERS*2] = { 0.0f };
@@ -257,4 +259,3 @@ void apply_dct2(float32_t *inout) {
     inout[n] = out[n*2];
   }
 }
-

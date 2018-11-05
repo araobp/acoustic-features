@@ -76,7 +76,7 @@ mode filter_type = FILTERED_MEL;
 uint8_t rxbuf[1];
 
 // Pre-emphasis toggle
-volatile bool enable_pre_emphasis = false;
+volatile bool enable_pre_emphasis = true;
 
 /* Private variables ---------------------------------------------------------*/
 
