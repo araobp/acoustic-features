@@ -219,15 +219,11 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs
 
 ## CNN experiments with Keras/TensorFlow (on Nov 6, 2018)
 
-The files in this folder are copies of ipynb files on Colab.
-
-## Class labels and data set
-
 #### Jupyter Notebook of this experiment
 
 - [CNN experiments (Jupyter Notebook)](./tensorflow/CNN_for_AED.ipynb)
 
-#### Data set
+#### Class labels and data set
 
 ```
 Classes:
