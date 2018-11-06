@@ -217,9 +217,7 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs
 
 - [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
 
-## CNN experiments with Keras/TensorFlow
-
-# CNN experiments with Keras/TensorFlow
+## CNN experiments with Keras/TensorFlow (on Nov 6, 2018)
 
 The files in this folder are copies of ipynb files on Colab.
 
