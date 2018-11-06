@@ -217,10 +217,107 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs
 
 - [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
 
-## CNN experiments on TensorFlow
+## CNN experiments with Keras/TensorFlow (on Nov 6, 2018)
 
-I use the edge device above to obtain a lot of Mel-scale spectrograms for each class label, then I feed the data into CNN on Colab with GPU acceleration for training.
+#### Jupyter Notebook of this experiment
 
-![](./tensorflow/filterd_spectrogram.png)
+- [CNN experiments (Jupyter Notebook)](./tensorflow/CNN_for_AED.ipynb)
 
-- [Experiments on Colab with GPU acceleration](./tensorflow)
+#### Class labels and data set
+
+```
+Classes:
+- piano music
+- classial guitar music
+- framenco guitar music
+- blues harp music
+- tin whistle music
+
+Conditions:
+- Pre emphasis enabled on the raw data.
+
+I split each 40 mel-filters x 200 strdes data into three three 40 x 64 data.
+
+Training data set: 48 mel-scale spectrograms (40 filters x 64 strides) for each class
+Test data set: 24 mel-scale spectrograms (40 filters x 64 strides) for each class
+```
+
+#### CNN model
+
+```
+Using TensorFlow backend.
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_1 (Conv2D)            (None, 64, 40, 64)        640       
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 32, 20, 64)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 32, 20, 128)       73856     
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 16, 10, 128)       0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 16, 10, 256)       295168    
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 8, 5, 256)         0         
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 10240)             0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 256)               2621696   
+_________________________________________________________________
+dense_2 (Dense)              (None, 128)               32896     
+_________________________________________________________________
+dense_3 (Dense)              (None, 5)                 645       
+=================================================================
+Total params: 3,024,901
+Trainable params: 3,024,901
+Non-trainable params: 0
+_________________________________________________________________
+```
+
+#### Result
+
+```
+Epoch 1/20
+1005/1005 [==============================] - 17s 17ms/step - loss: 1.6369 - acc: 0.2547
+Epoch 2/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 1.1508 - acc: 0.6020
+Epoch 3/20
+1005/1005 [==============================] - 17s 16ms/step - loss: 0.6631 - acc: 0.7323
+Epoch 4/20
+1005/1005 [==============================] - 17s 16ms/step - loss: 0.5015 - acc: 0.8040
+Epoch 5/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 0.4311 - acc: 0.8149
+Epoch 6/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 0.3256 - acc: 0.8736
+Epoch 7/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 0.2718 - acc: 0.8985
+Epoch 8/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 0.2695 - acc: 0.8945
+Epoch 9/20
+1005/1005 [==============================] - 17s 17ms/step - loss: 0.2393 - acc: 0.9075
+Epoch 10/20
+1005/1005 [==============================] - 17s 17ms/step - loss: 0.2327 - acc: 0.9114
+Epoch 11/20
+1005/1005 [==============================] - 17s 16ms/step - loss: 0.1907 - acc: 0.9214
+Epoch 12/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 0.1819 - acc: 0.9393
+Epoch 13/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 0.1749 - acc: 0.9313
+Epoch 14/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 0.1520 - acc: 0.9512
+Epoch 15/20
+1005/1005 [==============================] - 17s 16ms/step - loss: 0.1671 - acc: 0.9413
+Epoch 16/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 0.0958 - acc: 0.9602
+Epoch 17/20
+1005/1005 [==============================] - 17s 16ms/step - loss: 0.1117 - acc: 0.9612
+Epoch 18/20
+1005/1005 [==============================] - 17s 16ms/step - loss: 0.0944 - acc: 0.9612
+Epoch 19/20
+1005/1005 [==============================] - 16s 16ms/step - loss: 0.0979 - acc: 0.9642
+Epoch 20/20
+1005/1005 [==============================] - 17s 16ms/step - loss: 0.0653 - acc: 0.9701
+495/495 [==============================] - 2s 5ms/step
+test_acc: 0.9212121213325346
+```
