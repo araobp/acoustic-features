@@ -217,10 +217,8 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs
 
 - [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
 
-## CNN experiments on TensorFlow
+## CNN experiments with Keras/TensorFlow
 
-I use the edge device above to obtain a lot of Mel-scale spectrograms for each class label, then I feed the data into CNN on Colab with GPU acceleration for training.
-
-![](./tensorflow/filterd_spectrogram.png)
+I use the edge device above to obtain a lot of Mel-scale spectrograms for each class label, then I feed the data into CNN on Colab with GPU acceleration enabled for training CNN.
 
 - [Experiments on Colab with GPU acceleration](./tensorflow)
