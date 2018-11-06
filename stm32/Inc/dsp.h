@@ -19,6 +19,9 @@
 #define NUM_FILTERS 40     // Mel-spectrogram and MFCCs
 #define NUM_FILTERS_L 255  // Linear-spectrogram
 
+// Adjust mel filterbank so that the output to uart does not become too small
+#define ADJUST_MEL_FILTERBANK 2.0f
+
 // Note: MFCC_STREAMING is tentative.
 typedef enum {
   RAW_WAVE, PSD, FILTERBANK, FILTERED_MEL, MFCC, MFCC_STREAMING, FILTERED_LINEAR

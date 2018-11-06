@@ -10,6 +10,7 @@ import tkinter as Tk
 import dsp
 from datetime import datetime
 import time
+import os
 
 import matplotlib.pyplot as plt
 plt.style.use('dark_background')
@@ -44,9 +45,9 @@ entry = Tk.Entry(master=root, width=14)
 cmap = Tk.Spinbox(master=root, width=12, values=CMAP_LIST)
 counter = Tk.Label(master=root)
 range_amplitude = Tk.Spinbox(master=root, width=6, values=[2**8, 2**9, 2**11, 2**13, 2**15])
-range_filtered = Tk.Spinbox(master=root, width=3, values=[int(dsp.NUM_FILTERS*0.6), int(dsp.NUM_FILTERS*.8), dsp.NUM_FILTERS])
-range_filtered_l = Tk.Spinbox(master=root, width=4, values=[int(dsp.NUM_FILTERS_L*0.4), int(dsp.NUM_FILTERS_L*.7), dsp.NUM_FILTERS_L])
-range_mfcc = Tk.Spinbox(master=root, width=3, values=[13, 18, 25])
+range_filtered = Tk.Spinbox(master=root, width=3, values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
+range_filtered_l = Tk.Spinbox(master=root, width=4, values=[dsp.NUM_FILTERS_L, int(dsp.NUM_FILTERS_L*.7), int(dsp.NUM_FILTERS_L*0.4)])
+range_mfcc = Tk.Spinbox(master=root, width=3, values=[25, 18, 13])
 
 cnt = 0
 class_label_ = ''
@@ -145,6 +146,13 @@ def savefig():
     global filename
     if filename:
         fig.savefig(filename+'.png')
+
+def remove():
+    global filename, cnt
+    if filename:
+        os.remove(filename+'.csv')
+        cnt -= 1
+        counter.configure(text='({})'.format(str(cnt)))
     
 def on_key_event(event):
     print('you pressed %s' % event.key)
@@ -179,6 +187,7 @@ button_mfcc = Tk.Button(master=root, text='MFCCs', command=mfcc, bg='yellowgreen
 button_repeat = Tk.Button(master=root, text='Repeat', command=repeat_toggle, bg='lightblue', activebackground='grey')
 button_pre_emphasis = Tk.Button(master=root, text='Emphasis', command=pre_emphasis_toggle, bg='red', activebackground='grey')
 button_savefig = Tk.Button(master=root, text='Savefig', command=savefig, bg='lightblue', activebackground='grey')
+button_remove = Tk.Button(master=root, text='Remove', command=remove, bg='lightblue', activebackground='grey')
 button_quit = Tk.Button(master=root, text='Quit', command=_quit, bg='yellow', activebackground='grey')
 
 # Class label entry
@@ -223,10 +232,11 @@ cmap.pack(side=Tk.LEFT, padx=1)
 label_seperator6 = Tk.Label(master=root, text=' ')
 label_seperator6.pack(side=Tk.LEFT, padx=1)
 
-# Repeat
+# Repeat, pre_emphasis, save fig and delete
 button_repeat.pack(side=Tk.LEFT, padx=1)
 button_pre_emphasis.pack(side=Tk.LEFT, padx=1)
 button_savefig.pack(side=Tk.LEFT, padx=1)
+button_remove.pack(side=Tk.LEFT, padx=1)
 
 # Quit
 button_quit.pack(side=Tk.LEFT, padx=15)

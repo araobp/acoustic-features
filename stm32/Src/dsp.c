@@ -107,7 +107,7 @@ void generate_mel_scale_filters(void) {
     freq_m_minus_1 = n2hz(left_n);
     freq_m = n2hz(center_n);
     freq_m_plus_1 = n2hz(right_n);
-    divider = (float32_t)(right_n - left_n);
+    divider = (float32_t)(right_n - left_n) / ADJUST_MEL_FILTERBANK;
 
     for (int n = left_n; n < center_n; n++) {
       filterbank[m][n - left_n] = (n2hz(n) - freq_m_minus_1)/(freq_m - freq_m_minus_1)/divider;
