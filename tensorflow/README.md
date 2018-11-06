@@ -21,7 +21,9 @@ Training data set: 48 mel-scale spectrograms (40 filters x 64 strides) for each 
 Test data set: 24 mel-scale spectrograms (40 filters x 64 strides) for each class
 ```
 
-## CNN model (on Keras/TensorFlow)
+## Experiments on Nov 6, 2018
+
+#### CNN model
 
 ```
 Using TensorFlow backend.
@@ -54,7 +56,7 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-## Experiment result
+#### Result
 
 ```
 Epoch 1/20
