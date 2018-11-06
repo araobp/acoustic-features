@@ -223,6 +223,12 @@ The files in this folder are copies of ipynb files on Colab.
 
 ## Class labels and data set
 
+#### Jupyter Notebook of this experiment
+
+- [CNN experiments (Jupyter Notebook)](./tensorflow/CNN_for_AED.ipynb)
+
+#### Data set
+
 ```
 Classes:
 - piano music
@@ -239,10 +245,6 @@ I split each 40 mel-filters x 200 strdes data into three three 40 x 64 data.
 Training data set: 48 mel-scale spectrograms (40 filters x 64 strides) for each class
 Test data set: 24 mel-scale spectrograms (40 filters x 64 strides) for each class
 ```
-
-## CNN experiments with Keras/TensorFlow on Nov 6, 2018
-
-- [CNN experiments (Jupyter Notebook)](./tensorflow/CNN_for_AED.ipynb)
 
 #### CNN model
 
