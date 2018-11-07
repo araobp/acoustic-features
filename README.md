@@ -14,6 +14,7 @@ Although AI is booming, most of AI researchers use open data on the web for trai
 - collect data/image as an input to CNN.
 - use the data collection device as an IoT edge device for deploying a trained CNN.
 - low power consumption and small size.
+- workable with BLE/CAN/LoRa
 - free development tools avaiable for developing the edge device.
 
 ## Platform and tool chain
