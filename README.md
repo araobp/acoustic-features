@@ -222,7 +222,17 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs
 
 #### Jupyter Notebook of this experiment
 
-- [CNN experiments (Jupyter Notebook)](./tensorflow/CNN_for_AED.ipynb)
+I have made two CNN experiments as follows:
+
+- [CNN experiments on musical instruments recognition (Jupyter Notebook)](./tensorflow/CNN_for_AED.ipynb)
+- [CNN experiments on human activity in a living room (Jupyter Notebook)](./tensorflow/CNN_for_AED_living_room.ipynb)
+
+The trained CNN model will work OK if the following condition is satisfied:
+- use the same MEMS mic with the same filter setting (incl. the same frequency response) on the edge device (STM32L4)
+- same environment
+- no surrounding noise
+
+Next, I will try beam forming with two MEMS mic to supress noise from the surrounding envirnment.
 
 #### Class labels and data set
 
