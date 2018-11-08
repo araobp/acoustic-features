@@ -25,7 +25,7 @@ However, I pursue small-scale audio classification of particular use cases for m
 
 ## Platform and tool chain
 
-### Platform
+#### Platform
 
 STMicro STM32L4 (ARM Cortex-M4 with DFSDM, DAC, UART etc) is an all-in-one MCU that satisfies all the requirements above:
 - [STMicro NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-l476rg.html): STM32L4 development board
@@ -35,7 +35,7 @@ In addition, I use Knowles MEMS mics SPM0405HD4H to add extra mics to the platfo
 
 I already developed [an analog filter (LPF and AC couping)](https://github.com/araobp/stm32-mcu/tree/master/analog_filter) to monitor sound from DAC in real-time.
 
-### Tool chain
+#### Tool chain
 
 - STMicro's [CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) and [TrueSTUDIO(Eclipse/GCC/GDB)](https://atollic.com/truestudio/) for firmware development.
 - Jupyter Notebook for simulation.
@@ -60,7 +60,9 @@ Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN--
 
 Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tree/master/analog_filter
 
-## Making use of DMA
+## Edge device for machine learning (STM32L4)
+
+#### Making use of DMA
 
 STMicro's HAL library supports "HAL_DFSDM_FilterRegConvHalfCpltCallback" that is very useful to implemente ring-buffer-like buffering for real-time processing.
 
@@ -75,14 +77,14 @@ Sound/voice ))) [MEMS mic]-PDM->[DFSDM]-DMA->[A|B]->[ARM Cortex-M4]
 
 All the DMAs are synchronized, because their master clock is the system clock.
 
-## Sampling frequency
+#### Sampling frequency
 
 - The highest frequency on a piano is 4186Hz, but it generate overtones: ~10kHz.
 - Human voice also generates overtones: ~ 10kHz.
 
 So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency))
 
-## Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
+#### Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
 
 - System clock: 80MHz
 - Clock divider: 32
@@ -91,7 +93,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 - right bit shift: 3 (2 * 128^3 = 2^22, so 6-bit-right-shift is required to output 16bit PCM)
 - Sampling frequency: 80_000_000/32/128 = 19.5kHz
 
-## Pre-processing on STM32L4/CMSIS-DSP
+#### Pre-processing on STM32L4/CMSIS-DSP
 
 ```
       MEMS mic
@@ -134,7 +136,7 @@ Oscilloscope GUI/IoT gateway
 - My conclusion is that 80_000_000(Hz)/64(clock divider)/64(FOSR) with pre-emphasis(HPF) is the best setting for obtaining the best images of mel-spectrogram.
 - I use a triangler filter bank to obtain mel-spectrogram, and I make each triangle filter having a same amount of area.
 
-## Frame/stride/overlap
+#### Frame/stride/overlap
 
 - number of samples per frame: 512
 - length: 512/19.5kHz = 26.3msec
@@ -149,14 +151,14 @@ Oscilloscope GUI/IoT gateway
          [a2|b2]   2b --> mel-scale spectrogram via filter bank or 12 MFCCs
             :
 ```
-## Filter banks
+#### Filter banks
 
 Mel-scale spectrogram is used for training CNN
 
 - Mel-scale: 40 filters (512 samples divided by (40 + 1))
 - Linear-scale: 255 filters (512 samples divide by (255 + 1))
 
-## log10 processing time issue
+#### log10 processing time issue
 
 PSD caliculation uses log10 math function, but CMSIS-DSP does not support log10. log10 on the standard "math.h" is too slow. I tried math.h log10, and the time required for caluculating log10(x) does not fit into the time slot of sound frame, so I decided to adopt [log10 approximation](./ipynb/log10%20fast%20approximation.ipynb). The approximation has been working perfect so far.
 
@@ -172,7 +174,7 @@ Note: log10(x) = log10(2) * log2(x)
 
 Reference: https://community.arm.com/tools/f/discussions/4292/cmsis-dsp-new-functionality-proposal
 
-## Command over UART (USB-serial)
+#### Command over UART (USB-serial)
 
 UART baudrate: 921600bps
 
@@ -214,7 +216,7 @@ e: data transmission end
 |P  | Enable pre-emphasis |                    |                       |
 |p  | Disable pre-emphasis |                   |                       |
 
-## Oscilloscope GUI
+## Oscilloscope GUI with the edge device to acquire data for training CNN
 
 I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs etc.
 
