@@ -269,7 +269,7 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-#### Result
+#### Training result
 
 ```
 Train on 1005 samples, validate on 495 samples
@@ -293,4 +293,17 @@ Epoch 9/10
 1005/1005 [==============================] - 20s 20ms/step - loss: 0.0801 - acc: 0.9622 - val_loss: 0.2852 - val_acc: 0.9051
 Epoch 10/10
 1005/1005 [==============================] - 19s 19ms/step - loss: 0.0729 - acc: 0.9711 - val_loss: 0.2757 - val_acc: 0.9071
+```
+
+#### Using the trained model
+
+Just run [this agent](./tensorflow/agent.py).
+
+```
+<<< (17) this is framenco_guitar (85.7%) >>>
+blues_harp: 0.0%
+classical_guitar: 13.0%
+framenco_guitar: 85.7%
+piano: 0.5%
+tin_whistle: 0.0%
 ```
