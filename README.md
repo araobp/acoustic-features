@@ -325,3 +325,7 @@ framenco_guitar: 85.7%
 piano: 0.5%
 tin_whistle: 0.0%
 ```
+
+## CubeMX.AI
+
+I am looking forward to CubeMX.AI: https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html
