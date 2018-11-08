@@ -297,7 +297,7 @@ Epoch 10/10
 
 #### Using the trained model
 
-Just run (this agent)[./tensorflow/agent.py].
+Just run [this agent](./tensorflow/agent.py).
 
 ```
 <<< (17) this is framenco_guitar (85.7%) >>>
