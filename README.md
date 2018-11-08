@@ -17,6 +17,10 @@ Although AI is booming, most of AI researchers use open data on the web for trai
 - workable with BLE/CAN/LoRa
 - free development tools avaiable for developing the edge device.
 
+Starting point of this project is this paper: [CNN Architectures for Large-Scale Audio Classification](https://arxiv.org/abs/1609.09430)
+
+However, I pursue small-scale audio classification of particular use cases for myself.
+
 ## Platform and tool chain
 
 ### Platform
