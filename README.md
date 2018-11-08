@@ -19,7 +19,9 @@ Although AI is booming, most of AI researchers use open data on the web for trai
 
 Starting point of this project is this paper: [CNN Architectures for Large-Scale Audio Classification](https://arxiv.org/abs/1609.09430)
 
-However, I pursue small-scale audio classification of particular use cases for myself.
+However, I pursue small-scale audio classification of particular use cases for myself:
+- musical instruments recognition
+- human activity recognition
 
 ## Platform and tool chain
 
