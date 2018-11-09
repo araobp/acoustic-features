@@ -45,17 +45,17 @@ I already developed [an analog filter (LPF and AC couping)](https://github.com/a
 ## IoT network
 
 ```
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
-                                                                                 |
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT application on the cloud
-                                                                                 |
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--LPWA/5G--+
+                                                                     |
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--LPWA/5G--+---------> Database
+                                                                     |
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--LPWA/5G--+
                                      |           [DAC]
                                      |             |
                                  USB serial     [Analog filter] --> head phone for monitoring sound from mic
                                      |
                                      v
-                           [Oscilloscope GUI(Tk)] ----------------------> Google Drive --> Google Colab for training CNN
+                           [Oscilloscope GUI(Tk)] --- features ---> PC for training CNN
 ```
 
 Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tree/master/analog_filter
@@ -315,6 +315,10 @@ Epoch 10/10
 
 #### Using the trained model
 
+I am looking forward to CubeMX.AI: https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html
+
+Since CubeMX.AI is not available yet, I made a simple agent that runs on PC.
+
 Just run [this agent](./tensorflow/agent.py).
 
 ```
@@ -326,6 +330,3 @@ piano: 0.5%
 tin_whistle: 0.0%
 ```
 
-## CubeMX.AI
-
-I am looking forward to CubeMX.AI: https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html
