@@ -17,9 +17,15 @@ Although AI is booming, most of AI researchers use open data on the web for trai
 - workable with BLE/CAN/LoRa
 - free development tools avaiable for developing the edge device.
 
+Starting point of this project is this paper: [CNN Architectures for Large-Scale Audio Classification](https://arxiv.org/abs/1609.09430)
+
+However, I pursue small-scale audio classification of particular use cases for myself:
+- musical instruments recognition
+- human activity recognition
+
 ## Platform and tool chain
 
-### Platform
+#### Platform
 
 STMicro STM32L4 (ARM Cortex-M4 with DFSDM, DAC, UART etc) is an all-in-one MCU that satisfies all the requirements above:
 - [STMicro NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-l476rg.html): STM32L4 development board
@@ -29,7 +35,7 @@ In addition, I use Knowles MEMS mics SPM0405HD4H to add extra mics to the platfo
 
 I already developed [an analog filter (LPF and AC couping)](https://github.com/araobp/stm32-mcu/tree/master/analog_filter) to monitor sound from DAC in real-time.
 
-### Tool chain
+#### Tool chain
 
 - STMicro's [CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) and [TrueSTUDIO(Eclipse/GCC/GDB)](https://atollic.com/truestudio/) for firmware development.
 - Jupyter Notebook for simulation.
@@ -39,22 +45,24 @@ I already developed [an analog filter (LPF and AC couping)](https://github.com/a
 ## IoT network
 
 ```
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
-                                                                                 |
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+--[gateway]--> IoT application on the cloud
-                                                                                 |
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--Bluetooth/LPWA/CAN---+
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--LPWA/5G--+
+                                                                     |
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--LPWA/5G--+---------> Database
+                                                                     |
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--LPWA/5G--+
                                      |           [DAC]
                                      |             |
                                  USB serial     [Analog filter] --> head phone for monitoring sound from mic
                                      |
                                      v
-                           [Oscilloscope GUI(Tk)] ----------------------> Google Drive --> Google Colab for training CNN
+                           [Oscilloscope GUI(Tk)] --- features ---> PC for training CNN
 ```
 
 Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tree/master/analog_filter
 
-## Making use of DMA
+## Edge device for machine learning (STM32L4)
+
+#### Making use of DMA
 
 STMicro's HAL library supports "HAL_DFSDM_FilterRegConvHalfCpltCallback" that is very useful to implemente ring-buffer-like buffering for real-time processing.
 
@@ -69,14 +77,14 @@ Sound/voice ))) [MEMS mic]-PDM->[DFSDM]-DMA->[A|B]->[ARM Cortex-M4]
 
 All the DMAs are synchronized, because their master clock is the system clock.
 
-## Sampling frequency
+#### Sampling frequency
 
 - The highest frequency on a piano is 4186Hz, but it generate overtones: ~10kHz.
 - Human voice also generates overtones: ~ 10kHz.
 
 So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency))
 
-## Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
+#### Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
 
 - System clock: 80MHz
 - Clock divider: 32
@@ -85,7 +93,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 - right bit shift: 3 (2 * 128^3 = 2^22, so 6-bit-right-shift is required to output 16bit PCM)
 - Sampling frequency: 80_000_000/32/128 = 19.5kHz
 
-## Pre-processing on STM32L4/CMSIS-DSP
+#### Pre-processing on STM32L4/CMSIS-DSP
 
 ```
       MEMS mic
@@ -128,7 +136,7 @@ Oscilloscope GUI/IoT gateway
 - My conclusion is that 80_000_000(Hz)/64(clock divider)/64(FOSR) with pre-emphasis(HPF) is the best setting for obtaining the best images of mel-spectrogram.
 - I use a triangler filter bank to obtain mel-spectrogram, and I make each triangle filter having a same amount of area.
 
-## Frame/stride/overlap
+#### Frame/stride/overlap
 
 - number of samples per frame: 512
 - length: 512/19.5kHz = 26.3msec
@@ -143,14 +151,14 @@ Oscilloscope GUI/IoT gateway
          [a2|b2]   2b --> mel-scale spectrogram via filter bank or 12 MFCCs
             :
 ```
-## Filter banks
+#### Filter banks
 
 Mel-scale spectrogram is used for training CNN
 
 - Mel-scale: 40 filters (512 samples divided by (40 + 1))
 - Linear-scale: 255 filters (512 samples divide by (255 + 1))
 
-## log10 processing time issue
+#### log10 processing time issue
 
 PSD caliculation uses log10 math function, but CMSIS-DSP does not support log10. log10 on the standard "math.h" is too slow. I tried math.h log10, and the time required for caluculating log10(x) does not fit into the time slot of sound frame, so I decided to adopt [log10 approximation](./ipynb/log10%20fast%20approximation.ipynb). The approximation has been working perfect so far.
 
@@ -166,7 +174,7 @@ Note: log10(x) = log10(2) * log2(x)
 
 Reference: https://community.arm.com/tools/f/discussions/4292/cmsis-dsp-new-functionality-proposal
 
-## Command over UART (USB-serial)
+#### Command over UART (USB-serial)
 
 UART baudrate: 921600bps
 
@@ -208,7 +216,7 @@ e: data transmission end
 |P  | Enable pre-emphasis |                    |                       |
 |p  | Disable pre-emphasis |                   |                       |
 
-## Oscilloscope GUI
+## Oscilloscope GUI with the edge device to acquire data for training CNN
 
 I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs etc.
 
@@ -218,7 +226,9 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs
 
 - [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
 
-## CNN experiments with Keras/TensorFlow (on Nov 6, 2018)
+## CNN experiments with Keras/TensorFlow (on Nov 6-11, 2018)
+
+The result: about 90% accuracy has been achieved, so it is satisfying.
 
 #### Jupyter Notebook of this experiment
 
@@ -237,12 +247,21 @@ Next, I will try beam forming with two MEMS mic to supress noise from the surrou
 #### Class labels and data set
 
 ```
-Classes:
+Classes of musical instruments recognition:
 - piano music
 - classial guitar music
 - framenco guitar music
 - blues harp music
 - tin whistle music
+
+Classes of human activity recognition:
+- bathing
+- cocking
+- moving
+- silence
+- tooth brushing
+- washing the dishes
+- watching the TV
 
 Conditions:
 - Pre emphasis enabled on the raw data.
@@ -253,7 +272,11 @@ Training data set: 48 mel-scale spectrograms (40 filters x 64 strides) for each 
 Test data set: 24 mel-scale spectrograms (40 filters x 64 strides) for each class
 ```
 
-#### CNN model
+#### CNN model 1
+
+This model works well for both musical instruments recognition and human activity recognition.
+
+All the filters are the size of 5 x 5.
 
 ```
 _________________________________________________________________
@@ -279,33 +302,79 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-#### Training result
+#### CNN Model 2
+
+This model works well for musical instruments recognition, and the size of CNN is a hundred times smaller than the model 1.
+
+All the filters are the size of 3 x 3.
 
 ```
-Train on 1005 samples, validate on 495 samples
-Epoch 1/10
-1005/1005 [==============================] - 21s 21ms/step - loss: 0.8394 - acc: 0.6388 - val_loss: 0.4388 - val_acc: 0.8444
-Epoch 2/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.3728 - acc: 0.8269 - val_loss: 0.4255 - val_acc: 0.8283
-Epoch 3/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.2645 - acc: 0.8925 - val_loss: 0.3265 - val_acc: 0.8364
-Epoch 4/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.2041 - acc: 0.9174 - val_loss: 0.2839 - val_acc: 0.8808
-Epoch 5/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.1691 - acc: 0.9373 - val_loss: 0.5328 - val_acc: 0.8404
-Epoch 6/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.1574 - acc: 0.9393 - val_loss: 0.2934 - val_acc: 0.8909
-Epoch 7/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.1139 - acc: 0.9493 - val_loss: 0.3464 - val_acc: 0.8727
-Epoch 8/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.1070 - acc: 0.9582 - val_loss: 0.2380 - val_acc: 0.9192
-Epoch 9/10
-1005/1005 [==============================] - 20s 20ms/step - loss: 0.0801 - acc: 0.9622 - val_loss: 0.2852 - val_acc: 0.9051
-Epoch 10/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.0729 - acc: 0.9711 - val_loss: 0.2757 - val_acc: 0.9071
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_41 (Conv2D)           (None, 62, 38, 4)         40        
+_________________________________________________________________
+max_pooling2d_41 (MaxPooling (None, 31, 19, 4)         0         
+_________________________________________________________________
+conv2d_42 (Conv2D)           (None, 29, 17, 8)         296       
+_________________________________________________________________
+max_pooling2d_42 (MaxPooling (None, 14, 8, 8)          0         
+_________________________________________________________________
+conv2d_43 (Conv2D)           (None, 12, 6, 16)         1168      
+_________________________________________________________________
+max_pooling2d_43 (MaxPooling (None, 6, 3, 16)          0         
+_________________________________________________________________
+flatten_16 (Flatten)         (None, 288)               0         
+_________________________________________________________________
+dropout_17 (Dropout)         (None, 288)               0         
+_________________________________________________________________
+dense_34 (Dense)             (None, 5)                 1445      
+=================================================================
+Total params: 2,949
+Trainable params: 2,949
+Non-trainable params: 0
 ```
 
+#### CNN Model 3
+
+This model works well for human activity recognition, and the size of CNN is ten times smaller than the model 1.
+
+All the filters are the size of 3 x 3.
+
+```
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_18 (Conv2D)           (None, 62, 38, 4)         40        
+_________________________________________________________________
+max_pooling2d_15 (MaxPooling (None, 31, 19, 4)         0         
+_________________________________________________________________
+conv2d_19 (Conv2D)           (None, 29, 17, 8)         296       
+_________________________________________________________________
+max_pooling2d_16 (MaxPooling (None, 14, 8, 8)          0         
+_________________________________________________________________
+conv2d_20 (Conv2D)           (None, 12, 6, 16)         1168      
+_________________________________________________________________
+max_pooling2d_17 (MaxPooling (None, 6, 3, 16)          0         
+_________________________________________________________________
+flatten_7 (Flatten)          (None, 288)               0         
+_________________________________________________________________
+dense_10 (Dense)             (None, 64)                18496     
+_________________________________________________________________
+dropout_5 (Dropout)          (None, 64)                0         
+_________________________________________________________________
+dense_11 (Dense)             (None, 7)                 455       
+=================================================================
+Total params: 20,455
+Trainable params: 20,455
+Non-trainable params: 0
+_________________________________________________________________
+```
 #### Using the trained model
+
+I am looking forward to CubeMX.AI: https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html
+
+Since CubeMX.AI is not available yet, I made a simple agent that runs on PC.
 
 Just run [this agent](./tensorflow/agent.py).
 
@@ -317,3 +386,4 @@ framenco_guitar: 85.7%
 piano: 0.5%
 tin_whistle: 0.0%
 ```
+
