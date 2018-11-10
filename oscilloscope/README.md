@@ -1,6 +1,10 @@
-# Oscilloscope
+# Oscilloscope GUI
 
 The oscilloscope GUI is for visualizing wavefrom, FFT, spectrogram and MFCCs calcuated on the edge device. Its core software component is "matplotlib" that is superimposed onto Tk.
+
+```
+Sound ))) [MEMS mic]--[Edge device(STM32L476RG)]<-- USB serial -->[Osilloscope GUI (main.py)]
+```
 
 # Testing the oscilloscope
 
