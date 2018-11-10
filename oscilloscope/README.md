@@ -9,9 +9,11 @@ Sound ))) [MEMS mic]--[Edge device(STM32L476RG)]<-- USB serial -->[Oscilloscope 
 
 ## Screen shots
 
-![](./oscilloscope/screenshots/spectrogram(psd).jpg)
+![](./screenshots/spectrogram(psd).jpg)
 
 Framenco (Bulerias)
+
+- [screen shots](./screenshots)
 
 # Testing the oscilloscope
 
