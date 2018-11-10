@@ -1,4 +1,4 @@
-# Acoustic Event Detection with STM32L4 and TensorFlow
+# Acoustic Event Detection with STM32L4 and Keras/TensorFlow
 
 ![](./oscilloscope/screenshots/spectrogram(psd).jpg)
 
