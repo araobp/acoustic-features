@@ -8,7 +8,9 @@ Framenco (Bulerias)
 
 I need to collect a lot of data for training CNN(Convolutional Neural Network), but it is a very time-consuming work, so I decided to develop a data collecting device ("audio camera") for automation of the work.
 
-Since STMicro is going to release [CubeMX.AI](https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html), I decided to implement all the pre-processing for CNN on the edge device: STM32L476RG.
+Since STMicro is going to release [CubeMX.AI](https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html), I decided to implement most of the pre-processing for CNN on the edge device: STM32L476RG.
+
+I use Keras/TensorFlow for training CNN with the data acquired by the device via Oscillosope GUI.
 
 ## Use cases
 
