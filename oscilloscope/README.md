@@ -1,3 +1,7 @@
+# Oscilloscope
+
+The oscilloscope GUI is for visualizing wavefrom, FFT, spectrogram and MFCCs calcuated on the edge device.
+
 # Testing the oscilloscope
 
 ## Linear chirp spectrogram
