@@ -1,6 +1,6 @@
 # Oscilloscope
 
-The oscilloscope GUI is for visualizing wavefrom, FFT, spectrogram and MFCCs calcuated on the edge device.
+The oscilloscope GUI is for visualizing wavefrom, FFT, spectrogram and MFCCs calcuated on the edge device. Its core software component is "matplotlib" that is superimposed onto Tk.
 
 # Testing the oscilloscope
 
