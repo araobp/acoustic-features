@@ -263,6 +263,10 @@ Test data set: 24 mel-scale spectrograms (40 filters x 64 strides) for each clas
 
 #### CNN model 1
 
+This model works well for both musical instruments recognition and human activity recognition.
+
+All the filters are the size of 5 x 5.
+
 ```
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
@@ -287,33 +291,11 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-#### Training result
-
-```
-Train on 1005 samples, validate on 495 samples
-Epoch 1/10
-1005/1005 [==============================] - 21s 21ms/step - loss: 0.8394 - acc: 0.6388 - val_loss: 0.4388 - val_acc: 0.8444
-Epoch 2/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.3728 - acc: 0.8269 - val_loss: 0.4255 - val_acc: 0.8283
-Epoch 3/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.2645 - acc: 0.8925 - val_loss: 0.3265 - val_acc: 0.8364
-Epoch 4/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.2041 - acc: 0.9174 - val_loss: 0.2839 - val_acc: 0.8808
-Epoch 5/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.1691 - acc: 0.9373 - val_loss: 0.5328 - val_acc: 0.8404
-Epoch 6/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.1574 - acc: 0.9393 - val_loss: 0.2934 - val_acc: 0.8909
-Epoch 7/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.1139 - acc: 0.9493 - val_loss: 0.3464 - val_acc: 0.8727
-Epoch 8/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.1070 - acc: 0.9582 - val_loss: 0.2380 - val_acc: 0.9192
-Epoch 9/10
-1005/1005 [==============================] - 20s 20ms/step - loss: 0.0801 - acc: 0.9622 - val_loss: 0.2852 - val_acc: 0.9051
-Epoch 10/10
-1005/1005 [==============================] - 19s 19ms/step - loss: 0.0729 - acc: 0.9711 - val_loss: 0.2757 - val_acc: 0.9071
-```
-
 #### CNN Model 2
+
+This model works well for musical instruments recognition, and the size of CNN is a hundred times smaller than the model 1.
+
+All the filters are the size of 3 x 3.
 
 ```
 _________________________________________________________________
@@ -342,70 +324,41 @@ Trainable params: 2,949
 Non-trainable params: 0
 ```
 
-```
-Train on 1005 samples, validate on 495 samples
-Epoch 1/30
-1005/1005 [==============================] - 8s 8ms/step - loss: 1.4321 - acc: 0.3881 - val_loss: 1.1425 - val_acc: 0.6768
-Epoch 2/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 1.0787 - acc: 0.5552 - val_loss: 0.8194 - val_acc: 0.7051
-Epoch 3/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.8741 - acc: 0.6299 - val_loss: 0.6767 - val_acc: 0.7394
-Epoch 4/30
-1005/1005 [==============================] - 7s 7ms/step - loss: 0.7585 - acc: 0.6866 - val_loss: 0.5633 - val_acc: 0.7939
-Epoch 5/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.6532 - acc: 0.7383 - val_loss: 0.5615 - val_acc: 0.7535
-Epoch 6/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.6152 - acc: 0.7443 - val_loss: 0.5010 - val_acc: 0.8303
-Epoch 7/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.5168 - acc: 0.8020 - val_loss: 0.4320 - val_acc: 0.8505
-Epoch 8/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.4833 - acc: 0.8119 - val_loss: 0.4141 - val_acc: 0.8485
-Epoch 9/30
-1005/1005 [==============================] - 7s 7ms/step - loss: 0.4231 - acc: 0.8289 - val_loss: 0.3811 - val_acc: 0.8566
-Epoch 10/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.4137 - acc: 0.8279 - val_loss: 0.4544 - val_acc: 0.8283
-Epoch 11/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.3599 - acc: 0.8647 - val_loss: 0.3451 - val_acc: 0.8949
-Epoch 12/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.3562 - acc: 0.8537 - val_loss: 0.3423 - val_acc: 0.8707
-Epoch 13/30
-1005/1005 [==============================] - 7s 7ms/step - loss: 0.3379 - acc: 0.8746 - val_loss: 0.3091 - val_acc: 0.8929
-Epoch 14/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.3058 - acc: 0.8826 - val_loss: 0.3045 - val_acc: 0.9030
-Epoch 15/30
-1005/1005 [==============================] - 7s 7ms/step - loss: 0.2789 - acc: 0.9025 - val_loss: 0.3708 - val_acc: 0.8747
-Epoch 16/30
-1005/1005 [==============================] - 7s 7ms/step - loss: 0.2880 - acc: 0.9015 - val_loss: 0.3057 - val_acc: 0.8747
-Epoch 17/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.2636 - acc: 0.9085 - val_loss: 0.2850 - val_acc: 0.8949
-Epoch 18/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.2510 - acc: 0.9055 - val_loss: 0.2732 - val_acc: 0.9111
-Epoch 19/30
-1005/1005 [==============================] - 7s 6ms/step - loss: 0.2511 - acc: 0.9035 - val_loss: 0.2899 - val_acc: 0.9071
-Epoch 20/30
-1005/1005 [==============================] - 7s 7ms/step - loss: 0.2525 - acc: 0.8985 - val_loss: 0.2822 - val_acc: 0.9030
-Epoch 21/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.2278 - acc: 0.9075 - val_loss: 0.3122 - val_acc: 0.8667
-Epoch 22/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.2128 - acc: 0.9214 - val_loss: 0.2720 - val_acc: 0.9131
-Epoch 23/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.2165 - acc: 0.9214 - val_loss: 0.2853 - val_acc: 0.8970
-Epoch 24/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.2092 - acc: 0.9254 - val_loss: 0.2603 - val_acc: 0.9051
-Epoch 25/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.2053 - acc: 0.9224 - val_loss: 0.2493 - val_acc: 0.9091
-Epoch 26/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.2051 - acc: 0.9284 - val_loss: 0.2638 - val_acc: 0.9091
-Epoch 27/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.1855 - acc: 0.9224 - val_loss: 0.2973 - val_acc: 0.8929
-Epoch 28/30
-1005/1005 [==============================] - 7s 7ms/step - loss: 0.1922 - acc: 0.9164 - val_loss: 0.2536 - val_acc: 0.8990
-Epoch 29/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.1946 - acc: 0.9353 - val_loss: 0.2700 - val_acc: 0.9071
-Epoch 30/30
-1005/1005 [==============================] - 6s 6ms/step - loss: 0.1754 - acc: 0.9453 - val_loss: 0.2891 - val_acc: 0.9010
-```
+#### CNN Model 3
 
+This model works well for human activity recognition, and the size of CNN is ten times smaller than the model 1.
+
+All the filters are the size of 3 x 3.
+
+```
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_18 (Conv2D)           (None, 62, 38, 4)         40        
+_________________________________________________________________
+max_pooling2d_15 (MaxPooling (None, 31, 19, 4)         0         
+_________________________________________________________________
+conv2d_19 (Conv2D)           (None, 29, 17, 8)         296       
+_________________________________________________________________
+max_pooling2d_16 (MaxPooling (None, 14, 8, 8)          0         
+_________________________________________________________________
+conv2d_20 (Conv2D)           (None, 12, 6, 16)         1168      
+_________________________________________________________________
+max_pooling2d_17 (MaxPooling (None, 6, 3, 16)          0         
+_________________________________________________________________
+flatten_7 (Flatten)          (None, 288)               0         
+_________________________________________________________________
+dense_10 (Dense)             (None, 64)                18496     
+_________________________________________________________________
+dropout_5 (Dropout)          (None, 64)                0         
+_________________________________________________________________
+dense_11 (Dense)             (None, 7)                 455       
+=================================================================
+Total params: 20,455
+Trainable params: 20,455
+Non-trainable params: 0
+_________________________________________________________________
+```
 #### Using the trained model
 
 I am looking forward to CubeMX.AI: https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html
