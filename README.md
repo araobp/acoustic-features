@@ -25,7 +25,7 @@ However, I pursue small-scale audio classification of particular use cases for m
 
 ## Platform and tool chain
 
-=> [Platform and tool chain](./PLATFORM.md]
+=> [Platform and tool chain](./PLATFORM.md)
 
 ## IoT network
 
