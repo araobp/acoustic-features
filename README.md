@@ -66,11 +66,7 @@ Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tr
 
 ## Oscilloscope GUI with the edge device to acquire data for training CNN
 
-![](./oscilloscope/screenshots/waveform.jpg)
-
-![](./oscilloscope/screenshots/fft(psd).jpg)
-
-- [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
+=> [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
 
 ## CNN experiments with Keras/TensorFlow
 
