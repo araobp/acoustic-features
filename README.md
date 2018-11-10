@@ -245,12 +245,21 @@ Next, I will try beam forming with two MEMS mic to supress noise from the surrou
 #### Class labels and data set
 
 ```
-Classes:
+Classes of musical instruments recognition:
 - piano music
 - classial guitar music
 - framenco guitar music
 - blues harp music
 - tin whistle music
+
+Classes of human activity recognition:
+- bathing
+- cocking
+- moving
+- silence
+- tooth brushing
+- washing the dishes
+- watching the TV
 
 Conditions:
 - Pre emphasis enabled on the raw data.
