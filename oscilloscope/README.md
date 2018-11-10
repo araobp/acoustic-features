@@ -1,6 +1,6 @@
 # Oscilloscope GUI
 
-The oscilloscope GUI is for visualizing wavefrom, FFT, spectrogram and MFCCs calcuated on the edge device. Its core software component is "matplotlib" that is superimposed onto Tk.
+The oscilloscope GUI is for visualizing wavefrom, FFT, spectrogram and MFCCs calcuated on the edge device. Its core software component is "matplotlib" that is superimposed onto Tk. The GUI can also be used to acquire training data for CNN, just pressing a button on the GUI.
 
 Connect PC to the edge device with a USB cable, and run "main.py" to start the oscilloscope GUI:
 ```
