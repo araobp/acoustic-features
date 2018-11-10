@@ -98,7 +98,7 @@ Mel-scale spectrogram is used for training CNN
 
 ### log10 processing time issue
 
-PSD caliculation uses log10 math function, but CMSIS-DSP does not support log10. log10 on the standard "math.h" is too slow. I tried math.h log10, and the time required for caluculating log10(x) does not fit into the time slot of sound frame, so I decided to adopt [log10 approximation](./ipynb/log10%20fast%20approximation.ipynb). The approximation has been working perfect so far.
+PSD caliculation uses log10 math function, but CMSIS-DSP does not support log10. log10 on the standard "math.h" is too slow. I tried math.h log10, and the time required for caluculating log10(x) does not fit into the time slot of sound frame, so I decided to adopt [log10 approximation](../ipynb/log10%20fast%20approximation.ipynb). The approximation has been working perfect so far.
 
 ### Processing time (actual measurement)
 
