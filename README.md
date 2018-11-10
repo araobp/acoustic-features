@@ -226,7 +226,9 @@ I use Tkinter with matplotlib to draw graph of waveform, FFT, spectrogram, MFCCs
 
 - [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
 
-## CNN experiments with Keras/TensorFlow (on Nov 6, 2018)
+## CNN experiments with Keras/TensorFlow (on Nov 6-11, 2018)
+
+The result: about 90% accuracy has been achieved, so it is satisfying.
 
 #### Jupyter Notebook of this experiment
 
