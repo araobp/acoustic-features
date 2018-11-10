@@ -6,9 +6,12 @@ Framenco (Bulerias)
 
 ## Background and motivation
 
-Although AI is booming, most of AI researchers use open data on the web for training a neural network. However, I focus on paticular AED(Acoustic Event Detection) use cases for myself, and I need to collect a lot of data by myself. It is a very time-consuming work, so I need to develop a data collecting device ("audio camera").
+I need to collect a lot of data for training CNN(Convolutional Neural Network), but it is a very time-consuming work, so I decided to develop a data collecting device ("audio camera").
 
-Use cases:
+Since STMicro is going to release CubeMX.AI, I decided to implement all the pre-processing for CNN on the edge device: STM32L476RG.
+
+## Use cases
+
 - musical instruments recognition
 - human activity recognition
 
