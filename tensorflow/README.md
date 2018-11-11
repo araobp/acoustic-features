@@ -78,6 +78,8 @@ _________________________________________________________________
 
 This model works well for musical instruments recognition, and the size of CNN is a hundred times smaller than the model 1.
 
+- [Trained CNN model 2](./cnn_for_aed_20181110221837.h5)
+
 All the filters are the size of 3 x 3.
 
 ```
