@@ -161,3 +161,8 @@ piano: 0.5%
 tin_whistle: 0.0%
 ```
 
+#### Interesting findings
+
+- I mainly used songs played by a classical guitarist S for training CNN, and I tried to recognise songs played by a guitarist M using the trained model. The model always recognised M's guitar play as "piano". The same trend was seen on framenco guitarists. I think guitarists today play a guitar like a piano???
+
+
