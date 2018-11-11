@@ -19,6 +19,7 @@ I use Keras/TensorFlow for training CNN with the data acquired by the device via
 - [Platform and tool chain](./PLATFORM.md)
 - [Edge device for machine learning](./stm32)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter](./oscilloscope)
+- [GUI implementation on Android(in development)](./android)
 
 ## CNN experiments
 
