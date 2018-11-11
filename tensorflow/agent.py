@@ -9,8 +9,9 @@ import time
 
 DATA_FOLDER = '../oscilloscope/data/data_music/'
 
-#MODEL = './cnn_for_aed_20181108100417.h5'
-MODEL = './cnn_for_aed_20181107185253.h5'
+# MODEL = './cnn_for_aed_20181107185253.h5'
+# MODEL = './cnn_for_aed_20181110221837.h5'
+MODEL = './cnn_for_aed_20181111211558.h5'
 
 FILTERED_MEL = b'3'
 PORT = 'COM15'
@@ -48,6 +49,8 @@ model.summary()
 layer_outputs = [layer.output for layer in model.layers]
 activation_model = models.Model(inputs=model.input, outputs=layer_outputs)
 
+prediction_result = np.zeros(shape=(9, len(class_labels)), dtype=float)
+
 cnt = 0
 while True:
     
@@ -56,16 +59,14 @@ while True:
     data1 = data_a[:64,:, :]
     data2 = data_a[64:128,:, :]
     data3 = data_a[128:192,:, :]
-    data_b = serial_read()
-    data4 = data_b[:64,:, :]
-    data5 = data_b[64:128,:, :]
-    data6 = data_b[128:192,:, :]
-    data = np.array([data1, data2, data3, data4, data5, data6])
+
+    data = np.array([data1, data2, data3])
     
     activations = activation_model.predict(data)
-    prediction_result = (activations[-1]*100).astype(int)
-
-    p = np.sum(prediction_result, axis=0)/6.0
+    result = (activations[-1]*100)
+    prediction_result[0:6] = prediction_result[3:9]
+    prediction_result[6:9] = result
+    p = np.sum(prediction_result, axis=0)/9.0
     max_idx = np.argmax(p)
 
     print()
