@@ -112,48 +112,6 @@ Note: log10(x) = log10(2) * log2(x)
 
 Reference: https://community.arm.com/tools/f/discussions/4292/cmsis-dsp-new-functionality-proposal
 
-### Command over UART (USB-serial)
-
-UART baudrate: 921600bps
-
-```
-
-        Sequence over UART(USB-serial)
-
-    ARM Cortex-M4L                    PC
-           |                          |
-           |<-------- cmd ------------|
-           |                          |
-           |------ data output ------>|
-           |                          |
-
-
-Data is send in ASCII characters, and the data format is as follows:
-
-d: data delimiter
-e: data transmission end
-
-1,2,3,4,d,...,5,6,7,8,d\n
-9,10,11,12,d,...,13,14,15,16,d\n
-17,18,19,20,d,...,21,22,23,24,e\n
-
-```
-
-|cmd|description     | output size             | purpose               |
-|---|----------------|-------------------------|-----------------------|
-|0  | RAW_WAVE       | N x 1                   | Input to oscilloscope |
-|1  | PSD            | N/2 x 1                 | Input to ML           |
-|2  | FILTERBANK     | N/6 x NUM_FILTERS       | (for testing)         |
-|3  | FILTERED_MEL   | NUM_FILTERS x 200       | Input to ML           |
-|4  | MFCC           | NUM_FILTERS x 200       | Input to ML           |
-|5  | MFCC_STREAMING | NUM_FILTERS x 07fffffff | (for testing)         |
-|6  | FILTERED_LINEAR| NUM_FILTERS x 200       | Input to ML           |
-
-|cmd|description     | output size             | purpose               |
-|---|----------------|-------------------------|-----------------------|
-|P  | Enable pre-emphasis |                    |                       |
-|p  | Disable pre-emphasis |                   |                       |
-
 ## Beam forming
 
 Beam forming should improve SNR at five directions as follows:
@@ -187,3 +145,59 @@ theta_right2 = arccos(17.6*2/40.0) = 0.50[rad] = 28[degrees]
 |center   |90     |
 |right1   |64     |
 |right2   |28     |
+
+### Command over UART (USB-serial)
+
+UART baudrate: 921600bps
+
+```
+
+        Sequence over UART(USB-serial)
+
+    ARM Cortex-M4L                    PC
+           |                          |
+           |<-------- cmd ------------|
+           |                          |
+           |------ data output ------>|
+           |                          |
+
+
+Data is send in ASCII characters, and the data format is as follows:
+
+d: data delimiter
+e: data transmission end
+
+1,2,3,4,d,...,5,6,7,8,d\n
+9,10,11,12,d,...,13,14,15,16,d\n
+17,18,19,20,d,...,21,22,23,24,e\n
+
+```
+
+#### Filters
+
+|cmd|description     | output size             | purpose               |
+|---|----------------|-------------------------|-----------------------|
+|0  | RAW_WAVE       | N x 1                   | Input to oscilloscope |
+|1  | PSD            | N/2 x 1                 | Input to ML           |
+|2  | FILTERBANK     | N/6 x NUM_FILTERS       | (for testing)         |
+|3  | FILTERED_MEL   | NUM_FILTERS x 200       | Input to ML           |
+|4  | MFCC           | NUM_FILTERS x 200       | Input to ML           |
+|5  | MFCC_STREAMING | NUM_FILTERS x 07fffffff | (for testing)         |
+|6  | FILTERED_LINEAR| NUM_FILTERS x 200       | Input to ML           |
+
+#### Pre-emphasis
+
+|cmd|description     | output size             | purpose               |
+|---|----------------|-------------------------|-----------------------|
+|P  | Enable pre-emphasis |                    |                       |
+|p  | Disable pre-emphasis |                   |                       |
+
+#### Beam forming
+
+|cmd|description     | output size             | purpose               |
+|---|----------------|-------------------------|-----------------------|
+|L  | theta left2    |                         |                       |
+|l  | theta left1    |                         |                       |
+|c  | theta center   |                         |                       |
+|r  | theta right1   |                         |                       |
+|R  | theta right2   |                         |                       |
