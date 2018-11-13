@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name mcu)(type KiCad)(uri "$(KIPRJMOD)/mcu.pretty")(options "")(descr ""))
+)
