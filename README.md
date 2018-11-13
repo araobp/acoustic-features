@@ -13,10 +13,13 @@ I use Keras/TensorFlow for training CNN with the data acquired by the device via
 - musical instruments recognition
 - human activity recognition
 
-## Development
+## Architecture and platform
 
 - [IoT network architecture](./NETWORK.md)
 - [Platform and tool chain](./PLATFORM.md)
+
+## AED system compoenents in development
+
 - [Edge device for machine learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 - [Arduino shield of two MEMS microphones and Microchip RN4020 BLE module (KiCAD)](./kicad)
