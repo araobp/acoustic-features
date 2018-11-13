@@ -1,5 +1,7 @@
 # Acoustic Event Detection with STM32L4/Keras/TensorFlow
 
+![](./oscilloscope/screenshots/spectrogram(psd)_small.jpg)
+
 ## Background and motivation
 
 I need to collect a lot of data for training CNN(Convolutional Neural Network), but it is a very time-consuming work, so I decided to develop a data collecting device ("audio camera") for automation of the work.
