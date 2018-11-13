@@ -159,6 +159,8 @@ e: data transmission end
 Beam forming should improve SNR at five directions as follows:
 
 ```
+
+left                            right
       /                    /
      /                    /
     /                    /
@@ -170,7 +172,18 @@ f_s = 80_000_000 / 32 / 128 = 19.5kHz
 s = 343 / f_s = 0.0176m = 17.6mm (length of one-sample shift)
 l = 40mm (distance between Mic1 and Mic2)
 
-theta_0 = pi/2 rad = 90 degrees
-theta_1 = arccos(17.6/40.0) = 1.12[rad] = 64[degrees]
-theta_2 = arccos(17.6*2/40.0) = 0.50[rad] = 28[degrees]
+theta_left2 = arccos(-17.6*2/40.0) = 2.65[rad] = 152[degrees]
+theta_left1 = arccos(-17.6/40.0) = 2.03[rad] = 116[degrees]
+theta_center = pi/2 rad = 90[degrees]
+theta_right1 = arccos(17.6/40.0) = 1.12[rad] = 64[degrees]
+theta_right2 = arccos(17.6*2/40.0) = 0.50[rad] = 28[degrees]
+
 ```
+
+|direction|degrees|
+|---------|-------|
+|left2    |152    |
+|left1    |116    |
+|center   |90     |
+|right1   |64     |
+|right2   |28     |
