@@ -34,26 +34,3 @@ Note: BLE module should be replaced with 5G module in future, to simplify the ar
 ## CNN experiments
 
 - [CNN experiments with Keras/TensorFlow](./tensorflow)
-
-## Beam forming
-
-(I'm currently working on it)
-
-Beam forming should improve SNR at five directions as follows:
-
-```
-      /                    /
-     /                    /
-    /                    /
-   / )) theta           /
- [M1]                 [M2]
-   <------- l --------->
-
-f_s = 80_000_000 / 32 / 128 = 19.5kHz
-s = 343 / f_s = 0.0176m = 17.6mm (length of one-sample shift)
-l = 40mm (distance between Mic1 and Mic2)
-
-theta_0 = pi/2 rad = 90 degrees
-theta_1 = arccos(17.6/40.0) = 1.12[rad] = 64[degrees]
-theta_2 = arccos(17.6*2/40.0) = 0.50[rad] = 28[degrees]
-```
