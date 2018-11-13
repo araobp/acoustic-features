@@ -13,13 +13,20 @@ I use Keras/TensorFlow for training CNN with the data acquired by the device via
 - musical instruments recognition
 - human activity recognition
 
-## Development
+## Architecture and platform
 
 - [IoT network architecture](./NETWORK.md)
 - [Platform and tool chain](./PLATFORM.md)
+
+## AED system components in development
+
 - [Edge device for machine learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 - [Arduino shield of two MEMS microphones and Microchip RN4020 BLE module (KiCAD)](./kicad)
+- Mobile IoT gateway: "UART over BLE" to "MQTT over WiFi" (ESP32-based)
+- Database on the cloud: Node.js/Express/MongoDB-based => I will reuse [the output of this project](https://github.com/araobp/api-server).
+
+Note: BLE module should be replaced with 5G module in future, to simplify the architecture.
 
 ## CNN experiments
 
