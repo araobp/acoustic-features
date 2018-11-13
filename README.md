@@ -37,6 +37,10 @@ Note: BLE module should be replaced with 5G module in future, to simplify the ar
 
 ## Beam forming
 
+(I'm currently working on it)
+
+Beam forming should improve SNR at five directions as follows:
+
 ```
       /                    /
      /                    /
