@@ -1,18 +1,20 @@
 # IoT network
 
+Note: "BLE" in the picture below should be replaced with either LPWA or 5G in future.
+
 ```
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--LPWA/5G--+
-                                                                     |
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--LPWA/5G--+---------> Database
-                                                                     |
-Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--LPWA/5G--+
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--BLE--+
+                                                                 |
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--BLE--+---------> Cloud
+                                                                 |
+Sound/voice ))) [MEMS mic]-[DFSDM][ARM Cortex-M4(STM32L4)]--BLE--+
                                      |           [DAC]
+                                   UART            |
                                      |             |
-                                 USB serial     [Analog filter] --> head phone for monitoring sound from mic
+                                 (VCP/USB)    [Analog filter] --> head phone for monitoring sound from mic (for debugging purpose only)
+                                  (or BLE)
                                      |
                                      v
                            [Oscilloscope GUI(Tk)] --- features ---> PC for training CNN
 ```
-
-Refer to this page for the analog filter: https://github.com/araobp/stm32-mcu/tree/master/analog_filter
 
