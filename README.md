@@ -18,7 +18,7 @@ I use Keras/TensorFlow for training CNN with the data acquired by the device via
 - [IoT network architecture](./NETWORK.md)
 - [Platform and tool chain](./PLATFORM.md)
 
-## AED system compoenents in development
+## AED system components in development
 
 - [Edge device for machine learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
