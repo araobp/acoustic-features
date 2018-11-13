@@ -8,5 +8,4 @@
 
 ## Schematic
 
--
-- [PCB design]
+- [schematic](./arduino_shield.pdf)
