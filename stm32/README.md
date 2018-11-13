@@ -173,7 +173,7 @@ e: data transmission end
 
 ```
 
-#### Filters
+#### Output
 
 |cmd|description     | output size             | purpose               |
 |---|----------------|-------------------------|-----------------------|
