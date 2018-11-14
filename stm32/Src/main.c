@@ -62,8 +62,10 @@
 const int NN_HALF = NN / 2;
 
 // flag: "new PCM data has just been copied to buf"
-volatile bool new_pcm_data_a = false;
-volatile bool new_pcm_data_b = false;
+volatile bool new_pcm_data_a_l = false;
+volatile bool new_pcm_data_b_l = false;
+volatile bool new_pcm_data_a_r = false;
+volatile bool new_pcm_data_b_r = false;
 
 // output trigger
 volatile bool printing = false;
@@ -248,7 +250,8 @@ int main(void)
   float32_t sampling_frequency;
 
   // DMA peripheral-to-memory double buffer
-  int32_t input_buf[NN * 2] = { 0 };
+  int32_t input_buf_l[NN * 2] = { 0 };
+  int32_t input_buf_r[NN * 2] = { 0 };
 
   // DMA memory-to-peripheral double buffer
   volatile uint16_t dac1_out1_buf[NN * 2] = { 0 };
@@ -304,7 +307,11 @@ int main(void)
   HAL_Delay(1);
 
   // Enable DMA from DFSDM to buf (peripheral to memory)
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf, NN * 2)
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_l, NN * 2)
+      != HAL_OK) {
+    Error_Handler();
+  }
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_r, NN * 2)
       != HAL_OK) {
     Error_Handler();
   }
@@ -318,16 +325,16 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
     // Wait for next PCM samples from M1
-    if (new_pcm_data_a) {
+    if (new_pcm_data_a_r) {
 
       for (uint32_t n = 0; n < NN; n++) {
-        dac1_out1_buf[n] = (uint16_t) ((input_buf[n] >> 13) + 2048);
+        dac1_out1_buf[n] = (uint16_t) ((input_buf_l[n] >> 13) + 2048);
         dac1_out2_buf[n] = dac1_out1_buf[n];
       }
 
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
       for (uint32_t n = 0; n < NN; n++) {
-        signal_buf[n + NN_HALF] = (float32_t) (input_buf[n] >> 9);
+        signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n] >> 9) + (float32_t) (input_buf_r[n] >> 9);
       }
 
       arm_copy_f32(signal_buf, signal, NN);
@@ -342,20 +349,20 @@ int main(void)
         printing = uart_tx(signal, output_mode, true);
       }
 
-      new_pcm_data_a = false;
+      new_pcm_data_a_r = false;
 
     }
 
-    if (new_pcm_data_b) {
+    if (new_pcm_data_b_r) {
 
       for (uint32_t n = NN; n < NN * 2; n++) {
-        dac1_out1_buf[n] = (uint16_t) ((input_buf[n] >> 13) + 2048);
+        dac1_out1_buf[n] = (uint16_t) ((input_buf_l[n] >> 13) + 2048);
         dac1_out2_buf[n] = dac1_out1_buf[n];
       }
 
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
       for (uint32_t n = 0; n < NN; n++) {
-        signal_buf[n + NN_HALF] = (float32_t) (input_buf[n + NN] >> 9);
+        signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN] >> 9) + (float32_t) (input_buf_r[n + NN] >> 9);
       }
 
       arm_copy_f32(signal_buf, signal, NN);
@@ -370,7 +377,7 @@ int main(void)
         printing = uart_tx(signal, output_mode, true);
       }
 
-      new_pcm_data_b = false;
+      new_pcm_data_b_r = false;
     }
 
   /* USER CODE END WHILE */
@@ -459,8 +466,11 @@ void SystemClock_Config(void)
  */
 void HAL_DFSDM_FilterRegConvHalfCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
-  if (!new_pcm_data_a && (hdfsdm_filter == &hdfsdm1_filter0)) {
-    new_pcm_data_a = true;
+  if (!new_pcm_data_a_l && (hdfsdm_filter == &hdfsdm1_filter0)) {
+    //new_pcm_data_a_l = true;
+  }
+  if (!new_pcm_data_a_r && (hdfsdm_filter == &hdfsdm1_filter1)) {
+    new_pcm_data_a_r = true;
   }
 }
 
@@ -473,8 +483,11 @@ void HAL_DFSDM_FilterRegConvHalfCpltCallback(
  */
 void HAL_DFSDM_FilterRegConvCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
-  if (!new_pcm_data_b && (hdfsdm_filter == &hdfsdm1_filter0)) {
-    new_pcm_data_b = true;
+  if (!new_pcm_data_b_l && (hdfsdm_filter == &hdfsdm1_filter0)) {
+    //new_pcm_data_b_l = true;
+  }
+  if (!new_pcm_data_b_r && (hdfsdm_filter == &hdfsdm1_filter1)) {
+    new_pcm_data_b_r = true;
   }
 }
 
