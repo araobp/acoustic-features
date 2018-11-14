@@ -3,7 +3,7 @@
 ### CubeMX
 
 - [CubeMX file for X-NUCLEO-CCA02M1 expansion board](./acoustic_event_detection.ioc)
-- [CubeMX file for my origial Arduino shield](./acoustic_event_detection_arduino_shield.ioc)
+- [CubeMX file for my origial Arduino shield](./acoustic_event_detection_with_arduino_shield.ioc)
 
 ### Making use of DMA
 
