@@ -5,6 +5,8 @@
 - [CubeMX file for X-NUCLEO-CCA02M1 expansion board](./acoustic_event_detection.ioc)
 - [CubeMX file for my origial Arduino shield](./acoustic_event_detection_with_arduino_shield.ioc)
 
+The schematic of my original Knowles MEMS mic Arduino shield is [here](https://github.com/araobp/acoustic-event-detection/tree/master/kicad).
+
 ### Making use of DMA
 
 STMicro's HAL library supports "HAL_DFSDM_FilterRegConvHalfCpltCallback" that is very useful to implemente ring-buffer-like buffering for real-time processing.
