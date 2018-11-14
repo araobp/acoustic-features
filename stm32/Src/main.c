@@ -279,9 +279,9 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_USART2_UART_Init();
-  MX_DFSDM1_Init();
   MX_DAC1_Init();
   MX_TIM6_Init();
+  MX_DFSDM1_Init();
   /* USER CODE BEGIN 2 */
 
   sampling_frequency = SystemCoreClock
