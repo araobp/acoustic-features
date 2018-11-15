@@ -1,5 +1,7 @@
 # Arduino shield of two MEMS mics and Microchip RN4020 BLE module
 
+![](./arduino_shield.jpg)
+
 ## Parts
 
 - [Knowles SPM0405HD4H MEMS microphones](http://akizukidenshi.com/catalog/g/gM-05577/)
