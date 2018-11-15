@@ -2,6 +2,8 @@
 
 ![](./arduino_shield.jpg)
 
+It looks ugly ... I used a lot of zero ohm registors to avoid short circuit.
+
 ## Beam forming support
 
 The board support two MEMS mics, and the distance between mic1 and mic2 is 40mm.
