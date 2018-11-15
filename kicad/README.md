@@ -2,7 +2,7 @@
 
 ![](./arduino_shield.jpg)
 
-It looks ugly ... I used a lot of zero ohm registors to avoid short circuit.
+It looks ugly ... I used a lot of zero ohm registors to avoid short circuit, and a jumper cable to connect DFSDM clock out pin to the two MEMS mics.
 
 ## Beam forming support
 
