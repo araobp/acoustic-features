@@ -58,6 +58,13 @@ def enable_pre_emphasis(enable):
         ser.write(b'p')
     ser.close()
 
+def set_beam_forming(angle):
+    if angle in ('R', 'r', 'c', 'l', 'L'):
+        ser = serial.Serial(PORT, BAUD_RATE)
+        a = angle.encode('ascii')
+        ser.write(a)
+        ser.close()    
+
 def plot_aed(ax, df, cmd):
     
     if cmd == RAW_WAVE:

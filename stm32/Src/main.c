@@ -58,8 +58,11 @@
 
 /* USER CODE BEGIN PV */
 
-// N/2
+// N / 2
 const int NN_HALF = NN / 2;
+
+// N * 2
+const int NN_DOUBLE = NN * 2;
 
 // flag: "new PCM data has just been copied to buf"
 volatile bool new_pcm_data_a_l = false;
@@ -79,6 +82,9 @@ uint8_t rxbuf[1];
 
 // Pre-emphasis toggle
 volatile bool enable_pre_emphasis = true;
+
+// Beam forming
+volatile int beam_forming = 2;  // center
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -250,8 +256,8 @@ int main(void)
   float32_t sampling_frequency;
 
   // DMA peripheral-to-memory double buffer
-  int32_t input_buf_l[NN * 2] = { 0 };
-  int32_t input_buf_r[NN * 2] = { 0 };
+  int32_t input_buf_l[NN * 2 + 5] = { 0 };
+  int32_t input_buf_r[NN * 2 + 5] = { 0 };
 
   // DMA memory-to-peripheral double buffer
   volatile uint16_t dac1_out1_buf[NN * 2] = { 0 };
@@ -307,11 +313,11 @@ int main(void)
   HAL_Delay(1);
 
   // Enable DMA from DFSDM to buf (peripheral to memory)
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_l, NN * 2)
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_l + 5, NN * 2)
       != HAL_OK) {
     Error_Handler();
   }
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_r, NN * 2)
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_r + 5, NN * 2)
       != HAL_OK) {
     Error_Handler();
   }
@@ -334,7 +340,7 @@ int main(void)
 
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
       for (uint32_t n = 0; n < NN; n++) {
-        signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n] >> 9) + (float32_t) (input_buf_r[n] >> 9);
+        signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n+2] >> 9) + (float32_t) (input_buf_r[n+beam_forming] >> 9);
       }
 
       arm_copy_f32(signal_buf, signal, NN);
@@ -360,9 +366,14 @@ int main(void)
         dac1_out2_buf[n] = dac1_out1_buf[n];
       }
 
+      for (int n = 0; n < 5; n++) {
+    	  input_buf_l[n] = input_buf_l[NN_DOUBLE + n];
+    	  input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
+      }
+
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
       for (uint32_t n = 0; n < NN; n++) {
-        signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN] >> 9) + (float32_t) (input_buf_r[n + NN] >> 9);
+        signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) + (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
       }
 
       arm_copy_f32(signal_buf, signal, NN);
@@ -511,12 +522,30 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   char cmd;
   cmd = rxbuf[0];
   switch(cmd) {
+
   case 'P':
     enable_pre_emphasis = true;
     break;
   case 'p':
     enable_pre_emphasis = false;
     break;
+
+  case 'L':
+    beam_forming = 4;
+    break;
+  case 'l':
+    beam_forming = 3;
+    break;
+  case 'c':
+	beam_forming = 2;
+    break;
+  case 'r':
+	beam_forming = 1;
+    break;
+  case 'R':
+	beam_forming = 0;
+    break;
+
   default:
     output_mode = (mode) (cmd - 0x30);
     printing = true;

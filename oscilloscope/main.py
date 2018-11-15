@@ -48,6 +48,7 @@ range_amplitude = Tk.Spinbox(master=root, width=6, values=[2**8, 2**9, 2**11, 2*
 range_filtered = Tk.Spinbox(master=root, width=3, values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
 range_filtered_l = Tk.Spinbox(master=root, width=4, values=[dsp.NUM_FILTERS_L, int(dsp.NUM_FILTERS_L*.7), int(dsp.NUM_FILTERS_L*0.4)])
 range_mfcc = Tk.Spinbox(master=root, width=3, values=[25, 18, 13])
+range_beam_forming = Tk.Spinbox(master=root, width=2, values=['c', 'r', 'R', 'l', 'L'])
 
 cnt = 0
 class_label_ = ''
@@ -125,6 +126,10 @@ def mfcc():
     df_save(df, 'mfcc')
     repeat(mfcc)
 
+def beam_forming():
+    angle = range_beam_forming.get()
+    dsp.set_beam_forming(angle)
+
 def repeat_toggle():
     global repeat_action
     if repeat_action == True:
@@ -184,10 +189,13 @@ button_psd = Tk.Button(master=root, text='FFT', command=fft, bg='lightblue', act
 button_filtered_linear = Tk.Button(master=root, text='Spec', command=filtered_linear, bg='lightblue', activebackground='grey')
 button_filtered_mel = Tk.Button(master=root, text='Mel spec', command=filtered_mel, bg='pink', activebackground='grey')
 button_mfcc = Tk.Button(master=root, text='MFCCs', command=mfcc, bg='yellowgreen', activebackground='grey')
+button_beam_forming = Tk.Button(master=root, text='Beam', command=beam_forming, bg='lightblue', activebackground='grey')
+
 button_repeat = Tk.Button(master=root, text='Repeat', command=repeat_toggle, bg='lightblue', activebackground='grey')
 button_pre_emphasis = Tk.Button(master=root, text='Emphasis', command=pre_emphasis_toggle, bg='red', activebackground='grey')
 button_savefig = Tk.Button(master=root, text='Savefig', command=savefig, bg='lightblue', activebackground='grey')
 button_remove = Tk.Button(master=root, text='Remove', command=remove, bg='lightblue', activebackground='grey')
+
 button_quit = Tk.Button(master=root, text='Quit', command=_quit, bg='yellow', activebackground='grey')
 
 # Class label entry
@@ -226,11 +234,17 @@ button_mfcc.pack(side=Tk.LEFT, padx=1)
 label_seperator6 = Tk.Label(master=root, text=' ')
 label_seperator6.pack(side=Tk.LEFT, padx=1)
 
+# Beam forming
+range_beam_forming.pack(side=Tk.LEFT, padx=1)
+button_beam_forming.pack(side=Tk.LEFT, padx=1)
+label_seperator7 = Tk.Label(master=root, text=' ')
+label_seperator7.pack(side=Tk.LEFT, padx=1)
+
 # CMAP
 label_cmap.pack(side=Tk.LEFT, padx=1)
 cmap.pack(side=Tk.LEFT, padx=1)
-label_seperator6 = Tk.Label(master=root, text=' ')
-label_seperator6.pack(side=Tk.LEFT, padx=1)
+label_seperator8 = Tk.Label(master=root, text=' ')
+label_seperator8.pack(side=Tk.LEFT, padx=1)
 
 # Repeat, pre_emphasis, save fig and delete
 button_repeat.pack(side=Tk.LEFT, padx=1)
