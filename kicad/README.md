@@ -2,6 +2,10 @@
 
 ![](./arduino_shield.jpg)
 
+## Beam forming support
+
+The board support two MEMS mics, and the distance between mic1 and mic2 is 40mm.
+
 ## Parts
 
 - [Knowles SPM0405HD4H MEMS microphones](http://akizukidenshi.com/catalog/g/gM-05577/)
