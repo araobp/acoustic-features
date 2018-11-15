@@ -313,11 +313,11 @@ int main(void)
   HAL_Delay(1);
 
   // Enable DMA from DFSDM to buf (peripheral to memory)
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_l + 5, NN * 2)
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_r + 5, NN * 2)
       != HAL_OK) {
     Error_Handler();
   }
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_r + 5, NN * 2)
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_l + 5, NN * 2)
       != HAL_OK) {
     Error_Handler();
   }
@@ -331,7 +331,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
     // Wait for next PCM samples from M1
-    if (new_pcm_data_a_r) {
+    if (new_pcm_data_a_l) {
 
       for (uint32_t n = 0; n < NN; n++) {
         dac1_out1_buf[n] = (uint16_t) ((input_buf_l[n] >> 13) + 2048);
@@ -355,11 +355,11 @@ int main(void)
         printing = uart_tx(signal, output_mode, true);
       }
 
-      new_pcm_data_a_r = false;
+      new_pcm_data_a_l = false;
 
     }
 
-    if (new_pcm_data_b_r) {
+    if (new_pcm_data_b_l) {
 
       for (uint32_t n = NN; n < NN * 2; n++) {
         dac1_out1_buf[n] = (uint16_t) ((input_buf_l[n] >> 13) + 2048);
@@ -388,7 +388,7 @@ int main(void)
         printing = uart_tx(signal, output_mode, true);
       }
 
-      new_pcm_data_b_r = false;
+      new_pcm_data_b_l = false;
     }
 
   /* USER CODE END WHILE */
@@ -478,10 +478,10 @@ void SystemClock_Config(void)
 void HAL_DFSDM_FilterRegConvHalfCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
   if (!new_pcm_data_a_l && (hdfsdm_filter == &hdfsdm1_filter0)) {
-    //new_pcm_data_a_l = true;
+    new_pcm_data_a_l = true;
   }
   if (!new_pcm_data_a_r && (hdfsdm_filter == &hdfsdm1_filter1)) {
-    new_pcm_data_a_r = true;
+    //new_pcm_data_a_r = true;
   }
 }
 
@@ -495,10 +495,10 @@ void HAL_DFSDM_FilterRegConvHalfCpltCallback(
 void HAL_DFSDM_FilterRegConvCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
   if (!new_pcm_data_b_l && (hdfsdm_filter == &hdfsdm1_filter0)) {
-    //new_pcm_data_b_l = true;
+    new_pcm_data_b_l = true;
   }
   if (!new_pcm_data_b_r && (hdfsdm_filter == &hdfsdm1_filter1)) {
-    new_pcm_data_b_r = true;
+    //new_pcm_data_b_r = true;
   }
 }
 

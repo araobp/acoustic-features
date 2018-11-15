@@ -9769,28 +9769,28 @@ void SystemClock_Config(void)
  80043e6:	48ac      	ldr	r0, [pc, #688]	; (8004698 <main+0x398>)
  80043e8:	f7fc ff08 	bl	80011fc <HAL_DAC_Start>
   HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_2, (uint32_t*) dac1_out2_buf, NN * 2,
- 80043ec:	f44f 6380 	mov.w	r3, #1024	; 0x400
- 80043f0:	463a      	mov	r2, r7
- 80043f2:	2110      	movs	r1, #16
+ 80043ec:	463a      	mov	r2, r7
+ 80043ee:	2110      	movs	r1, #16
+ 80043f0:	f44f 6380 	mov.w	r3, #1024	; 0x400
  80043f4:	f8cd 9000 	str.w	r9, [sp]
  80043f8:	48a7      	ldr	r0, [pc, #668]	; (8004698 <main+0x398>)
  80043fa:	f7fc ff29 	bl	8001250 <HAL_DAC_Start_DMA>
   HAL_Delay(1);
  80043fe:	2001      	movs	r0, #1
  8004400:	f7fc fe62 	bl	80010c8 <HAL_Delay>
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_l + 5, NN * 2)
- 8004404:	f50d 5310 	add.w	r3, sp, #9216	; 0x2400
- 8004408:	3330      	adds	r3, #48	; 0x30
- 800440a:	f44f 6280 	mov.w	r2, #1024	; 0x400
- 800440e:	f1a3 0114 	sub.w	r1, r3, #20
- 8004412:	4640      	mov	r0, r8
- 8004414:	f7fd f9a6 	bl	8001764 <HAL_DFSDM_FilterRegularStart_DMA>
- 8004418:	b100      	cbz	r0, 800441c <main+0x11c>
- 800441a:	e7fe      	b.n	800441a <main+0x11a>
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_r + 5, NN * 2)
- 800441c:	f50d 5150 	add.w	r1, sp, #13312	; 0x3400
- 8004420:	f44f 6280 	mov.w	r2, #1024	; 0x400
- 8004424:	3130      	adds	r1, #48	; 0x30
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_r + 5, NN * 2)
+ 8004404:	f50d 5150 	add.w	r1, sp, #13312	; 0x3400
+ 8004408:	f44f 6280 	mov.w	r2, #1024	; 0x400
+ 800440c:	3130      	adds	r1, #48	; 0x30
+ 800440e:	4640      	mov	r0, r8
+ 8004410:	f7fd f9a8 	bl	8001764 <HAL_DFSDM_FilterRegularStart_DMA>
+ 8004414:	b100      	cbz	r0, 8004418 <main+0x118>
+ 8004416:	e7fe      	b.n	8004416 <main+0x116>
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_l + 5, NN * 2)
+ 8004418:	f50d 5310 	add.w	r3, sp, #9216	; 0x2400
+ 800441c:	3330      	adds	r3, #48	; 0x30
+ 800441e:	f44f 6280 	mov.w	r2, #1024	; 0x400
+ 8004422:	f1a3 0114 	sub.w	r1, r3, #20
  8004426:	489d      	ldr	r0, [pc, #628]	; (800469c <main+0x39c>)
  8004428:	f7fd f99c 	bl	8001764 <HAL_DFSDM_FilterRegularStart_DMA>
  800442c:	b100      	cbz	r0, 8004430 <main+0x130>
@@ -9799,13 +9799,13 @@ void SystemClock_Config(void)
  8004430:	2201      	movs	r2, #1
  8004432:	499b      	ldr	r1, [pc, #620]	; (80046a0 <main+0x3a0>)
  8004434:	489b      	ldr	r0, [pc, #620]	; (80046a4 <main+0x3a4>)
-    if (new_pcm_data_a_r) {
+    if (new_pcm_data_a_l) {
  8004436:	f8df a270 	ldr.w	sl, [pc, #624]	; 80046a8 <main+0x3a8>
         signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n+2] >> 9) + (float32_t) (input_buf_r[n+beam_forming] >> 9);
  800443a:	f8df b278 	ldr.w	fp, [pc, #632]	; 80046b4 <main+0x3b4>
   HAL_UART_Receive_IT(&huart2, rxbuf, 1);
  800443e:	f7fe fb5b 	bl	8002af8 <HAL_UART_Receive_IT>
-    if (new_pcm_data_a_r) {
+    if (new_pcm_data_a_l) {
  8004442:	f89a 3000 	ldrb.w	r3, [sl]
  8004446:	2b00      	cmp	r3, #0
  8004448:	f000 8085 	beq.w	8004556 <main+0x256>
@@ -9910,11 +9910,11 @@ void SystemClock_Config(void)
  8004546:	3008      	adds	r0, #8
  8004548:	f7ff fd86 	bl	8004058 <uart_tx>
  800454c:	f888 0000 	strb.w	r0, [r8]
-      new_pcm_data_a_r = false;
+      new_pcm_data_a_l = false;
  8004550:	4a55      	ldr	r2, [pc, #340]	; (80046a8 <main+0x3a8>)
  8004552:	2300      	movs	r3, #0
  8004554:	7013      	strb	r3, [r2, #0]
-    if (new_pcm_data_b_r) {
+    if (new_pcm_data_b_l) {
  8004556:	4b55      	ldr	r3, [pc, #340]	; (80046ac <main+0x3ac>)
  8004558:	781b      	ldrb	r3, [r3, #0]
  800455a:	2b00      	cmp	r3, #0
@@ -10036,7 +10036,7 @@ void SystemClock_Config(void)
  800467a:	3008      	adds	r0, #8
  800467c:	f7ff fcec 	bl	8004058 <uart_tx>
  8004680:	f888 0000 	strb.w	r0, [r8]
-      new_pcm_data_b_r = false;
+      new_pcm_data_b_l = false;
  8004684:	4a09      	ldr	r2, [pc, #36]	; (80046ac <main+0x3ac>)
  8004686:	2300      	movs	r3, #0
  8004688:	7013      	strb	r3, [r2, #0]
@@ -10048,8 +10048,8 @@ void SystemClock_Config(void)
  800469c:	20013664 	.word	0x20013664
  80046a0:	2001372c 	.word	0x2001372c
  80046a4:	200137b8 	.word	0x200137b8
- 80046a8:	2001248d 	.word	0x2001248d
- 80046ac:	2001248f 	.word	0x2001248f
+ 80046a8:	2001248c 	.word	0x2001248c
+ 80046ac:	2001248e 	.word	0x2001248e
  80046b0:	20013548 	.word	0x20013548
  80046b4:	20000008 	.word	0x20000008
  80046b8:	2000000e 	.word	0x2000000e
@@ -10063,24 +10063,23 @@ void HAL_DFSDM_FilterRegConvHalfCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
   if (!new_pcm_data_a_l && (hdfsdm_filter == &hdfsdm1_filter0)) {
  80046c0:	4b05      	ldr	r3, [pc, #20]	; (80046d8 <HAL_DFSDM_FilterRegConvHalfCpltCallback+0x18>)
- 80046c2:	781b      	ldrb	r3, [r3, #0]
-    //new_pcm_data_a_l = true;
+ 80046c2:	781a      	ldrb	r2, [r3, #0]
+ 80046c4:	b922      	cbnz	r2, 80046d0 <HAL_DFSDM_FilterRegConvHalfCpltCallback+0x10>
+ 80046c6:	4a05      	ldr	r2, [pc, #20]	; (80046dc <HAL_DFSDM_FilterRegConvHalfCpltCallback+0x1c>)
+ 80046c8:	4290      	cmp	r0, r2
+    new_pcm_data_a_l = true;
+ 80046ca:	bf04      	itt	eq
+ 80046cc:	2201      	moveq	r2, #1
+ 80046ce:	701a      	strbeq	r2, [r3, #0]
   }
   if (!new_pcm_data_a_r && (hdfsdm_filter == &hdfsdm1_filter1)) {
- 80046c4:	4b05      	ldr	r3, [pc, #20]	; (80046dc <HAL_DFSDM_FilterRegConvHalfCpltCallback+0x1c>)
- 80046c6:	781a      	ldrb	r2, [r3, #0]
- 80046c8:	b922      	cbnz	r2, 80046d4 <HAL_DFSDM_FilterRegConvHalfCpltCallback+0x14>
- 80046ca:	4a05      	ldr	r2, [pc, #20]	; (80046e0 <HAL_DFSDM_FilterRegConvHalfCpltCallback+0x20>)
- 80046cc:	4290      	cmp	r0, r2
-    new_pcm_data_a_r = true;
- 80046ce:	bf04      	itt	eq
- 80046d0:	2201      	moveq	r2, #1
- 80046d2:	701a      	strbeq	r2, [r3, #0]
+ 80046d0:	4b03      	ldr	r3, [pc, #12]	; (80046e0 <HAL_DFSDM_FilterRegConvHalfCpltCallback+0x20>)
+ 80046d2:	781b      	ldrb	r3, [r3, #0]
  80046d4:	4770      	bx	lr
  80046d6:	bf00      	nop
  80046d8:	2001248c 	.word	0x2001248c
- 80046dc:	2001248d 	.word	0x2001248d
- 80046e0:	20013664 	.word	0x20013664
+ 80046dc:	20013548 	.word	0x20013548
+ 80046e0:	2001248d 	.word	0x2001248d
 
 080046e4 <HAL_DFSDM_FilterRegConvCpltCallback>:
  * @param  hdfsdm_filter : DFSDM filter handle.
@@ -10090,24 +10089,23 @@ void HAL_DFSDM_FilterRegConvCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
   if (!new_pcm_data_b_l && (hdfsdm_filter == &hdfsdm1_filter0)) {
  80046e4:	4b05      	ldr	r3, [pc, #20]	; (80046fc <HAL_DFSDM_FilterRegConvCpltCallback+0x18>)
- 80046e6:	781b      	ldrb	r3, [r3, #0]
-    //new_pcm_data_b_l = true;
+ 80046e6:	781a      	ldrb	r2, [r3, #0]
+ 80046e8:	b922      	cbnz	r2, 80046f4 <HAL_DFSDM_FilterRegConvCpltCallback+0x10>
+ 80046ea:	4a05      	ldr	r2, [pc, #20]	; (8004700 <HAL_DFSDM_FilterRegConvCpltCallback+0x1c>)
+ 80046ec:	4290      	cmp	r0, r2
+    new_pcm_data_b_l = true;
+ 80046ee:	bf04      	itt	eq
+ 80046f0:	2201      	moveq	r2, #1
+ 80046f2:	701a      	strbeq	r2, [r3, #0]
   }
   if (!new_pcm_data_b_r && (hdfsdm_filter == &hdfsdm1_filter1)) {
- 80046e8:	4b05      	ldr	r3, [pc, #20]	; (8004700 <HAL_DFSDM_FilterRegConvCpltCallback+0x1c>)
- 80046ea:	781a      	ldrb	r2, [r3, #0]
- 80046ec:	b922      	cbnz	r2, 80046f8 <HAL_DFSDM_FilterRegConvCpltCallback+0x14>
- 80046ee:	4a05      	ldr	r2, [pc, #20]	; (8004704 <HAL_DFSDM_FilterRegConvCpltCallback+0x20>)
- 80046f0:	4290      	cmp	r0, r2
-    new_pcm_data_b_r = true;
- 80046f2:	bf04      	itt	eq
- 80046f4:	2201      	moveq	r2, #1
- 80046f6:	701a      	strbeq	r2, [r3, #0]
+ 80046f4:	4b03      	ldr	r3, [pc, #12]	; (8004704 <HAL_DFSDM_FilterRegConvCpltCallback+0x20>)
+ 80046f6:	781b      	ldrb	r3, [r3, #0]
  80046f8:	4770      	bx	lr
  80046fa:	bf00      	nop
  80046fc:	2001248e 	.word	0x2001248e
- 8004700:	2001248f 	.word	0x2001248f
- 8004704:	20013664 	.word	0x20013664
+ 8004700:	20013548 	.word	0x20013548
+ 8004704:	2001248f 	.word	0x2001248f
 
 08004708 <_write>:
 /**
