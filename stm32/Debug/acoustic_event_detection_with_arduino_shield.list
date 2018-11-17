@@ -33,17 +33,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  14 .debug_ranges 000015b8  00000000  00000000  000635d8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_line   0000afb0  00000000  00000000  00064b90  2**0
+ 15 .debug_line   0000afb2  00000000  00000000  00064b90  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_str    000073c9  00000000  00000000  0006fb40  2**0
+ 16 .debug_str    000073c9  00000000  00000000  0006fb42  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .comment      000000ea  00000000  00000000  00076f09  2**0
+ 17 .comment      000000ea  00000000  00000000  00076f0b  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  0000476c  00000000  00000000  00076ff4  2**2
+ 18 .debug_frame  0000476c  00000000  00000000  00076ff8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 19 .stab         00000084  00000000  00000000  0007b760  2**2
+ 19 .stab         00000084  00000000  00000000  0007b764  2**2
                   CONTENTS, READONLY, DEBUGGING
- 20 .stabstr      00000117  00000000  00000000  0007b7e4  2**0
+ 20 .stabstr      00000117  00000000  00000000  0007b7e8  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -9671,7 +9671,7 @@ void SystemClock_Config(void)
  8004300:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
  8004304:	f5ad 4d88 	sub.w	sp, sp, #17408	; 0x4400
  8004308:	b08d      	sub	sp, #52	; 0x34
-  int32_t input_buf_l[NN * 2 + 5] = { 0 };
+  int32_t input_buf_r[NN * 2 + 5] = { 0 };
  800430a:	f50d 5310 	add.w	r3, sp, #9216	; 0x2400
  800430e:	3330      	adds	r3, #48	; 0x30
  8004310:	f1a3 0528 	sub.w	r5, r3, #40	; 0x28
@@ -9679,7 +9679,7 @@ void SystemClock_Config(void)
  8004318:	2100      	movs	r1, #0
  800431a:	4628      	mov	r0, r5
  800431c:	f002 f9c0 	bl	80066a0 <memset>
-  int32_t input_buf_r[NN * 2 + 5] = { 0 };
+  int32_t input_buf_l[NN * 2 + 5] = { 0 };
  8004320:	f50d 5350 	add.w	r3, sp, #13312	; 0x3400
  8004324:	3330      	adds	r3, #48	; 0x30
  8004326:	f1a3 0614 	sub.w	r6, r3, #20
@@ -9687,7 +9687,7 @@ void SystemClock_Config(void)
  800432e:	2100      	movs	r1, #0
   volatile uint16_t dac1_out1_buf[NN * 2] = { 0 };
  8004330:	ac02      	add	r4, sp, #8
-  int32_t input_buf_r[NN * 2 + 5] = { 0 };
+  int32_t input_buf_l[NN * 2 + 5] = { 0 };
  8004332:	4630      	mov	r0, r6
  8004334:	f002 f9b4 	bl	80066a0 <memset>
   volatile uint16_t dac1_out2_buf[NN * 2] = { 0 };
@@ -9769,9 +9769,9 @@ void SystemClock_Config(void)
  80043e6:	48ac      	ldr	r0, [pc, #688]	; (8004698 <main+0x398>)
  80043e8:	f7fc ff08 	bl	80011fc <HAL_DAC_Start>
   HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_2, (uint32_t*) dac1_out2_buf, NN * 2,
- 80043ec:	463a      	mov	r2, r7
- 80043ee:	2110      	movs	r1, #16
- 80043f0:	f44f 6380 	mov.w	r3, #1024	; 0x400
+ 80043ec:	f44f 6380 	mov.w	r3, #1024	; 0x400
+ 80043f0:	463a      	mov	r2, r7
+ 80043f2:	2110      	movs	r1, #16
  80043f4:	f8cd 9000 	str.w	r9, [sp]
  80043f8:	48a7      	ldr	r0, [pc, #668]	; (8004698 <main+0x398>)
  80043fa:	f7fc ff29 	bl	8001250 <HAL_DAC_Start_DMA>
@@ -9779,18 +9779,18 @@ void SystemClock_Config(void)
  80043fe:	2001      	movs	r0, #1
  8004400:	f7fc fe62 	bl	80010c8 <HAL_Delay>
   if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_r + 5, NN * 2)
- 8004404:	f50d 5150 	add.w	r1, sp, #13312	; 0x3400
- 8004408:	f44f 6280 	mov.w	r2, #1024	; 0x400
- 800440c:	3130      	adds	r1, #48	; 0x30
- 800440e:	4640      	mov	r0, r8
- 8004410:	f7fd f9a8 	bl	8001764 <HAL_DFSDM_FilterRegularStart_DMA>
- 8004414:	b100      	cbz	r0, 8004418 <main+0x118>
- 8004416:	e7fe      	b.n	8004416 <main+0x116>
+ 8004404:	f50d 5310 	add.w	r3, sp, #9216	; 0x2400
+ 8004408:	3330      	adds	r3, #48	; 0x30
+ 800440a:	f44f 6280 	mov.w	r2, #1024	; 0x400
+ 800440e:	f1a3 0114 	sub.w	r1, r3, #20
+ 8004412:	4640      	mov	r0, r8
+ 8004414:	f7fd f9a6 	bl	8001764 <HAL_DFSDM_FilterRegularStart_DMA>
+ 8004418:	b100      	cbz	r0, 800441c <main+0x11c>
+ 800441a:	e7fe      	b.n	800441a <main+0x11a>
   if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_l + 5, NN * 2)
- 8004418:	f50d 5310 	add.w	r3, sp, #9216	; 0x2400
- 800441c:	3330      	adds	r3, #48	; 0x30
- 800441e:	f44f 6280 	mov.w	r2, #1024	; 0x400
- 8004422:	f1a3 0114 	sub.w	r1, r3, #20
+ 800441c:	f50d 5150 	add.w	r1, sp, #13312	; 0x3400
+ 8004420:	f44f 6280 	mov.w	r2, #1024	; 0x400
+ 8004424:	3130      	adds	r1, #48	; 0x30
  8004426:	489d      	ldr	r0, [pc, #628]	; (800469c <main+0x39c>)
  8004428:	f7fd f99c 	bl	8001764 <HAL_DFSDM_FilterRegularStart_DMA>
  800442c:	b100      	cbz	r0, 8004430 <main+0x130>
@@ -9811,7 +9811,7 @@ void SystemClock_Config(void)
  8004448:	f000 8085 	beq.w	8004556 <main+0x256>
  800444c:	2300      	movs	r3, #0
         dac1_out1_buf[n] = (uint16_t) ((input_buf_l[n] >> 13) + 2048);
- 800444e:	f855 2023 	ldr.w	r2, [r5, r3, lsl #2]
+ 800444e:	f856 2023 	ldr.w	r2, [r6, r3, lsl #2]
  8004452:	1352      	asrs	r2, r2, #13
  8004454:	f502 6200 	add.w	r2, r2, #2048	; 0x800
  8004458:	b292      	uxth	r2, r2
@@ -9832,9 +9832,9 @@ void SystemClock_Config(void)
  800447e:	f44f 7280 	mov.w	r2, #256	; 0x100
  8004482:	3108      	adds	r1, #8
  8004484:	f000 fb20 	bl	8004ac8 <arm_copy_f32>
- 8004488:	f50d 5310 	add.w	r3, sp, #9216	; 0x2400
+ 8004488:	f50d 5350 	add.w	r3, sp, #13312	; 0x3400
  800448c:	3330      	adds	r3, #48	; 0x30
- 800448e:	f1a3 0024 	sub.w	r0, r3, #36	; 0x24
+ 800448e:	f1a3 0010 	sub.w	r0, r3, #16
  8004492:	f50d 53c1 	add.w	r3, sp, #6176	; 0x1820
  8004496:	3310      	adds	r3, #16
  8004498:	f503 7176 	add.w	r1, r3, #984	; 0x3d8
@@ -9846,7 +9846,7 @@ void SystemClock_Config(void)
       for (uint32_t n = 0; n < NN; n++) {
  80044a4:	3201      	adds	r2, #1
         signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n+2] >> 9) + (float32_t) (input_buf_r[n+beam_forming] >> 9);
- 80044a6:	f856 3023 	ldr.w	r3, [r6, r3, lsl #2]
+ 80044a6:	f855 3023 	ldr.w	r3, [r5, r3, lsl #2]
  80044aa:	125b      	asrs	r3, r3, #9
  80044ac:	ee07 3a90 	vmov	s15, r3
  80044b0:	f850 3f04 	ldr.w	r3, [r0, #4]!
@@ -9921,7 +9921,7 @@ void SystemClock_Config(void)
  800455c:	f43f af71 	beq.w	8004442 <main+0x142>
  8004560:	f44f 7300 	mov.w	r3, #512	; 0x200
         dac1_out1_buf[n] = (uint16_t) ((input_buf_l[n] >> 13) + 2048);
- 8004564:	f855 2023 	ldr.w	r2, [r5, r3, lsl #2]
+ 8004564:	f856 2023 	ldr.w	r2, [r6, r3, lsl #2]
  8004568:	1352      	asrs	r2, r2, #13
  800456a:	f502 6200 	add.w	r2, r2, #2048	; 0x800
  800456e:	b292      	uxth	r2, r2
@@ -9938,13 +9938,13 @@ void SystemClock_Config(void)
  8004588:	009a      	lsls	r2, r3, #2
     	  input_buf_l[n] = input_buf_l[NN_DOUBLE + n];
  800458a:	f502 5280 	add.w	r2, r2, #4096	; 0x1000
- 800458e:	58a9      	ldr	r1, [r5, r2]
+ 800458e:	58b1      	ldr	r1, [r6, r2]
     	  input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
- 8004590:	58b2      	ldr	r2, [r6, r2]
+ 8004590:	58aa      	ldr	r2, [r5, r2]
     	  input_buf_l[n] = input_buf_l[NN_DOUBLE + n];
- 8004592:	f845 1023 	str.w	r1, [r5, r3, lsl #2]
+ 8004592:	f846 1023 	str.w	r1, [r6, r3, lsl #2]
     	  input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
- 8004596:	f846 2023 	str.w	r2, [r6, r3, lsl #2]
+ 8004596:	f845 2023 	str.w	r2, [r5, r3, lsl #2]
       for (int n = 0; n < 5; n++) {
  800459a:	3301      	adds	r3, #1
  800459c:	2b05      	cmp	r3, #5
@@ -9957,9 +9957,9 @@ void SystemClock_Config(void)
  80045ae:	f44f 7280 	mov.w	r2, #256	; 0x100
  80045b2:	3108      	adds	r1, #8
  80045b4:	f000 fa88 	bl	8004ac8 <arm_copy_f32>
- 80045b8:	f50d 5310 	add.w	r3, sp, #9216	; 0x2400
+ 80045b8:	f50d 5350 	add.w	r3, sp, #13312	; 0x3400
  80045bc:	3330      	adds	r3, #48	; 0x30
- 80045be:	f203 70dc 	addw	r0, r3, #2012	; 0x7dc
+ 80045be:	f503 60fe 	add.w	r0, r3, #2032	; 0x7f0
  80045c2:	f50d 53c1 	add.w	r3, sp, #6176	; 0x1820
  80045c6:	3310      	adds	r3, #16
  80045c8:	f503 7176 	add.w	r1, r3, #984	; 0x3d8
@@ -9972,7 +9972,7 @@ void SystemClock_Config(void)
       for (uint32_t n = 0; n < NN; n++) {
  80045d8:	3201      	adds	r2, #1
         signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) + (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
- 80045da:	f856 3023 	ldr.w	r3, [r6, r3, lsl #2]
+ 80045da:	f855 3023 	ldr.w	r3, [r5, r3, lsl #2]
  80045de:	125b      	asrs	r3, r3, #9
  80045e0:	ee07 3a90 	vmov	s15, r3
  80045e4:	f850 3f04 	ldr.w	r3, [r0, #4]!
@@ -10144,14 +10144,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
  8004730:	20012491 	.word	0x20012491
 
 08004734 <HAL_UART_RxCpltCallback>:
-  }
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   char cmd;
+
   cmd = rxbuf[0];
  8004734:	4b16      	ldr	r3, [pc, #88]	; (8004790 <HAL_UART_RxCpltCallback+0x5c>)
  8004736:	781b      	ldrb	r3, [r3, #0]
+
   switch(cmd) {
  8004738:	2b63      	cmp	r3, #99	; 0x63
  800473a:	d01c      	beq.n	8004776 <HAL_UART_RxCpltCallback+0x42>
@@ -10162,10 +10163,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
  8004744:	d01b      	beq.n	800477e <HAL_UART_RxCpltCallback+0x4a>
  8004746:	2b4c      	cmp	r3, #76	; 0x4c
  8004748:	d11b      	bne.n	8004782 <HAL_UART_RxCpltCallback+0x4e>
-  case 'p':
     enable_pre_emphasis = false;
     break;
 
+    // Beam forming
   case 'L':
     beam_forming = 4;
  800474a:	2204      	movs	r2, #4
@@ -10177,11 +10178,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	beam_forming = 0;
  800474c:	4b11      	ldr	r3, [pc, #68]	; (8004794 <HAL_UART_RxCpltCallback+0x60>)
  800474e:	601a      	str	r2, [r3, #0]
-  default:
     output_mode = (mode) (cmd - 0x30);
     printing = true;
     break;
   }
+
   HAL_UART_Receive_IT(&huart2, rxbuf, 1);
  8004750:	2201      	movs	r2, #1
  8004752:	490f      	ldr	r1, [pc, #60]	; (8004790 <HAL_UART_RxCpltCallback+0x5c>)

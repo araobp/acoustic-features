@@ -256,8 +256,8 @@ int main(void)
   float32_t sampling_frequency;
 
   // DMA peripheral-to-memory double buffer
-  int32_t input_buf_l[NN * 2 + 5] = { 0 };
   int32_t input_buf_r[NN * 2 + 5] = { 0 };
+  int32_t input_buf_l[NN * 2 + 5] = { 0 };
 
   // DMA memory-to-peripheral double buffer
   volatile uint16_t dac1_out1_buf[NN * 2] = { 0 };
@@ -520,9 +520,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   char cmd;
+
   cmd = rxbuf[0];
+
   switch(cmd) {
 
+  // Pre-emphasis
   case 'P':
     enable_pre_emphasis = true;
     break;
@@ -530,6 +533,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     enable_pre_emphasis = false;
     break;
 
+    // Beam forming
   case 'L':
     beam_forming = 4;
     break;
@@ -546,11 +550,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	beam_forming = 0;
     break;
 
+    // The others
   default:
     output_mode = (mode) (cmd - 0x30);
     printing = true;
     break;
   }
+
   HAL_UART_Receive_IT(&huart2, rxbuf, 1);
 }
 

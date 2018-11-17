@@ -7,4 +7,4 @@ main.c:495:6:HAL_DFSDM_FilterRegConvCpltCallback	0	static
 main.c:510:5:_write	8	static
 main.c:515:6:HAL_GPIO_EXTI_Callback	0	static
 main.c:521:6:HAL_UART_RxCpltCallback	0	static
-main.c:565:6:_Error_Handler	0	static
+main.c:571:6:_Error_Handler	0	static

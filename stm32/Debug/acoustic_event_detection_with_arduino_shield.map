@@ -3686,7 +3686,7 @@ OUTPUT(acoustic_event_detection_with_arduino_shield.elf elf32-littlearm)
  .debug_ranges  0x00001598       0x10 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
  .debug_ranges  0x000015a8       0x10 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
-.debug_line     0x00000000     0xafb0
+.debug_line     0x00000000     0xafb2
  .debug_line    0x00000000      0x455 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
  .debug_line    0x00000455      0x451 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.o
  .debug_line    0x000008a6      0x4c5 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dac.o
@@ -3706,32 +3706,32 @@ OUTPUT(acoustic_event_detection_with_arduino_shield.elf elf32-littlearm)
  .debug_line    0x000069a1      0x202 Src\dma.o
  .debug_line    0x00006ba3      0x565 Src\dsp.o
  .debug_line    0x00007108      0x21b Src\gpio.o
- .debug_line    0x00007323      0x68b Src\main.o
- .debug_line    0x000079ae      0x20a Src\stm32l4xx_hal_msp.o
- .debug_line    0x00007bb8      0x2e0 Src\stm32l4xx_it.o
- .debug_line    0x00007e98      0x248 Src\system_stm32l4xx.o
- .debug_line    0x000080e0      0x278 Src\tim.o
- .debug_line    0x00008358      0x2d1 Src\usart.o
- .debug_line    0x00008629       0x7f startup\startup_stm32l476xx.o
- .debug_line    0x000086a8      0x156 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
- .debug_line    0x000087fe      0x15c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
- .debug_line    0x0000895a      0x167 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
- .debug_line    0x00008ac1      0x1b5 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_line    0x00008c76      0x2b2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
- .debug_line    0x00008f28      0x73e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
- .debug_line    0x00009666      0x157 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
- .debug_line    0x000097bd      0x31c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
- .debug_line    0x00009ad9      0x1c8 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
- .debug_line    0x00009ca1      0x216 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
- .debug_line    0x00009eb7      0x17c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_line    0x0000a033      0x175 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_line    0x0000a1a8      0x168 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
- .debug_line    0x0000a310      0x169 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
- .debug_line    0x0000a479      0x175 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
- .debug_line    0x0000a5ee      0x16a ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
- .debug_line    0x0000a758      0x135 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_common_tables.o)
- .debug_line    0x0000a88d       0xa2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
- .debug_line    0x0000a92f      0x681 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+ .debug_line    0x00007323      0x68d Src\main.o
+ .debug_line    0x000079b0      0x20a Src\stm32l4xx_hal_msp.o
+ .debug_line    0x00007bba      0x2e0 Src\stm32l4xx_it.o
+ .debug_line    0x00007e9a      0x248 Src\system_stm32l4xx.o
+ .debug_line    0x000080e2      0x278 Src\tim.o
+ .debug_line    0x0000835a      0x2d1 Src\usart.o
+ .debug_line    0x0000862b       0x7f startup\startup_stm32l476xx.o
+ .debug_line    0x000086aa      0x156 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
+ .debug_line    0x00008800      0x15c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
+ .debug_line    0x0000895c      0x167 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
+ .debug_line    0x00008ac3      0x1b5 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_line    0x00008c78      0x2b2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_line    0x00008f2a      0x73e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_line    0x00009668      0x157 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
+ .debug_line    0x000097bf      0x31c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
+ .debug_line    0x00009adb      0x1c8 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
+ .debug_line    0x00009ca3      0x216 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
+ .debug_line    0x00009eb9      0x17c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_line    0x0000a035      0x175 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_line    0x0000a1aa      0x168 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_line    0x0000a312      0x169 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
+ .debug_line    0x0000a47b      0x175 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
+ .debug_line    0x0000a5f0      0x16a ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
+ .debug_line    0x0000a75a      0x135 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_line    0x0000a88f       0xa2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
+ .debug_line    0x0000a931      0x681 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
 .debug_str      0x00000000     0x73c9
  .debug_str     0x00000000      0xc8b Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
