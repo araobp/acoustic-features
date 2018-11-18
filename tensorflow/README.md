@@ -150,7 +150,7 @@ I am looking forward to CubeMX.AI: https://www.st.com/content/st_com/en/about/in
 
 Since CubeMX.AI is not available yet, I made a simple agent that runs on PC.
 
-Just run [this agent](./tensorflow/agent.py).
+Just run [this agent](./agent.py).
 
 ```
 <<< (17) this is framenco_guitar (85.7%) >>>
@@ -160,9 +160,3 @@ framenco_guitar: 85.7%
 piano: 0.5%
 tin_whistle: 0.0%
 ```
-
-#### Interesting findings
-
-- I mainly used songs played by a classical guitarist S for training CNN, and I tried to recognise songs played by a guitarist M using the trained model. The model always recognised M's guitar play as "piano". The same trend was seen on framenco guitarists. I think guitarists today play a guitar like a piano???
-
-
