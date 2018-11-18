@@ -26,7 +26,6 @@ FRAME_LENGTH[FILTERED_MEL] = 40 * 200
 FRAME_LENGTH[MFCC] = 40 * 200
 FRAME_LENGTH[FILTERED_LINEAR] = 255 * 200
 
-
 ## Note: dirty but simplest way for setting attributes from a main program 
 range_waveform = 2**9
 range_filtered = NUM_FILTERS
@@ -40,18 +39,12 @@ def serial_read(cmd):
     id_ = 0
     n = 0
 
-    length = 0
-
-    if cmd == RAW_WAVE:
-        length = 1024
-    
     ser.write(cmd)
     rx = ser.read(FRAME_LENGTH[cmd])
     for d in rx:
         n += 1
         d =  int.from_bytes([int(d)], byteorder='little', signed=True)
         data.append((0,n,d))
-
     ser.close()
 
     labels = ['id', 'n', 'magnitude']
