@@ -164,20 +164,21 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   } else {   // dump time-series signal
 
     for (int n = 0; n < length; n++) {
-      idx += sprintf(&uart_buf[idx], "%ld,", (int32_t) in[n]);
+      //idx += sprintf(&uart_buf[idx], "%ld,", (int32_t) in[n]);
+      uart_buf[idx++] = (int8_t) in[n];
     }
 
     if (--cnt == 0) {
-      idx += sprintf(&uart_buf[idx], "e\n");  // transmission end
+      //idx += sprintf(&uart_buf[idx], "e\n");  // transmission end
       HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
       printing = false;
     } else if (dma_start) {
-      idx += sprintf(&uart_buf[idx], "d\n");  // delimiter
+      //idx += sprintf(&uart_buf[idx], "d\n");  // delimiter
       HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
       idx = 0;
       printing = true;
     } else {
-      idx += sprintf(&uart_buf[idx], "d\n");  // delimiter
+      //idx += sprintf(&uart_buf[idx], "d\n");  // delimiter
       printing = true;
     }
   }
