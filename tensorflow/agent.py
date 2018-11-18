@@ -18,7 +18,9 @@ MODEL = './cnn_for_aed_20181111211558.h5'
 FILTERED_MEL = b'3'
 #PORT = 'COM15'
 PORT = '/dev/serial/by-id/usb-STMicroelectronics_STM32_STLink_066BFF323532543457234431-if02' 
-BAUD_RATE = 921600
+BAUD_RATE = 460800 
+
+FRAME_LENGTH = 40 * 200
 
 
 def serial_read():
@@ -28,14 +30,11 @@ def serial_read():
     n = 0
     
     ser.write(FILTERED_MEL)
-    while True:
-        line = ser.readline().decode('ascii')
-        records = line[:-3].split(',')  # exclude the last ','
-        delim = line[-2]  # exclude '\n'
-        for r in records:
-            data.append(int(r))
-        if delim == 'e':
-            break
+    rx = ser.read(FRAME_LENGTH)
+    for d in rx:
+        n += 1
+        d = int.from_bytes([int(d)], byteorder='little', signed=True)
+        data.append(d)
 
     ser.close()
     data = pp.scale(np.array(data).astype(float))

@@ -155,7 +155,7 @@ theta_right2 = arccos(17.6*2/40.0) = 0.50[rad] = 28[degrees]
 
 ### Command over UART (USB-serial)
 
-UART baudrate: 921600bps
+UART baudrate: 460800bps
 
 ```
 
@@ -169,14 +169,7 @@ UART baudrate: 921600bps
            |                          |
 
 
-Data is send in ASCII characters, and the data format is as follows:
-
-d: data delimiter
-e: data transmission end
-
-1,2,3,4,d,...,5,6,7,8,d\n
-9,10,11,12,d,...,13,14,15,16,d\n
-17,18,19,20,d,...,21,22,23,24,e\n
+Data is send in int8_t.
 
 ```
 
