@@ -7,13 +7,13 @@ import pandas as pd
 import yaml
 import sklearn.preprocessing as pp
 import time
-
-
-DATA_FOLDER = '../oscilloscope/data_music/'
+import sys
 
 # MODEL = './cnn_for_aed_20181107185253.h5'
 # MODEL = './cnn_for_aed_20181110221837.h5'
-MODEL = './cnn_for_aed_20181111211558.h5'
+# MODEL = './cnn_for_aed_20181111211558.h5'
+MODEL = sys.argv[1]
+CLASS_FOLDER = sys.argv[2]
 
 FILTERED_MEL = b'3'
 #PORT = 'COM15'
@@ -40,7 +40,7 @@ def serial_read():
     data = pp.scale(np.array(data).astype(float))
     return data.reshape(200, 40, 1)
     
-with open(DATA_FOLDER+'class_labels.yaml', 'r') as f:
+with open(CLASS_FOLDER+'class_labels.yaml', 'r') as f:
     class_labels = yaml.load(f)
 
 #print(class_labels)
