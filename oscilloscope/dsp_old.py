@@ -4,11 +4,10 @@ import numpy as np
 
 Fs = 80000000.0/128.0/32.0
 Nyq = Fs/2.0
-FRAME_LENGTH = {}
+FRAME_LENGTH = 512
 NUM_FILTERS = 40
 NUM_FILTERS_L = 255
-##BAUD_RATE = 921600
-BAUD_RATE = 460800
+BAUD_RATE = 921600
 
 #PORT = 'COM15'
 PORT = '/dev/serial/by-id/usb-STMicroelectronics_STM32_STLink_066BFF323532543457234431-if02'
@@ -19,13 +18,6 @@ FILTERBANK = b'2'
 FILTERED_MEL = b'3'
 FILTERED_LINEAR = b'6'
 MFCC = b'4'
-
-FRAME_LENGTH[RAW_WAVE] = 512
-FRAME_LENGTH[PSD] = 256 
-FRAME_LENGTH[FILTERED_MEL] = 40 * 200
-FRAME_LENGTH[MFCC] = 40 * 200
-FRAME_LENGTH[FILTERED_LINEAR] = 255 * 200
-
 
 ## Note: dirty but simplest way for setting attributes from a main program 
 range_waveform = 2**9
@@ -39,19 +31,20 @@ def serial_read(cmd):
     data = []
     id_ = 0
     n = 0
-
-    length = 0
-
-    if cmd == RAW_WAVE:
-        length = 1024
     
     ser.write(cmd)
-    rx = ser.read(FRAME_LENGTH[cmd])
-    for d in rx:
-        n += 1
-        d =  int.from_bytes([int(d)], byteorder='little', signed=True)
-        data.append((0,n,d))
-
+    while True:
+        line = ser.readline().decode('ascii')
+        records = line[:-3].split(',')  # exclude the last ','
+        delim = line[-2]  # exclude '\n'
+        for r in records:
+            data.append((id_, n, int(r)))
+            n += 1
+        if delim == 'e':
+            break
+        elif delim == 'd':
+            id_ += 1
+            n = 0
     ser.close()
 
     labels = ['id', 'n', 'magnitude']
@@ -76,7 +69,7 @@ def set_beam_forming(angle):
 def plot_aed(ax, df, cmd):
     
     if cmd == RAW_WAVE:
-        t = np.linspace(0, FRAME_LENGTH[RAW_WAVE]/Fs*1000.0, FRAME_LENGTH[RAW_WAVE])
+        t = np.linspace(0, FRAME_LENGTH/Fs*1000.0, FRAME_LENGTH)
         ax.set_title('Time domain')
         ax.plot(t, df['magnitude'])
         ax.set_xlabel('Time [msec]')
@@ -84,7 +77,7 @@ def plot_aed(ax, df, cmd):
         ax.set_ylim([-range_waveform, range_waveform])
 
     elif cmd == PSD:
-        freq = np.linspace(0, Fs/2, FRAME_LENGTH[PSD])
+        freq = np.linspace(0, Fs/2, FRAME_LENGTH/2)
         ax.set_title('Frequency domain')
         ax.plot(freq, df['magnitude'])
         ax.set_xlabel('Frequency [Hz]')
@@ -98,7 +91,7 @@ def plot_aed(ax, df, cmd):
 
     elif cmd == FILTERED_MEL:
         filtered = df['magnitude'].values.reshape(200, NUM_FILTERS)
-        t = np.linspace(0, FRAME_LENGTH[RAW_WAVE]/Fs*200.0/2, 200)
+        t = np.linspace(0, FRAME_LENGTH/Fs*200.0/2, 200)
         f = np.linspace(1, NUM_FILTERS+1, NUM_FILTERS)
         ax.pcolormesh(t, f[:range_filtered], filtered.T[:range_filtered], cmap=cmap)
         ax.set_title('Mel-scale spectrogram (PSD in dB)')
@@ -107,7 +100,7 @@ def plot_aed(ax, df, cmd):
 
     elif cmd == FILTERED_LINEAR:
         filtered = df['magnitude'].values.reshape(200, NUM_FILTERS_L)
-        t = np.linspace(0, FRAME_LENGTH[RAW_WAVE]/Fs*200.0/2, 200)
+        t = np.linspace(0, FRAME_LENGTH/Fs*200.0/2, 200)
         f = np.linspace(Nyq/(NUM_FILTERS_L+1), Nyq - Nyq/(NUM_FILTERS_L+1), NUM_FILTERS_L)
         ax.pcolormesh(t, f[:range_filtered], filtered.T[:range_filtered], cmap=cmap)
         ax.set_title('Spectrogram (PSD in dB)')
@@ -116,7 +109,7 @@ def plot_aed(ax, df, cmd):
 
     elif cmd == MFCC:
         filtered = df['magnitude'].values.reshape(200, NUM_FILTERS)
-        t = np.linspace(0, FRAME_LENGTH[RAW_WAVE]/Fs*200.0/2, 200)
+        t = np.linspace(0, FRAME_LENGTH/Fs*200.0/2, 200)
         f = np.linspace(1, NUM_FILTERS, NUM_FILTERS)
         ax.pcolormesh(t, f[:range_mfcc], filtered.T[:range_mfcc], cmap=cmap)
         ax.set_title('MFCCs')
