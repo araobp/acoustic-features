@@ -7,11 +7,9 @@ Nyq = Fs/2.0
 FRAME_LENGTH = {}
 NUM_FILTERS = 40
 NUM_FILTERS_L = 255
-##BAUD_RATE = 921600
 BAUD_RATE = 460800
 
-#PORT = 'COM15'
-PORT = '/dev/serial/by-id/usb-STMicroelectronics_STM32_STLink_066BFF323532543457234431-if02'
+port = 'COM15'
 
 RAW_WAVE = b'0'
 PSD = b'1'
@@ -34,7 +32,7 @@ cmap = 'hot'
 ####################
 
 def serial_read(cmd):
-    ser = serial.Serial(PORT, BAUD_RATE)
+    ser = serial.Serial(port, BAUD_RATE)
     data = []
     id_ = 0
     n = 0
@@ -52,7 +50,7 @@ def serial_read(cmd):
     return df
 
 def enable_pre_emphasis(enable):
-    ser = serial.Serial(PORT, BAUD_RATE)
+    ser = serial.Serial(port, BAUD_RATE)
     if enable:
         ser.write(b'P')
     else:
@@ -61,7 +59,7 @@ def enable_pre_emphasis(enable):
 
 def set_beam_forming(angle):
     if angle in ('R', 'r', 'c', 'l', 'L'):
-        ser = serial.Serial(PORT, BAUD_RATE)
+        ser = serial.Serial(port, BAUD_RATE)
         a = angle.encode('ascii')
         ser.write(a)
         ser.close()    
