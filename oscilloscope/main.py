@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Reference: https://matplotlib.org/2.1.0/gallery/user_interfaces/embedding_in_tk_sgskip.html
 
 import matplotlib

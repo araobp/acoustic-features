@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from keras import models
 import serial
 import numpy as np
@@ -7,14 +9,15 @@ import sklearn.preprocessing as pp
 import time
 
 
-DATA_FOLDER = '../oscilloscope/data/data_music/'
+DATA_FOLDER = '../oscilloscope/data_music/'
 
 # MODEL = './cnn_for_aed_20181107185253.h5'
 # MODEL = './cnn_for_aed_20181110221837.h5'
 MODEL = './cnn_for_aed_20181111211558.h5'
 
 FILTERED_MEL = b'3'
-PORT = 'COM15'
+#PORT = 'COM15'
+PORT = '/dev/serial/by-id/usb-STMicroelectronics_STM32_STLink_066BFF323532543457234431-if02' 
 BAUD_RATE = 921600
 
 

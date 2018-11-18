@@ -2,14 +2,15 @@ import serial
 import pandas as pd
 import numpy as np
 
-Fs = 80_000_000.0/128.0/32.0
+Fs = 80000000.0/128.0/32.0
 Nyq = Fs/2.0
 FRAME_LENGTH = 512
 NUM_FILTERS = 40
 NUM_FILTERS_L = 255
 BAUD_RATE = 921600
 
-PORT = 'COM15'
+#PORT = 'COM15'
+PORT = '/dev/serial/by-id/usb-STMicroelectronics_STM32_STLink_066BFF323532543457234431-if02'
 
 RAW_WAVE = b'0'
 PSD = b'1'
