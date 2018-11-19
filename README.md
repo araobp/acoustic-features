@@ -14,6 +14,7 @@ I use Keras/TensorFlow for training CNN with the data acquired by the device via
 
 - musical instruments recognition
 - human activity recognition
+- always-on speech recogniton (e.g., "OK Google")
 
 ## Architecture and platform
 

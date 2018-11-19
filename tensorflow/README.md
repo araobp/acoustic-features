@@ -1,22 +1,23 @@
-# CNN experiments with Keras/TensorFlow (on Nov 6-11, 2018)
+# CNN experiments with Keras/TensorFlow
 
-The result: about 90% accuracy has been achieved, so it is satisfying.
+The results: about 90% accuracy has been achieved, so it is satisfying.
 
 ### Jupyter Notebook of this experiment
 
-I have made two CNN experiments as follows:
+I have made CNN experiments as follows:
 
-- [CNN experiments on musical instruments recognition (Jupyter Notebook)](./tensorflow/CNN_for_AED.ipynb)
-- [CNN experiments on human activity in a living room (Jupyter Notebook)](./tensorflow/CNN_for_AED_living_room.ipynb)
+- [CNN experiments on musical instruments recognition (Jupyter Notebook)](./CNN_for_AED.ipynb)
+- [CNN experiments on human activity in a living room (Jupyter Notebook)](./CNN_for_AED_living_room.ipynb)
+- [CNN experiments on speech recognition for restaurants (Jupyter Notebook)](./CNN_for_AED_restaurant.ipynb)
 
 The trained CNN model will work OK if the following condition is satisfied:
 - use the same MEMS mic with the same filter setting (incl. the same frequency response) on the edge device (STM32L4)
-- same environment
-- no surrounding noise
-
-Next, I will try beam forming with two MEMS mic to supress noise from the surrounding envirnment.
+- the same environment
+- less surrounding noise
 
 ### Class labels and data set
+
+#### Mel-spectrogram feature set
 
 ```
 Classes of musical instruments recognition:
@@ -42,6 +43,25 @@ I split each 40 mel-filters x 200 strdes data into three three 40 x 64 data.
 
 Training data set: 48 mel-scale spectrograms (40 filters x 64 strides) for each class
 Test data set: 24 mel-scale spectrograms (40 filters x 64 strides) for each class
+```
+#### MFCC feature set
+
+MFCCs are good for speech recognition.
+
+```
+Classes of speech recognition:
+- umai ("delicious" in Japanese)
+- oishii ("delicious" in Japanese)
+- mazui ("bad" in Japanese)
+- others
+
+Conditions:
+- Pre emphasis enabled on the raw data.
+
+I split each 40 MFCCs x 200 strdes data into two 12 x 96 data.
+
+Training data set: 12 MFCCs (12 coeeficients x 96 strides) for each class
+Test data set:  12 MFCCs (12 coeeficients x 96 strides)  for each class
 ```
 
 ### CNN model 1
