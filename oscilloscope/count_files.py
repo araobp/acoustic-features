@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Count the number of files for each class label
 
 import glob

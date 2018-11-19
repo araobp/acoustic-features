@@ -19,7 +19,7 @@ plt.style.use('dark_background')
 
 matplotlib.use('TkAgg')
 
-dsp.port = sys.argv[0]
+dsp.port = sys.argv[1]
 
 CMAP_LIST = ['hot',
              'ocean',
