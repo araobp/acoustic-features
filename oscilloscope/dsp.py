@@ -41,7 +41,7 @@ def serial_read(cmd):
     rx = ser.read(FRAME_LENGTH[cmd])
     for d in rx:
         n += 1
-        d =  int.from_bytes([int(d)], byteorder='little', signed=True)
+        d =  int.from_bytes([d], byteorder='little', signed=True)
         data.append((0,n,d))
     ser.close()
 
