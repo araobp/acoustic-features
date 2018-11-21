@@ -142,7 +142,7 @@ I have made a simulation on Jupyter Notebook to study beam forming :
 
 - [Beam forming simulation](../ipynb/Beam%20forming.ipynb)
 
-The conclusion: d = 20mm is the best to support both Broadside and Endfire, and to avoid aliases under the Nyquist frequency (19.5kHz/2).
+The conclusion: d = 20mm is the best to support both Broadside and Endfire, and to avoid aliases under the Nyquist frequency (19.5kHz/2): peak amplitude at theta=28, theta=90 and theta=152 degrees.
 
 References:
 - [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
@@ -189,10 +189,12 @@ Data is send in int8_t.
 
 #### Beam forming
 
+Set the direction for max amplitude.
+
 |cmd|description     | output size             | purpose               |
 |---|----------------|-------------------------|-----------------------|
-|L  | theta left2    |                         |                       |
-|l  | theta left1    |                         |                       |
-|c  | theta center   |                         |                       |
-|r  | theta right1   |                         |                       |
-|R  | theta right2   |                         |                       |
+|L  | theta left2    |                         | (for d=40mm)          |
+|l  | theta left1    |                         | when d=20mm, theta=152 degrees|
+|c  | theta center   |                         | when d=20mm, theta=90 degrees |
+|r  | theta right1   |                         | when d=20mm, theta=28 degrees |
+|R  | theta right2   |                         | (for d=40mm)          |
