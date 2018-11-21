@@ -62,6 +62,9 @@ repeat_action = False
 
 filename = None
 
+# Set beam forming mode
+dsp.set_beam_forming('e')
+
 def df_save(df, step):
     global class_label_, cnt, filename
     class_label = entry.get()

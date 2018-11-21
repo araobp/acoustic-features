@@ -85,6 +85,7 @@ volatile bool enable_pre_emphasis = true;
 
 // Beam forming
 volatile int beam_forming = 2;  // center
+volatile int beam_forming_mode = BROADSIDE;
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -340,8 +341,14 @@ int main(void)
       }
 
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
-      for (uint32_t n = 0; n < NN; n++) {
-        signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n+2] >> 9) + (float32_t) (input_buf_r[n+beam_forming] >> 9);
+      if (beam_forming_mode == BROADSIDE) {
+        for (uint32_t n = 0; n < NN; n++) {
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n+2] >> 9) + (float32_t) (input_buf_r[n+beam_forming] >> 9);
+        }
+      } else if (beam_forming_mode == ENDFIRE) {
+        for (uint32_t n = 0; n < NN; n++) {
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n+2] >> 9) - (float32_t) (input_buf_r[n+beam_forming] >> 9);
+        }
       }
 
       arm_copy_f32(signal_buf, signal, NN);
@@ -373,8 +380,14 @@ int main(void)
       }
 
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
-      for (uint32_t n = 0; n < NN; n++) {
-        signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) + (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
+      if (beam_forming_mode == BROADSIDE) {
+        for (uint32_t n = 0; n < NN; n++) {
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) + (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
+        }
+      } else if (beam_forming_mode == ENDFIRE) {
+        for (uint32_t n = 0; n < NN; n++) {
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) - (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
+        }
       }
 
       arm_copy_f32(signal_buf, signal, NN);
@@ -549,6 +562,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     break;
   case 'R':
 	beam_forming = 0;
+    break;
+  case 'b':
+    beam_forming_mode = BROADSIDE;
+    break;
+  case 'e':
+    beam_forming_mode = ENDFIRE;
     break;
 
     // The others

@@ -58,7 +58,7 @@ def enable_pre_emphasis(enable):
     ser.close()
 
 def set_beam_forming(angle):
-    if angle in ('R', 'r', 'c', 'l', 'L'):
+    if angle in ('R', 'r', 'c', 'l', 'L', 'b', 'e'):
         ser = serial.Serial(port, BAUD_RATE)
         a = angle.encode('ascii')
         ser.write(a)

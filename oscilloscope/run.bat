@@ -1,1 +1,1 @@
-python main.py COM15
+python oscilloscope.py COM15

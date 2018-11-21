@@ -44,6 +44,8 @@
 /* Includes ------------------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
+#define BROADSIDE 0U
+#define ENDFIRE 1U
 
 /* USER CODE END Includes */
 
