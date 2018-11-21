@@ -10,6 +10,8 @@ In addition, I use Knowles MEMS mics SPM0405HD4H to add extra mics to the platfo
 
 I already developed [an analog filter (LPF and AC couping)](https://github.com/araobp/stm32-mcu/tree/master/analog_filter) to monitor sound from DAC in real-time.
 
+I also use RasPi for CNN inference for the time being: all the pre-proccessing is performed on STM32L4 and another STM32L4 or F4 will be added to the system for CNN inference in future.
+
 ### Tool chain
 
 - STMicro's [CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) and [TrueSTUDIO(Eclipse/GCC/GDB)](https://atollic.com/truestudio/) for firmware development.
