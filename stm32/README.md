@@ -142,7 +142,7 @@ I have made a simulation on Jupyter Notebook to study beam forming :
 
 - [Beam forming simulation](../ipynb/Beam%20forming.ipynb)
 
-The conclusion: d = 20mm is the best to support both Broadsise and Endfire, and to avoid aliases under the Nyquist frequency (19.5kHz/2).
+The conclusion: d = 20mm is the best to support both Broadside and Endfire, and to avoid aliases under the Nyquist frequency (19.5kHz/2).
 
 References:
 - [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
