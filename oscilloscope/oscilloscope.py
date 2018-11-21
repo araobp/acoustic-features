@@ -17,6 +17,10 @@ import os
 import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 
+# Set beam forming mode
+dsp.set_beam_forming('e')  # ENDFIRE
+# dsp.set_beam_forming('b')  # Broadside
+
 matplotlib.use('TkAgg')
 
 dsp.port = sys.argv[1]
@@ -61,9 +65,6 @@ counter.configure(text='({})'.format(str(0)))
 repeat_action = False
 
 filename = None
-
-# Set beam forming mode
-dsp.set_beam_forming('e')
 
 def df_save(df, step):
     global class_label_, cnt, filename

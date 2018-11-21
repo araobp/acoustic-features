@@ -343,11 +343,15 @@ int main(void)
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
       if (beam_forming_mode == BROADSIDE) {
         for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n+2] >> 9) + (float32_t) (input_buf_r[n+beam_forming] >> 9);
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + 2] >> 9) + (float32_t) (input_buf_r[n + beam_forming] >> 9);
         }
-      } else if (beam_forming_mode == ENDFIRE) {
+      } else if (beam_forming_mode == ENDFIRE && beam_forming != 2) {
         for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n+2] >> 9) - (float32_t) (input_buf_r[n+beam_forming] >> 9);
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + 2] >> 9) - (float32_t) (input_buf_r[n - beam_forming] >> 9);
+        }
+      } else if (beam_forming_mode == ENDFIRE && beam_forming == 2) {
+        for (uint32_t n = 0; n < NN; n++) {
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + 2] >> 9) + (float32_t) (input_buf_r[n + 2] >> 9);
         }
       }
 
@@ -384,11 +388,16 @@ int main(void)
         for (uint32_t n = 0; n < NN; n++) {
           signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) + (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
         }
-      } else if (beam_forming_mode == ENDFIRE) {
+      } else if (beam_forming_mode == ENDFIRE && beam_forming != 2) {
         for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) - (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) - (float32_t) (input_buf_r[n + NN - beam_forming] >> 9);
+        }
+      } else if (beam_forming_mode == ENDFIRE && beam_forming == 2) {
+        for (uint32_t n = 0; n < NN; n++) {
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) + (float32_t) (input_buf_r[n + NN + 2] >> 9);
         }
       }
+
 
       arm_copy_f32(signal_buf, signal, NN);
       dsp(signal, output_mode);
