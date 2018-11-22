@@ -38,7 +38,7 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
                                             +---> [Oscilloscope GUI(Tk)] --- (data set) ---> Keras/TensorFlow
                                             |
                                             | *** inference ***
-                                            +---> [agent.py/RasPi3] (to replaced with CubeMX.AI in future)
+                                            +---> [agent.py/RasPi3] ---> Cloud
                                             :
                                             : *** inference (Note: *1) ***
                                             +- -> [CubeMX.AI/STM32] ---> [Communication module] ---> Cloud
