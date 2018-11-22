@@ -38,11 +38,20 @@ def serial_read(cmd):
     n = 0
 
     ser.write(cmd)
-    rx = ser.read(FRAME_LENGTH[cmd])
-    for d in rx:
-        n += 1
-        d =  int.from_bytes([d], byteorder='little', signed=True)
-        data.append((0,n,d))
+    if cmd == RAW_WAVE:
+        rx = ser.read(FRAME_LENGTH[cmd]*2)
+        rx = zip(rx[0::2], rx[1::2])
+        for msb, lsb in rx:
+            n += 1
+            d =  int.from_bytes([msb, lsb], byteorder='big', signed=True)
+            print(msb, lsb, d)
+            data.append((0,n,d))    
+    else:
+        rx = ser.read(FRAME_LENGTH[cmd])
+        for d in rx:
+            n += 1
+            d =  int.from_bytes([d], byteorder='big', signed=True)
+            data.append((0,n,d))
     ser.close()
 
     labels = ['id', 'n', 'magnitude']

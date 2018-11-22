@@ -116,7 +116,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     switch (mode) {
 
     case RAW_WAVE:
-      length = NN;
+      length = NN * 2;
       cnt = 1;
       break;
 
@@ -152,6 +152,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     }
   }
 
+  /*
   if (mode == FILTERBANK) {   // just dump filter bank itself
     for (int m = 1; m < NUM_FILTERS + 1; m++) {
       for (int i = 0; i < NN / 8; i++) {
@@ -163,25 +164,28 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     printing = false;
 
   } else {   // dump time-series signal
+  */
 
+  if (mode == RAW_WAVE) {
     for (int n = 0; n < length; n++) {
-      //idx += sprintf(&uart_buf[idx], "%ld,", (int32_t) in[n]);
+      uart_buf[idx++] = (uint8_t) (((int16_t)in[n]) >> 8);
+      uart_buf[idx++] = (uint8_t) (((int16_t)in[n] & 0x00ff));
+    }
+  } else {
+    for (int n = 0; n < length; n++) {
       uart_buf[idx++] = (int8_t) in[n];
     }
+  }
 
-    if (--cnt == 0) {
-      //idx += sprintf(&uart_buf[idx], "e\n");  // transmission end
-      HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
-      printing = false;
-    } else if (dma_start) {
-      //idx += sprintf(&uart_buf[idx], "d\n");  // delimiter
-      HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
-      idx = 0;
-      printing = true;
-    } else {
-      //idx += sprintf(&uart_buf[idx], "d\n");  // delimiter
-      printing = true;
-    }
+  if (--cnt == 0) {
+    HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
+    printing = false;
+  } else if (dma_start) {
+    HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
+    idx = 0;
+    printing = true;
+  } else {
+    printing = true;
   }
 
   return printing;
