@@ -39,9 +39,12 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
                                             |
                                             | *** inference ***
                                             +---> [agent.py/RasPi3] (to replaced with CubeMX.AI in future)
+                                            :
+                                            : *** inference (Note: *1) ***
+                                            +- -> [CubeMX.AI/STM32] ---> [Communication module] ---> Cloud
 ```
 
-CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50X00009yG1AUSA0/when-is-stm32cubeai-available
+*1 CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50X00009yG1AUSA0/when-is-stm32cubeai-available
 
 ## Platform
 
@@ -52,8 +55,6 @@ CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50
 - [Edge device for machine learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 - [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
-
-Note: BLE module should be replaced with 5G module in future, to simplify the architecture.
 
 ## CNN experiments
 
