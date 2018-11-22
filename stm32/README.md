@@ -144,7 +144,16 @@ I have made a simulation on Jupyter Notebook to study beam forming :
 
 The conclusion: d = 20mm is the best to support both Broadside and Endfire, and to avoid aliases under the Nyquist frequency (19.5kHz/2): peak amplitude at theta=28, theta=90 and theta=152 degrees.
 
-References:
+### The test board with d = 20mm
+
+![](./beam_forming_20mm_board.jpg)
+
+### Testing d = 20mm with Endfire mode
+
+![](./beam_forming_test.jpg)
+
+### References
+
 - [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
 - [AcousticBF(by STMicro)](https://www.st.com/content/ccc/resource/technical/document/user_manual/group0/40/93/ec/80/3c/61/4e/d0/DM00391112/files/DM00391112.pdf/jcr:content/translations/en.DM00391112.pdf)
 
