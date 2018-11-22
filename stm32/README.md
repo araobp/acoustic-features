@@ -152,11 +152,11 @@ The conclusion: d = 20mm is the best to support both Broadside and Endfire, and 
 
 ![](./beam_forming_test.jpg)
 
-![](./beam_forming_test_20mm_endfire_right.jpg)
+![](./beam_forming_test_20mm_endfire_right.png)
 
-![](./beam_forming_test_20mm_endfire_center.jpg)
+![](./beam_forming_test_20mm_endfire_center.png)
 
-![](./beam_forming_test_20mm_endfire_left.jpg)
+![](./beam_forming_test_20mm_endfire_left.png)
 
 ### References
 
