@@ -16,9 +16,29 @@ I use Keras/TensorFlow for training CNN with the data acquired by the device via
 - human activity recognition
 - always-on speech recogniton (e.g., "OK Google")
 
-## Architecture and platform
+## Architecture
 
-- [Network architecture](./NETWORK.md)
+```
+                                      ................................
+                                      :                              :
+Sound/voice ))) [MEMS mic]--PDM-->[DFSDM] ARM Cortex-M4(STM32L476RG) :
+                                      :                              :
+                                      :..[USART]......[DAC]..........:
+                                            |           |
+                                            |           | *** monitoring ***
+                                        (VCP/USB)   [Analog filter] --> head phone
+                                            |
+                                            | *** learning ***
+                                            +---> [Oscilloscope GUI(Tk)] --- features ---> Keras/TensorFlow on Jupyter
+                                            |
+                                            | *** inference ***
+                                            +---> [agent.py/RasPi] (Note: it will be replaced with CubeMX.AI in future)
+```
+
+CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50X00009yG1AUSA0/when-is-stm32cubeai-available
+
+## Platform
+
 - [Platform and tool chain](./PLATFORM.md)
 
 ## AED system components in development
