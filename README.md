@@ -19,17 +19,23 @@ I use Keras/TensorFlow for training CNN with the data acquired by the device via
 ## Architecture
 
 ```
-                                      ................................
-                                      :                              :
-Sound/voice ))) [MEMS mic]--PDM-->[DFSDM] ARM Cortex-M4(STM32L476RG) :
-                                      :                              :
-                                      :..[USART]......[DAC]..........:
+                                          ARM Cortex-M4(STM32L476RG)
+                                      ....................................
+                                      :   Filters for feature extraction :
+Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
+                                      :    |                   |         :
+                                      :    +------------+      |         :
+                                      :     +-----------|------+         :
+                                      :     |           |                :
+                                      :     V           V                :
+                                      :..[USART]......[DAC]..............:
                                             |           |
                                             |           | *** monitoring ***
-                                        (VCP/USB)   [Analog filter] --> head phone
+                                            |           +---> [Analog filter] --> head phone
+                                       (features)
                                             |
                                             | *** learning ***
-                                            +---> [Oscilloscope GUI(Tk)] --- features ---> Keras/TensorFlow
+                                            +---> [Oscilloscope GUI(Tk)] --- (data set) ---> Keras/TensorFlow
                                             |
                                             | *** inference ***
                                             +---> [agent.py/RasPi3] (to replaced with CubeMX.AI in future)
