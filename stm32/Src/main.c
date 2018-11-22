@@ -85,7 +85,7 @@ volatile bool enable_pre_emphasis = true;
 
 // Beam forming
 volatile int beam_forming = 2;  // center
-volatile int beam_forming_mode = BROADSIDE;
+volatile int beam_forming_mode = ENDFIRE;
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -340,14 +340,15 @@ int main(void)
         dac1_out2_buf[n] = dac1_out1_buf[n];
       }
 
+      // Beam forming
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
       if (beam_forming_mode == BROADSIDE) {
         for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + 2] >> 9) + (float32_t) (input_buf_r[n + beam_forming] >> 9);
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + beam_forming] >> 9) + (float32_t) (input_buf_r[n + 2] >> 9);
         }
       } else if (beam_forming_mode == ENDFIRE && beam_forming != 2) {
         for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + 2] >> 9) - (float32_t) (input_buf_r[n - beam_forming] >> 9);
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + 2] >> 9) - (float32_t) (input_buf_r[n + beam_forming] >> 9);
         }
       } else if (beam_forming_mode == ENDFIRE && beam_forming == 2) {
         for (uint32_t n = 0; n < NN; n++) {
@@ -378,26 +379,27 @@ int main(void)
         dac1_out2_buf[n] = dac1_out1_buf[n];
       }
 
+      // Buffering PCM data for beam forming
       for (int n = 0; n < 5; n++) {
     	  input_buf_l[n] = input_buf_l[NN_DOUBLE + n];
     	  input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
       }
 
+      // Beam forming
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
       if (beam_forming_mode == BROADSIDE) {
         for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) + (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + beam_forming] >> 9) + (float32_t) (input_buf_r[n + NN + 2] >> 9);
         }
       } else if (beam_forming_mode == ENDFIRE && beam_forming != 2) {
         for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) - (float32_t) (input_buf_r[n + NN - beam_forming] >> 9);
+          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) - (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
         }
       } else if (beam_forming_mode == ENDFIRE && beam_forming == 2) {
         for (uint32_t n = 0; n < NN; n++) {
           signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) + (float32_t) (input_buf_r[n + NN + 2] >> 9);
         }
       }
-
 
       arm_copy_f32(signal_buf, signal, NN);
       dsp(signal, output_mode);
@@ -558,19 +560,19 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
     // Beam forming
   case 'L':
-    beam_forming = 4;
+    beam_forming = 0;
     break;
   case 'l':
-    beam_forming = 3;
+    beam_forming = 1;
     break;
   case 'c':
 	beam_forming = 2;
     break;
   case 'r':
-	beam_forming = 1;
+	beam_forming = 3;
     break;
   case 'R':
-	beam_forming = 0;
+	beam_forming = 4;
     break;
   case 'b':
     beam_forming_mode = BROADSIDE;

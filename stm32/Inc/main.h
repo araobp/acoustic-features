@@ -44,6 +44,8 @@
 /* Includes ------------------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
+
+// Beam forming: Broadside mode and Endfire mode
 #define BROADSIDE 0U
 #define ENDFIRE 1U
 

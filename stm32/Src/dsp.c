@@ -51,10 +51,11 @@ void hann(int num) {
 const float32_t C[4] = {1.23149591368684f, -4.11852516267426f, 6.02197014179219f, -3.13396450166353f};
 const float32_t LOG10_2 = log10(2.0f);
 float32_t log10_approx(float32_t x) {
-  float32_t f;
+  float32_t f, l;
   int e;
   f = frexpf(fabsf(x), &e);
-  return LOG10_2 * (C[0]*f*f*f + C[1]*f*f + C[2]*f + C[3] + e);
+  l = LOG10_2 * (C[0]*f*f*f + C[1]*f*f + C[2]*f + C[3] + e);
+  return (l > 0.000001) ? l : 0.000001;  // for numerical stability
 }
 
 float32_t hz2mel(float32_t hz) {

@@ -57,9 +57,12 @@ def enable_pre_emphasis(enable):
         ser.write(b'p')
     ser.close()
 
-def set_beam_forming(angle):
-    if angle in ('R', 'r', 'c', 'l', 'L', 'b', 'e'):
+def set_beam_forming(mode, angle):
+    if mode in ('e', 'b') and angle in ('R', 'r', 'c', 'l', 'L', 'b', 'e'):
+        print('set beam forming')
         ser = serial.Serial(port, BAUD_RATE)
+        m = mode.encode('ascii')
+        ser.write(m)
         a = angle.encode('ascii')
         ser.write(a)
         ser.close()    
@@ -80,7 +83,7 @@ def plot_aed(ax, df, cmd):
         ax.plot(freq, df['magnitude'])
         ax.set_xlabel('Frequency [Hz]')
         ax.set_ylabel('PSD [dB]')
-        ax.set_ylim([-40, 120])
+        ax.set_ylim([-8, 127])
 
     elif cmd == FILTERBANK:
         filterbank = df['magnitude'].values.reshape(NUM_FILTERS,int(FRAME_LENGTH/6))

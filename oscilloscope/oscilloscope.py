@@ -17,13 +17,14 @@ import os
 import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 
-# Set beam forming mode
-dsp.set_beam_forming('e')  # ENDFIRE
-# dsp.set_beam_forming('b')  # Broadside
+dsp.port = sys.argv[1]
+
+### Default settings to DSP ###
+#dsp.set_beam_forming('e', 'c')  # ENDFIRE mode, center
+#dsp.enable_pre_emphasis(True)  # Pre emphasis enabled
+###############################
 
 matplotlib.use('TkAgg')
-
-dsp.port = sys.argv[1]
 
 CMAP_LIST = ['hot',
              'ocean',
@@ -50,12 +51,13 @@ canvas.get_tk_widget().pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
 canvas._tkcanvas.pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
 
 entry = Tk.Entry(master=root, width=14)
-cmap = Tk.Spinbox(master=root, width=12, values=CMAP_LIST)
+cmap = Tk.Spinbox(master=root, width=10, values=CMAP_LIST)
 counter = Tk.Label(master=root)
 range_amplitude = Tk.Spinbox(master=root, width=6, values=[2**8, 2**9, 2**11, 2**13, 2**15])
 range_filtered = Tk.Spinbox(master=root, width=3, values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
 range_filtered_l = Tk.Spinbox(master=root, width=4, values=[dsp.NUM_FILTERS_L, int(dsp.NUM_FILTERS_L*.7), int(dsp.NUM_FILTERS_L*0.4)])
 range_mfcc = Tk.Spinbox(master=root, width=3, values=[25, 18, 13])
+mode_beam_forming = Tk.Spinbox(master=root, width=2, values=['e', 'b'])
 range_beam_forming = Tk.Spinbox(master=root, width=2, values=['c', 'r', 'R', 'l', 'L'])
 
 cnt = 0
@@ -135,8 +137,9 @@ def mfcc():
     repeat(mfcc)
 
 def beam_forming():
+    mode = mode_beam_forming.get()
     angle = range_beam_forming.get()
-    dsp.set_beam_forming(angle)
+    dsp.set_beam_forming(mode, angle)
 
 def repeat_toggle():
     global repeat_action
@@ -243,6 +246,7 @@ label_seperator6 = Tk.Label(master=root, text=' ')
 label_seperator6.pack(side=Tk.LEFT, padx=1)
 
 # Beam forming
+mode_beam_forming.pack(side=Tk.LEFT, padx=1)
 range_beam_forming.pack(side=Tk.LEFT, padx=1)
 button_beam_forming.pack(side=Tk.LEFT, padx=1)
 label_seperator7 = Tk.Label(master=root, text=' ')
