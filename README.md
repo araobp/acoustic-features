@@ -29,10 +29,10 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM] ARM Cortex-M4(STM32L476RG) :
                                         (VCP/USB)   [Analog filter] --> head phone
                                             |
                                             | *** learning ***
-                                            +---> [Oscilloscope GUI(Tk)] --- features ---> Keras/TensorFlow on Jupyter
+                                            +---> [Oscilloscope GUI(Tk)] --- features ---> Keras/TensorFlow
                                             |
                                             | *** inference ***
-                                            +---> [agent.py/RasPi] (Note: it will be replaced with CubeMX.AI in future)
+                                            +---> [agent.py/RasPi3] (to replaced with CubeMX.AI in future)
 ```
 
 CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50X00009yG1AUSA0/when-is-stm32cubeai-available
