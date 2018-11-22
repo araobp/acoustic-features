@@ -152,6 +152,12 @@ The conclusion: d = 20mm is the best to support both Broadside and Endfire, and 
 
 ![](./beam_forming_test.jpg)
 
+![](./beam_forming_test_20mm_endfire_right.jpg)
+
+![](./beam_forming_test_20mm_endfire_center.jpg)
+
+![](./beam_forming_test_20mm_endfire_left.jpg)
+
 ### References
 
 - [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
