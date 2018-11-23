@@ -89,15 +89,15 @@ Oscilloscope GUI/IoT gateway
 - overlap: 50%(13.2msec)
 
 ```
- * 26.3msec          stride 13.2msec
- * --- overlap dsp -------------
- * [b0|a0]            a(1/2)
- *    [a0|a1]         a(2/2)
- * --- overlap dsp -------------
- *       [a1|b0]      b(1/2)
- *          [b0|b1]   b(2/2)
- * --- overlap dsp -------------
- *             :
+  26.3msec          stride 13.2msec
+  --- overlap dsp -------------
+  [b0|a0]            a(1/2)
+     [a0|a1]         a(2/2)
+  --- overlap dsp -------------
+        [a1|b0]      b(1/2)
+           [b0|b1]   b(2/2)
+  --- overlap dsp -------------
+              :
 ```
 ### Filter banks
 
