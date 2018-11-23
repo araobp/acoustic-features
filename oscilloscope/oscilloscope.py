@@ -218,51 +218,51 @@ button_quit = Tk.Button(master=root, text='Quit', command=_quit, bg='yellow', ac
 label_class.pack(side=Tk.LEFT, padx=1, pady=10)
 entry.pack(side=Tk.LEFT, padx=1)
 counter.pack(side=Tk.LEFT, padx=1)
-label_seperator1 = Tk.Label(master=root, text=' ')
-label_seperator1.pack(side=Tk.LEFT, padx=1)
+label_separator1 = Tk.Label(master=root, text=' ')
+label_separator1.pack(side=Tk.LEFT, padx=1)
 
 # Waveform
 range_amplitude.pack(side=Tk.LEFT, padx=1)
 button_waveform.pack(side=Tk.LEFT, padx=1)
-label_seperator2 = Tk.Label(master=root, text=' ')
-label_seperator2.pack(side=Tk.LEFT, padx=1)
+label_separator2 = Tk.Label(master=root, text=' ')
+label_separator2.pack(side=Tk.LEFT, padx=1)
 
 # FFT (PSD)
 button_psd.pack(side=Tk.LEFT, padx=1)
-label_seperator3 = Tk.Label(master=root, text=' ')
-label_seperator3.pack(side=Tk.LEFT, padx=1)
+label_separator3 = Tk.Label(master=root, text=' ')
+label_separator3.pack(side=Tk.LEFT, padx=1)
 
 # Linear-scale Spectrogram (PSD)
 range_filtered_l.pack(side=Tk.LEFT, padx=1)
 button_filtered_linear.pack(side=Tk.LEFT, padx=1)
-label_seperator5 = Tk.Label(master=root, text=' ')
-label_seperator5.pack(side=Tk.LEFT, padx=1)
+label_separator5 = Tk.Label(master=root, text=' ')
+label_separator5.pack(side=Tk.LEFT, padx=1)
 
 # Mel-scale Spectrogram (PSD)
 range_filtered.pack(side=Tk.LEFT, padx=1)
 button_filtered_mel.pack(side=Tk.LEFT, padx=1)
-label_seperator4 = Tk.Label(master=root, text=' ')
-label_seperator4.pack(side=Tk.LEFT, padx=1)
+label_separator4 = Tk.Label(master=root, text=' ')
+label_separator4.pack(side=Tk.LEFT, padx=1)
 
 # MFCC
 range_mfcc.pack(side=Tk.LEFT, padx=1)
 button_mfcc.pack(side=Tk.LEFT, padx=1)
-label_seperator6 = Tk.Label(master=root, text=' ')
-label_seperator6.pack(side=Tk.LEFT, padx=1)
+label_separator6 = Tk.Label(master=root, text=' ')
+label_separator6.pack(side=Tk.LEFT, padx=1)
 
 # Beam forming
 mode_beam_forming.pack(side=Tk.LEFT, padx=1)
 range_beam_forming.pack(side=Tk.LEFT, padx=1)
 button_beam_forming.pack(side=Tk.LEFT, padx=1)
-label_seperator7 = Tk.Label(master=root, text=' ')
-label_seperator7.pack(side=Tk.LEFT, padx=1)
+label_separator7 = Tk.Label(master=root, text=' ')
+label_separator7.pack(side=Tk.LEFT, padx=1)
 
 # CMAP
 label_image.pack(side=Tk.LEFT, padx=1)
 spectrum_subtraction.pack(side=Tk.LEFT, padx=1)
 cmap.pack(side=Tk.LEFT, padx=1)
-label_seperator8 = Tk.Label(master=root, text=' ')
-label_seperator8.pack(side=Tk.LEFT, padx=1)
+label_separator8 = Tk.Label(master=root, text=' ')
+label_separator8.pack(side=Tk.LEFT, padx=1)
 
 # Repeat, pre_emphasis, save fig and delete
 button_repeat.pack(side=Tk.LEFT, padx=1)
