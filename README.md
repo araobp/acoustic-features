@@ -16,9 +16,38 @@ I use Keras/TensorFlow for training CNN with the data acquired by the device via
 - human activity recognition
 - always-on speech recogniton (e.g., "OK Google")
 
-## Architecture and platform
+## Architecture
 
-- [Network architecture](./NETWORK.md)
+```
+                                          ARM Cortex-M4(STM32L476RG)
+                                      ....................................
+                                      :   Filters for feature extraction :
+Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
+                                      :    |                   |         :
+                                      :    +------------+      |         :
+                                      :     +-----------|------+         :
+                                      :     |           |                :
+                                      :     V           V                :
+                                      :..[USART]......[DAC]..............:
+                                            |           |
+                                            |           | *** monitoring ***
+                                            |           +---> [Analog filter] --> head phone
+                                       (features)
+                                            |
+                                            | *** learning ***
+                                            +---> [Oscilloscope GUI(Tk)] --- (data set) ---> Keras/TensorFlow
+                                            |
+                                            | *** inference ***
+                                            +---> [agent.py/RasPi3] ---> Cloud
+                                            :
+                                            : *** inference (Note: *1) ***
+                                            +- -> [CubeMX.AI/STM32] ---> [Communication module] ---> Cloud
+```
+
+*1 CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50X00009yG1AUSA0/when-is-stm32cubeai-available
+
+## Platform
+
 - [Platform and tool chain](./PLATFORM.md)
 
 ## AED system components in development
@@ -26,10 +55,6 @@ I use Keras/TensorFlow for training CNN with the data acquired by the device via
 - [Edge device for machine learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 - [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
-- Mobile IoT gateway: "UART over BLE" to "REST over WiFi" (ESP32-based)
-- Database on the cloud: Node.js/Express/MongoDB-based => I will reuse [the output of this project](https://github.com/araobp/api-server).
-
-Note: BLE module should be replaced with 5G module in future, to simplify the architecture.
 
 ## CNN experiments
 
