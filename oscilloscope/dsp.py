@@ -9,6 +9,8 @@ NUM_FILTERS = 40
 NUM_FILTERS_L = 255
 BAUD_RATE = 460800
 
+NOISE_LEVEL = 20.0
+
 port = 'COM15'
 
 RAW_WAVE = b'0'
@@ -29,6 +31,7 @@ range_waveform = 2**9
 range_filtered = NUM_FILTERS
 range_mfcc = 13
 cmap = 'hot'
+ssub = 0
 ####################
 
 def serial_read(cmd):
@@ -44,13 +47,16 @@ def serial_read(cmd):
         for msb, lsb in rx:
             n += 1
             d =  int.from_bytes([msb, lsb], byteorder='big', signed=True)
-            print(msb, lsb, d)
             data.append((0,n,d))    
     else:
         rx = ser.read(FRAME_LENGTH[cmd])
         for d in rx:
             n += 1
             d =  int.from_bytes([d], byteorder='big', signed=True)
+            if ssub > 0:
+                d = d - ssub
+                if d < 0:
+                    d = 0.0
             data.append((0,n,d))
     ser.close()
 
@@ -68,7 +74,6 @@ def enable_pre_emphasis(enable):
 
 def set_beam_forming(mode, angle):
     if mode in ('e', 'b') and angle in ('R', 'r', 'c', 'l', 'L', 'b', 'e'):
-        print('set beam forming')
         ser = serial.Serial(port, BAUD_RATE)
         m = mode.encode('ascii')
         ser.write(m)

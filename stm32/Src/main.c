@@ -1,4 +1,3 @@
-
 /**
   ******************************************************************************
   * @file           : main.c
@@ -74,10 +73,10 @@ volatile bool new_pcm_data_b_r = false;
 volatile bool printing = false;
 
 // UART output mode
-volatile mode output_mode = FILTERED_MEL;
-mode filter_type = FILTERED_MEL;
+volatile mode output_mode = MFCC;
+mode filter_type = MFCC;  // Current filter bank
 
-// UART input
+// UART input buffer
 uint8_t rxbuf[1];
 
 // Pre-emphasis toggle
@@ -101,6 +100,9 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
 
+/*
+ * Output feature to UART
+ */
 bool uart_tx(float32_t *in, mode mode, bool dma_start) {
 
   bool printing;
@@ -108,7 +110,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   static int length = 0;
   static int idx = 0;
 
-  static char uart_buf[NN * 8] = { 0.0f };
+  static char uart_buf[NN * 4] = { 0.0f };
 
   if (cnt == 0) {
     idx = 0;
@@ -116,7 +118,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     switch (mode) {
 
     case RAW_WAVE:
-      length = NN * 2;
+      length = NN * 2;  // 16bit output
       cnt = 1;
       break;
 
@@ -135,11 +137,6 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
       cnt = 200;
       break;
 
-    case MFCC_STREAMING:
-      length = NUM_FILTERS;
-      cnt = 0x7fffffff;
-      break;
-
     case FILTERED_LINEAR:
       length = NUM_FILTERS_L;
       cnt = 200;
@@ -151,20 +148,6 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
 
     }
   }
-
-  /*
-  if (mode == FILTERBANK) {   // just dump filter bank itself
-    for (int m = 1; m < NUM_FILTERS + 1; m++) {
-      for (int i = 0; i < NN / 8; i++) {
-        printf("%ld\n", (uint32_t) (filterbank[m][i] * 100.0));
-      }
-      if (m != NUM_FILTERS) printf("d\n");
-    }
-    printf("e\n");
-    printing = false;
-
-  } else {   // dump time-series signal
-  */
 
   if (mode == RAW_WAVE) {
     for (int n = 0; n < length; n++) {
@@ -202,7 +185,7 @@ void dsp(float32_t *s1, mode mode) {
   if (p)
     start = HAL_GetTick();
 
-  apply_ac_coupling(s1);
+  apply_ac_coupling(s1);  // remove DC
 
   switch (mode) {
 
@@ -385,8 +368,8 @@ int main(void)
 
       // Buffering PCM data for beam forming
       for (int n = 0; n < 5; n++) {
-    	  input_buf_l[n] = input_buf_l[NN_DOUBLE + n];
-    	  input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
+        input_buf_l[n] = input_buf_l[NN_DOUBLE + n];
+        input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
       }
 
       // Beam forming
@@ -570,13 +553,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     beam_forming = 1;
     break;
   case 'c':
-	beam_forming = 2;
+  beam_forming = 2;
     break;
   case 'r':
-	beam_forming = 3;
+  beam_forming = 3;
     break;
   case 'R':
-	beam_forming = 4;
+  beam_forming = 4;
     break;
   case 'b':
     beam_forming_mode = BROADSIDE;

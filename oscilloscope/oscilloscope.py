@@ -20,22 +20,22 @@ plt.style.use('dark_background')
 dsp.port = sys.argv[1]
 
 ### Default settings to DSP ###
-#dsp.set_beam_forming('e', 'c')  # ENDFIRE mode, center
-#dsp.enable_pre_emphasis(True)  # Pre emphasis enabled
+dsp.set_beam_forming('e', 'c')  # ENDFIRE mode, center
+dsp.enable_pre_emphasis(True)  # Pre emphasis enabled
 ###############################
 
 matplotlib.use('TkAgg')
 
 CMAP_LIST = ['hot',
+             'viridis',
+             'gray',
+             'binary',
              'ocean',
              'magma',
-             'viridis',
              'cubehelix',
              'cool',
              'winter',
-             'summer',
-             'binary',
-             'gray']
+             'summer']
 
 root = Tk.Tk()
 root.wm_title("Oscilloscope")
@@ -59,6 +59,7 @@ range_filtered_l = Tk.Spinbox(master=root, width=4, values=[dsp.NUM_FILTERS_L, i
 range_mfcc = Tk.Spinbox(master=root, width=3, values=[25, 18, 13])
 mode_beam_forming = Tk.Spinbox(master=root, width=2, values=['e', 'b'])
 range_beam_forming = Tk.Spinbox(master=root, width=2, values=['c', 'r', 'R', 'l', 'L'])
+spectrum_subtraction = Tk.Spinbox(master=root, width=3, values=[0, 10, 15, 20, 25])
 
 cnt = 0
 class_label_ = ''
@@ -98,6 +99,7 @@ def raw_wave():
     repeat(raw_wave)
 
 def fft():
+    dsp.ssub = int(spectrum_subtraction.get())
     ax.clear()
     ax.grid(True, alpha=0.3)
     df = dsp.serial_read(dsp.PSD)
@@ -107,6 +109,7 @@ def fft():
     repeat(fft)
 
 def filtered_mel():
+    dsp.ssub = int(spectrum_subtraction.get())
     dsp.range_filtered = int(range_filtered.get())
     dsp.cmap = cmap.get()
     ax.clear()
@@ -117,6 +120,7 @@ def filtered_mel():
     repeat(filtered_mel)
 
 def filtered_linear():
+    dsp.ssub = int(spectrum_subtraction.get())    
     dsp.range_filtered = int(range_filtered_l.get())
     dsp.cmap = cmap.get()
     ax.clear()
@@ -127,6 +131,7 @@ def filtered_linear():
     repeat(filtered_linear)
 
 def mfcc():
+    dsp.ssub = int(spectrum_subtraction.get())    
     dsp.range_mfcc = int(range_mfcc.get())
     dsp.cmap = cmap.get()
     ax.clear()
@@ -192,8 +197,8 @@ def _quit():
     root.quit()
     root.destroy()
 
-label_class = Tk.Label(master=root, text='Class label:')
-label_cmap = Tk.Label(master=root, text='cmap:')
+label_class = Tk.Label(master=root, text='Class label')
+label_image = Tk.Label(master=root, text='image')
 
 button_waveform = Tk.Button(master=root, text='Wave', command=raw_wave, bg='lightblue', activebackground='grey')
 button_psd = Tk.Button(master=root, text='FFT', command=fft, bg='lightblue', activebackground='grey')
@@ -253,7 +258,8 @@ label_seperator7 = Tk.Label(master=root, text=' ')
 label_seperator7.pack(side=Tk.LEFT, padx=1)
 
 # CMAP
-label_cmap.pack(side=Tk.LEFT, padx=1)
+label_image.pack(side=Tk.LEFT, padx=1)
+spectrum_subtraction.pack(side=Tk.LEFT, padx=1)
 cmap.pack(side=Tk.LEFT, padx=1)
 label_seperator8 = Tk.Label(master=root, text=' ')
 label_seperator8.pack(side=Tk.LEFT, padx=1)
