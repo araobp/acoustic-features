@@ -8118,7 +8118,7 @@ void MX_DMA_Init(void)
 08003860 <hann>:
 
 // Half sample shifter
-float32_t half_sample_shifter[NUM_FILTERS * 2] = { 0.0f };
+float32_t half_sample_shifter[NUM_FILTERS_MEL * 2] = { 0.0f };
 
 // hann window generation
 void hann(int num) {
@@ -8310,7 +8310,7 @@ float32_t n2hz(uint32_t n) {
 
 void clear_filterbank(void) {
  8003a2c:	b5f0      	push	{r4, r5, r6, r7, lr}
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
  8003a2e:	2300      	movs	r3, #0
  8003a30:	480b      	ldr	r0, [pc, #44]	; (8003a60 <clear_filterbank+0x34>)
  8003a32:	4d0c      	ldr	r5, [pc, #48]	; (8003a64 <clear_filterbank+0x38>)
@@ -8324,7 +8324,7 @@ void clear_filterbank(void) {
  8003a36:	2400      	movs	r4, #0
     hz_freqs_n[m] = 0;
  8003a38:	461f      	mov	r7, r3
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
  8003a3a:	f240 1e01 	movw	lr, #257	; 0x101
  8003a3e:	eb05 2103 	add.w	r1, r5, r3, lsl #8
 void clear_filterbank(void) {
@@ -8338,12 +8338,12 @@ void clear_filterbank(void) {
  8003a4c:	d1fa      	bne.n	8003a44 <clear_filterbank+0x18>
     hz_freqs_n[m] = 0;
  8003a4e:	f846 7023 	str.w	r7, [r6, r3, lsl #2]
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
  8003a52:	3301      	adds	r3, #1
  8003a54:	4573      	cmp	r3, lr
     hz_freqs[m] = 0.0f;
  8003a56:	f840 4b04 	str.w	r4, [r0], #4
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
  8003a5a:	d1f0      	bne.n	8003a3e <clear_filterbank+0x12>
  8003a5c:	bdf0      	pop	{r4, r5, r6, r7, pc}
  8003a5e:	bf00      	nop
@@ -8368,9 +8368,9 @@ void generate_mel_scale_filters(void) {
   mel_freq_high = hz2mel((float32_t)fs/2.0);
  8003a74:	4d54      	ldr	r5, [pc, #336]	; (8003bc8 <generate_mel_scale_filters+0x15c>)
  8003a76:	f8df a164 	ldr.w	sl, [pc, #356]	; 8003bdc <generate_mel_scale_filters+0x170>
-  mel_delta = (mel_freq_high - mel_freq_low)/(float32_t)(NUM_FILTERS+1);
+  mel_delta = (mel_freq_high - mel_freq_low)/(float32_t)(NUM_FILTERS_MEL+1);
 
-  for (int m = 0; m < NUM_FILTERS + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_MEL + 2; m++) {
     hz_freqs[m] = mel2hz(mel_delta*m);
     hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
  8003a7a:	f8df b15c 	ldr.w	fp, [pc, #348]	; 8003bd8 <generate_mel_scale_filters+0x16c>
@@ -8384,10 +8384,10 @@ void generate_mel_scale_filters(void) {
  8003a8a:	eeb6 8a00 	vmov.f32	s16, #96	; 0x3f000000  0.5
  8003a8e:	ee20 0a08 	vmul.f32	s0, s0, s16
  8003a92:	f7ff ff69 	bl	8003968 <hz2mel>
-  mel_delta = (mel_freq_high - mel_freq_low)/(float32_t)(NUM_FILTERS+1);
+  mel_delta = (mel_freq_high - mel_freq_low)/(float32_t)(NUM_FILTERS_MEL+1);
  8003a96:	eddf 7a4e 	vldr	s15, [pc, #312]	; 8003bd0 <generate_mel_scale_filters+0x164>
  8003a9a:	eec0 8a27 	vdiv.f32	s17, s0, s15
-  for (int m = 0; m < NUM_FILTERS + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_MEL + 2; m++) {
  8003a9e:	2400      	movs	r4, #0
     hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
  8003aa0:	2600      	movs	r6, #0
@@ -8420,7 +8420,7 @@ void generate_mel_scale_filters(void) {
  8003aea:	f7fc fde1 	bl	80006b0 <__aeabi_dmul>
  8003aee:	f7fd f8b7 	bl	8000c60 <__aeabi_d2uiz>
  8003af2:	f84b 0024 	str.w	r0, [fp, r4, lsl #2]
-  for (int m = 0; m < NUM_FILTERS + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_MEL + 2; m++) {
  8003af6:	3401      	adds	r4, #1
  8003af8:	2c2a      	cmp	r4, #42	; 0x2a
  8003afa:	d1d2      	bne.n	8003aa2 <generate_mel_scale_filters+0x36>
@@ -8483,7 +8483,7 @@ void generate_mel_scale_filters(void) {
  8003b68:	4295      	cmp	r5, r2
  8003b6a:	da1b      	bge.n	8003ba4 <generate_mel_scale_filters+0x138>
  8003b6c:	f109 0901 	add.w	r9, r9, #1
-  for (int m = 1; m < NUM_FILTERS + 1; m++) {
+  for (int m = 1; m < NUM_FILTERS_MEL + 1; m++) {
  8003b70:	f1b9 0f29 	cmp.w	r9, #41	; 0x29
  8003b74:	d1cb      	bne.n	8003b0e <generate_mel_scale_filters+0xa2>
       filterbank[m][n - left_n] = (freq_m_plus_1 - n2hz(n))/(freq_m_plus_1 - freq_m)/divider;
@@ -8545,13 +8545,13 @@ void generate_linear_scale_filters(void) {
   freq_low = 0.0f;
   freq_high = (float32_t)fs/2.0;
  8003bee:	4b4a      	ldr	r3, [pc, #296]	; (8003d18 <generate_linear_scale_filters+0x138>)
-  delta = (freq_high - freq_low)/(float32_t)(NUM_FILTERS_L+1);
+  delta = (freq_high - freq_low)/(float32_t)(NUM_FILTERS_SPEC+1);
  8003bf0:	ed9f 7a4a 	vldr	s14, [pc, #296]	; 8003d1c <generate_linear_scale_filters+0x13c>
   freq_high = (float32_t)fs/2.0;
  8003bf4:	edd3 7a00 	vldr	s15, [r3]
  8003bf8:	4d49      	ldr	r5, [pc, #292]	; (8003d20 <generate_linear_scale_filters+0x140>)
 
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
     hz_freqs[m] = delta * m;
     hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
  8003bfa:	f8df b130 	ldr.w	fp, [pc, #304]	; 8003d2c <generate_linear_scale_filters+0x14c>
@@ -8560,21 +8560,21 @@ void generate_linear_scale_filters(void) {
  8003c02:	ee27 8a88 	vmul.f32	s16, s15, s16
     hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
  8003c06:	ee17 0a90 	vmov	r0, s15
-  delta = (freq_high - freq_low)/(float32_t)(NUM_FILTERS_L+1);
+  delta = (freq_high - freq_low)/(float32_t)(NUM_FILTERS_SPEC+1);
  8003c0a:	ee28 8a07 	vmul.f32	s16, s16, s14
     hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
  8003c0e:	f7fc fcfb 	bl	8000608 <__aeabi_f2d>
  8003c12:	2200      	movs	r2, #0
  8003c14:	4b43      	ldr	r3, [pc, #268]	; (8003d24 <generate_linear_scale_filters+0x144>)
  8003c16:	f7fc fd4b 	bl	80006b0 <__aeabi_dmul>
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
  8003c1a:	2400      	movs	r4, #0
     hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
  8003c1c:	4680      	mov	r8, r0
  8003c1e:	4689      	mov	r9, r1
  8003c20:	2600      	movs	r6, #0
  8003c22:	f04f 4781 	mov.w	r7, #1082130432	; 0x40800000
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
  8003c26:	f240 1a01 	movw	sl, #257	; 0x101
     hz_freqs[m] = delta * m;
  8003c2a:	ee07 4a90 	vmov	s15, r4
@@ -8595,7 +8595,7 @@ void generate_linear_scale_filters(void) {
  8003c56:	f7fc fd2b 	bl	80006b0 <__aeabi_dmul>
  8003c5a:	f7fd f801 	bl	8000c60 <__aeabi_d2uiz>
  8003c5e:	f84b 0024 	str.w	r0, [fp, r4, lsl #2]
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
  8003c62:	3401      	adds	r4, #1
  8003c64:	4554      	cmp	r4, sl
  8003c66:	d1e0      	bne.n	8003c2a <generate_linear_scale_filters+0x4a>
@@ -8651,7 +8651,7 @@ void generate_linear_scale_filters(void) {
  8003cc4:	4297      	cmp	r7, r2
  8003cc6:	da18      	bge.n	8003cfa <generate_linear_scale_filters+0x11a>
  8003cc8:	3101      	adds	r1, #1
-  for (int m = 1; m < NUM_FILTERS_L + 1; m++) {
+  for (int m = 1; m < NUM_FILTERS_SPEC + 1; m++) {
  8003cca:	f5b1 7f80 	cmp.w	r1, #256	; 0x100
  8003cce:	d1d3      	bne.n	8003c78 <generate_linear_scale_filters+0x98>
       filterbank[m][n - left_n] = (freq_m_plus_1 - n2hz(n))/(freq_m_plus_1 - freq_m);
@@ -8716,8 +8716,8 @@ void generate_filters(mode mode) {
 void generate_half_sample_shifter(void) {
  8003d48:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
   int re, im;
-  float32_t num_filters_2 = (float32_t)NUM_FILTERS * 2;
-  for (int k = 0; k < NUM_FILTERS; k ++) {
+  float32_t num_filters_2 = (float32_t)NUM_FILTERS_MEL * 2;
+  for (int k = 0; k < NUM_FILTERS_MEL; k ++) {
     re = k * 2;
     im = re + 1;
     half_sample_shifter[re] = arm_cos_f32(-1.0*PI*(float32_t)k/num_filters_2);
@@ -8728,13 +8728,13 @@ void generate_half_sample_shifter(void) {
  8003d58:	4d17      	ldr	r5, [pc, #92]	; (8003db8 <generate_half_sample_shifter+0x70>)
     half_sample_shifter[re] = arm_cos_f32(-1.0*PI*(float32_t)k/num_filters_2);
  8003d5a:	4f18      	ldr	r7, [pc, #96]	; (8003dbc <generate_half_sample_shifter+0x74>)
-  for (int k = 0; k < NUM_FILTERS; k ++) {
+  for (int k = 0; k < NUM_FILTERS_MEL; k ++) {
  8003d5c:	2400      	movs	r4, #0
     half_sample_shifter[re] = arm_cos_f32(-1.0*PI*(float32_t)k/num_filters_2);
  8003d5e:	2600      	movs	r6, #0
  8003d60:	ee07 4a90 	vmov	s15, r4
  8003d64:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-  for (int k = 0; k < NUM_FILTERS; k ++) {
+  for (int k = 0; k < NUM_FILTERS_MEL; k ++) {
  8003d68:	3401      	adds	r4, #1
     half_sample_shifter[re] = arm_cos_f32(-1.0*PI*(float32_t)k/num_filters_2);
  8003d6a:	ee17 0a90 	vmov	r0, s15
@@ -8754,12 +8754,12 @@ void generate_half_sample_shifter(void) {
  8003d96:	eeb0 0a48 	vmov.f32	s0, s16
  8003d9a:	f002 f81f 	bl	8005ddc <arm_sin_f32>
  8003d9e:	462b      	mov	r3, r5
-  for (int k = 0; k < NUM_FILTERS; k ++) {
+  for (int k = 0; k < NUM_FILTERS_MEL; k ++) {
  8003da0:	2c28      	cmp	r4, #40	; 0x28
     half_sample_shifter[im] = arm_sin_f32(-1.0*PI*(float32_t)k/num_filters_2);
  8003da2:	f105 0508 	add.w	r5, r5, #8
  8003da6:	ed83 0a00 	vstr	s0, [r3]
-  for (int k = 0; k < NUM_FILTERS; k ++) {
+  for (int k = 0; k < NUM_FILTERS_MEL; k ++) {
  8003daa:	d1d9      	bne.n	8003d60 <generate_half_sample_shifter+0x18>
   }
 }
@@ -8796,7 +8796,7 @@ void init_dsp(float32_t f_s) {
   arm_rfft_fast_init_f32(&S, NN);
  8003de4:	f44f 7100 	mov.w	r1, #512	; 0x200
  8003de8:	f000 ff0c 	bl	8004c04 <arm_rfft_fast_init_f32>
-  arm_rfft_fast_init_f32(&S_DCT, NUM_FILTERS*2);
+  arm_rfft_fast_init_f32(&S_DCT, NUM_FILTERS_MEL*2);
  8003dec:	2150      	movs	r1, #80	; 0x50
  8003dee:	480c      	ldr	r0, [pc, #48]	; (8003e20 <init_dsp+0x58>)
  8003df0:	f000 ff08 	bl	8004c04 <arm_rfft_fast_init_f32>
@@ -8908,7 +8908,7 @@ void apply_filterbank(float32_t *inout, mode mode) {
   float32_t sum = 0.0f;
  8003eac:	ed9f 0a1c 	vldr	s0, [pc, #112]	; 8003f20 <apply_filterbank+0x78>
  8003eb0:	f8df 8070 	ldr.w	r8, [pc, #112]	; 8003f24 <apply_filterbank+0x7c>
-    num_filters = NUM_FILTERS;
+    num_filters = NUM_FILTERS_MEL;
   }
 
   arm_fill_f32(0.0f, signal_buf, NN/2);
@@ -8919,7 +8919,7 @@ void apply_filterbank(float32_t *inout, mode mode) {
     len = right_n - left_n + 1;
     arm_dot_prod_f32(&inout[left_n], filterbank[m], len, &sum);
  8003eb8:	f8df a070 	ldr.w	sl, [pc, #112]	; 8003f2c <apply_filterbank+0x84>
-    num_filters = NUM_FILTERS;
+    num_filters = NUM_FILTERS_MEL;
  8003ebc:	2906      	cmp	r1, #6
 void apply_filterbank(float32_t *inout, mode mode) {
  8003ebe:	4606      	mov	r6, r0
@@ -8930,7 +8930,7 @@ void apply_filterbank(float32_t *inout, mode mode) {
  8003ec6:	4817      	ldr	r0, [pc, #92]	; (8003f24 <apply_filterbank+0x7c>)
   float32_t sum = 0.0f;
  8003ec8:	ed25 0a01 	vstmdb	r5!, {s0}
-    num_filters = NUM_FILTERS;
+    num_filters = NUM_FILTERS_MEL;
  8003ecc:	bf0c      	ite	eq
  8003ece:	27ff      	moveq	r7, #255	; 0xff
  8003ed0:	2728      	movne	r7, #40	; 0x28
@@ -9025,31 +9025,31 @@ void apply_dct2(float32_t *inout) {
  8003f80:	b530      	push	{r4, r5, lr}
  8003f82:	f5ad 7d21 	sub.w	sp, sp, #644	; 0x284
  8003f86:	4605      	mov	r5, r0
-  float32_t in[NUM_FILTERS*2] = { 0.0f };
+  float32_t in[NUM_FILTERS_MEL*2] = { 0.0f };
  8003f88:	f44f 72a0 	mov.w	r2, #320	; 0x140
  8003f8c:	2100      	movs	r1, #0
  8003f8e:	4668      	mov	r0, sp
-  float32_t out[NUM_FILTERS*2] = { 0.0f };
+  float32_t out[NUM_FILTERS_MEL*2] = { 0.0f };
  8003f90:	ac50      	add	r4, sp, #320	; 0x140
-  float32_t in[NUM_FILTERS*2] = { 0.0f };
+  float32_t in[NUM_FILTERS_MEL*2] = { 0.0f };
  8003f92:	f002 fbbf 	bl	8006714 <memset>
-  float32_t out[NUM_FILTERS*2] = { 0.0f };
+  float32_t out[NUM_FILTERS_MEL*2] = { 0.0f };
  8003f96:	f44f 72a0 	mov.w	r2, #320	; 0x140
  8003f9a:	2100      	movs	r1, #0
  8003f9c:	4620      	mov	r0, r4
  8003f9e:	f002 fbb9 	bl	8006714 <memset>
-  arm_copy_f32(inout, in, NUM_FILTERS);
+  arm_copy_f32(inout, in, NUM_FILTERS_MEL);
  8003fa2:	2228      	movs	r2, #40	; 0x28
  8003fa4:	4669      	mov	r1, sp
  8003fa6:	4628      	mov	r0, r5
  8003fa8:	f000 fdc8 	bl	8004b3c <arm_copy_f32>
  8003fac:	aa28      	add	r2, sp, #160	; 0xa0
  8003fae:	4613      	mov	r3, r2
-  for (int n = 0; n < NUM_FILTERS; n++) {
-    in[n+NUM_FILTERS] = in[NUM_FILTERS-n-1];
+  for (int n = 0; n < NUM_FILTERS_MEL; n++) {
+    in[n+NUM_FILTERS_MEL] = in[NUM_FILTERS_MEL-n-1];
  8003fb0:	f852 1d04 	ldr.w	r1, [r2, #-4]!
  8003fb4:	f843 1b04 	str.w	r1, [r3], #4
-  for (int n = 0; n < NUM_FILTERS; n++) {
+  for (int n = 0; n < NUM_FILTERS_MEL; n++) {
  8003fb8:	42a3      	cmp	r3, r4
  8003fba:	d1f9      	bne.n	8003fb0 <apply_dct2+0x30>
   }
@@ -9059,26 +9059,26 @@ void apply_dct2(float32_t *inout) {
  8003fc0:	4669      	mov	r1, sp
  8003fc2:	480e      	ldr	r0, [pc, #56]	; (8003ffc <apply_dct2+0x7c>)
  8003fc4:	f000 fea0 	bl	8004d08 <arm_rfft_fast_f32>
-  arm_scale_f32 (out, 2.0, out, NUM_FILTERS*2);
+  arm_scale_f32 (out, 2.0, out, NUM_FILTERS_MEL*2);
  8003fc8:	2250      	movs	r2, #80	; 0x50
  8003fca:	4621      	mov	r1, r4
  8003fcc:	eeb0 0a00 	vmov.f32	s0, #0	; 0x40000000  2.0
  8003fd0:	4620      	mov	r0, r4
  8003fd2:	f001 ff91 	bl	8005ef8 <arm_scale_f32>
-  arm_cmplx_mult_cmplx_f32(out, half_sample_shifter, out, NUM_FILTERS);
+  arm_cmplx_mult_cmplx_f32(out, half_sample_shifter, out, NUM_FILTERS_MEL);
  8003fd6:	2328      	movs	r3, #40	; 0x28
  8003fd8:	4622      	mov	r2, r4
  8003fda:	4909      	ldr	r1, [pc, #36]	; (8004000 <apply_dct2+0x80>)
  8003fdc:	4620      	mov	r0, r4
  8003fde:	f001 fd75 	bl	8005acc <arm_cmplx_mult_cmplx_f32>
  8003fe2:	2300      	movs	r3, #0
-  for (int n = 0; n < NUM_FILTERS; n++) {
+  for (int n = 0; n < NUM_FILTERS_MEL; n++) {
     inout[n] = out[n*2];
  8003fe4:	18e2      	adds	r2, r4, r3
  8003fe6:	3308      	adds	r3, #8
  8003fe8:	6812      	ldr	r2, [r2, #0]
  8003fea:	f845 2b04 	str.w	r2, [r5], #4
-  for (int n = 0; n < NUM_FILTERS; n++) {
+  for (int n = 0; n < NUM_FILTERS_MEL; n++) {
  8003fee:	f5b3 7fa0 	cmp.w	r3, #320	; 0x140
  8003ff2:	d1f7      	bne.n	8003fe4 <apply_dct2+0x64>
   }
@@ -9200,8 +9200,8 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
  80040a3:	00          	.byte	0x00
 
     case RAW_WAVE:
-      length = NN * 2;  // 16bit quantization
- 80040a4:	f44f 6180 	mov.w	r1, #1024	; 0x400
+      length = NN;
+ 80040a4:	f44f 7100 	mov.w	r1, #512	; 0x200
  80040a8:	6011      	str	r1, [r2, #0]
       cnt = 1;
  80040aa:	2101      	movs	r1, #1
@@ -9278,14 +9278,14 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
  8004114:	d0dd      	beq.n	80040d2 <uart_tx+0x52>
  8004116:	602a      	str	r2, [r5, #0]
  8004118:	e7db      	b.n	80040d2 <uart_tx+0x52>
-      length = NUM_FILTERS_L;
+      length = NUM_FILTERS_SPEC;
  800411a:	21ff      	movs	r1, #255	; 0xff
-      length = NUM_FILTERS;
+      length = NUM_FILTERS_MEL;
  800411c:	6011      	str	r1, [r2, #0]
       cnt = 200;
  800411e:	21c8      	movs	r1, #200	; 0xc8
  8004120:	e7e9      	b.n	80040f6 <uart_tx+0x76>
-      length = NUM_FILTERS;
+      length = NUM_FILTERS_MEL;
  8004122:	2128      	movs	r1, #40	; 0x28
  8004124:	e7fa      	b.n	800411c <uart_tx+0x9c>
       length = 0;

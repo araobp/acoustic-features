@@ -136,7 +136,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     switch (mode) {
 
     case RAW_WAVE:
-      length = NN * 2;  // 16bit quantization
+      length = NN;
       cnt = 1;
       break;
 
@@ -146,17 +146,17 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
       break;
 
     case SPECTROGRAM:
-      length = NUM_FILTERS_L;
+      length = NUM_FILTERS_SPEC;
       cnt = 200;
       break;
 
     case MEL_SPECTROGRAM:
-      length = NUM_FILTERS;
+      length = NUM_FILTERS_MEL;
       cnt = 200;
       break;
 
     case MFCC:
-      length = NUM_FILTERS;
+      length = NUM_FILTERS_MEL;
       cnt = 200;
       break;
 

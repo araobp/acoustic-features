@@ -18,10 +18,10 @@ arm_rfft_fast_instance_f32 S;
 arm_fir_instance_f32 S_PRE;
 arm_rfft_fast_instance_f32 S_DCT;
 
-float32_t filterbank[NUM_FILTERS_L+2][NN/8] = { { 0.0f } };
+float32_t filterbank[NUM_FILTERS_SPEC+2][NN/8] = { { 0.0f } };
 
-float32_t hz_freqs[NUM_FILTERS_L+2] = { 0.0f };
-uint32_t hz_freqs_n[NUM_FILTERS_L+2] = { 0.0f };
+float32_t hz_freqs[NUM_FILTERS_SPEC+2] = { 0.0f };
+uint32_t hz_freqs_n[NUM_FILTERS_SPEC+2] = { 0.0f };
 
 float32_t hann_window[NN] = { 0.0f };
 
@@ -32,7 +32,7 @@ float32_t fir_coefficients[2] = {-ALPHA, 1.0f};
 float32_t state_buf[NN+1] = { 0.0f };
 
 // Half sample shifter
-float32_t half_sample_shifter[NUM_FILTERS * 2] = { 0.0f };
+float32_t half_sample_shifter[NUM_FILTERS_MEL * 2] = { 0.0f };
 
 // hann window generation
 void hann(int num) {
@@ -73,7 +73,7 @@ float32_t n2hz(uint32_t n) {
 }
 
 void clear_filterbank(void) {
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
     for (int n = 0; n < NN/8; n++) {
       filterbank[m][n] = 0.0f;
     }
@@ -96,13 +96,13 @@ void generate_mel_scale_filters(void) {
   clear_filterbank();
   mel_freq_low = 0.0f;
   mel_freq_high = hz2mel((float32_t)fs/2.0);
-  mel_delta = (mel_freq_high - mel_freq_low)/(float32_t)(NUM_FILTERS+1);
+  mel_delta = (mel_freq_high - mel_freq_low)/(float32_t)(NUM_FILTERS_MEL+1);
 
-  for (int m = 0; m < NUM_FILTERS + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_MEL + 2; m++) {
     hz_freqs[m] = mel2hz(mel_delta*m);
     hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
   }
-  for (int m = 1; m < NUM_FILTERS + 1; m++) {
+  for (int m = 1; m < NUM_FILTERS_MEL + 1; m++) {
     left_n = hz_freqs_n[m-1];
     center_n = hz_freqs_n[m];
     right_n = hz_freqs_n[m+1];
@@ -137,13 +137,13 @@ void generate_linear_scale_filters(void) {
   clear_filterbank();
   freq_low = 0.0f;
   freq_high = (float32_t)fs/2.0;
-  delta = (freq_high - freq_low)/(float32_t)(NUM_FILTERS_L+1);
+  delta = (freq_high - freq_low)/(float32_t)(NUM_FILTERS_SPEC+1);
 
-  for (int m = 0; m < NUM_FILTERS_L + 2; m++) {
+  for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
     hz_freqs[m] = delta * m;
     hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
   }
-  for (int m = 1; m < NUM_FILTERS_L + 1; m++) {
+  for (int m = 1; m < NUM_FILTERS_SPEC + 1; m++) {
     left_n = hz_freqs_n[m-1];
     center_n = hz_freqs_n[m];
     right_n = hz_freqs_n[m+1];
@@ -174,8 +174,8 @@ void generate_filters(mode mode) {
 
 void generate_half_sample_shifter(void) {
   int re, im;
-  float32_t num_filters_2 = (float32_t)NUM_FILTERS * 2;
-  for (int k = 0; k < NUM_FILTERS; k ++) {
+  float32_t num_filters_2 = (float32_t)NUM_FILTERS_MEL * 2;
+  for (int k = 0; k < NUM_FILTERS_MEL; k ++) {
     re = k * 2;
     im = re + 1;
     half_sample_shifter[re] = arm_cos_f32(-1.0*PI*(float32_t)k/num_filters_2);
@@ -191,7 +191,7 @@ void init_dsp(float32_t f_s) {
   hann(NN);
   fs = f_s;
   arm_rfft_fast_init_f32(&S, NN);
-  arm_rfft_fast_init_f32(&S_DCT, NUM_FILTERS*2);
+  arm_rfft_fast_init_f32(&S_DCT, NUM_FILTERS_MEL*2);
   arm_fir_init_f32(&S_PRE, 2, fir_coefficients, state_buf, NN+1);
   generate_mel_scale_filters();
   //generate_linear_scale_filters();
@@ -224,9 +224,9 @@ void apply_filterbank(float32_t *inout, mode mode) {
   int left_n, right_n, len, num_filters;
 
   if (mode == SPECTROGRAM) {
-    num_filters = NUM_FILTERS_L;
+    num_filters = NUM_FILTERS_SPEC;
   } else {
-    num_filters = NUM_FILTERS;
+    num_filters = NUM_FILTERS_MEL;
   }
 
   arm_fill_f32(0.0f, signal_buf, NN/2);
@@ -249,16 +249,16 @@ void apply_psd_logscale(float32_t *inout) {
 }
 
 void apply_dct2(float32_t *inout) {
-  float32_t in[NUM_FILTERS*2] = { 0.0f };
-  float32_t out[NUM_FILTERS*2] = { 0.0f };
-  arm_copy_f32(inout, in, NUM_FILTERS);
-  for (int n = 0; n < NUM_FILTERS; n++) {
-    in[n+NUM_FILTERS] = in[NUM_FILTERS-n-1];
+  float32_t in[NUM_FILTERS_MEL*2] = { 0.0f };
+  float32_t out[NUM_FILTERS_MEL*2] = { 0.0f };
+  arm_copy_f32(inout, in, NUM_FILTERS_MEL);
+  for (int n = 0; n < NUM_FILTERS_MEL; n++) {
+    in[n+NUM_FILTERS_MEL] = in[NUM_FILTERS_MEL-n-1];
   }
   arm_rfft_fast_f32(&S_DCT, in, out, 0);
-  arm_scale_f32 (out, 2.0, out, NUM_FILTERS*2);
-  arm_cmplx_mult_cmplx_f32(out, half_sample_shifter, out, NUM_FILTERS);
-  for (int n = 0; n < NUM_FILTERS; n++) {
+  arm_scale_f32 (out, 2.0, out, NUM_FILTERS_MEL*2);
+  arm_cmplx_mult_cmplx_f32(out, half_sample_shifter, out, NUM_FILTERS_MEL);
+  for (int n = 0; n < NUM_FILTERS_MEL; n++) {
     inout[n] = out[n*2];
   }
 }

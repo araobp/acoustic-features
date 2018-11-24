@@ -1,11 +1,13 @@
-#!/usr/bin/env python3
-
+# << Oscilloscope GUI >>
+#
+# This implementaion makes use of matplotlib on Tk for agile GUI development.
+#
 # Reference: https://matplotlib.org/2.1.0/gallery/user_interfaces/embedding_in_tk_sgskip.html
+#
 
 import matplotlib
 import numpy as np
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-from matplotlib.backend_bases import key_press_handler
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import sys
 import tkinter as Tk
@@ -54,8 +56,8 @@ entry = Tk.Entry(master=root, width=14)
 cmap = Tk.Spinbox(master=root, width=10, values=CMAP_LIST)
 counter = Tk.Label(master=root)
 range_amplitude = Tk.Spinbox(master=root, width=6, values=[2**8, 2**9, 2**11, 2**13, 2**15])
-range_filtered = Tk.Spinbox(master=root, width=3, values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
-range_filtered_l = Tk.Spinbox(master=root, width=4, values=[dsp.NUM_FILTERS_L, int(dsp.NUM_FILTERS_L*.7), int(dsp.NUM_FILTERS_L*0.4)])
+range_filtered = Tk.Spinbox(master=root, width=3, values=[dsp.NUM_FILTERS_MEL, int(dsp.NUM_FILTERS_MEL*.8), int(dsp.NUM_FILTERS_MEL*0.6)])
+range_filtered_l = Tk.Spinbox(master=root, width=4, values=[dsp.NUM_FILTERS_SPEC, int(dsp.NUM_FILTERS_SPEC*.7), int(dsp.NUM_FILTERS_SPEC*0.4)])
 range_mfcc = Tk.Spinbox(master=root, width=3, values=[25, 18, 13])
 mode_beam_forming = Tk.Spinbox(master=root, width=2, values=['e', 'b'])
 range_beam_forming = Tk.Spinbox(master=root, width=2, values=['c', 'r', 'R', 'l', 'L'])
@@ -90,8 +92,7 @@ def raw_wave():
     range_ = int(range_amplitude.get())
     ax.clear()
     ax.grid(True, alpha=0.3)
-    df = dsp.serial_read(dsp.RAW_WAVE)
-    dsp.plot_aed(ax, df, dsp.RAW_WAVE, range_=range_)
+    df = dsp.plot_aed(ax, dsp.RAW_WAVE, range_=range_)
     canvas.draw()
     df_save(df, 'waveform')
     repeat(raw_wave)
@@ -100,8 +101,7 @@ def fft():
     ssub = int(spectrum_subtraction.get())
     ax.clear()
     ax.grid(True, alpha=0.3)
-    df = dsp.serial_read(dsp.FFT, ssub=ssub)
-    dsp.plot_aed(ax, df, dsp.FFT)
+    df = dsp.plot_aed(ax, dsp.FFT, ssub=ssub)
     canvas.draw()
     df_save(df, 'fft')
     repeat(fft)
@@ -111,8 +111,7 @@ def mel_spectrogram():
     range_ = int(range_filtered.get())
     cmap_ = cmap.get()
     ax.clear()
-    df = dsp.serial_read(dsp.MEL_SPECTROGRAM, ssub=ssub)
-    dsp.plot_aed(ax, df, dsp.MEL_SPECTROGRAM, range_, cmap_)
+    df = dsp.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub)
     canvas.draw()
     df_save(df, 'mel_spectrogram')
     repeat(mel_spectrogram)
@@ -122,8 +121,7 @@ def spectrogram():
     range_ = int(range_filtered_l.get())
     cmap_ = cmap.get()
     ax.clear()
-    df = dsp.serial_read(dsp.SPECTROGRAM, ssub=ssub)
-    dsp.plot_aed(ax, df, dsp.SPECTROGRAM, range_, cmap_)
+    df = dsp.plot_aed(ax, dsp.SPECTROGRAM, range_, cmap_, ssub)
     canvas.draw()
     df_save(df, 'spectrogram')
     repeat(spectrogram)
@@ -133,8 +131,7 @@ def mfcc():
     range_ = int(range_mfcc.get())
     cmap_ = cmap.get()
     ax.clear()
-    df = dsp.serial_read(dsp.MFCC, ssub=ssub)
-    dsp.plot_aed(ax, df, dsp.MFCC, range_, cmap_)
+    df = dsp.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub)
     canvas.draw()
     df_save(df, 'mfcc')
     repeat(mfcc)
@@ -172,26 +169,9 @@ def remove():
         os.remove(filename+'.csv')
         cnt -= 1
         counter.configure(text='({})'.format(str(cnt)))
-    
-def on_key_event(event):
-    print('you pressed %s' % event.key)
-    key = event.key
-    m = None
-    if (key == 'w'):
-        raw_wave()
-    elif (key == 'f'):
-        fft()
-    elif (key == 'm'):
-        mel_spectrogram()
-    elif (key == 's'):
-        spectrogram()
-    elif (key == 'c'):
-        mfcc()
-    key_press_handler(event, canvas)
-
-canvas.mpl_connect('key_press_event', on_key_event)
 
 def _quit():
+    dsp.close()
     root.quit()
     root.destroy()
 

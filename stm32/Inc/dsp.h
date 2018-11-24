@@ -16,8 +16,8 @@
 
 // The number of filters
 // Note: NUM_FILTERS_L >= NUM_FILTERS
-#define NUM_FILTERS 40     // Mel-spectrogram and MFCCs
-#define NUM_FILTERS_L 255  // Linear-spectrogram
+#define NUM_FILTERS_MEL 40     // Mel-spectrogram and MFCCs
+#define NUM_FILTERS_SPEC 255  // Linear-spectrogram
 
 // Adjust mel filterbank so that the output to uart does not become too small
 #define ADJUST_MEL_FILTERBANK 2.0f
@@ -27,7 +27,7 @@ typedef enum {
   RAW_WAVE, FFT, FILTERBANK, MEL_SPECTROGRAM, MFCC, MFCC_STREAMING, SPECTROGRAM
 } mode;
 
-extern float32_t filterbank[NUM_FILTERS_L+2][NN/8];
+extern float32_t filterbank[NUM_FILTERS_SPEC+2][NN/8];
 
 void init_dsp(float32_t sampling_frequency);
 
