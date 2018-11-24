@@ -4,11 +4,13 @@
 
 ## Background and motivation
 
-I need to collect a lot of data for training CNN(Convolutional Neural Network), but it is a very time-consuming work, so I decided to develop a data collecting device ("audio camera") for automation of the work.
+If you are interested in "edge AI", extracting good feature and feature quantization is as important as modeling a good CNN, since your CNN should be small enough to fit into a limited amount of RAM memory size (e.g., 128Kbyes).
 
-Since Arm has already released [CMSIS-NN](http://www.keil.com/pack/doc/CMSIS_Dev/NN/html/index.html) and STMicro is going to release [CubeMX.AI](https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html), I decided to implement most of the pre-processing for CNN on the edge device: STM32L476RG.
+At first, I am experimenting to see if pre-processing for edge AI fit into MCU's RAM. 
 
-I use Keras/TensorFlow for training CNN with the data acquired by the device via Oscillosope GUI.
+Also I am developing a tool "oscilloscope" to visualize how data is processed at every stage in the pre-processing pipeline. Such a tool is useful to seek the best quantization model for every use cases.
+
+Currently, I am using the device and the tool to train CNN on Keras/TensorFlow for AED (Acoustic Event Detection).
 
 ## Use cases
 
