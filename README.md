@@ -14,6 +14,8 @@ Also I am developing a tool "oscilloscope" to visualize how data is processed at
 
 Currently, I am using the device and the tool to train CNN on Keras/TensorFlow for AED (Acoustic Event Detection).
 
+I will also run CNN itself on Arm Cortex-M MCUs when [CubeMX.AI](https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html) becomes available in 1Q/CY2019.
+
 ## Use cases
 
 - musical instruments recognition
