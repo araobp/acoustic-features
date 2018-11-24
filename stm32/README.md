@@ -56,7 +56,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
          |             |
 [Overlapping frames]   |  arm_copy_f32()
          |             |
-  [Windowins(hann)]    |  arm_mult_f32()
+  [Windowing(hann)]    |  arm_mult_f32()
          |             |
   [   Real FFT   ]     |  arm_rfft_fast_f32()
          |             |
