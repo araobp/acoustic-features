@@ -4,6 +4,8 @@
 
 ## Background and motivation
 
+["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920)
+
 If you are interested in "edge AI", extracting good feature (i.e., seeking the best feature quantization model) is as important as modeling a good CNN, since your CNN should be small enough to fit into a limited amount of RAM memory size (e.g., 128Kbyes).
 
 At first, I am experimenting to see if pre-processing for edge AI fit into RAM on Arm Cortex-M MCU.
