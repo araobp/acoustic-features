@@ -88,12 +88,15 @@ Oscilloscope GUI/IoT gateway
 - overlap: 50%(13.2msec)
 
 ```
-26.3msec         stride
-[b0|a1]            1a --> mel-scale spectrogram via filter bank or 12 MFCCs
-   [a1|b1]         1b --> mel-scale spectrogram via filter bank or 12 MFCCs
-      [b1|a2]      2a --> mel-scale spectrogram via filter bank or 12 MFCCs
-         [a2|b2]   2b --> mel-scale spectrogram via filter bank or 12 MFCCs
-            :
+  26.3msec          stride 13.2msec
+  --- overlap dsp -------------
+  [b0|a0]            a(1/2)
+     [a0|a1]         a(2/2)
+  --- overlap dsp -------------
+        [a1|b0]      b(1/2)
+           [b0|b1]   b(2/2)
+  --- overlap dsp -------------
+              :
 ```
 ## Filter banks
 
