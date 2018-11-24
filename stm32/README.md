@@ -4,7 +4,7 @@
 
 The configuration below assumes [my original "Knowles MEMS mic Arduino shield"](https://github.com/araobp/acoustic-event-detection/tree/master/kicad).
 
-- [CubeMX file](./acoustic_event_detection.ioc)
+- [CubeMX file](./acoustic_event_detection.ioc) for STM32L476RG and the Arduino shield
 
 ## Making use of DMA
 
