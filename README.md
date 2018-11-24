@@ -58,7 +58,7 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
 
 ## AED system components in development
 
-- [Edge device for machine learning (CubeMX/TrueSTUDIO)](./stm32)
+- [Edge device for deep learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 - [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
 
