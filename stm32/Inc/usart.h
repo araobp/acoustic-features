@@ -44,7 +44,6 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l4xx_hal.h"
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
@@ -56,8 +55,6 @@ extern UART_HandleTypeDef huart2;
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
-
-extern void _Error_Handler(char *, int);
 
 void MX_USART2_UART_Init(void);
 

@@ -40,9 +40,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "dac.h"
 
-#include "gpio.h"
-#include "dma.h"
-
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -54,18 +51,17 @@ DMA_HandleTypeDef hdma_dac_ch2;
 /* DAC1 init function */
 void MX_DAC1_Init(void)
 {
-  DAC_ChannelConfTypeDef sConfig;
+  DAC_ChannelConfTypeDef sConfig = {0};
 
-    /**DAC Initialization 
-    */
+  /**DAC Initialization 
+  */
   hdac1.Instance = DAC1;
   if (HAL_DAC_Init(&hdac1) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
-
-    /**DAC channel OUT1 config 
-    */
+  /**DAC channel OUT1 config 
+  */
   sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
   sConfig.DAC_Trigger = DAC_TRIGGER_T6_TRGO;
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
@@ -73,15 +69,14 @@ void MX_DAC1_Init(void)
   sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
   if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_1) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
-
-    /**DAC channel OUT2 config 
-    */
+  /**DAC channel OUT2 config 
+  */
   sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
   if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_2) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
 
 }
@@ -89,7 +84,7 @@ void MX_DAC1_Init(void)
 void HAL_DAC_MspInit(DAC_HandleTypeDef* dacHandle)
 {
 
-  GPIO_InitTypeDef GPIO_InitStruct;
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(dacHandle->Instance==DAC1)
   {
   /* USER CODE BEGIN DAC1_MspInit 0 */
@@ -98,6 +93,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* dacHandle)
     /* DAC1 clock enable */
     __HAL_RCC_DAC1_CLK_ENABLE();
   
+    __HAL_RCC_GPIOA_CLK_ENABLE();
     /**DAC1 GPIO Configuration    
     PA4     ------> DAC1_OUT1
     PA5     ------> DAC1_OUT2 
@@ -120,7 +116,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* dacHandle)
     hdma_dac_ch1.Init.Priority = DMA_PRIORITY_LOW;
     if (HAL_DMA_Init(&hdma_dac_ch1) != HAL_OK)
     {
-      _Error_Handler(__FILE__, __LINE__);
+      Error_Handler();
     }
 
     __HAL_LINKDMA(dacHandle,DMA_Handle1,hdma_dac_ch1);
@@ -137,7 +133,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* dacHandle)
     hdma_dac_ch2.Init.Priority = DMA_PRIORITY_LOW;
     if (HAL_DMA_Init(&hdma_dac_ch2) != HAL_OK)
     {
-      _Error_Handler(__FILE__, __LINE__);
+      Error_Handler();
     }
 
     __HAL_LINKDMA(dacHandle,DMA_Handle2,hdma_dac_ch2);
@@ -177,13 +173,5 @@ void HAL_DAC_MspDeInit(DAC_HandleTypeDef* dacHandle)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

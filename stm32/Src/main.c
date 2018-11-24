@@ -1,3 +1,4 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file           : main.c
@@ -35,9 +36,10 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
+
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stm32l4xx_hal.h"
 #include "dac.h"
 #include "dfsdm.h"
 #include "dma.h"
@@ -45,6 +47,7 @@
 #include "usart.h"
 #include "gpio.h"
 
+/* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdbool.h"
 #include "arm_math.h"
@@ -52,6 +55,21 @@
 #include "stdio.h"
 #include "dsp.h"
 /* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -64,10 +82,10 @@ const int NN_HALF = NN / 2;
 const int NN_DOUBLE = NN * 2;
 
 // flag: "new PCM data has just been copied to buf"
-volatile bool new_pcm_data_a_l = false;
-volatile bool new_pcm_data_b_l = false;
-volatile bool new_pcm_data_a_r = false;
-volatile bool new_pcm_data_b_r = false;
+volatile bool new_pcm_data_l_a = false;
+volatile bool new_pcm_data_l_b = false;
+volatile bool new_pcm_data_r_a = false;
+volatile bool new_pcm_data_r_b = false;
 
 // output trigger
 volatile bool printing = false;
@@ -76,13 +94,13 @@ volatile bool printing = false;
 volatile mode output_mode = MFCC;
 mode filter_type = MFCC;  // Current filter bank
 
-// UART input buffer
+// UART one-byte input buffer
 uint8_t rxbuf[1];
 
 // Pre-emphasis toggle
 volatile bool enable_pre_emphasis = true;
 
-// Beam forming
+// Beam forming setting
 volatile int beam_forming = 2;  // center
 volatile int beam_forming_mode = ENDFIRE;
 
@@ -92,16 +110,16 @@ volatile int beam_forming_mode = ENDFIRE;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
 /* USER CODE END PFP */
 
+/* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
 /*
- * Output feature to UART
+ * Output raw wave or feature to UART by memory-to-peripheral DMA
  */
 bool uart_tx(float32_t *in, mode mode, bool dma_start) {
 
@@ -118,27 +136,27 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     switch (mode) {
 
     case RAW_WAVE:
-      length = NN * 2;  // 16bit output
+      length = NN * 2;  // 16bit quantization
       cnt = 1;
       break;
 
-    case PSD:
+    case FFT:
       length = NN / 2;
       cnt = 1;
       break;
 
-    case FILTERED_MEL:
+    case SPECTROGRAM:
+      length = NUM_FILTERS_L;
+      cnt = 200;
+      break;
+
+    case MEL_SPECTROGRAM:
       length = NUM_FILTERS;
       cnt = 200;
       break;
 
     case MFCC:
       length = NUM_FILTERS;
-      cnt = 200;
-      break;
-
-    case FILTERED_LINEAR:
-      length = NUM_FILTERS_L;
       cnt = 200;
       break;
 
@@ -149,17 +167,19 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     }
   }
 
-  if (mode == RAW_WAVE) {
+  // Quantization: convert float into int
+  if (mode == RAW_WAVE) {  // 16bit quantization
     for (int n = 0; n < length; n++) {
       uart_buf[idx++] = (uint8_t) (((int16_t)in[n]) >> 8);
       uart_buf[idx++] = (uint8_t) (((int16_t)in[n] & 0x00ff));
     }
-  } else {
+  } else {  // 8bit quantization
     for (int n = 0; n < length; n++) {
       uart_buf[idx++] = (int8_t) in[n];
     }
   }
 
+  // memory-to-peripheral DMA to UART
   if (--cnt == 0) {
     HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
     printing = false;
@@ -193,9 +213,9 @@ void dsp(float32_t *s1, mode mode) {
     break;
 
   case MFCC:
-  case FILTERED_MEL:
-  case FILTERED_LINEAR:
-  case PSD:
+  case MEL_SPECTROGRAM:
+  case SPECTROGRAM:
+  case FFT:
     if (enable_pre_emphasis) {
       apply_pre_emphasis(s1);
     }
@@ -203,10 +223,10 @@ void dsp(float32_t *s1, mode mode) {
     apply_fft(s1);
     apply_psd_logscale(s1);
     switch (mode) {
-    case PSD:
+    case FFT:
       break;
-    case FILTERED_MEL:
-    case FILTERED_LINEAR:
+    case MEL_SPECTROGRAM:
+    case SPECTROGRAM:
       if (filter_type != mode) {
         generate_filters(mode);
         filter_type = mode;
@@ -230,35 +250,63 @@ void dsp(float32_t *s1, mode mode) {
   }
 }
 
+/*
+ * Overlap dsp for spectrogram calculation
+ *
+ * 26.3msec          13.2msec stride
+ * --- overlap dsp -------------
+ * [b0|a0]            a(1/2) ... 13.2msec
+ *    [a0|a1]         a(2/2) ... 13.2msec
+ * --- overlap dsp -------------
+ *       [a1|b0]      b(1/2) ... 13.2msec
+ *          [b0|b1]   b(2/2) ... 13.2msec
+ * --- overlap dsp -------------
+ *             :
+ */
+void overlap_dsp(float32_t *buf, float32_t *sig, mode mode) {
+  arm_copy_f32(buf, sig, NN);
+  dsp(sig, mode);  // (1/2)
+  if (printing) {
+    printing = uart_tx(sig, mode, false);  // false: UART output pending
+  }
+  arm_copy_f32(buf + NN_HALF, sig, NN);
+  dsp(sig, mode);  // (2/2)
+  if (printing) {
+    printing = uart_tx(sig, mode, true);  // true: UART output
+  }
+}
+
 /* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
-  *
-  * @retval None
+  * @retval int
   */
 int main(void)
 {
   /* USER CODE BEGIN 1 */
 
   // Audio sample rate and period
-  float32_t sampling_frequency;
+  float32_t f_s;
 
   // DMA peripheral-to-memory double buffer
   int32_t input_buf_r[NN * 2 + 5] = { 0 };
   int32_t input_buf_l[NN * 2 + 5] = { 0 };
 
   // DMA memory-to-peripheral double buffer
-  volatile uint16_t dac1_out1_buf[NN * 2] = { 0 };
-  volatile uint16_t dac1_out2_buf[NN * 2] = { 0 };
+  volatile uint16_t dac_out_buf_a[NN * 2] = { 0 };
+  volatile uint16_t dac_out_buf_b[NN * 2] = { 0 };
 
   // PCM data store for further processing (FFT etc)
   float32_t signal[NN] = { 0.0f };
-  float32_t signal_buf[NN + NN / 2] = { 0.0f };
+  float32_t signal_buf[NN + NN / 2] = { 0.0f };  // NN/2 overlap
+
+  // n + NN for iteration over a buffer
+  int n_nn;
 
   /* USER CODE END 1 */
 
-  /* MCU Configuration----------------------------------------------------------*/
+  /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
@@ -282,26 +330,27 @@ int main(void)
   MX_DFSDM1_Init();
   /* USER CODE BEGIN 2 */
 
-  sampling_frequency = SystemCoreClock
+  f_s = SystemCoreClock
       / hdfsdm1_channel2.Init.OutputClock.Divider
       / hdfsdm1_filter0.Init.FilterParam.Oversampling
       / hdfsdm1_filter0.Init.FilterParam.IntOversampling;
 
   // DSP initialization
-  init_dsp(sampling_frequency);
+  init_dsp(f_s);
 
   // Start timer 6 and DAC for DMA
   HAL_TIM_Base_Start(&htim6);
   HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
-  HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_1, (uint32_t*) dac1_out1_buf, NN * 2,
+  HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_1, (uint32_t*) dac_out_buf_a, NN * 2,
   DAC_ALIGN_12B_R);
   HAL_DAC_Start(&hdac1, DAC_CHANNEL_2);
-  HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_2, (uint32_t*) dac1_out2_buf, NN * 2,
+  HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_2, (uint32_t*) dac_out_buf_b, NN * 2,
   DAC_ALIGN_12B_R);
 
   HAL_Delay(1);
 
   // Enable DMA from DFSDM to buf (peripheral to memory)
+  // Note: filter1 for left channel is started after filter 0 for right channel
   if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_r + 5, NN * 2)
       != HAL_OK) {
     Error_Handler();
@@ -311,7 +360,8 @@ int main(void)
     Error_Handler();
   }
 
-  // Enable UART receive interrupt
+  // Enable UART receive interrupt to receive a command
+  // from an application processor
   HAL_UART_Receive_IT(&huart2, rxbuf, 1);
 
   /* USER CODE END 2 */
@@ -320,12 +370,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
     // Wait for next PCM samples from M1
-    if (new_pcm_data_a_l) {
-
-      for (uint32_t n = 0; n < NN; n++) {
-        dac1_out1_buf[n] = (uint16_t) ((input_buf_l[n] >> 13) + 2048);
-        dac1_out2_buf[n] = dac1_out1_buf[n];
-      }
+    if (new_pcm_data_l_a) {  // 1st half of the buffer
 
       // Beam forming
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
@@ -343,30 +388,22 @@ int main(void)
         }
       }
 
-      arm_copy_f32(signal_buf, signal, NN);
-      dsp(signal, output_mode);
-      if (printing) {
-        printing = uart_tx(signal, output_mode, false);
+      // Overlap dsp
+      overlap_dsp(signal_buf, signal, output_mode);
+
+      // Output PCM data to DAC
+      for (uint32_t n = 0; n < NN; n++) {
+        dac_out_buf_a[n] = (uint16_t) (((int32_t)signal_buf[n] >> 4) + 2048);  // 12bit quantization
+        dac_out_buf_b[n] = dac_out_buf_a[n];
       }
 
-      arm_copy_f32(signal_buf + NN_HALF, signal, NN);
-      dsp(signal, output_mode);
-      if (printing) {
-        printing = uart_tx(signal, output_mode, true);
-      }
-
-      new_pcm_data_a_l = false;
+      new_pcm_data_l_a = false;
 
     }
 
-    if (new_pcm_data_b_l) {
+    if (new_pcm_data_l_b) {  // 2nd half of the buffer
 
-      for (uint32_t n = NN; n < NN * 2; n++) {
-        dac1_out1_buf[n] = (uint16_t) ((input_buf_l[n] >> 13) + 2048);
-        dac1_out2_buf[n] = dac1_out1_buf[n];
-      }
-
-      // Buffering PCM data for beam forming
+      // Buffering PCM data for beam forming: n=2 is center
       for (int n = 0; n < 5; n++) {
         input_buf_l[n] = input_buf_l[NN_DOUBLE + n];
         input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
@@ -388,28 +425,25 @@ int main(void)
         }
       }
 
-      arm_copy_f32(signal_buf, signal, NN);
-      dsp(signal, output_mode);
-      if (printing) {
-        printing = uart_tx(signal, output_mode, false);
+      // Overlap dsp
+      overlap_dsp(signal_buf, signal, output_mode);
+
+      // Output PCM data to DAC
+      for (uint32_t n = 0; n < NN; n++) {
+        n_nn = n + NN;
+        dac_out_buf_a[n_nn] = (uint16_t) (((int32_t)signal_buf[n] >> 4) + 2048);  // 12bit quantization
+        dac_out_buf_b[n_nn] = dac_out_buf_a[n_nn];
       }
 
-      arm_copy_f32(signal_buf + NN_HALF, signal, NN);
-      dsp(signal, output_mode);
-      if (printing) {
-        printing = uart_tx(signal, output_mode, true);
-      }
-
-      new_pcm_data_b_l = false;
+      new_pcm_data_l_b = false;
     }
 
-  /* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
-  /* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
 
   }
   /* USER CODE END 3 */
-
 }
 
 /**
@@ -418,16 +452,15 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
-  RCC_OscInitTypeDef RCC_OscInitStruct;
-  RCC_ClkInitTypeDef RCC_ClkInitStruct;
-  RCC_PeriphCLKInitTypeDef PeriphClkInit;
-
-    /**Initializes the CPU, AHB and APB busses clocks 
-    */
+  /**Initializes the CPU, AHB and APB busses clocks 
+  */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = 16;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 1;
@@ -437,11 +470,10 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
-
-    /**Initializes the CPU, AHB and APB busses clocks 
-    */
+  /**Initializes the CPU, AHB and APB busses clocks 
+  */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
@@ -451,34 +483,21 @@ void SystemClock_Config(void)
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
-
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_DFSDM1;
   PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
   PeriphClkInit.Dfsdm1ClockSelection = RCC_DFSDM1CLKSOURCE_PCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
-
-    /**Configure the main internal regulator output voltage 
-    */
+  /**Configure the main internal regulator output voltage 
+  */
   if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
-
-    /**Configure the Systick interrupt time 
-    */
-  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
-
-    /**Configure the Systick 
-    */
-  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
-
-  /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
 
 /* USER CODE BEGIN 4 */
@@ -489,11 +508,11 @@ void SystemClock_Config(void)
  */
 void HAL_DFSDM_FilterRegConvHalfCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
-  if (!new_pcm_data_a_l && (hdfsdm_filter == &hdfsdm1_filter0)) {
-    new_pcm_data_a_l = true;
+  if (!new_pcm_data_l_a && (hdfsdm_filter == &hdfsdm1_filter0)) {
+    new_pcm_data_l_a = true;  // ready for 1st half of the buffer
   }
-  if (!new_pcm_data_a_r && (hdfsdm_filter == &hdfsdm1_filter1)) {
-    //new_pcm_data_a_r = true;
+  if (!new_pcm_data_r_a && (hdfsdm_filter == &hdfsdm1_filter1)) {
+    //new_pcm_data_r_a = true;
   }
 }
 
@@ -506,11 +525,11 @@ void HAL_DFSDM_FilterRegConvHalfCpltCallback(
  */
 void HAL_DFSDM_FilterRegConvCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
-  if (!new_pcm_data_b_l && (hdfsdm_filter == &hdfsdm1_filter0)) {
-    new_pcm_data_b_l = true;
+  if (!new_pcm_data_l_b && (hdfsdm_filter == &hdfsdm1_filter0)) {
+    new_pcm_data_l_b = true;  // ready for 2nd half of the buffer
   }
-  if (!new_pcm_data_b_r && (hdfsdm_filter == &hdfsdm1_filter1)) {
-    //new_pcm_data_b_r = true;
+  if (!new_pcm_data_r_b && (hdfsdm_filter == &hdfsdm1_filter1)) {
+    //new_pcm_data_r_b = true;
   }
 }
 
@@ -524,12 +543,17 @@ int _write(int file, char *ptr, int len) {
   return len;
 }
 
+/*  (This func is commented out: for a debug purpose only)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if (GPIO_Pin == GPIO_PIN_13) {  // User button (blue tactile switch)
     printing = true;
   }
 }
+*/
 
+/*
+ * One-byte command reception from an application processor
+ */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   char cmd;
 
@@ -582,11 +606,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
 /**
   * @brief  This function is executed in case of error occurrence.
-  * @param  file: The file name as string.
-  * @param  line: The line in file as a number.
   * @retval None
   */
-void _Error_Handler(char *file, int line)
+void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
@@ -603,7 +625,7 @@ void _Error_Handler(char *file, int line)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t* file, uint32_t line)
+void assert_failed(char *file, uint32_t line)
 { 
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
@@ -611,13 +633,5 @@ void assert_failed(uint8_t* file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

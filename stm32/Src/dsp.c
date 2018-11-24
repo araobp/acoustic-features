@@ -58,10 +58,12 @@ float32_t log10_approx(float32_t x) {
   return (l > 0.000001) ? l : 0.000001;  // for numerical stability
 }
 
+// Frequency in Hz to Mel-scale
 float32_t hz2mel(float32_t hz) {
   return 2595.0f * log10(hz/700.0f + 1.0f);
 }
 
+// Mel-scale to Frequency in Hz
 float32_t mel2hz(float32_t mel) {
   return 700.0 * (pow(10.0, (mel/2595.0f)) - 1.0f);
 }
@@ -163,9 +165,9 @@ void generate_linear_scale_filters(void) {
 }
 
 void generate_filters(mode mode) {
-  if (mode == FILTERED_MEL) {
+  if (mode == MEL_SPECTROGRAM) {
     generate_mel_scale_filters();
-  } else if (mode == FILTERED_LINEAR) {
+  } else if (mode == SPECTROGRAM) {
     generate_linear_scale_filters();
   }
 }
@@ -184,10 +186,10 @@ void generate_half_sample_shifter(void) {
 /*
  * dsp initialization
  */
-void init_dsp(float32_t sampling_frequency) {
+void init_dsp(float32_t f_s) {
   // Generate Hanning window
   hann(NN);
-  fs = sampling_frequency;
+  fs = f_s;
   arm_rfft_fast_init_f32(&S, NN);
   arm_rfft_fast_init_f32(&S_DCT, NUM_FILTERS*2);
   arm_fir_init_f32(&S_PRE, 2, fir_coefficients, state_buf, NN+1);
@@ -221,7 +223,7 @@ void apply_filterbank(float32_t *inout, mode mode) {
   float32_t sum = 0.0f;
   int left_n, right_n, len, num_filters;
 
-  if (mode == FILTERED_LINEAR) {
+  if (mode == SPECTROGRAM) {
     num_filters = NUM_FILTERS_L;
   } else {
     num_filters = NUM_FILTERS;

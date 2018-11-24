@@ -17,7 +17,7 @@ import os
 import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 
-dsp.port = sys.argv[1]
+dsp.init(port = sys.argv[1])
 
 ### Default settings to DSP ###
 dsp.set_beam_forming('e', 'c')  # ENDFIRE mode, center
@@ -64,9 +64,7 @@ spectrum_subtraction = Tk.Spinbox(master=root, width=3, values=[0, 10, 15, 20, 2
 cnt = 0
 class_label_ = ''
 counter.configure(text='({})'.format(str(0)))
-
 repeat_action = False
-
 filename = None
 
 def df_save(df, step):
@@ -89,54 +87,54 @@ def repeat(func):
         root.after(50, func)
 
 def raw_wave():
-    dsp.range_waveform = int(range_amplitude.get())
+    range_ = int(range_amplitude.get())
     ax.clear()
     ax.grid(True, alpha=0.3)
     df = dsp.serial_read(dsp.RAW_WAVE)
-    dsp.plot_aed(ax, df, dsp.RAW_WAVE)
+    dsp.plot_aed(ax, df, dsp.RAW_WAVE, range_=range_)
     canvas.draw()
     df_save(df, 'waveform')
     repeat(raw_wave)
 
 def fft():
-    dsp.ssub = int(spectrum_subtraction.get())
+    ssub = int(spectrum_subtraction.get())
     ax.clear()
     ax.grid(True, alpha=0.3)
-    df = dsp.serial_read(dsp.PSD)
-    dsp.plot_aed(ax, df, dsp.PSD)
+    df = dsp.serial_read(dsp.FFT, ssub=ssub)
+    dsp.plot_aed(ax, df, dsp.FFT)
     canvas.draw()
     df_save(df, 'fft')
     repeat(fft)
 
-def filtered_mel():
-    dsp.ssub = int(spectrum_subtraction.get())
-    dsp.range_filtered = int(range_filtered.get())
-    dsp.cmap = cmap.get()
+def mel_spectrogram():
+    ssub = int(spectrum_subtraction.get())
+    range_ = int(range_filtered.get())
+    cmap_ = cmap.get()
     ax.clear()
-    df = dsp.serial_read(dsp.FILTERED_MEL)
-    dsp.plot_aed(ax, df, dsp.FILTERED_MEL)
+    df = dsp.serial_read(dsp.MEL_SPECTROGRAM, ssub=ssub)
+    dsp.plot_aed(ax, df, dsp.MEL_SPECTROGRAM, range_, cmap_)
     canvas.draw()
     df_save(df, 'mel_spectrogram')
-    repeat(filtered_mel)
+    repeat(mel_spectrogram)
 
-def filtered_linear():
-    dsp.ssub = int(spectrum_subtraction.get())    
-    dsp.range_filtered = int(range_filtered_l.get())
-    dsp.cmap = cmap.get()
+def spectrogram():
+    ssub = int(spectrum_subtraction.get())    
+    range_ = int(range_filtered_l.get())
+    cmap_ = cmap.get()
     ax.clear()
-    df = dsp.serial_read(dsp.FILTERED_LINEAR)
-    dsp.plot_aed(ax, df, dsp.FILTERED_LINEAR)
+    df = dsp.serial_read(dsp.SPECTROGRAM, ssub=ssub)
+    dsp.plot_aed(ax, df, dsp.SPECTROGRAM, range_, cmap_)
     canvas.draw()
     df_save(df, 'spectrogram')
-    repeat(filtered_linear)
+    repeat(spectrogram)
 
 def mfcc():
-    dsp.ssub = int(spectrum_subtraction.get())    
-    dsp.range_mfcc = int(range_mfcc.get())
-    dsp.cmap = cmap.get()
+    ssub = int(spectrum_subtraction.get())    
+    range_ = int(range_mfcc.get())
+    cmap_ = cmap.get()
     ax.clear()
-    df = dsp.serial_read(dsp.MFCC)
-    dsp.plot_aed(ax, df, dsp.MFCC)
+    df = dsp.serial_read(dsp.MFCC, ssub=ssub)
+    dsp.plot_aed(ax, df, dsp.MFCC, range_, cmap_)
     canvas.draw()
     df_save(df, 'mfcc')
     repeat(mfcc)
@@ -184,9 +182,9 @@ def on_key_event(event):
     elif (key == 'f'):
         fft()
     elif (key == 'm'):
-        filtered_mel()
+        mel_spectrogram()
     elif (key == 's'):
-        filtered_linear()
+        spectrogram()
     elif (key == 'c'):
         mfcc()
     key_press_handler(event, canvas)
@@ -202,8 +200,8 @@ label_image = Tk.Label(master=root, text='image')
 
 button_waveform = Tk.Button(master=root, text='Wave', command=raw_wave, bg='lightblue', activebackground='grey')
 button_psd = Tk.Button(master=root, text='FFT', command=fft, bg='lightblue', activebackground='grey')
-button_filtered_linear = Tk.Button(master=root, text='Spec', command=filtered_linear, bg='lightblue', activebackground='grey')
-button_filtered_mel = Tk.Button(master=root, text='Mel spec', command=filtered_mel, bg='pink', activebackground='grey')
+button_spectrogram = Tk.Button(master=root, text='Spec', command=spectrogram, bg='lightblue', activebackground='grey')
+button_mel_spectrogram = Tk.Button(master=root, text='Mel spec', command=mel_spectrogram, bg='pink', activebackground='grey')
 button_mfcc = Tk.Button(master=root, text='MFCCs', command=mfcc, bg='yellowgreen', activebackground='grey')
 button_beam_forming = Tk.Button(master=root, text='Beam', command=beam_forming, bg='lightblue', activebackground='grey')
 
@@ -213,6 +211,8 @@ button_savefig = Tk.Button(master=root, text='Savefig', command=savefig, bg='lig
 button_remove = Tk.Button(master=root, text='Remove', command=remove, bg='lightblue', activebackground='grey')
 
 button_quit = Tk.Button(master=root, text='Quit', command=_quit, bg='yellow', activebackground='grey')
+
+##### Place the parts on Tk #####
 
 # Class label entry
 label_class.pack(side=Tk.LEFT, padx=1, pady=10)
@@ -234,13 +234,13 @@ label_separator3.pack(side=Tk.LEFT, padx=1)
 
 # Linear-scale Spectrogram (PSD)
 range_filtered_l.pack(side=Tk.LEFT, padx=1)
-button_filtered_linear.pack(side=Tk.LEFT, padx=1)
+button_spectrogram.pack(side=Tk.LEFT, padx=1)
 label_separator5 = Tk.Label(master=root, text=' ')
 label_separator5.pack(side=Tk.LEFT, padx=1)
 
 # Mel-scale Spectrogram (PSD)
 range_filtered.pack(side=Tk.LEFT, padx=1)
-button_filtered_mel.pack(side=Tk.LEFT, padx=1)
+button_mel_spectrogram.pack(side=Tk.LEFT, padx=1)
 label_separator4 = Tk.Label(master=root, text=' ')
 label_separator4.pack(side=Tk.LEFT, padx=1)
 
@@ -273,4 +273,5 @@ button_remove.pack(side=Tk.LEFT, padx=1)
 # Quit
 button_quit.pack(side=Tk.LEFT, padx=15)
 
+##### loop forever #####
 Tk.mainloop()

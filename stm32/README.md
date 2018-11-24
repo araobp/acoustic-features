@@ -1,13 +1,12 @@
 # Edge device for machine learning (STM32L4)
 
-### CubeMX
+## STM32L4 configuration
 
-- [CubeMX file for X-NUCLEO-CCA02M1 expansion board](./acoustic_event_detection.ioc)
-- [CubeMX file for my origial Arduino shield](./acoustic_event_detection_with_arduino_shield.ioc)
+The configuration below assumes [my original "Knowles MEMS mic Arduino shield"](https://github.com/araobp/acoustic-event-detection/tree/master/kicad).
 
-The schematic of my original Knowles MEMS mic Arduino shield is [here](https://github.com/araobp/acoustic-event-detection/tree/master/kicad).
+- [CubeMX file](./acoustic_event_detection.ioc)
 
-### Making use of DMA
+## Making use of DMA
 
 STMicro's HAL library supports "HAL_DFSDM_FilterRegConvHalfCpltCallback" that is very useful to implemente ring-buffer-like buffering for real-time processing.
 
@@ -22,14 +21,14 @@ Sound/voice ))) [MEMS mic]-PDM->[DFSDM]-DMA->[A|B]->[ARM Cortex-M4]
 
 All the DMAs are synchronized, because their master clock is the system clock.
 
-### Sampling frequency
+## Sampling frequency
 
 - The highest frequency on a piano is 4186Hz, but it generate overtones: ~10kHz.
 - Human voice also generates overtones: ~ 10kHz.
 
 So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency))
 
-### Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
+## Parameters of DFSDM (digital filter for sigma-delta modulators) on STM32L4
 
 - System clock: 80MHz
 - Clock divider: 32
@@ -38,7 +37,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 - right bit shift: 3 (2 * 128^3 = 2^22, so 6-bit-right-shift is required to output 16bit PCM)
 - Sampling frequency: 80_000_000/32/128 = 19.5kHz
 
-#### Pre-processing on STM32L4/CMSIS-DSP
+## Pre-processing on STM32L4/CMSIS-DSP
 
 ```
       MEMS mic
@@ -81,7 +80,7 @@ Oscilloscope GUI/IoT gateway
 - My conclusion is that 80_000_000(Hz)/64(clock divider)/64(FOSR) with pre-emphasis(HPF) is the best setting for obtaining the best images of mel-spectrogram.
 - I use a triangler filter bank to obtain mel-spectrogram, and I make each triangle filter having a same amount of area.
 
-### Frame/stride/overlap
+## Frame/stride/overlap
 
 - number of samples per frame: 512
 - length: 512/19.5kHz = 26.3msec
@@ -96,14 +95,14 @@ Oscilloscope GUI/IoT gateway
          [a2|b2]   2b --> mel-scale spectrogram via filter bank or 12 MFCCs
             :
 ```
-### Filter banks
+## Filter banks
 
 Mel-scale spectrogram is used for training CNN
 
 - Mel-scale: 40 filters (512 samples divided by (40 + 1))
 - Linear-scale: 255 filters (512 samples divide by (255 + 1))
 
-### log10 processing time issue
+## log10 processing time issue
 
 PSD caliculation uses log10 math function, but CMSIS-DSP does not support log10. log10 on the standard "math.h" is too slow. I tried math.h log10, and the time required for caluculating log10(x) does not fit into the time slot of sound frame, so I decided to adopt [log10 approximation](../ipynb/log10%20fast%20approximation.ipynb). The approximation has been working perfect so far.
 
@@ -168,12 +167,12 @@ The conclusion: d = 20mm is the best to support both Broadside and Endfire, and 
 
 ![](./beam_forming_test_20mm_endfire_left.png)
 
-### References
+## References
 
 - [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
 - [AcousticBF(by STMicro)](https://www.st.com/content/ccc/resource/technical/document/user_manual/group0/40/93/ec/80/3c/61/4e/d0/DM00391112/files/DM00391112.pdf/jcr:content/translations/en.DM00391112.pdf)
 
-### Command over UART (USB-serial)
+## Command over UART (USB-serial)
 
 UART baudrate: 460800bps
 
@@ -193,7 +192,7 @@ Data is send in int8_t.
 
 ```
 
-#### Output
+### Output
 
 |cmd|description     | output size             | purpose               |
 |---|----------------|-------------------------|-----------------------|
@@ -205,14 +204,14 @@ Data is send in int8_t.
 |5  | MFCC_STREAMING | NUM_FILTERS x 07fffffff | (for testing)         |
 |6  | FILTERED_LINEAR| NUM_FILTERS x 200       | Input to ML           |
 
-#### Pre-emphasis
+### Pre-emphasis
 
 |cmd|description     | output size             | purpose               |
 |---|----------------|-------------------------|-----------------------|
 |P  | Enable pre-emphasis |                    |                       |
 |p  | Disable pre-emphasis |                   |                       |
 
-#### Beam forming
+### Beam forming
 
 Set the direction for max amplitude.
 
