@@ -40,7 +40,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 ## Pre-processing on STM32L4/CMSIS-DSP
 
 ```
-      MEMS mic
+   << MEMS mic >>
          |
          V
    DFSDM w/ DMA
@@ -68,13 +68,13 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
          |             |
          +<------------+
          |
- data the size of int8_t (in ASCII)
+ data the size of int8_t or int16_t (i.e., quantization)
          |
          V
     UART w/ DMA
          |
          V
-Oscilloscope GUI/IoT gateway
+<< Oscilloscope GUI >>
 ```
 
 - My conclusion is that 80_000_000(Hz)/64(clock divider)/64(FOSR) with pre-emphasis(HPF) is the best setting for obtaining the best images of mel-spectrogram.
