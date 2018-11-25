@@ -1,4 +1,4 @@
-# Edge device for machine learning (STM32L4)
+# Edge device for deep learning (STM32L4)
 
 ## STM32L4 configuration
 
