@@ -10,9 +10,10 @@
 #include "arm_const_structs.h"
 #include "main.h"
 
-const float32_t MAX_AMPLITUDE = 0x7fff;
 const float32_t RECIPROCAL_NN = 1.0/(float32_t)NN;
+
 float32_t fs = 0.0f;
+float32_t nyq_fs = 0.0f;
 
 arm_rfft_fast_instance_f32 S;
 arm_fir_instance_f32 S_PRE;
@@ -69,7 +70,7 @@ float32_t mel2hz(float32_t mel) {
 }
 
 float32_t n2hz(uint32_t n) {
-  return (float32_t)n/(float32_t)NN * (float32_t)(fs/2);
+  return (float32_t)n/(float32_t)NN * nyq_fs;
 }
 
 void clear_filterbank(void) {
@@ -88,19 +89,17 @@ void clear_filterbank(void) {
 void generate_mel_scale_filters(void) {
   int left_n, center_n, right_n;
   float32_t freq_m_minus_1, freq_m, freq_m_plus_1;
-  float32_t mel_freq_low;
   float32_t mel_freq_high;
   float32_t mel_delta;
   float32_t divider;
 
   clear_filterbank();
-  mel_freq_low = 0.0f;
-  mel_freq_high = hz2mel((float32_t)fs/2.0);
-  mel_delta = (mel_freq_high - mel_freq_low)/(float32_t)(NUM_FILTERS_MEL+1);
+  mel_freq_high = hz2mel(nyq_fs);
+  mel_delta = mel_freq_high/(float32_t)(NUM_FILTERS_MEL + 2);
 
   for (int m = 0; m < NUM_FILTERS_MEL + 2; m++) {
-    hz_freqs[m] = mel2hz(mel_delta*m);
-    hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
+    hz_freqs[m] = mel2hz(mel_delta * m);
+    hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / nyq_fs * NN / 2);
   }
   for (int m = 1; m < NUM_FILTERS_MEL + 1; m++) {
     left_n = hz_freqs_n[m-1];
@@ -130,18 +129,16 @@ void generate_mel_scale_filters(void) {
 void generate_linear_scale_filters(void) {
   int left_n, center_n, right_n;
   float32_t freq_m_minus_1, freq_m, freq_m_plus_1;
-  float32_t freq_low;
   float32_t freq_high;
   float32_t delta;
 
   clear_filterbank();
-  freq_low = 0.0f;
   freq_high = (float32_t)fs/2.0;
-  delta = (freq_high - freq_low)/(float32_t)(NUM_FILTERS_SPEC+1);
+  delta = freq_high/(float32_t)(NUM_FILTERS_SPEC + 2);
 
   for (int m = 0; m < NUM_FILTERS_SPEC + 2; m++) {
     hz_freqs[m] = delta * m;
-    hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / ((float32_t)fs/2.0) * NN / 2);
+    hz_freqs_n[m] = (uint32_t)(hz_freqs[m] / nyq_fs * NN / 2);
   }
   for (int m = 1; m < NUM_FILTERS_SPEC + 1; m++) {
     left_n = hz_freqs_n[m-1];
@@ -190,6 +187,7 @@ void init_dsp(float32_t f_s) {
   // Generate Hanning window
   hann(NN);
   fs = f_s;
+  nyq_fs = f_s/2.0;
   arm_rfft_fast_init_f32(&S, NN);
   arm_rfft_fast_init_f32(&S_DCT, NUM_FILTERS_MEL*2);
   arm_fir_init_f32(&S_PRE, 2, fir_coefficients, state_buf, NN+1);
