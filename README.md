@@ -6,7 +6,9 @@
 
 I am just interested in Acoustic Event Detection (AED) on "edge AI": ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
 
-## AED system architecture
+## AED system
+
+Architecture:
 
 ```
                                           ARM Cortex-M4(STM32L476RG)
@@ -36,23 +38,22 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
 
 *1 CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50X00009yG1AUSA0/when-is-stm32cubeai-available
 
-## Platform
-
+Platform:
 - [Platform and tool chain](./PLATFORM.md)
 
-## AED system components in development
+## System components in development
 
 - [Edge device for deep learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 
-## Use cases
+## Use cases of AED on edge AI
 
+I apply the system to potential edge AI use cases:
 - musical instruments recognition
 - human activity recognition
 - always-on speech recogniton (e.g., "OK Google")
 
-## CNN experiments
+### CNN experiments 
 
-I use the system for CNN experiments:
 - [CNN experiments with Keras/TensorFlow](./tensorflow)
