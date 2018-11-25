@@ -27,13 +27,13 @@ Condition:
 
 #### Linear chirp spectrogram
 
-![Linear chirp spectrogram (pre-emphasis enabled)](./calibration/chirp_spectrogram-32-128.png)
+![Linear chirp spectrogram (pre-emphasis enabled)](./calibration/chirp_spectrogram.png)
 
 Note: two resonance components can be seen on the picture above.
 
 #### Linear chirp mel-spectrogram
 
-![Linear chirp mel-scale spectrogram (pre-emphasis enabled)](./calibration/chirp_mel_spectrogram-32-128.png)
+![Linear chirp mel-scale spectrogram (pre-emphasis enabled)](./calibration/chirp_mel_spectrogram.png)
 
 # Calibrating MEMS mic and DFSDM
 
