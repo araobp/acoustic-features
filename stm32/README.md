@@ -13,10 +13,15 @@ STMicro's HAL library supports "HAL_DFSDM_FilterRegConvHalfCpltCallback" that is
 I splitted buffers for DMA into two segments: segment A and segment B.
 
 ```
-Sound/voice ))) [MEMS mic]-PDM->[DFSDM]-DMA->[A|B]->[ARM Cortex-M4]
-                                                    [ARM Cortex-M4]->[A|B]->DMA->[UART] --- > PC(pyserial)
-                                                    [ARM Cortex-M4]->[A|B]->DMA->[DAC] ))) Sound/Voice
-
+                                                  Interrupt
+                          Clock                 ..............
+                     +-+-------------+          : .......... :
+                     | |             |          : :        V V
+                     V |             |          : :   +-------------+
+Sound/voice ))) [MEMS mic]-+-PDM->[DFSDM]-DMA->[A|B]->|             |->[A|B]->DMA->[DAC] --> Analog filter->head phone ))) Sound/Voice
+                       V   |                          |ARM Cortex-M4|->[Feature]->DMA->[UART] --> Oscilloscope on PC or RasPi3
+Sound/voice ))) [MEMS mic]-+                          |             |
+                                                      +-------------+
 ```
 
 All the DMAs are synchronized, because their master clock is the system clock.
