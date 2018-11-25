@@ -359,4 +359,8 @@ NoConn ~ 5550 6250
 NoConn ~ 5950 6250
 NoConn ~ -1000 1500
 NoConn ~ -950 1450
+Text Notes 4950 3200 0    60   ~ 0
+Mic R
+Text Notes 4950 4100 0    60   ~ 0
+Mic L
 $EndSCHEMATC
