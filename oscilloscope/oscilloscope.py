@@ -19,11 +19,11 @@ import os
 import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 
-dsp.init(port = sys.argv[1])
+gui = dsp.GUI(port = sys.argv[1])
 
 ### Default settings to DSP ###
-dsp.set_beam_forming('e', 'c')  # ENDFIRE mode, center
-dsp.enable_pre_emphasis(True)  # Pre emphasis enabled
+gui.set_beam_forming('e', 'c')  # ENDFIRE mode, center
+gui.enable_pre_emphasis(True)  # Pre emphasis enabled
 ###############################
 
 matplotlib.use('TkAgg')
@@ -92,7 +92,7 @@ def raw_wave():
     range_ = int(range_amplitude.get())
     ax.clear()
     ax.grid(True, alpha=0.3)
-    df = dsp.plot_aed(ax, dsp.RAW_WAVE, range_=range_)
+    df = gui.plot_aed(ax, dsp.RAW_WAVE, range_=range_)
     canvas.draw()
     df_save(df, 'waveform')
     repeat(raw_wave)
@@ -101,7 +101,7 @@ def fft():
     ssub = int(spectrum_subtraction.get())
     ax.clear()
     ax.grid(True, alpha=0.3)
-    df = dsp.plot_aed(ax, dsp.FFT, ssub=ssub)
+    df = gui.plot_aed(ax, dsp.FFT, ssub=ssub)
     canvas.draw()
     df_save(df, 'fft')
     repeat(fft)
@@ -111,7 +111,7 @@ def mel_spectrogram():
     range_ = int(range_filtered.get())
     cmap_ = cmap.get()
     ax.clear()
-    df = dsp.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub)
+    df = gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub)
     canvas.draw()
     df_save(df, 'mel_spectrogram')
     repeat(mel_spectrogram)
@@ -121,7 +121,7 @@ def spectrogram():
     range_ = int(range_filtered_l.get())
     cmap_ = cmap.get()
     ax.clear()
-    df = dsp.plot_aed(ax, dsp.SPECTROGRAM, range_, cmap_, ssub)
+    df = gui.plot_aed(ax, dsp.SPECTROGRAM, range_, cmap_, ssub)
     canvas.draw()
     df_save(df, 'spectrogram')
     repeat(spectrogram)
@@ -131,7 +131,7 @@ def mfcc():
     range_ = int(range_mfcc.get())
     cmap_ = cmap.get()
     ax.clear()
-    df = dsp.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub)
+    df = gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub)
     canvas.draw()
     df_save(df, 'mfcc')
     repeat(mfcc)
@@ -139,7 +139,7 @@ def mfcc():
 def beam_forming():
     mode = mode_beam_forming.get()
     angle = range_beam_forming.get()
-    dsp.set_beam_forming(mode, angle)
+    gui.set_beam_forming(mode, angle)
 
 def repeat_toggle():
     global repeat_action
@@ -153,10 +153,10 @@ def repeat_toggle():
 def pre_emphasis_toggle():
     if button_pre_emphasis.cget('bg') == 'lightblue':
         button_pre_emphasis.configure(bg='red')
-        dsp.enable_pre_emphasis(True)
+        gui.enable_pre_emphasis(True)
     else:       
         button_pre_emphasis.configure(bg='lightblue')
-        dsp.enable_pre_emphasis(False)
+        gui.enable_pre_emphasis(False)
         
 def savefig():
     global filename
@@ -171,7 +171,7 @@ def remove():
         counter.configure(text='({})'.format(str(cnt)))
 
 def _quit():
-    dsp.close()
+    gui.close()
     root.quit()
     root.destroy()
 

@@ -1,6 +1,6 @@
 Configuration	acoustic_event_detection
 STM32CubeMX 	5.0.0
-Date	11/24/2018
+Date	11/25/2018
 MCU	STM32L476RGTx
 
 

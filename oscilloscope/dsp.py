@@ -11,6 +11,7 @@
 import serial
 import pandas as pd
 import numpy as np
+import traceback
 
 ### Constants #####
 
@@ -23,7 +24,7 @@ BAUD_RATE = 460800          # UART baud rate
 # main.c
 RAW_WAVE = b'0'
 FFT = b'1'
-SPECTROGRAM = b'6'
+SPECTROGRAM = b'2'
 MEL_SPECTROGRAM = b'3'
 MFCC = b'4'
 
@@ -49,114 +50,112 @@ FREQ[MFCC] = np.linspace(1, NUM_FILTERS_MEL, NUM_FILTERS_MEL)
 
 ###################
 
-# Serial interface
-ser = None
-_port = None
+# GUI class
 
-def init(port):
-    global _port, ser
-    _port = port
-    ser = serial.Serial(_port, BAUD_RATE)
-
-def close():
-    ser.close()
+class GUI:
     
-# As an application processor, send a command
-# then receive and process the output.
-def _serial_read(cmd, ssub=None):
-    try:
-        data = []
-        id_ = 0
-        n = 0
+    def __init__(self, port):
+        # Serial interface
+        self.ser = serial.Serial(port, BAUD_RATE)
 
-        ser.write(cmd)
-        if cmd == RAW_WAVE:  # 16bit quantization
-            rx = ser.read(NUM_SAMPLES[cmd]*2)
-            rx = zip(rx[0::2], rx[1::2])
-            for msb, lsb in rx:
-                n += 1
-                d =  int.from_bytes([msb, lsb], byteorder='big', signed=True)
-                data.append((0,n,d))    
-        else:  # 8bit quantization
-            rx = ser.read(NUM_SAMPLES[cmd])
-            for d in rx:
-                n += 1
-                d =  int.from_bytes([d], byteorder='big', signed=True)
-                if ssub and (ssub > 0):
-                    d = d - ssub
-                    if d < 0:
-                        d = 0.0
-                data.append((0,n,d))
-    except:
-        print('serial connection error!')
-        ser.close()
-
-    labels = ['id', 'n', 'magnitude']
-    df = pd.DataFrame(data, columns=labels)
-    return df
-
-def enable_pre_emphasis(enable):
-    if enable:
-        ser.write(b'P')
-    else:
-        ser.write(b'p')
-
-def set_beam_forming(mode, angle):
-    if mode in ('e', 'b') and angle in ('R', 'r', 'c', 'l', 'L', 'b', 'e'):
-        m = mode.encode('ascii')
-        ser.write(m)
-        a = angle.encode('ascii')
-        ser.write(a)
-
-# Use matplotlib to plot the output from the device
-def plot_aed(ax, cmd, range_=None, cmap=None, ssub=None):
-
-    df = _serial_read(cmd, ssub)
-    mag = df['magnitude']
+    def close(self):
+        self.ser.close()
     
-    if cmd == RAW_WAVE:
-        ax.set_title('Time domain')
-        ax.plot(TIME[RAW_WAVE], mag)
-        ax.set_xlabel('Time [msec]')
-        ax.set_ylabel('Amplitude')
-        ax.set_ylim([-range_, range_])
+    # As an application processor, send a command
+    # then receive and process the output.
+    def _serial_read(self, cmd, ssub=None):
+        try:
+            data = []
+            id_ = 0
+            n = 0
 
-    elif cmd == FFT:
-        ax.set_title('Frequency domain')
-        ax.plot(FREQ[FFT], mag)
-        ax.set_xlabel('Frequency [Hz]')
-        ax.set_ylabel('PSD [dB]')
-        ax.set_ylim([-8, 127])
+            self.ser.write(cmd)
+            if cmd == RAW_WAVE:  # 16bit quantization
+                rx = self.ser.read(NUM_SAMPLES[cmd]*2)
+                rx = zip(rx[0::2], rx[1::2])
+                for msb, lsb in rx:
+                    n += 1
+                    d =  int.from_bytes([msb, lsb], byteorder='big', signed=True)
+                    data.append((0,n,d))    
+            else:  # 8bit quantization
+                rx = self.ser.read(NUM_SAMPLES[cmd])
+                for d in rx:
+                    n += 1
+                    d =  int.from_bytes([d], byteorder='big', signed=True)
+                    if ssub and (ssub > 0):
+                        d = d - ssub
+                        if d < 0:
+                            d = 0.0
+                    data.append((0,n,d))
+        except:
+            print('*** serial connection error!')
+            traceback.print_exc()
+            self.ser.close()
 
-    elif cmd == SPECTROGRAM:
-        filtered = mag.values.reshape(200, NUM_FILTERS_SPEC)
-        ax.pcolormesh(TIME[SPECTROGRAM],
-                      FREQ[SPECTROGRAM][:range_],
-                      filtered.T[:range_],
-                      cmap=cmap)
-        ax.set_title('Spectrogram (PSD in dB)')
-        ax.set_xlabel('Time [sec]')
-        ax.set_ylabel('Frequency (Hz)')
+        labels = ['id', 'n', 'magnitude']
+        df = pd.DataFrame(data, columns=labels)
+        return df
 
-    elif cmd == MEL_SPECTROGRAM:
-        filtered = mag.values.reshape(200, NUM_FILTERS_MEL)
-        ax.pcolormesh(TIME[MEL_SPECTROGRAM],
-                      FREQ[MEL_SPECTROGRAM][:range_],
-                      filtered.T[:range_],
-                      cmap=cmap)
-        ax.set_title('Mel-scale spectrogram (PSD in dB)')
-        ax.set_xlabel('Time [sec]')
-        ax.set_ylabel('Mel-scale filters')
+    def enable_pre_emphasis(self, enable):
+        if enable:
+            self.ser.write(b'P')
+        else:
+            self.ser.write(b'p')
 
-    elif cmd == MFCC:
-        filtered = mag.values.reshape(200, NUM_FILTERS_MEL)
-        ax.pcolormesh(TIME[MFCC],
-                      FREQ[MFCC][:range_],
-                      filtered.T[:range_],
-                      cmap=cmap)
-        ax.set_title('MFCCs')
-        ax.set_xlabel('Time [sec]')
-        ax.set_ylabel('MFCC')
+    def set_beam_forming(self, mode, angle):
+        if mode in ('e', 'b') and angle in ('R', 'r', 'c', 'l', 'L', 'b', 'e'):
+            self.ser.write(mode.encode('ascii'))
+            self.ser.write(angle.encode('ascii'))
 
-    return df
+    # Use matplotlib to plot the output from the device
+    def plot_aed(self, ax, cmd, range_=None, cmap=None, ssub=None):
+
+        df = self._serial_read(cmd, ssub)
+        mag = df['magnitude']
+        
+        if cmd == RAW_WAVE:
+            ax.set_title('Time domain')
+            ax.plot(TIME[RAW_WAVE], mag)
+            ax.set_xlabel('Time [msec]')
+            ax.set_ylabel('Amplitude')
+            ax.set_ylim([-range_, range_])
+
+        elif cmd == FFT:
+            ax.set_title('Frequency domain')
+            ax.plot(FREQ[FFT], mag)
+            ax.set_xlabel('Frequency [Hz]')
+            ax.set_ylabel('PSD [dB]')
+            ax.set_ylim([-8, 127])
+
+        elif cmd == SPECTROGRAM:
+            filtered = mag.values.reshape(200, NUM_FILTERS_SPEC)
+            ax.pcolormesh(TIME[SPECTROGRAM],
+                          FREQ[SPECTROGRAM][:range_],
+                          filtered.T[:range_],
+                          cmap=cmap)
+            ax.set_title('Spectrogram (PSD in dB)')
+            ax.set_xlabel('Time [sec]')
+            ax.set_ylabel('Frequency (Hz)')
+
+        elif cmd == MEL_SPECTROGRAM:
+            filtered = mag.values.reshape(200, NUM_FILTERS_MEL)
+            ax.pcolormesh(TIME[MEL_SPECTROGRAM],
+                          FREQ[MEL_SPECTROGRAM][:range_],
+                          filtered.T[:range_],
+                          cmap=cmap)
+            ax.set_title('Mel-scale spectrogram (PSD in dB)')
+            ax.set_xlabel('Time [sec]')
+            ax.set_ylabel('Mel-scale filters')
+
+        elif cmd == MFCC:
+            filtered = mag.values.reshape(200, NUM_FILTERS_MEL)
+            ax.pcolormesh(TIME[MFCC],
+                          FREQ[MFCC][:range_],
+                          filtered.T[:range_],
+                          cmap=cmap)
+            ax.set_title('MFCCs')
+            ax.set_xlabel('Time [sec]')
+            ax.set_ylabel('MFCC')
+
+        return df
 
