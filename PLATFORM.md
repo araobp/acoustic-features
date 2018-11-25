@@ -18,7 +18,7 @@ I use two MEMS microphones from Knowles:
 
 ### Application processor (host MCU/MPU)
 
-- I use Win10 PC mainly as an application processor for developing this system. 
+- I use Win10 PC as an application processor for developing this system. 
 - I also use RasPi for CNN training and CNN inference for the time being: all the pre-proccessing is performed on STM32L4 and another STM32L4 or F4 will be added to the system for CNN inference in future.
 
 ## Tool chain
