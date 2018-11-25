@@ -1,5 +1,7 @@
 # Edge device for deep learning (STM32L4)
 
+This edge device is a sort of human ear: log scale, spectrogram and MEL scale.
+
 ## STM32L4 configuration
 
 The configuration below assumes [my original "Knowles MEMS mic Arduino shield"](https://github.com/araobp/acoustic-event-detection/tree/master/kicad).
