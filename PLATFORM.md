@@ -24,7 +24,5 @@ I use two MEMS microphones from Knowles:
 ## Tool chain
 
 - STMicro's [CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) and [TrueSTUDIO(Eclipse/GCC/GDB)](https://atollic.com/truestudio/) for firmware development.
-- Jupyter Notebook for simulation.
+- Jupyter Notebook for CNN training and some simulation.
 - IDLE and numpy/pandas/matplotlib/Tkinter for developing Oscilloscope GUI.
-- Google's Colab to train CNN.
-
