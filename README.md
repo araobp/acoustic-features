@@ -50,9 +50,10 @@ Platform:
 ## Use cases of AED on edge AI
 
 I apply the system to potential edge AI use cases:
-- musical instruments recognition
+- musical instrument recognition
 - human activity recognition
 - always-on speech recogniton (e.g., "OK Google")
+- bird recognition
 
 ### CNN experiments 
 
