@@ -4,13 +4,7 @@
 
 ## Background and motivation
 
-I am just interested in Acoustic Event Detection (AED) on "edge AI": ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920)
-
-## Use cases
-
-- musical instruments recognition
-- human activity recognition
-- always-on speech recogniton (e.g., "OK Google")
+I am just interested in Acoustic Event Detection (AED) on "edge AI": ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
 
 ## AED system architecture
 
@@ -51,6 +45,12 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
 - [Edge device for deep learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
+
+## Use cases
+
+- musical instruments recognition
+- human activity recognition
+- always-on speech recogniton (e.g., "OK Google")
 
 ## CNN experiments
 
