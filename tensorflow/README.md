@@ -12,8 +12,9 @@ I have made CNN experiments as follows:
 
 The trained CNN model will work OK if the following condition is satisfied:
 - use the same MEMS mic with the same filter setting (incl. the same frequency response) on the edge device (STM32L4)
-- the same environment
+- same environment
 - less surrounding noise
+- same beam forming setting
 
 ### Class labels and data set
 
