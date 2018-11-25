@@ -2,15 +2,24 @@
 
 ### Platform
 
+#### Main board
+
 STMicro STM32L4 (ARM Cortex-M4 with DFSDM, DAC, UART etc) is an all-in-one MCU that satisfies all the requirements of this project:
 - [STMicro NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-l476rg.html): STM32L4 development board
-- [STMicro X-NUCLEO-CCA02M1](https://www.st.com/en/ecosystems/x-nucleo-cca02m1.html): MEMS mic evaluation board
 
-In addition, I use Knowles MEMS mics SPM0405HD4H to add extra mics to the platform above (for beam forming etc).
+#### My original Arduino shield
 
-I already developed [an analog filter (LPF and AC couping)](https://github.com/araobp/stm32-mcu/tree/master/analog_filter) to monitor sound from DAC in real-time.
+I use two MEMS microphones from Knowles:
+- [README and the schematic of the shield](./kicad)
 
-I also use RasPi for CNN inference for the time being: all the pre-proccessing is performed on STM32L4 and another STM32L4 or F4 will be added to the system for CNN inference in future.
+#### Analog filter for DAC: LPF and AC coupling
+
+[Analog filter (LPF and AC couping)](https://github.com/araobp/stm32-mcu/tree/master/analog_filter) is optionally used for monitoring sound with a head phone.
+
+#### Application processor (host MCU/MPU)
+
+- I use Win10 PC mainly as an application processor for developing this system. 
+- I also use RasPi for CNN training and CNN inference for the time being: all the pre-proccessing is performed on STM32L4 and another STM32L4 or F4 will be added to the system for CNN inference in future.
 
 ### Tool chain
 
