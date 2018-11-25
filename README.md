@@ -4,17 +4,7 @@
 
 ## Background and motivation
 
-["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920)
-
-If you are interested in "edge AI", extracting good feature (i.e., seeking the best feature quantization model) is as important as modeling a good CNN, since your CNN should be small enough to fit into a limited amount of RAM memory size (e.g., 128Kbyes).
-
-At first, I am experimenting to see if pre-processing for edge AI fit into RAM on Arm Cortex-M MCU.
-
-Also I am developing a tool "oscilloscope" to visualize how data is processed at every stage in the pre-processing pipeline. Such a tool is useful to seek the best quantization model for every use cases. For example, the picture above is a capture of Tin Whistle music. Squre wave form is seen on the picutre at several points which can be "good feature" for training CNN.
-
-Currently, I am using the device and the tool to train CNN on Keras/TensorFlow for AED (Acoustic Event Detection).
-
-I will also run CNN itself on Arm Cortex-M MCUs when [CubeMX.AI](https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html) becomes available in 1Q/CY2019.
+I am just interested in Acoustic Event Detection (AED) on "edge AI": ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920)
 
 ## Use cases
 
