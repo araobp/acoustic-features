@@ -64,4 +64,5 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
 
 ## CNN experiments
 
+I use the system for CNN experiments:
 - [CNN experiments with Keras/TensorFlow](./tensorflow)
