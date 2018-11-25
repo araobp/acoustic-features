@@ -41,9 +41,6 @@ Conditions:
 - Pre emphasis enabled on the raw data.
 
 I split each 40 mel-filters x 200 strdes data into three three 40 x 64 data.
-
-Training data set: 48 mel-scale spectrograms (40 filters x 64 strides) for each class
-Test data set: 24 mel-scale spectrograms (40 filters x 64 strides) for each class
 ```
 #### MFCC feature set
 
@@ -60,9 +57,6 @@ Conditions:
 - Pre emphasis enabled on the raw data.
 
 I split each 40 MFCCs x 200 strdes data into two 12 x 96 data.
-
-Training data set: 12 MFCCs (12 coeeficients x 96 strides) for each class
-Test data set:  12 MFCCs (12 coeeficients x 96 strides)  for each class
 ```
 
 ### Using the trained CNN model
