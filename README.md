@@ -22,7 +22,7 @@ I will also run CNN itself on Arm Cortex-M MCUs when [CubeMX.AI](https://www.st.
 - human activity recognition
 - always-on speech recogniton (e.g., "OK Google")
 
-## Architecture
+## System architecture
 
 ```
                                           ARM Cortex-M4(STM32L476RG)
