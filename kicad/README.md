@@ -6,7 +6,7 @@ It looks ugly ... I used a lot of zero ohm registors to avoid short circuit, and
 
 ## Beam forming support
 
-The board support two MEMS mics, and the distance between mic1 and mic2 is 40mm.
+The board support two MEMS mics, and the distance between mic1 and mic2 is 20mm.
 
 ## Parts
 
