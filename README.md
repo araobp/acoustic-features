@@ -41,7 +41,7 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
 Platform:
 - [Platform and tool chain](./PLATFORM.md)
 
-## System components in development
+## System components
 
 - [Edge device for deep learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
