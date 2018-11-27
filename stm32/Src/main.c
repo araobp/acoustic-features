@@ -146,17 +146,17 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
       break;
 
     case SPECTROGRAM:
-      length = NUM_FILTERS_SPEC;
+      length = NN / 2;
       cnt = 200;
       break;
 
     case MEL_SPECTROGRAM:
-      length = NUM_FILTERS_MEL;
+      length = NUM_FILTERS;
       cnt = 200;
       break;
 
     case MFCC:
-      length = NUM_FILTERS_MEL;
+      length = NUM_FILTERS;
       cnt = 200;
       break;
 
@@ -168,15 +168,18 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   }
 
   // Quantization: convert float into int
-  if (mode == RAW_WAVE) {  // 16bit quantization
-    for (int n = 0; n < length; n++) {
-      uart_buf[idx++] = (uint8_t) (((int16_t)in[n]) >> 8);
-      uart_buf[idx++] = (uint8_t) (((int16_t)in[n] & 0x00ff));
-    }
-  } else {  // 8bit quantization
-    for (int n = 0; n < length; n++) {
-      uart_buf[idx++] = (int8_t) in[n];
-    }
+  switch(mode) {
+    case RAW_WAVE: // 16bit quantization
+      for (int n = 0; n < length; n++) {
+        uart_buf[idx++] = (uint8_t) (((int16_t)in[n]) >> 8);
+        uart_buf[idx++] = (uint8_t) (((int16_t)in[n] & 0x00ff));
+      }
+      break;
+    default:  // 8bit quantization
+      for (int n = 0; n < length; n++) {
+        uart_buf[idx++] = (int8_t) in[n];
+      }
+      break;
   }
 
   // memory-to-peripheral DMA to UART
@@ -198,7 +201,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
  * DSP pipeline
  */
 void dsp(float32_t *s1, mode mode) {
-//static bool p = true;
+
   static bool p = false;
   uint32_t start = 0;
   uint32_t end = 0;
@@ -213,8 +216,8 @@ void dsp(float32_t *s1, mode mode) {
     break;
 
   case MFCC:
-  case MEL_SPECTROGRAM:
   case SPECTROGRAM:
+  case MEL_SPECTROGRAM:
   case FFT:
     if (enable_pre_emphasis) {
       apply_pre_emphasis(s1);
@@ -224,17 +227,13 @@ void dsp(float32_t *s1, mode mode) {
     apply_psd_logscale(s1);
     switch (mode) {
     case FFT:
+    case SPECTROGRAM:
       break;
     case MEL_SPECTROGRAM:
-    case SPECTROGRAM:
-      if (filter_type != mode) {
-        generate_filters(mode);
-        filter_type = mode;
-      }
-      apply_filterbank(s1, mode);
+      apply_filterbank(s1);
       break;
     case MFCC:
-      apply_filterbank(s1, mode);
+      apply_filterbank(s1);
       apply_dct2(s1);
       break;
     default:
@@ -273,6 +272,28 @@ void overlap_dsp(float32_t *buf, float32_t *sig, mode mode) {
   dsp(sig, mode);  // (2/2)
   if (printing) {
     printing = uart_tx(sig, mode, true);  // true: UART output
+  }
+}
+
+/*
+ * Dump debug info
+ */
+void dump(mode mode) {
+  if (printing && (output_mode >= FILTERBANK)) {
+    switch(mode) {
+      case FILTERBANK:
+        for (int m = 0; m < NUM_FILTERS+2; m++) {
+          for (int n = 0; n < FILTER_LENGTH; n++) {
+            printf("%.3f,", filterbank[m][n]);
+          }
+          printf("\n");
+        }
+        printf("e\n");
+        break;
+      default:
+        break;
+    }
+    printing = false;
   }
 }
 
@@ -438,6 +459,9 @@ int main(void)
       new_pcm_data_l_b = false;
     }
 
+    // Dump debug info
+    dump(output_mode);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -543,13 +567,12 @@ int _write(int file, char *ptr, int len) {
   return len;
 }
 
-/*  (This func is commented out: for a debug purpose only)
+//  (This func is commented out: for a debug purpose only)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if (GPIO_Pin == GPIO_PIN_13) {  // User button (blue tactile switch)
-    printing = true;
+    //
   }
 }
-*/
 
 /*
  * One-byte command reception from an application processor
