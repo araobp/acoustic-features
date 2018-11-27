@@ -202,3 +202,5 @@ class GUI:
             ax.set_title('Mel filter bank')
             ax.set_xlabel('n')
             ax.set_ylabel('Magnitude')
+
+        return mag
