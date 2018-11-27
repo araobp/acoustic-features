@@ -1,6 +1,6 @@
 # Arduino shield of two MEMS mics
 
-![](./arduino_shield.jpg)
+![](../stm32/beam_forming_20mm_board.jpg)
 
 It looks ugly ... I used a lot of zero ohm registors to avoid short circuit, and a jumper cable to connect DFSDM clock out pin to the two MEMS mics.
 
