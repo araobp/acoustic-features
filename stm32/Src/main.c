@@ -101,8 +101,12 @@ uint8_t rxbuf[1];
 volatile bool enable_pre_emphasis = true;
 
 // Beam forming setting
-volatile int beam_forming = 2;  // center
-volatile int beam_forming_mode = ENDFIRE;
+volatile int beam_forming_angle = 2;  // center
+volatile beam_forming beam_forming_mode = ENDFIRE;
+
+// Debug
+volatile debug debug_output = ELAPSED_TIME;
+uint32_t elapsed_time = 0;
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -128,7 +132,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   static int length = 0;
   static int idx = 0;
 
-  static char uart_buf[NN * 4] = { 0.0f };
+  static char uart_buf[NN * 2] = { 0.0f };
 
   if (cnt == 0) {
     idx = 0;
@@ -151,10 +155,6 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
       break;
 
     case MEL_SPECTROGRAM:
-      length = NUM_FILTERS;
-      cnt = 200;
-      break;
-
     case MFCC:
       length = NUM_FILTERS;
       cnt = 200;
@@ -168,18 +168,15 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   }
 
   // Quantization: convert float into int
-  switch(mode) {
-    case RAW_WAVE: // 16bit quantization
-      for (int n = 0; n < length; n++) {
-        uart_buf[idx++] = (uint8_t) (((int16_t)in[n]) >> 8);
-        uart_buf[idx++] = (uint8_t) (((int16_t)in[n] & 0x00ff));
-      }
-      break;
-    default:  // 8bit quantization
-      for (int n = 0; n < length; n++) {
-        uart_buf[idx++] = (int8_t) in[n];
-      }
-      break;
+  if (mode == RAW_WAVE) {
+    for (int n = 0; n < length; n++) {
+      uart_buf[idx++] = (uint8_t) (((int16_t)in[n]) >> 8);
+      uart_buf[idx++] = (uint8_t) (((int16_t)in[n] & 0x00ff));
+    }
+  } else {
+    for (int n = 0; n < length; n++) {
+      uart_buf[idx++] = (int8_t) in[n];
+    }
   }
 
   // memory-to-peripheral DMA to UART
@@ -202,51 +199,30 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
  */
 void dsp(float32_t *s1, mode mode) {
 
-  static bool p = false;
   uint32_t start = 0;
   uint32_t end = 0;
-  if (p)
-    start = HAL_GetTick();
+
+  start = HAL_GetTick();
 
   apply_ac_coupling(s1);  // remove DC
 
-  switch (mode) {
-
-  case RAW_WAVE:
-    break;
-
-  case MFCC:
-  case SPECTROGRAM:
-  case MEL_SPECTROGRAM:
-  case FFT:
+  if (mode >= FFT) {
     if (enable_pre_emphasis) {
       apply_pre_emphasis(s1);
     }
     apply_hann(s1);
     apply_fft(s1);
     apply_psd_logscale(s1);
-    switch (mode) {
-    case FFT:
-    case SPECTROGRAM:
-      break;
-    case MEL_SPECTROGRAM:
-      apply_filterbank(s1);
-      break;
-    case MFCC:
-      apply_filterbank(s1);
-      apply_dct2(s1);
-      break;
-    default:
-      break;
-    }
-  default:
-    break;
   }
-  if (p) {
-    end = HAL_GetTick();
-    printf("%lu %lu\n", start, end);
-    p = false;
+  if (mode >= MEL_SPECTROGRAM) {
+    apply_filterbank(s1);
   }
+  if (mode >= MFCC) {
+    apply_dct2(s1);
+  }
+
+  end = HAL_GetTick();
+  elapsed_time = end - start;
 }
 
 /*
@@ -262,25 +238,30 @@ void dsp(float32_t *s1, mode mode) {
  * --- overlap dsp -------------
  *             :
  */
-void overlap_dsp(float32_t *buf, float32_t *sig, mode mode) {
-  arm_copy_f32(buf, sig, NN);
-  dsp(sig, mode);  // (1/2)
+void overlap_dsp(float32_t *buf, mode mode) {
+
+  float32_t signal[NN] = { 0.0f };
+
+  arm_copy_f32(buf, signal, NN);
+  dsp(signal, mode);  // (1/2)
   if (printing) {
-    printing = uart_tx(sig, mode, false);  // false: UART output pending
+    printing = uart_tx(signal, mode, false);  // false: UART output pending
   }
-  arm_copy_f32(buf + NN_HALF, sig, NN);
-  dsp(sig, mode);  // (2/2)
+
+  arm_copy_f32(buf + NN_HALF, signal, NN);
+  dsp(signal, mode);  // (2/2)
   if (printing) {
-    printing = uart_tx(sig, mode, true);  // true: UART output
+    printing = uart_tx(signal, mode, true);  // true: UART output
   }
+
 }
 
 /*
  * Dump debug info
  */
-void dump(mode mode) {
-  if (printing && (output_mode >= FILTERBANK)) {
-    switch(mode) {
+void dump(void) {
+  if (debug_output != DISABLED) {
+    switch(debug_output) {
       case FILTERBANK:
         for (int m = 0; m < NUM_FILTERS+2; m++) {
           for (int n = 0; n < FILTER_LENGTH; n++) {
@@ -290,10 +271,29 @@ void dump(mode mode) {
         }
         printf("e\n");
         break;
+      case ELAPSED_TIME:
+        printf("mode: %d, elapsed_time: %lu(msec)\n", output_mode, elapsed_time);
+        break;
       default:
         break;
     }
-    printing = false;
+    debug_output = DISABLED;
+  }
+}
+
+void apply_beam_forming(float32_t *sig, int32_t *l, int32_t *r) {
+  if (beam_forming_mode == BROADSIDE) {
+    for (uint32_t n = 0; n < NN; n++) {
+      sig[n] = (float32_t) (l[n + beam_forming_angle] >> 9) + (float32_t) (r[n + 2] >> 9);
+    }
+  } else if (beam_forming_mode == ENDFIRE && beam_forming_angle != 2) {
+    for (uint32_t n = 0; n < NN; n++) {
+      sig[n] = (float32_t) (l[n + 2] >> 9) - (float32_t) (r[n + beam_forming_angle] >> 9);
+    }
+  } else if (beam_forming_mode == ENDFIRE && beam_forming_angle == 2) {
+    for (uint32_t n = 0; n < NN; n++) {
+      sig[n] = (float32_t) (l[n + 2] >> 9) + (float32_t) (r[n + 2] >> 9);
+    }
   }
 }
 
@@ -319,12 +319,10 @@ int main(void)
   volatile uint16_t dac_out_buf_b[NN * 2] = { 0 };
 
   // PCM data store for further processing (FFT etc)
-  float32_t signal[NN] = { 0.0f };
   float32_t signal_buf[NN + NN / 2] = { 0.0f };  // NN/2 overlap
 
-  // n + NN for iteration over a buffer
-  int n_nn;
-
+  // n + NN
+  int n_nn = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -393,24 +391,14 @@ int main(void)
     // Wait for next PCM samples from M1
     if (new_pcm_data_l_a) {  // 1st half of the buffer
 
-      // Beam forming
+      // Overlap
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
-      if (beam_forming_mode == BROADSIDE) {
-        for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + beam_forming] >> 9) + (float32_t) (input_buf_r[n + 2] >> 9);
-        }
-      } else if (beam_forming_mode == ENDFIRE && beam_forming != 2) {
-        for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + 2] >> 9) - (float32_t) (input_buf_r[n + beam_forming] >> 9);
-        }
-      } else if (beam_forming_mode == ENDFIRE && beam_forming == 2) {
-        for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + 2] >> 9) + (float32_t) (input_buf_r[n + 2] >> 9);
-        }
-      }
+
+      // Beam forming
+      apply_beam_forming(signal_buf + NN_HALF, input_buf_l, input_buf_r);
 
       // Overlap dsp
-      overlap_dsp(signal_buf, signal, output_mode);
+      overlap_dsp(signal_buf, output_mode);
 
       // Output PCM data to DAC
       for (uint32_t n = 0; n < NN; n++) {
@@ -430,24 +418,14 @@ int main(void)
         input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
       }
 
-      // Beam forming
+      // Overlap
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
-      if (beam_forming_mode == BROADSIDE) {
-        for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + beam_forming] >> 9) + (float32_t) (input_buf_r[n + NN + 2] >> 9);
-        }
-      } else if (beam_forming_mode == ENDFIRE && beam_forming != 2) {
-        for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) - (float32_t) (input_buf_r[n + NN + beam_forming] >> 9);
-        }
-      } else if (beam_forming_mode == ENDFIRE && beam_forming == 2) {
-        for (uint32_t n = 0; n < NN; n++) {
-          signal_buf[n + NN_HALF] = (float32_t) (input_buf_l[n + NN + 2] >> 9) + (float32_t) (input_buf_r[n + NN + 2] >> 9);
-        }
-      }
+
+      // Beam forming
+      apply_beam_forming(signal_buf + NN_HALF, input_buf_l+NN, input_buf_r+NN);
 
       // Overlap dsp
-      overlap_dsp(signal_buf, signal, output_mode);
+      overlap_dsp(signal_buf, output_mode);
 
       // Output PCM data to DAC
       for (uint32_t n = 0; n < NN; n++) {
@@ -460,7 +438,7 @@ int main(void)
     }
 
     // Dump debug info
-    dump(output_mode);
+    dump();
 
     /* USER CODE END WHILE */
 
@@ -594,25 +572,31 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
     // Beam forming
   case 'L':
-    beam_forming = 0;
+    beam_forming_angle = 0;
     break;
   case 'l':
-    beam_forming = 1;
+    beam_forming_angle = 1;
     break;
   case 'c':
-  beam_forming = 2;
+  beam_forming_angle = 2;
     break;
   case 'r':
-  beam_forming = 3;
+  beam_forming_angle = 3;
     break;
   case 'R':
-  beam_forming = 4;
+  beam_forming_angle = 4;
     break;
   case 'b':
     beam_forming_mode = BROADSIDE;
     break;
   case 'e':
     beam_forming_mode = ENDFIRE;
+    break;
+  case 'f':
+    debug_output = FILTERBANK;
+    break;
+  case 't':
+    debug_output = ELAPSED_TIME;
     break;
 
     // The others

@@ -12,8 +12,8 @@
 
 const float32_t RECIPROCAL_NN = 1.0/(float32_t)NN;
 
-float32_t fs = 0.0f;
-float32_t nyq_fs = 0.0f;
+float32_t fs = 0.0f;      // Sampling frequency
+float32_t nyq_fs = 0.0f;  // Nyquist frequency
 
 arm_rfft_fast_instance_f32 S;
 arm_fir_instance_f32 S_PRE;
@@ -27,14 +27,14 @@ float32_t hann_window[NN] = { 0.0f };
 
 float32_t signal_buf[NN] = { 0.0f };
 
-// pre-emphasis
+// Pre-emphasis
 float32_t fir_coefficients[2] = {-ALPHA, 1.0f};
 float32_t state_buf[NN+1] = { 0.0f };
 
-// Half sample shifter
+// Half sample shifter for DCT2
 float32_t half_sample_shifter[NUM_FILTERS*2] = { 0.0f };
 
-// hann window generation
+// Hann window generation
 void hann(int num) {
   arm_fill_f32(0.0f, hann_window, NN);
   float32_t scale = 2.0f * PI / (float32_t) num;
@@ -68,12 +68,13 @@ float32_t mel2hz(float32_t mel) {
   return 700.0 * (pow(10.0, (mel/2595.0f)) - 1.0f);
 }
 
+// n to Frequency in Hz
 float32_t n2hz(uint32_t n) {
   return (float32_t)n/(float32_t)NN * nyq_fs;
 }
 
 /*
- * Filter bank: Mel scale
+ * Mel filter bank
  */
 void generate_filters(void) {
   int left_n, center_n, right_n;
@@ -111,6 +112,7 @@ void generate_filters(void) {
   }
 }
 
+// Generate half sample shifter for DCT2
 void generate_half_sample_shifter(void) {
   int re, im;
   float32_t num_filters_2 = (float32_t)NUM_FILTERS * 2;
@@ -123,7 +125,7 @@ void generate_half_sample_shifter(void) {
 }
 
 /*
- * dsp initialization
+ * DSP pipeline initialization
  */
 void init_dsp(float32_t f_s) {
   // Generate Hanning window
@@ -139,29 +141,35 @@ void init_dsp(float32_t f_s) {
 
 //--- DSP pipeline functions -----------------------------//
 
-void apply_pre_emphasis(float32_t *inout) {
-  arm_fir_f32(&S_PRE, inout, inout, NN);
+// Apply pre-emphasis
+void apply_pre_emphasis(float32_t *signal) {
+  arm_fir_f32(&S_PRE, signal, signal, NN);
 }
 
-void apply_ac_coupling(float32_t *inout) {
+// AC coupling (to remove DC)
+void apply_ac_coupling(float32_t *signal) {
   float32_t mean;
   static float32_t mean_hist[NUM_MEANS] = { 0.0f };
   arm_copy_f32(mean_hist+1, mean_hist, NUM_MEANS-1);
-  arm_mean_f32(inout, NN, mean_hist+NUM_MEANS-1);
-  arm_mean_f32(inout, NUM_MEANS, &mean);
-  arm_offset_f32(inout, -mean, inout, NN);
+  arm_mean_f32(signal, NN, mean_hist+NUM_MEANS-1);
+  arm_mean_f32(signal, NUM_MEANS, &mean);
+  arm_offset_f32(signal, -mean, signal, NN);
 }
 
-void apply_hann(float32_t *inout) {
-  arm_mult_f32(inout, hann_window, inout, NN);
+// Apply Hann window
+void apply_hann(float32_t *signal) {
+  arm_mult_f32(signal, hann_window, signal, NN);
 }
 
-void apply_fft(float32_t *inout) {
-  arm_rfft_fast_f32(&S, inout, signal_buf, 0);
-  arm_copy_f32(signal_buf, inout, NN);
+// FFT
+void apply_fft(float32_t *signal) {
+  // Caution: arm_rfft_fast_f32() rewrites the 2nd arg (signal)
+  arm_rfft_fast_f32(&S, signal, signal_buf, 0);
+  arm_copy_f32(signal_buf, signal, NN);
 }
 
-void apply_filterbank(float32_t *inout) {
+// Apply mel filter bank
+void apply_filterbank(float32_t *signal) {
   float32_t sum = 0.0f;
   int left_n, right_n, len;
 
@@ -170,24 +178,26 @@ void apply_filterbank(float32_t *inout) {
     left_n = hz_freqs_n[m-1];
     right_n = hz_freqs_n[m+1];
     len = right_n - left_n + 1;
-    arm_dot_prod_f32(&inout[left_n], filterbank[m], len, &sum);
+    arm_dot_prod_f32(&signal[left_n], filterbank[m], len, &sum);
     signal_buf[m-1] = sum;
   }
-  arm_copy_f32(signal_buf, inout, NUM_FILTERS);
+  arm_copy_f32(signal_buf, signal, NUM_FILTERS);
 }
 
-void apply_psd_logscale(float32_t *inout) {
-  arm_cmplx_mag_f32(inout, signal_buf, NN / 2);
-  arm_scale_f32(inout, RECIPROCAL_NN, inout, NN / 2);
+// PSD in logscale
+void apply_psd_logscale(float32_t *signal) {
+  arm_cmplx_mag_f32(signal, signal_buf, NN / 2);
+  arm_scale_f32(signal, RECIPROCAL_NN, signal, NN / 2);
   for (int n = 0; n < NN / 2; n++) {
-    inout[n] = 20.0 * log10_approx(signal_buf[n]);
+    signal[n] = 20.0 * log10_approx(signal_buf[n]);
   }
 }
 
-void apply_dct2(float32_t *inout) {
+// DCT Type-II
+void apply_dct2(float32_t *signal) {
   float32_t in[NUM_FILTERS*2] = { 0.0f };
   float32_t out[NUM_FILTERS*2] = { 0.0f };
-  arm_copy_f32(inout, in, NUM_FILTERS);
+  arm_copy_f32(signal, in, NUM_FILTERS);
   for (int n = 0; n < NUM_FILTERS; n++) {
     in[n+NUM_FILTERS] = in[NUM_FILTERS-n-1];
   }
@@ -195,6 +205,6 @@ void apply_dct2(float32_t *inout) {
   arm_scale_f32 (out, 2.0, out, NUM_FILTERS*2);
   arm_cmplx_mult_cmplx_f32(out, half_sample_shifter, out, NUM_FILTERS);
   for (int n = 0; n < NUM_FILTERS; n++) {
-    inout[n] = out[n*2];
+    signal[n] = out[n*2];
   }
 }

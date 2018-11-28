@@ -200,6 +200,9 @@ if __name__ == '__main__':
         mag = gui.plot_aed(ax, dsp.FILTERBANK)
         canvas.draw()
 
+    def elapsed_time():
+        mag = gui.plot_aed(ax, dsp.ELAPSED_TIME)
+
     ### Row 1 ####
 
     label_class = Tk.Label(master=frame_row1, text='Class label:')
@@ -215,7 +218,6 @@ if __name__ == '__main__':
 
     button_repeat = Tk.Button(master=frame_row2, text='Repeat', command=repeat_toggle, bg='lightblue', activebackground='grey', padx=PADX)
     button_pre_emphasis = Tk.Button(master=frame_row2, text='Emphasis', command=pre_emphasis_toggle, bg='red', activebackground='grey', padx=PADX)
-    button_filterbank = Tk.Button(master=frame_row2, text='Filterbank', command=filterbank, bg='lightblue', activebackground='grey', padx=PADX)
     button_savefig = Tk.Button(master=frame_row2, text='Savefig', command=savefig, bg='lightblue', activebackground='grey', padx=PADX)
     button_remove = Tk.Button(master=frame_row2, text='Remove', command=remove, bg='lightblue', activebackground='grey', padx=PADX)
     button_quit = Tk.Button(master=frame_row2, text='Quit', command=_quit, bg='yellow', activebackground='grey', padx=PADX)
@@ -225,6 +227,8 @@ if __name__ == '__main__':
     label_right = Tk.Label(master=frame_row2, text='R')
     range_beam_forming = Tk.Scale(master=frame_row2, orient=Tk.HORIZONTAL, length=70, from_=-1, to=1, showvalue=0, command=beam_forming)
 
+    button_filterbank = Tk.Button(master=frame_row2, text='Filterbank', command=filterbank, bg='lightblue', activebackground='grey', padx=PADX)
+    button_elapsed_time = Tk.Button(master=frame_row2, text='Elapsed time', command=elapsed_time, bg='lightblue', activebackground='grey', padx=PADX)
 
     ##### Place the parts on Tk #####
 
@@ -268,7 +272,6 @@ if __name__ == '__main__':
     spectrum_subtraction.grid(row=0, column=14, padx=PADX_GRID)
     cmap.grid(row=0, column=15, padx=PADX_GRID)
 
-
     ### Row 2 ####
 
     frame_row2.pack(pady=PADY_GRID)
@@ -288,7 +291,8 @@ if __name__ == '__main__':
     # Filterbank
     if args.debug:
         button_filterbank.grid(row=0, column=8, padx=PADX_GRID)
-
+        button_elapsed_time.grid(row=1, column=9, padx=PADX_GRID)
+        
     # Quit
     button_quit.grid(row=0, column=9, padx=PADX_GRID)
 
