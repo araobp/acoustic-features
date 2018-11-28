@@ -4,7 +4,7 @@ The oscilloscope GUI is for visualizing wavefrom, FFT, spectrogram and MFCCs cal
 
 Connect PC to the edge device with a USB cable, and run [oscilloscope.py](./oscilloscope.py) to start the oscilloscope GUI:
 ```
-Sound ))) [MEMS mic]--[Edge device(STM32L476RG)]<-- USB serial -->[Oscilloscope GUI (main.py)]
+Sound ))) [MEMS mic]--[Edge device(STM32L476RG)]<-- USB serial -->[Oscilloscope GUI (oscilloscope.py)]
 ```
 
 ## Screen shots
