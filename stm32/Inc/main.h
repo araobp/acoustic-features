@@ -55,7 +55,7 @@ extern "C" {
 
 // Beam forming: Broadside mode and Endfire mode
 typedef enum {
-  BROADSIDE, ENDFIRE
+  BROADSIDE, ENDFIRE, LEFT_MIC_ONLY, RIGHT_MIC_ONLY
 } beam_forming;
 
 // Debug info

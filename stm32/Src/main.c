@@ -101,7 +101,7 @@ uint8_t rxbuf[1];
 volatile bool enable_pre_emphasis = true;
 
 // Beam forming setting
-volatile int beam_forming_angle = 2;  // center
+volatile int angle = 2;  // center
 volatile beam_forming beam_forming_mode = ENDFIRE;
 
 // Debug
@@ -281,19 +281,37 @@ void dump(void) {
   }
 }
 
-void apply_beam_forming(float32_t *sig, int32_t *l, int32_t *r) {
-  if (beam_forming_mode == BROADSIDE) {
+/*
+ * Apply beam forming
+ */
+void apply_beam_forming(float32_t *signal, int32_t *l, int32_t *r) {
+  switch (beam_forming_mode) {
+  case BROADSIDE:
     for (uint32_t n = 0; n < NN; n++) {
-      sig[n] = (float32_t) (l[n + beam_forming_angle] >> 9) + (float32_t) (r[n + 2] >> 9);
+      signal[n] = (float32_t) (l[n + angle] >> 9) + (float32_t) (r[n + 2] >> 9);
     }
-  } else if (beam_forming_mode == ENDFIRE && beam_forming_angle != 2) {
+    break;
+  case ENDFIRE:
+    if (angle != 2) {
+      for (uint32_t n = 0; n < NN; n++) {
+        signal[n] = (float32_t) (l[n + 2] >> 9) - (float32_t) (r[n + angle] >> 9);
+      }
+    } else {
+      for (uint32_t n = 0; n < NN; n++) {
+        signal[n] = (float32_t) (l[n + 2] >> 9) + (float32_t) (r[n + 2] >> 9);
+      }
+    }
+    break;
+  case LEFT_MIC_ONLY:
     for (uint32_t n = 0; n < NN; n++) {
-      sig[n] = (float32_t) (l[n + 2] >> 9) - (float32_t) (r[n + beam_forming_angle] >> 9);
+      signal[n] = (float32_t) (l[n + 2] >> 9);
     }
-  } else if (beam_forming_mode == ENDFIRE && beam_forming_angle == 2) {
+    break;
+  case RIGHT_MIC_ONLY:
     for (uint32_t n = 0; n < NN; n++) {
-      sig[n] = (float32_t) (l[n + 2] >> 9) + (float32_t) (r[n + 2] >> 9);
+      signal[n] = (float32_t) (r[n + 2] >> 9);
     }
+    break;
   }
 }
 
@@ -572,25 +590,31 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
     // Beam forming
   case 'L':
-    beam_forming_angle = 0;
+    angle = 0;
     break;
   case 'l':
-    beam_forming_angle = 1;
+    angle = 1;
     break;
   case 'c':
-  beam_forming_angle = 2;
+    angle = 2;
     break;
   case 'r':
-  beam_forming_angle = 3;
+    angle = 3;
     break;
   case 'R':
-  beam_forming_angle = 4;
+    angle = 4;
     break;
   case 'b':
     beam_forming_mode = BROADSIDE;
     break;
   case 'e':
     beam_forming_mode = ENDFIRE;
+    break;
+  case '[':
+    beam_forming_mode = LEFT_MIC_ONLY;
+    break;
+  case ']':
+    beam_forming_mode = RIGHT_MIC_ONLY;
     break;
   case 'f':
     debug_output = FILTERBANK;

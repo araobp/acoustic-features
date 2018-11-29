@@ -25,12 +25,14 @@ parser.add_argument("port", help="serial port identifier")
 parser.add_argument("-d", "--debug", help="serial port identifier", action="store_true")
 args = parser.parse_args()
 
+mode = dsp.ENDFIRE
+
 if __name__ == '__main__':
 
     gui = dsp.GUI(port = args.port)
 
     ### Default settings to DSP ###
-    gui.set_beam_forming('e', 'c')  # ENDFIRE mode, center
+    gui.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
     gui.enable_pre_emphasis(True)  # Pre emphasis enabled
     ###############################
 
@@ -64,6 +66,7 @@ if __name__ == '__main__':
     frame_row0 = Tk.Frame(master=frame)
     frame_row1 = Tk.Frame(master=frame)
     frame_row2 = Tk.Frame(master=frame)
+    frame_row3 = Tk.Frame(master=frame)
 
     canvas = FigureCanvasTkAgg(fig, master=frame_row0)
     canvas.show()
@@ -159,7 +162,7 @@ if __name__ == '__main__':
         repeat(mfcc)
 
     def beam_forming(angle):
-        mode = 'e'
+        global mode
         angle = int(angle) + 2
         gui.set_beam_forming(mode, ANGLE[angle])
 
@@ -201,7 +204,25 @@ if __name__ == '__main__':
         canvas.draw()
 
     def elapsed_time():
-        mag = gui.plot_aed(ax, dsp.ELAPSED_TIME)
+        gui.plot_aed(ax, dsp.ELAPSED_TIME)
+
+    def broadside():
+        global mode
+        mode = dsp.BROADSIDE
+        angle = range_beam_forming.get() + 2
+        gui.set_beam_forming(mode, ANGLE[angle])
+
+    def endfire():
+        global mode
+        mode = dsp.ENDFIRE
+        angle = int(range_beam_forming.get()) + 2
+        gui.set_beam_forming(mode, ANGLE[angle])
+
+    def left_mic_only():
+        gui.left_mic_only()
+
+    def right_mic_only():
+        gui.right_mic_only()
 
     ### Row 1 ####
 
@@ -227,8 +248,14 @@ if __name__ == '__main__':
     label_right = Tk.Label(master=frame_row2, text='R')
     range_beam_forming = Tk.Scale(master=frame_row2, orient=Tk.HORIZONTAL, length=70, from_=-1, to=1, showvalue=0, command=beam_forming)
 
-    button_filterbank = Tk.Button(master=frame_row2, text='Filterbank', command=filterbank, bg='lightblue', activebackground='grey', padx=PADX)
-    button_elapsed_time = Tk.Button(master=frame_row2, text='Elapsed time', command=elapsed_time, bg='lightblue', activebackground='grey', padx=PADX)
+    ### Row 3 ####
+    
+    button_filterbank = Tk.Button(master=frame_row3, text='Filterbank', command=filterbank, bg='lightblue', activebackground='grey', padx=PADX)
+    button_elapsed_time = Tk.Button(master=frame_row3, text='Elapsed time', command=elapsed_time, bg='lightblue', activebackground='grey', padx=PADX)
+    button_broadside = Tk.Button(master=frame_row3, text='Broadside', command=broadside, bg='lightblue', activebackground='grey', padx=PADX)
+    button_endfire = Tk.Button(master=frame_row3, text='Endfire', command=endfire, bg='lightblue', activebackground='grey', padx=PADX)
+    button_left_mic_only = Tk.Button(master=frame_row3, text='Left mic only', command=left_mic_only, bg='lightblue', activebackground='grey', padx=PADX)
+    button_right_mic_only = Tk.Button(master=frame_row3, text='Right mic only', command=right_mic_only, bg='lightblue', activebackground='grey', padx=PADX)
 
     ##### Place the parts on Tk #####
 
@@ -287,14 +314,21 @@ if __name__ == '__main__':
     button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
     button_savefig.grid(row=0, column=6, padx=PADX_GRID)
     button_remove.grid(row=0, column=7, padx=PADX_GRID)
-
-    # Filterbank
-    if args.debug:
-        button_filterbank.grid(row=0, column=8, padx=PADX_GRID)
-        button_elapsed_time.grid(row=1, column=9, padx=PADX_GRID)
         
     # Quit
     button_quit.grid(row=0, column=9, padx=PADX_GRID)
+
+    ### Row 3 ####
+
+    # DEBUG
+    if args.debug:
+        frame_row3.pack(pady=PADY_GRID)
+        button_filterbank.grid(row=0, column=0, padx=PADX_GRID)
+        button_elapsed_time.grid(row=0, column=1, padx=PADX_GRID)
+        button_broadside.grid(row=0, column=2, padx=PADX_GRID)    
+        button_endfire.grid(row=0, column=3, padx=PADX_GRID)            
+        button_left_mic_only.grid(row=0, column=4, padx=PADX_GRID)    
+        button_right_mic_only.grid(row=0, column=5, padx=PADX_GRID)    
 
     ##### loop forever #####
     Tk.mainloop()

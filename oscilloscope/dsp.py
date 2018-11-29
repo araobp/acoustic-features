@@ -35,6 +35,14 @@ MFCC = b'5'
 FILTERBANK = b'f'
 ELAPSED_TIME = b't'
 
+ENABLE_PRE_EMPHASIS = b'P'
+DISABLE_PRE_EMPHASIS = b'p'
+
+LEFT_MIC_ONLY = b'['
+RIGHT_MIC_ONLY = b']'
+BROADSIDE = b'b'
+ENDFIRE = b'e'
+
 # main.c
 NUM_SAMPLES = {}            # The number of samples to receive from the device
 NUM_SAMPLES[RAW_WAVE] = 512
@@ -138,18 +146,29 @@ class GUI:
     def enable_pre_emphasis(self, enable):
         ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
         if enable:
-            ser.write(b'P')
+            ser.write(ENABLE_PRE_EMPHASIS)
         else:
-            ser.write(b'p')
+            ser.write(DISABLE_PRE_EMPHASIS)
         ser.close()
 
     # Enable/disable beam forming
     def set_beam_forming(self, mode, angle):
-        if mode in ('e', 'b') and angle in ('R', 'r', 'c', 'l', 'L', 'b', 'e'):
-            ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
-            ser.write(mode.encode('ascii'))
-            ser.write(angle.encode('ascii'))
-            ser.close()
+        ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
+        ser.write(mode)
+        ser.write(angle.encode('ascii'))
+        ser.close()
+
+    # Left mic only
+    def left_mic_only(self):
+        ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
+        ser.write(LEFT_MIC_ONLY)
+        ser.close()
+
+    # Right mic only
+    def right_mic_only(self):
+        ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
+        ser.write(RIGHT_MIC_ONLY)
+        ser.close()
 
     # Use matplotlib to plot the output from the device
     def plot_aed(self, ax, cmd, range_=None, cmap=None, ssub=None):
