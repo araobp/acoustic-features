@@ -41,7 +41,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 - Clock divider: 32
 - FOSR/decimation: 128
 - sinc filter: sinc3
-- right bit shift: 3 (2 * 128^3 = 2^22, so 6-bit-right-shift is required to output 16bit PCM)
+- right bit shift: 6 (2 * 128^3 = 2^22, so 6-bit-right-shift is required to output 16bit PCM)
 - Sampling frequency: 80_000_000/32/128 = 19.5kHz
 
 ## Pre-processing on STM32L4/CMSIS-DSP
