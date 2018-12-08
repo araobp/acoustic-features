@@ -6,18 +6,22 @@
 #
 
 import matplotlib
+matplotlib.use('TkAgg')
+
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import sys
 import tkinter as Tk
-import dsp
 from datetime import datetime
 import time
 import os
 
 import matplotlib.pyplot as plt
 plt.style.use('dark_background')
+
+import dsp
+import inference
 
 import argparse
 parser = argparse.ArgumentParser()
@@ -36,8 +40,6 @@ if __name__ == '__main__':
     gui.enable_pre_emphasis(True)  # Pre emphasis enabled
     ###############################
 
-    matplotlib.use('TkAgg')
-
     PADX = 6
     PADX_GRID = 2
     PADY_GRID = 2
@@ -55,6 +57,8 @@ if __name__ == '__main__':
 
     ANGLE = ('L', 'l', 'c', 'r', 'R')
 
+    repeat_action = False
+    
     root = Tk.Tk()
     root.wm_title("Oscilloscope")
 
@@ -69,27 +73,7 @@ if __name__ == '__main__':
     frame_row3 = Tk.Frame(master=frame)
 
     canvas = FigureCanvasTkAgg(fig, master=frame_row0)
-    canvas.show()
-
-    ### Row 1 ####
-    entry = Tk.Entry(master=frame_row1, width=14)
-    #cmap = Tk.Spinbox(master=frame_row1, width=10, values=CMAP_LIST)
-    var_cmap = Tk.StringVar()
-    var_cmap.set('hot')
-    cmap = Tk.OptionMenu(frame_row1, var_cmap, *CMAP_LIST)
-    counter = Tk.Label(master=frame_row1)
-    range_amplitude = Tk.Spinbox(master=frame_row1, width=6, values=[2**8, 2**9, 2**11, 2**13, 2**15])
-    range_mel_spectrogram = Tk.Spinbox(master=frame_row1, width=3, values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
-    range_spectrogram = Tk.Spinbox(master=frame_row1, width=4, values=[int(dsp.NN/2), int(dsp.NN/2.0*.7), int(dsp.NN/2.0*0.4)])
-    range_mfcc = Tk.Spinbox(master=frame_row1, width=3, values=[25, 18, 13])
-    spectrum_subtraction = Tk.Spinbox(master=frame_row1, width=3, values=[0, 10, 15, 20, 25])
-
-    ### Row 2 ####
-    cnt = 0
-    class_label_ = ''
-    counter.configure(text='({})'.format(str(0)))
-    repeat_action = False
-    filename = None
+    canvas.draw()
 
     # Save training data for deep learning
     def save_training_data(mag, step):
@@ -225,7 +209,17 @@ if __name__ == '__main__':
         gui.right_mic_only()
 
     ### Row 1 ####
-
+    entry = Tk.Entry(master=frame_row1, width=14)
+    var_cmap = Tk.StringVar()
+    var_cmap.set('hot')
+    cmap = Tk.OptionMenu(frame_row1, var_cmap, *CMAP_LIST)
+    counter = Tk.Label(master=frame_row1)
+    counter.configure(text='({})'.format(str(0)))
+    range_amplitude = Tk.Spinbox(master=frame_row1, width=6, values=[2**8, 2**9, 2**11, 2**13, 2**15])
+    range_mel_spectrogram = Tk.Spinbox(master=frame_row1, width=3, values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
+    range_spectrogram = Tk.Spinbox(master=frame_row1, width=4, values=[int(dsp.NN/2), int(dsp.NN/2.0*.7), int(dsp.NN/2.0*0.4)])
+    range_mfcc = Tk.Spinbox(master=frame_row1, width=3, values=[25, 18, 13])
+    spectrum_subtraction = Tk.Spinbox(master=frame_row1, width=3, values=[0, 10, 15, 20, 25])
     label_class = Tk.Label(master=frame_row1, text='Class label:')
     label_image = Tk.Label(master=frame_row1, text='Subtraction:')
     label_color = Tk.Label(master=frame_row1, text='Color:')
@@ -236,13 +230,11 @@ if __name__ == '__main__':
     button_mfcc = Tk.Button(master=frame_row1, text='MFCCs', command=mfcc, bg='yellowgreen', activebackground='grey', padx=PADX)
 
     ### Row 2 ####
-
     button_repeat = Tk.Button(master=frame_row2, text='Repeat', command=repeat_toggle, bg='lightblue', activebackground='grey', padx=PADX)
     button_pre_emphasis = Tk.Button(master=frame_row2, text='Emphasis', command=pre_emphasis_toggle, bg='red', activebackground='grey', padx=PADX)
     button_savefig = Tk.Button(master=frame_row2, text='Savefig', command=savefig, bg='lightblue', activebackground='grey', padx=PADX)
     button_remove = Tk.Button(master=frame_row2, text='Remove', command=remove, bg='lightblue', activebackground='grey', padx=PADX)
     button_quit = Tk.Button(master=frame_row2, text='Quit', command=_quit, bg='yellow', activebackground='grey', padx=PADX)
-
     label_beam_forming = Tk.Label(master=frame_row2, text='Beam forming:')
     label_left = Tk.Label(master=frame_row2, text='L')
     label_right = Tk.Label(master=frame_row2, text='R')
