@@ -21,12 +21,19 @@ import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 
 import dsp
-import inference
 
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("port", help="serial port identifier")
-parser.add_argument("-d", "--debug", help="serial port identifier", action="store_true")
+parser.add_argument("-d", "--debug",
+                    help="serial port identifier",
+                    action="store_true")
+parser.add_argument("-m", "--model_file",
+                    help="Trained CNN model in hdf5 (.h5) format")
+parser.add_argument("-c", "--class_file",
+                    help="Class labels of the trained CNN model in YAML format")
+parser.add_argument("-w", "--windows",
+                    help="Moving window applied to the input data for ML inference")
 args = parser.parse_args()
 
 mode = dsp.ENDFIRE
@@ -57,8 +64,20 @@ if __name__ == '__main__':
 
     ANGLE = ('L', 'l', 'c', 'r', 'R')
 
+    cnt = 0
     repeat_action = False
     
+    class_label_ = ''
+    filename = None
+    data = None
+    cnn_model = None
+
+    if args.model_file and args.class_file and args.windows:
+        import inference
+        cnn_model = inference.Model(class_file=args.class_file,
+                                    model_file=args.model_file,
+                                    windows=eval(args.windows))
+        
     root = Tk.Tk()
     root.wm_title("Oscilloscope")
 
@@ -71,6 +90,7 @@ if __name__ == '__main__':
     frame_row1 = Tk.Frame(master=frame)
     frame_row2 = Tk.Frame(master=frame)
     frame_row3 = Tk.Frame(master=frame)
+    frame_row4 = Tk.Frame(master=frame)    
 
     canvas = FigureCanvasTkAgg(fig, master=frame_row0)
     canvas.draw()
@@ -97,6 +117,11 @@ if __name__ == '__main__':
         if repeat_action:
             root.after(50, func)
 
+    def infer(mag):
+        probabilities = cnn_model.infer(mag)
+        class_label, p = probabilities[0][0]
+        label_inference.configure(text='ML inference: this is {} ({} %)'.format(class_label, int(p)))
+        
     def raw_wave():
         range_ = int(range_amplitude.get())
         ax.grid(True, alpha=0.3)
@@ -130,6 +155,8 @@ if __name__ == '__main__':
         range_ = int(range_mel_spectrogram.get())
         cmap_ = var_cmap.get()
         mag = gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub)
+        if cnn_model:
+            infer(mag)
         fig.tight_layout()
         canvas.draw()
         save_training_data(mag, 'mel_spectrogram')
@@ -140,6 +167,8 @@ if __name__ == '__main__':
         range_ = int(range_mfcc.get())
         cmap_ = var_cmap.get()
         mag = gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub)
+        if cnn_model:
+            infer(mag)
         fig.tight_layout()
         canvas.draw()
         save_training_data(mag, 'mfcc')
@@ -249,6 +278,10 @@ if __name__ == '__main__':
     button_left_mic_only = Tk.Button(master=frame_row3, text='Left mic only', command=left_mic_only, bg='lightblue', activebackground='grey', padx=PADX)
     button_right_mic_only = Tk.Button(master=frame_row3, text='Right mic only', command=right_mic_only, bg='lightblue', activebackground='grey', padx=PADX)
 
+    ### Row 4 ####
+    label_inference = Tk.Label(master=frame_row4, padx=PADX)
+    label_inference.config(font=("Arial", 20))
+    
     ##### Place the parts on Tk #####
 
     frame.pack(expand=True, fill=Tk.BOTH)
@@ -321,6 +354,12 @@ if __name__ == '__main__':
         button_endfire.grid(row=0, column=3, padx=PADX_GRID)            
         button_left_mic_only.grid(row=0, column=4, padx=PADX_GRID)    
         button_right_mic_only.grid(row=0, column=5, padx=PADX_GRID)    
+
+    ### Row 4 ####
+    if cnn_model:
+        frame_row4.pack(pady=PADY_GRID)
+        label_inference.grid(row=0, column=0, padx=PADX_GRID)
+        label_inference.configure(text='...')
 
     ##### loop forever #####
     Tk.mainloop()

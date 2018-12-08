@@ -1,0 +1,1 @@
+python oscilloscope.py COM15 --model_file ../tensorflow/cnn_for_aed_20181127192236.h5 --class_file ./data_music/class_labels.yaml --windows "((0,64,40), (64,128,40), (128,192,40))"
