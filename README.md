@@ -6,6 +6,13 @@
 
 I am just interested in Acoustic Event Detection (AED) on "edge AI": ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
 
+## Project status (Nov 29, 2018)
+
+- All the pre-processing features and the oscilloscope GUI have been implemented.
+- Several CNN models on Keras/TensorFlow have already been tested.
+
+*** **I will come back to this project after CubeMX AI has been released (1Q/2018)** ***
+
 ## AED system
 
 Architecture:
