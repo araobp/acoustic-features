@@ -90,7 +90,7 @@ if __name__ == '__main__':
     frame_row1 = Tk.Frame(master=frame)
     frame_row2 = Tk.Frame(master=frame)
     frame_row3 = Tk.Frame(master=frame)
-    frame_row4 = Tk.Frame(master=frame)    
+    frame_row4 = Tk.Frame(master=frame)
 
     canvas = FigureCanvasTkAgg(fig, master=frame_row0)
     canvas.draw()
