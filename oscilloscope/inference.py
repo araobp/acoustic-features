@@ -29,9 +29,8 @@ class Model:
         if self.activation_model:
             windowed_data = []
             for w in self.windows:
-                d = pp.scale(data[w[0]*dsp.NUM_FILTERS:w[1]*dsp.NUM_FILTERS])
-                d = d.reshape(w[1]-w[0], dsp.NUM_FILTERS, 1)
-                d = d[:,:w[2],:]
+                d = pp.scale(data[w[0]:w[1], :w[2]])
+                d = d.reshape(d.shape[0], d.shape[1], 1)
                 windowed_data.append(d)
             activations = self.activation_model.predict(np.array(windowed_data))
             result = (activations[-1]*100)  # The last layer

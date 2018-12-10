@@ -52,6 +52,14 @@ NUM_SAMPLES[SPECTROGRAM] = int(NN/2) * 200
 NUM_SAMPLES[MEL_SPECTROGRAM] = 40 * 200
 NUM_SAMPLES[MFCC] = 40 * 200
 
+# Shapes
+SHAPE = {}
+SHAPE[RAW_WAVE] = None
+SHAPE[FFT] = None
+SHAPE[SPECTROGRAM] = (200, int(NN/2))
+SHAPE[MEL_SPECTROGRAM] = (200, NUM_FILTERS)
+SHAPE[MFCC] = (200, NUM_FILTERS)
+
 # Time axis and frequency axis
 TIME = {}
 FREQ = {}
@@ -139,6 +147,8 @@ class GUI:
                                 d = 0.0
                         data.append(d)
                     data = np.array(data, dtype=np.int8)
+                    if SHAPE[cmd]:
+                        data = data.reshape(SHAPE[cmd])
                 ser.close()
             except:
                 print('*** serial timeout!')
@@ -199,34 +209,35 @@ class GUI:
             ax.set_ylim([-8, 127])
 
         elif cmd == SPECTROGRAM:
-            filtered = mag.reshape(200, int(NN/2))
             ax.pcolormesh(TIME[SPECTROGRAM],
                           FREQ[SPECTROGRAM][:range_],
-                          filtered.T[:range_],
+                          mag.T[:range_],
                           cmap=cmap)
             ax.set_title('Spectrogram (PSD in dB)')
             ax.set_xlabel('Time [sec]')
             ax.set_ylabel('Frequency (Hz)')
 
         elif cmd == MEL_SPECTROGRAM:
-            filtered = mag.reshape(200, NUM_FILTERS)
             if window:
-                filtered = utils.shadow(filtered, window, shadow_sub=10)
+                shadowed = utils.shadow(mag, window, shadow_sub=10)
+            else:
+                shadowed = mag
             ax.pcolormesh(TIME[MEL_SPECTROGRAM],
                           FREQ[MEL_SPECTROGRAM][:range_],
-                          filtered.T[:range_],
+                          shadowed.T[:range_],
                           cmap=cmap)
             ax.set_title('Mel-scale spectrogram (PSD in dB)')
             ax.set_xlabel('Time [sec]')
             ax.set_ylabel('Mel-scale filters')
 
         elif cmd == MFCC:
-            filtered = mag.reshape(200, NUM_FILTERS)
             if window:
-                filtered = utils.shadow(filtered, window, shadow_sub=10)
+                shadowed = utils.shadow(mag, window, shadow_sub=10)
+            else:
+                shadowed = mag
             ax.pcolormesh(TIME[MFCC],
                           FREQ[MFCC][:range_],
-                          filtered.T[:range_],
+                          shadowed.T[:range_],
                           cmap=cmap)
             ax.set_title('MFCCs')
             ax.set_xlabel('Time [sec]')

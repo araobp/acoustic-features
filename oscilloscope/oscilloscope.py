@@ -72,7 +72,7 @@ if __name__ == '__main__':
     filename = None
     data = None
     cnn_model = None
-    windows = None
+    windows = [(None, None, None)]
     last_operation = None
 
     EMPTY = np.array([])
@@ -83,6 +83,8 @@ if __name__ == '__main__':
         cnn_model = inference.Model(class_file=args.class_file,
                                     model_file=args.model_file,
                                     windows=windows)
+    elif args.windows:
+        windows = eval(args.windows)
         
     root = Tk.Tk()
     root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
@@ -102,14 +104,17 @@ if __name__ == '__main__':
     canvas.draw()
 
     # Save training data for deep learning
-    def save_training_data(mag, step):
+    def save_training_data(mag, num, window=None):
         global class_label_, cnt, filename
         class_label = entry.get()
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
         if class_label == '':
-            filename = './data/{}-{}'.format(step, dt)
+            filename = './data/{}-{}'.format(num, dt)
         else:
-            filename = './data/{}-{}-{}'.format(entry.get(), step, dt)
+            filename = './data/{}-{}-{}'.format(entry.get(), num, dt)
+            if window:
+                mag = mag[window[0]:window[1], window[2]]
+            mag = mag.flatten()
             with open(filename+'.csv', "w") as f:
                 f.write(','.join(mag.astype(str)))
             if class_label_ != class_label:
@@ -158,42 +163,48 @@ if __name__ == '__main__':
         repeat(spectrogram)
 
     def mel_spectrogram(mag=EMPTY, pos=0, repeatable=True):
-        global last_operation
+        global last_operation, windows
         ssub = int(spectrum_subtraction.get())
         range_ = int(range_mel_spectrogram.get())
         cmap_ = var_cmap.get()
+        window = None
         if mag is EMPTY:
+            window = windows[int(range_window.get())]
             mag = gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub,
-                               window=windows[int(range_window.get())])
+                               window=window)
         else:
+            window = windows[pos]
             gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub, mag=mag,
-                         window=windows[pos])
+                         window=window)
         if cnn_model:
             infer(mag, pos)
-            last_operation = (mel_spectrogram, mag)
+        last_operation = (mel_spectrogram, mag)
         fig.tight_layout()
         canvas.draw()
-        save_training_data(mag, 'mel_spectrogram')
+        save_training_data(mag, 'mel_spectrogram', window=window)
         if repeatable:
             repeat(mel_spectrogram)
 
     def mfcc(mag=EMPTY, pos=0, repeatable=True):
-        global last_operation
+        global last_operation, windows
         ssub = int(spectrum_subtraction.get())    
         range_ = int(range_mfcc.get())
         cmap_ = var_cmap.get()
+        windows = None
         if mag is EMPTY:
+            window = windows[int(range_window.get())]
             mag = gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub,
-                               window=windows[int(range_window.get())])
+                               window=window)
         else:
+            window = windows[pos]
             gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub, mag=mag,
-                         window=windows[pos])
+                         window=window)
         if cnn_model:
             infer(mag, pos)
-            last_operation = (mfcc, mag)
+        last_operation = (mfcc, mag)
         fig.tight_layout()
         canvas.draw()
-        save_training_data(mag, 'mfcc')
+        save_training_data(mag, 'mfcc', window=window)
         if repeatable:
             repeat(mfcc)
 
@@ -270,11 +281,16 @@ if __name__ == '__main__':
     cmap = Tk.OptionMenu(frame_row1, var_cmap, *CMAP_LIST)
     counter = Tk.Label(master=frame_row1)
     counter.configure(text='({})'.format(str(0)))
-    range_amplitude = Tk.Spinbox(master=frame_row1, width=6, values=[2**8, 2**9, 2**11, 2**13, 2**15])
-    range_mel_spectrogram = Tk.Spinbox(master=frame_row1, width=3, values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
-    range_spectrogram = Tk.Spinbox(master=frame_row1, width=4, values=[int(dsp.NN/2), int(dsp.NN/2.0*.7), int(dsp.NN/2.0*0.4)])
-    range_mfcc = Tk.Spinbox(master=frame_row1, width=3, values=[25, 18, 13])
-    spectrum_subtraction = Tk.Spinbox(master=frame_row1, width=3, values=[0, 10, 15, 20, 25])
+    range_amplitude = Tk.Spinbox(master=frame_row1, width=6,
+                                 values=[2**8, 2**9, 2**11, 2**13, 2**15])
+    range_mel_spectrogram = Tk.Spinbox(master=frame_row1, width=3,
+                                       values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
+    range_spectrogram = Tk.Spinbox(master=frame_row1, width=4,
+                                   values=[int(dsp.NN/2), int(dsp.NN/2.0*.7), int(dsp.NN/2.0*0.4)])
+    range_mfcc = Tk.Spinbox(master=frame_row1, width=3,
+                            values=[25, 18, 13])
+    spectrum_subtraction = Tk.Spinbox(master=frame_row1, width=3,
+                                      values=[0, 10, 15, 20, 25])
     label_class = Tk.Label(master=frame_row1, text='Class label:')
     label_image = Tk.Label(master=frame_row1, text='Subtraction:')
     label_color = Tk.Label(master=frame_row1, text='Color:')
@@ -303,7 +319,8 @@ if __name__ == '__main__':
     label_beam_forming = Tk.Label(master=frame_row2, text='Beam forming:')
     label_left = Tk.Label(master=frame_row2, text='L')
     label_right = Tk.Label(master=frame_row2, text='R')
-    range_beam_forming = Tk.Scale(master=frame_row2, orient=Tk.HORIZONTAL, length=70, from_=-1, to=1, showvalue=0, command=beam_forming)
+    range_beam_forming = Tk.Scale(master=frame_row2, orient=Tk.HORIZONTAL, length=70,
+                                  from_=-1, to=1, showvalue=0, command=beam_forming)
 
     ### Row 3 ####
     
@@ -321,10 +338,10 @@ if __name__ == '__main__':
                                       bg='lightblue', activebackground='grey', padx=PADX)
 
     ### Row 4 ####
-    if cnn_model:
-        label_window = Tk.Label(master=frame_row4, text='Window:')
-        range_window = Tk.Scale(master=frame_row4, orient=Tk.HORIZONTAL, length=70,
+    label_window = Tk.Label(master=frame_row4, text='Window:')
+    range_window = Tk.Scale(master=frame_row4, orient=Tk.HORIZONTAL, length=70,
                                 from_=0, to=len(windows)-1, showvalue=0, command=shadow)
+    if cnn_model:
         label_inference = Tk.Label(master=frame_row4, width=40, fg='DeepSkyBlue4', padx=PADX)
         label_inference.config(font=("Arial", 20))
     
@@ -402,10 +419,10 @@ if __name__ == '__main__':
         button_right_mic_only.grid(row=0, column=5, padx=PADX_GRID)    
 
     ### Row 4 ####
+    frame_row4.pack(pady=PADY_GRID)
+    label_window.grid(row=0, column=0, padx=PADX_GRID)
+    range_window.grid(row=0, column=1, padx=PADX_GRID)
     if cnn_model:
-        frame_row4.pack(pady=PADY_GRID)
-        label_window.grid(row=0, column=0, padx=PADX_GRID)
-        range_window.grid(row=0, column=1, padx=PADX_GRID)
         label_inference.grid(row=0, column=2, padx=PADX_GRID)
         label_inference.configure(text='...')
 
