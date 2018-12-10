@@ -272,6 +272,21 @@ if __name__ == '__main__':
     def shadow(pos):
         last_operation[0](data=last_operation[1], pos=int(pos), repeatable=False)
 
+    ### Key press event ###
+
+    def on_key_event(event):
+        c = event.key
+        pos = range_window.get()
+        if c == 'right':
+            if pos < len(windows) - 1:
+                pos += 1
+                range_window.set(pos)
+        elif c == 'left':
+            if pos > 0:
+                pos -= 1
+                range_window.set(pos)            
+
+    canvas.mpl_connect('key_press_event', on_key_event)
 
     ### Row 1 ####
     entry = Tk.Entry(master=frame_row1, width=14)
