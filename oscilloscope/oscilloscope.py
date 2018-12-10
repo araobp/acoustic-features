@@ -340,8 +340,8 @@ if __name__ == '__main__':
 
     ### Row 4 ####
     label_window = Tk.Label(master=frame_row4, text='Window:')
-    range_window = Tk.Scale(master=frame_row4, orient=Tk.HORIZONTAL, length=70,
-                                from_=0, to=len(windows)-1, showvalue=0, command=shadow)
+    range_window = Tk.Scale(master=frame_row4, orient=Tk.HORIZONTAL, length=120,
+                                from_=0, to=len(windows)-1, command=shadow, tickinterval=1)
     if cnn_model:
         label_inference = Tk.Label(master=frame_row4, width=40, fg='DeepSkyBlue4', padx=PADX)
         label_inference.config(font=("Arial", 20))
