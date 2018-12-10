@@ -1,8 +1,5 @@
 import numpy as np
 
-# Example:
-# filtered = utils.shadow(filtered, (64, 128, 30), 10)
-#
 def shadow(pixels, window, shadow_sub):
 
     subtract = lambda x: x - shadow_sub
