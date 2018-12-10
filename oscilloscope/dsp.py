@@ -13,6 +13,7 @@ import pandas as pd
 import numpy as np
 import traceback
 import threading
+import utils
 
 ### Constants #####
 
@@ -62,6 +63,9 @@ TIME[MEL_SPECTROGRAM] = np.linspace(0, NUM_SAMPLES[RAW_WAVE]/Fs*200.0/2, 200)
 FREQ[MEL_SPECTROGRAM] = np.linspace(1, NUM_FILTERS+1, NUM_FILTERS)
 TIME[MFCC] = np.linspace(0, NUM_SAMPLES[RAW_WAVE]/Fs*200.0/2, 200)
 FREQ[MFCC] = np.linspace(1, NUM_FILTERS, NUM_FILTERS)
+
+# Empty array
+EMPTY = np.array([])
 
 # Convert frequency to Mel
 def hz2mel(hz):
@@ -171,9 +175,13 @@ class GUI:
         ser.close()
 
     # Use matplotlib to plot the output from the device
-    def plot_aed(self, ax, cmd, range_=None, cmap=None, ssub=None):
+    def plot_aed(self, ax, cmd, range_=None,
+                 cmap=None, ssub=None,
+                 window=None, mag=EMPTY, shadow_sub=0):
 
-        mag = self._serial_read(cmd, ssub)
+        if mag is EMPTY:
+            mag = self._serial_read(cmd, ssub)
+            
         ax.clear()
         
         if cmd == RAW_WAVE:
@@ -202,6 +210,8 @@ class GUI:
 
         elif cmd == MEL_SPECTROGRAM:
             filtered = mag.reshape(200, NUM_FILTERS)
+            if window:
+                filtered = utils.shadow(filtered, window, shadow_sub=10)
             ax.pcolormesh(TIME[MEL_SPECTROGRAM],
                           FREQ[MEL_SPECTROGRAM][:range_],
                           filtered.T[:range_],
@@ -212,6 +222,8 @@ class GUI:
 
         elif cmd == MFCC:
             filtered = mag.reshape(200, NUM_FILTERS)
+            if window:
+                filtered = utils.shadow(filtered, window, shadow_sub=10)
             ax.pcolormesh(TIME[MFCC],
                           FREQ[MFCC][:range_],
                           filtered.T[:range_],

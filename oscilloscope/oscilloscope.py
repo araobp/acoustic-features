@@ -50,6 +50,7 @@ if __name__ == '__main__':
     PADX = 6
     PADX_GRID = 2
     PADY_GRID = 2
+    WIDTH = 7
 
     CMAP_LIST = ('hot',
                  'viridis',
@@ -71,15 +72,20 @@ if __name__ == '__main__':
     filename = None
     data = None
     cnn_model = None
+    windows = None
+    last_operation = None
+
+    EMPTY = np.array([])
 
     if args.model_file and args.class_file and args.windows:
         import inference
+        windows = eval(args.windows)
         cnn_model = inference.Model(class_file=args.class_file,
                                     model_file=args.model_file,
-                                    windows=eval(args.windows))
+                                    windows=windows)
         
     root = Tk.Tk()
-    root.wm_title("Oscilloscope")
+    root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
 
     fig = Figure(figsize=(11, 4), dpi=100)
     ax = fig.add_subplot(111)
@@ -114,13 +120,14 @@ if __name__ == '__main__':
 
     # Repeat an operation
     def repeat(func):
+        global repeat_action
         if repeat_action:
             root.after(50, func)
 
-    def infer(mag):
+    def infer(mag, pos=0):
         probabilities = cnn_model.infer(mag)
-        class_label, p = probabilities[0][0]
-        label_inference.configure(text='ML inference: this is {} ({} %)'.format(class_label, int(p)))
+        class_label, p = probabilities[pos][0]
+        label_inference.configure(text='This is {} ({} %)'.format(class_label, int(p)))
         
     def raw_wave():
         range_ = int(range_amplitude.get())
@@ -150,29 +157,45 @@ if __name__ == '__main__':
         save_training_data(mag, 'spectrogram')
         repeat(spectrogram)
 
-    def mel_spectrogram():
+    def mel_spectrogram(mag=EMPTY, pos=0, repeatable=True):
+        global last_operation
         ssub = int(spectrum_subtraction.get())
         range_ = int(range_mel_spectrogram.get())
         cmap_ = var_cmap.get()
-        mag = gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub)
+        if mag is EMPTY:
+            mag = gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub,
+                               window=windows[int(range_window.get())])
+        else:
+            gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub, mag=mag,
+                         window=windows[pos])
         if cnn_model:
-            infer(mag)
+            infer(mag, pos)
+            last_operation = (mel_spectrogram, mag)
         fig.tight_layout()
         canvas.draw()
         save_training_data(mag, 'mel_spectrogram')
-        repeat(mel_spectrogram)
+        if repeatable:
+            repeat(mel_spectrogram)
 
-    def mfcc():
+    def mfcc(mag=EMPTY, pos=0, repeatable=True):
+        global last_operation
         ssub = int(spectrum_subtraction.get())    
         range_ = int(range_mfcc.get())
         cmap_ = var_cmap.get()
-        mag = gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub)
+        if mag is EMPTY:
+            mag = gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub,
+                               window=windows[int(range_window.get())])
+        else:
+            gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub, mag=mag,
+                         window=windows[pos])
         if cnn_model:
-            infer(mag)
+            infer(mag, pos)
+            last_operation = (mfcc, mag)
         fig.tight_layout()
         canvas.draw()
         save_training_data(mag, 'mfcc')
-        repeat(mfcc)
+        if repeatable:
+            repeat(mfcc)
 
     def beam_forming(angle):
         global mode
@@ -237,6 +260,9 @@ if __name__ == '__main__':
     def right_mic_only():
         gui.right_mic_only()
 
+    def shadow(pos):
+        last_operation[0](mag=last_operation[1], pos=int(pos), repeatable=False)
+
     ### Row 1 ####
     entry = Tk.Entry(master=frame_row1, width=14)
     var_cmap = Tk.StringVar()
@@ -252,18 +278,28 @@ if __name__ == '__main__':
     label_class = Tk.Label(master=frame_row1, text='Class label:')
     label_image = Tk.Label(master=frame_row1, text='Subtraction:')
     label_color = Tk.Label(master=frame_row1, text='Color:')
-    button_waveform = Tk.Button(master=frame_row1, text='Wave', command=raw_wave, bg='lightblue', activebackground='grey', padx=PADX)
-    button_psd = Tk.Button(master=frame_row1, text='FFT', command=fft, bg='lightblue', activebackground='grey', padx=PADX)
-    button_spectrogram = Tk.Button(master=frame_row1, text='Spec', command=spectrogram, bg='lightblue', activebackground='grey', padx=PADX)
-    button_mel_spectrogram = Tk.Button(master=frame_row1, text='Mel spec', command=mel_spectrogram, bg='pink', activebackground='grey', padx=PADX)
-    button_mfcc = Tk.Button(master=frame_row1, text='MFCCs', command=mfcc, bg='yellowgreen', activebackground='grey', padx=PADX)
+    button_waveform = Tk.Button(master=frame_row1, text='Wave', command=raw_wave,
+                                bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+    button_psd = Tk.Button(master=frame_row1, text='FFT', command=fft,
+                           bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+    button_spectrogram = Tk.Button(master=frame_row1, text='Spec', command=spectrogram,
+                                   bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+    button_mel_spectrogram = Tk.Button(master=frame_row1, text='Mel spec', command=mel_spectrogram,
+                                       bg='pink', activebackground='grey', padx=PADX, width=WIDTH)
+    button_mfcc = Tk.Button(master=frame_row1, text='MFCCs', command=mfcc,
+                            bg='yellowgreen', activebackground='grey', padx=PADX, width=WIDTH)
 
     ### Row 2 ####
-    button_repeat = Tk.Button(master=frame_row2, text='Repeat', command=repeat_toggle, bg='lightblue', activebackground='grey', padx=PADX)
-    button_pre_emphasis = Tk.Button(master=frame_row2, text='Emphasis', command=pre_emphasis_toggle, bg='red', activebackground='grey', padx=PADX)
-    button_savefig = Tk.Button(master=frame_row2, text='Savefig', command=savefig, bg='lightblue', activebackground='grey', padx=PADX)
-    button_remove = Tk.Button(master=frame_row2, text='Remove', command=remove, bg='lightblue', activebackground='grey', padx=PADX)
-    button_quit = Tk.Button(master=frame_row2, text='Quit', command=_quit, bg='yellow', activebackground='grey', padx=PADX)
+    button_repeat = Tk.Button(master=frame_row2, text='Repeat', command=repeat_toggle,
+                              bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+    button_pre_emphasis = Tk.Button(master=frame_row2, text='Emphasis', command=pre_emphasis_toggle,
+                                    bg='red', activebackground='grey', padx=PADX, width=WIDTH)
+    button_savefig = Tk.Button(master=frame_row2, text='Savefig', command=savefig,
+                               bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+    button_remove = Tk.Button(master=frame_row2, text='Remove', command=remove,
+                              bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+    button_quit = Tk.Button(master=frame_row2, text='Quit', command=_quit,
+                            bg='yellow', activebackground='grey', padx=PADX, width=WIDTH)
     label_beam_forming = Tk.Label(master=frame_row2, text='Beam forming:')
     label_left = Tk.Label(master=frame_row2, text='L')
     label_right = Tk.Label(master=frame_row2, text='R')
@@ -271,16 +307,26 @@ if __name__ == '__main__':
 
     ### Row 3 ####
     
-    button_filterbank = Tk.Button(master=frame_row3, text='Filterbank', command=filterbank, bg='lightblue', activebackground='grey', padx=PADX)
-    button_elapsed_time = Tk.Button(master=frame_row3, text='Elapsed time', command=elapsed_time, bg='lightblue', activebackground='grey', padx=PADX)
-    button_broadside = Tk.Button(master=frame_row3, text='Broadside', command=broadside, bg='lightblue', activebackground='grey', padx=PADX)
-    button_endfire = Tk.Button(master=frame_row3, text='Endfire', command=endfire, bg='lightblue', activebackground='grey', padx=PADX)
-    button_left_mic_only = Tk.Button(master=frame_row3, text='Left mic only', command=left_mic_only, bg='lightblue', activebackground='grey', padx=PADX)
-    button_right_mic_only = Tk.Button(master=frame_row3, text='Right mic only', command=right_mic_only, bg='lightblue', activebackground='grey', padx=PADX)
+    button_filterbank = Tk.Button(master=frame_row3, text='Filterbank', command=filterbank,
+                                  bg='lightblue', activebackground='grey', padx=PADX)
+    button_elapsed_time = Tk.Button(master=frame_row3, text='Elapsed time', command=elapsed_time,
+                                    bg='lightblue', activebackground='grey', padx=PADX)
+    button_broadside = Tk.Button(master=frame_row3, text='Broadside', command=broadside,
+                                 bg='lightblue', activebackground='grey', padx=PADX)
+    button_endfire = Tk.Button(master=frame_row3, text='Endfire', command=endfire,
+                               bg='lightblue', activebackground='grey', padx=PADX)
+    button_left_mic_only = Tk.Button(master=frame_row3, text='Left mic only', command=left_mic_only,
+                                     bg='lightblue', activebackground='grey', padx=PADX)
+    button_right_mic_only = Tk.Button(master=frame_row3, text='Right mic only', command=right_mic_only,
+                                      bg='lightblue', activebackground='grey', padx=PADX)
 
     ### Row 4 ####
-    label_inference = Tk.Label(master=frame_row4, padx=PADX)
-    label_inference.config(font=("Arial", 20))
+    if cnn_model:
+        label_window = Tk.Label(master=frame_row4, text='Window:')
+        range_window = Tk.Scale(master=frame_row4, orient=Tk.HORIZONTAL, length=70,
+                                from_=0, to=len(windows)-1, showvalue=0, command=shadow)
+        label_inference = Tk.Label(master=frame_row4, width=40, fg='DeepSkyBlue4', padx=PADX)
+        label_inference.config(font=("Arial", 20))
     
     ##### Place the parts on Tk #####
 
@@ -358,7 +404,9 @@ if __name__ == '__main__':
     ### Row 4 ####
     if cnn_model:
         frame_row4.pack(pady=PADY_GRID)
-        label_inference.grid(row=0, column=0, padx=PADX_GRID)
+        label_window.grid(row=0, column=0, padx=PADX_GRID)
+        range_window.grid(row=0, column=1, padx=PADX_GRID)
+        label_inference.grid(row=0, column=2, padx=PADX_GRID)
         label_inference.configure(text='...')
 
     ##### loop forever #####
