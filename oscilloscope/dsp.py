@@ -187,23 +187,23 @@ class GUI:
     # Use matplotlib to plot the output from the device
     def plot_aed(self, ax, cmd, range_=None,
                  cmap=None, ssub=None,
-                 window=None, mag=EMPTY, shadow_sub=0):
+                 window=None, data=EMPTY, shadow_sub=0):
 
-        if mag is EMPTY:
-            mag = self._serial_read(cmd, ssub)
+        if data is EMPTY:
+            data = self._serial_read(cmd, ssub)
             
         ax.clear()
         
         if cmd == RAW_WAVE:
             ax.set_title('Time domain')
-            ax.plot(TIME[RAW_WAVE], mag)
+            ax.plot(TIME[RAW_WAVE], data)
             ax.set_xlabel('Time [msec]')
             ax.set_ylabel('Amplitude')
             ax.set_ylim([-range_, range_])
 
         elif cmd == FFT:
             ax.set_title('Frequency domain')
-            ax.plot(FREQ[FFT], mag)
+            ax.plot(FREQ[FFT], data)
             ax.set_xlabel('Frequency [Hz]')
             ax.set_ylabel('PSD [dB]')
             ax.set_ylim([-8, 127])
@@ -211,7 +211,7 @@ class GUI:
         elif cmd == SPECTROGRAM:
             ax.pcolormesh(TIME[SPECTROGRAM],
                           FREQ[SPECTROGRAM][:range_],
-                          mag.T[:range_],
+                          data.T[:range_],
                           cmap=cmap)
             ax.set_title('Spectrogram (PSD in dB)')
             ax.set_xlabel('Time [sec]')
@@ -219,9 +219,9 @@ class GUI:
 
         elif cmd == MEL_SPECTROGRAM:
             if window:
-                shadowed = utils.shadow(mag, window, shadow_sub=10)
+                shadowed = utils.shadow(data, window, shadow_sub=10)
             else:
-                shadowed = mag
+                shadowed = data
             ax.pcolormesh(TIME[MEL_SPECTROGRAM],
                           FREQ[MEL_SPECTROGRAM][:range_],
                           shadowed.T[:range_],
@@ -232,9 +232,9 @@ class GUI:
 
         elif cmd == MFCC:
             if window:
-                shadowed = utils.shadow(mag, window, shadow_sub=10)
+                shadowed = utils.shadow(data, window, shadow_sub=10)
             else:
-                shadowed = mag
+                shadowed = data
             ax.pcolormesh(TIME[MFCC],
                           FREQ[MFCC][:range_],
                           shadowed.T[:range_],
@@ -244,7 +244,7 @@ class GUI:
             ax.set_ylabel('MFCC')     
 
         elif cmd == FILTERBANK: 
-            data = mag.reshape(NUM_FILTERS+2, FILTER_LENGTH)
+            data = data.reshape(NUM_FILTERS+2, FILTER_LENGTH)
             for m in range(1, NUM_FILTERS+1):
                 num_axis = hz_freqs_n[m]+FILTER_LENGTH
                 mel = np.zeros(num_axis)
@@ -255,4 +255,4 @@ class GUI:
             ax.set_xlabel('n')
             ax.set_ylabel('Magnitude')
 
-        return mag
+        return data

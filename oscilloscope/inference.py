@@ -14,7 +14,7 @@ class Model:
         if windows:
             self.windows = windows
         else:
-            self.windows = ((0,dsp.NN))
+            self.windows = ((0, dsp.NN))
         
         with open(class_file, 'r') as f:
             self.class_labels = yaml.load(f)
@@ -22,7 +22,8 @@ class Model:
             _model.summary()
             layer_outputs = [layer.output for layer in _model.layers]
             self.activation_model = models.Model(inputs=_model.input, outputs=layer_outputs)
-    
+
+    # ML Inference
     def infer(self, data):
         probabilities = []
         data = data.astype(float)

@@ -104,19 +104,20 @@ if __name__ == '__main__':
     canvas.draw()
 
     # Save training data for deep learning
-    def save_training_data(mag, num, window=None):
+    def save():
         global class_label_, cnt, filename
         class_label = entry.get()
+        func, data, window = last_operation
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
         if class_label == '':
-            filename = './data/{}-{}'.format(num, dt)
+            filename = './data/{}-{}'.format(func.__name__, dt)
         else:
-            filename = './data/{}-{}-{}'.format(entry.get(), num, dt)
+            filename = './data/{}-{}-{}'.format(class_label, func.__name__, dt)
             if window:
-                mag = mag[window[0]:window[1], window[2]]
-            mag = mag.flatten()
+                data = data[window[0]:window[1], :window[2]]
+            data = data.flatten()
             with open(filename+'.csv', "w") as f:
-                f.write(','.join(mag.astype(str)))
+                f.write(','.join(data.astype(str)))
             if class_label_ != class_label:
                 class_label_ = class_label
                 cnt = 0
@@ -129,82 +130,79 @@ if __name__ == '__main__':
         if repeat_action:
             root.after(50, func)
 
-    def infer(mag, pos=0):
-        probabilities = cnn_model.infer(mag)
+    def infer(data, pos=0):
+        probabilities = cnn_model.infer(data)
         class_label, p = probabilities[pos][0]
         label_inference.configure(text='This is {} ({} %)'.format(class_label, int(p)))
         
     def raw_wave():
+        global last_operation
         range_ = int(range_amplitude.get())
-        ax.grid(True, alpha=0.3)
-        mag = gui.plot_aed(ax, dsp.RAW_WAVE, range_=range_)
+        data = gui.plot_aed(ax, dsp.RAW_WAVE, range_=range_)
+        last_operation = (raw_wave, data, None)
         fig.tight_layout()
         canvas.draw()
-        save_training_data(mag, 'waveform')
         repeat(raw_wave)
 
     def fft():
+        global last_operation
         ssub = int(spectrum_subtraction.get())
-        ax.grid(True, alpha=0.3)
-        mag = gui.plot_aed(ax, dsp.FFT, ssub=ssub)
+        data = gui.plot_aed(ax, dsp.FFT, ssub=ssub)
+        last_operation = (fft, data, None)
         fig.tight_layout()
         canvas.draw()
-        save_training_data(mag, 'fft')
         repeat(fft)
 
     def spectrogram():
+        global last_operation
         ssub = int(spectrum_subtraction.get())    
         range_ = int(range_spectrogram.get())
         cmap_ = var_cmap.get()
-        mag = gui.plot_aed(ax, dsp.SPECTROGRAM, range_, cmap_, ssub)
+        data = gui.plot_aed(ax, dsp.SPECTROGRAM, range_, cmap_, ssub)
+        last_operation = (spectrogram, data, None)
         fig.tight_layout()
         canvas.draw()
-        save_training_data(mag, 'spectrogram')
         repeat(spectrogram)
 
-    def mel_spectrogram(mag=EMPTY, pos=0, repeatable=True):
+    def mel_spectrogram(data=EMPTY, pos=0, repeatable=True):
         global last_operation, windows
         ssub = int(spectrum_subtraction.get())
         range_ = int(range_mel_spectrogram.get())
         cmap_ = var_cmap.get()
-        window = None
-        if mag is EMPTY:
+        if data is EMPTY:
             window = windows[int(range_window.get())]
-            mag = gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub,
+            data = gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub,
                                window=window)
         else:
             window = windows[pos]
-            gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub, mag=mag,
+            gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
-            infer(mag, pos)
-        last_operation = (mel_spectrogram, mag)
+            infer(data, pos)
+        last_operation = (mel_spectrogram, data, window)
         fig.tight_layout()
         canvas.draw()
-        save_training_data(mag, 'mel_spectrogram', window=window)
         if repeatable:
             repeat(mel_spectrogram)
 
-    def mfcc(mag=EMPTY, pos=0, repeatable=True):
+    def mfcc(data=EMPTY, pos=0, repeatable=True):
         global last_operation, windows
         ssub = int(spectrum_subtraction.get())    
         range_ = int(range_mfcc.get())
         cmap_ = var_cmap.get()
-        windows = None
-        if mag is EMPTY:
+        if data is EMPTY:
             window = windows[int(range_window.get())]
-            mag = gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub,
+            data = gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub,
                                window=window)
         else:
             window = windows[pos]
-            gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub, mag=mag,
+            gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
-            infer(mag, pos)
-        last_operation = (mfcc, mag)
+            infer(data, pos)
+        last_operation = (mfcc, data, window)
         fig.tight_layout()
         canvas.draw()
-        save_training_data(mag, 'mfcc', window=window)
         if repeatable:
             repeat(mfcc)
 
@@ -247,7 +245,7 @@ if __name__ == '__main__':
         root.destroy()
 
     def filterbank():
-        mag = gui.plot_aed(ax, dsp.FILTERBANK)
+        data = gui.plot_aed(ax, dsp.FILTERBANK)
         canvas.draw()
 
     def elapsed_time():
@@ -272,7 +270,8 @@ if __name__ == '__main__':
         gui.right_mic_only()
 
     def shadow(pos):
-        last_operation[0](mag=last_operation[1], pos=int(pos), repeatable=False)
+        last_operation[0](data=last_operation[1], pos=int(pos), repeatable=False)
+
 
     ### Row 1 ####
     entry = Tk.Entry(master=frame_row1, width=14)
@@ -313,6 +312,8 @@ if __name__ == '__main__':
     button_savefig = Tk.Button(master=frame_row2, text='Savefig', command=savefig,
                                bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
     button_remove = Tk.Button(master=frame_row2, text='Remove', command=remove,
+                              bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+    button_save = Tk.Button(master=frame_row2, text='Save', command=save,
                               bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
     button_quit = Tk.Button(master=frame_row2, text='Quit', command=_quit,
                             bg='yellow', activebackground='grey', padx=PADX, width=WIDTH)
@@ -401,7 +402,8 @@ if __name__ == '__main__':
     button_repeat.grid(row=0, column=4, padx=PADX_GRID)
     button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
     button_savefig.grid(row=0, column=6, padx=PADX_GRID)
-    button_remove.grid(row=0, column=7, padx=PADX_GRID)
+    button_save.grid(row=0, column=7, padx=PADX_GRID)
+    button_remove.grid(row=0, column=8, padx=PADX_GRID)
         
     # Quit
     button_quit.grid(row=0, column=9, padx=PADX_GRID)
