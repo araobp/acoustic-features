@@ -9,6 +9,7 @@ I have made CNN experiments as follows:
 - [CNN experiments on musical instruments recognition (Jupyter Notebook)](./CNN_for_AED.ipynb)
 - [CNN experiments on human activity in a living room (Jupyter Notebook)](./CNN_for_AED_living_room.ipynb)
 - [CNN experiments on speech recognition for restaurants (Jupyter Notebook)](./CNN_for_AED_restaurant.ipynb)
+- [CNN experiments on birds chirping (Jupyter Notebook)](./CNN_for_AED_birds.ipynb)
 
 The trained CNN model will work OK if the following condition is satisfied:
 - use the same MEMS mic with the same filter setting (incl. the same frequency response) on the edge device (STM32L4)
