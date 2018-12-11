@@ -65,4 +65,6 @@ I apply the system to potential edge AI use cases:
 
 ### CNN experiments 
 
+![](./oscilloscope/screenshots/ml_inference_classical_guitar.jpg)
+
 - [CNN experiments with Keras/TensorFlow](./tensorflow)
