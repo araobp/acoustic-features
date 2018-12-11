@@ -106,7 +106,7 @@ if __name__ == '__main__':
     # Save training data for deep learning
     def save():
         global class_label_, cnt, filename
-        class_label = entry.get()
+        class_label = entry_class_label.get()
         func, data, window = last_operation
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
         if class_label == '':
@@ -135,25 +135,27 @@ if __name__ == '__main__':
         class_label, p = probabilities[pos][0]
         label_inference.configure(text='This is {} ({} %)'.format(class_label, int(p)))
         
-    def raw_wave():
+    def raw_wave(repeatable=True):
         global last_operation
         range_ = int(range_amplitude.get())
         data = gui.plot_aed(ax, dsp.RAW_WAVE, range_=range_)
         last_operation = (raw_wave, data, None)
         fig.tight_layout()
         canvas.draw()
-        repeat(raw_wave)
+        if repeatable:
+            repeat(raw_wave)
 
-    def fft():
+    def fft(repeatable=True):
         global last_operation
         ssub = int(spectrum_subtraction.get())
         data = gui.plot_aed(ax, dsp.FFT, ssub=ssub)
         last_operation = (fft, data, None)
         fig.tight_layout()
         canvas.draw()
-        repeat(fft)
+        if repeatable:
+            repeat(fft)
 
-    def spectrogram():
+    def spectrogram(repeatable=True):
         global last_operation
         ssub = int(spectrum_subtraction.get())    
         range_ = int(range_spectrogram.get())
@@ -162,7 +164,8 @@ if __name__ == '__main__':
         last_operation = (spectrogram, data, None)
         fig.tight_layout()
         canvas.draw()
-        repeat(spectrogram)
+        if repeatable:
+            repeat(spectrogram)
 
     def mel_spectrogram(data=EMPTY, pos=0, repeatable=True):
         global last_operation, windows
@@ -240,10 +243,13 @@ if __name__ == '__main__':
             cnt -= 1
             counter.configure(text='({})'.format(str(cnt)))
 
-    def _quit():
+    def quit():
         root.quit()
         root.destroy()
 
+    def confirm():
+        canvas._tkcanvas.focus_set()
+        
     def filterbank():
         data = gui.plot_aed(ax, dsp.FILTERBANK)
         canvas.draw()
@@ -285,11 +291,22 @@ if __name__ == '__main__':
             if pos > 0:
                 pos -= 1
                 range_window.set(pos)            
-
+        elif c == 'up':
+            if last_operation is None:
+                print('Up key becomes effective after executing an operations.')
+            else:
+                func = last_operation[0]
+                if func in (mel_spectrogram, mfcc):
+                    func(pos=int(range_window.get()), repeatable=False)
+                else:
+                    func(repeatable=False)
+        elif c == 'down':
+            save()
+            
     canvas.mpl_connect('key_press_event', on_key_event)
-
+    
     ### Row 1 ####
-    entry = Tk.Entry(master=frame_row1, width=14)
+    entry_class_label = Tk.Entry(master=frame_row1, width=14)
     var_cmap = Tk.StringVar()
     var_cmap.set('hot')
     cmap = Tk.OptionMenu(frame_row1, var_cmap, *CMAP_LIST)
@@ -330,13 +347,15 @@ if __name__ == '__main__':
                               bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
     button_save = Tk.Button(master=frame_row2, text='Save', command=save,
                               bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
-    button_quit = Tk.Button(master=frame_row2, text='Quit', command=_quit,
+    button_quit = Tk.Button(master=frame_row2, text='Quit', command=quit,
                             bg='yellow', activebackground='grey', padx=PADX, width=WIDTH)
     label_beam_forming = Tk.Label(master=frame_row2, text='Beam forming:')
     label_left = Tk.Label(master=frame_row2, text='L')
     label_right = Tk.Label(master=frame_row2, text='R')
     range_beam_forming = Tk.Scale(master=frame_row2, orient=Tk.HORIZONTAL, length=70,
                                   from_=-1, to=1, showvalue=0, command=beam_forming)
+    button_confirm = Tk.Button(master=frame_row2, text='Confirm', command=confirm,
+                            bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
 
     ### Row 3 ####
     
@@ -375,7 +394,7 @@ if __name__ == '__main__':
 
     # Class label entry
     label_class.grid(row=0, column=0, padx=PADX_GRID)
-    entry.grid(row=0, column=1, padx=PADX_GRID)
+    entry_class_label.grid(row=0, column=1, padx=PADX_GRID)
     counter.grid(row=0, column=2, padx=PADX_GRID)
 
     # Waveform
@@ -416,12 +435,13 @@ if __name__ == '__main__':
     # Repeat, pre_emphasis, save fig and delete
     button_repeat.grid(row=0, column=4, padx=PADX_GRID)
     button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
-    button_savefig.grid(row=0, column=6, padx=PADX_GRID)
+    button_confirm.grid(row=0, column=6, padx=PADX_GRID)
     button_save.grid(row=0, column=7, padx=PADX_GRID)
     button_remove.grid(row=0, column=8, padx=PADX_GRID)
+    button_savefig.grid(row=0, column=9, padx=PADX_GRID)
         
     # Quit
-    button_quit.grid(row=0, column=9, padx=PADX_GRID)
+    button_quit.grid(row=0, column=10, padx=PADX_GRID)
 
     ### Row 3 ####
 
