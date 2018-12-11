@@ -62,6 +62,8 @@ I split each 40 MFCCs x 200 strdes data into two 12 x 96 data.
 
 ### Using the trained CNN model
 
+![](../oscilloscope/screenshots/ml_inference_hibari.jpg)
+
 - [Musical instruments recognition](../oscilloscope/run_inference_music.bat)
 - [Birds chirping recognition](../oscilloscope/run_inference_birds.bat)
 - [Speech recognition for restaurants](../oscilloscope/run_inference_restaurant.bat)
