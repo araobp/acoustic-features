@@ -62,17 +62,9 @@ I split each 40 MFCCs x 200 strdes data into two 12 x 96 data.
 
 ### Using the trained CNN model
 
+- [Musical instruments recognition](../oscilloscope/run_inference_music.bat)
+- [Birds chirping recognition](../oscilloscope/run_inference_birds.bat)
+- [Speech recognition for restaurants](../oscilloscope/run_inference_restaurant.bat)
+
 I am looking forward to CubeMX.AI: https://www.st.com/content/st_com/en/about/innovation---technology/artificial-intelligence.html
 
-Since CubeMX.AI is not available yet, I made a simple agent that runs on PC.
-
-Just run [this agent](./agent.py).
-
-```
-<<< (17) this is framenco_guitar (85.7%) >>>
-blues_harp: 0.0%
-classical_guitar: 13.0%
-framenco_guitar: 85.7%
-piano: 0.5%
-tin_whistle: 0.0%
-```
