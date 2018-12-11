@@ -27,11 +27,12 @@ class Model:
     def infer(self, data):
         probabilities = []
         data = data.astype(float)
+        shape = data.shape
+        data = pp.scale(data.flatten()).reshape(shape[0], shape[1], 1)
         if self.activation_model:
             windowed_data = []
             for w in self.windows:
-                d = pp.scale(data[w[0]:w[1], :w[2]])
-                d = d.reshape(d.shape[0], d.shape[1], 1)
+                d = data[w[0]:w[1], :w[2], :]
                 windowed_data.append(d)
             activations = self.activation_model.predict(np.array(windowed_data))
             result = (activations[-1]*100)  # The last layer

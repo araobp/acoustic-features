@@ -22,6 +22,7 @@ plt.style.use('dark_background')
 
 import dsp
 
+# Command arguments
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("port", help="serial port identifier")
@@ -36,11 +37,12 @@ parser.add_argument("-w", "--windows",
                     help="Moving window applied to the input data for ML inference")
 args = parser.parse_args()
 
-mode = dsp.ENDFIRE
-
 if __name__ == '__main__':
 
     gui = dsp.GUI(port = args.port)
+
+    # Beam forming mode
+    mode = dsp.ENDFIRE
 
     ### Default settings to DSP ###
     gui.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
@@ -124,7 +126,6 @@ if __name__ == '__main__':
             cnt += 1
             counter.configure(text='({})'.format(str(cnt)))
 
-    # Repeat an operation
     def repeat(func):
         global repeat_action
         if repeat_action:
@@ -208,7 +209,7 @@ if __name__ == '__main__':
         canvas.draw()
         if repeatable:
             repeat(mfcc)
-
+            
     def beam_forming(angle):
         global mode
         angle = int(angle) + 2
@@ -249,6 +250,9 @@ if __name__ == '__main__':
 
     def confirm():
         canvas._tkcanvas.focus_set()
+
+    def shadow(pos):
+        last_operation[0](data=last_operation[1], pos=int(pos), repeatable=False)
         
     def filterbank():
         data = gui.plot_aed(ax, dsp.FILTERBANK)
@@ -274,9 +278,6 @@ if __name__ == '__main__':
 
     def right_mic_only():
         gui.right_mic_only()
-
-    def shadow(pos):
-        last_operation[0](data=last_operation[1], pos=int(pos), repeatable=False)
 
     ### Key press event ###
 
@@ -358,7 +359,6 @@ if __name__ == '__main__':
                             bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
 
     ### Row 3 ####
-    
     button_filterbank = Tk.Button(master=frame_row3, text='Filterbank', command=filterbank,
                                   bg='lightblue', activebackground='grey', padx=PADX)
     button_elapsed_time = Tk.Button(master=frame_row3, text='Elapsed time', command=elapsed_time,
