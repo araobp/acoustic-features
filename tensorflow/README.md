@@ -2,6 +2,29 @@
 
 The results: about 90% accuracy has been achieved, so it is satisfying.
 
+### Using the oscilloscope GUI to collect data for training CNN
+
+[Step 1] Enter a class label into the class label entry on the GUI.
+
+[Step 2] Press "Mel spectrogram" or "MFCC" button to check if the edge device can transfer feature data to the GUI.
+
+[Step 3] Press "Confirm" button.
+
+[Step 4] Use cursor keys for data collection:
+
+```
+          [Up]
+     [Left]   [Right]
+         [Down]
+
+Up: fetch feature data from the device
+Left: move the window left
+Right: move the window right
+Down: save the data
+```
+
+The window is high lighted.
+
 ### Jupyter Notebook of this experiment
 
 I have made CNN experiments as follows:
