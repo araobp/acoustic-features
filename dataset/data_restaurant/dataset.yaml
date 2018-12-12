@@ -1,0 +1,8 @@
+feature: mfcc
+files: 30
+training_files: 20
+length: 96
+filters: 40
+cutoff: 12
+cutout: true
+stride: 96

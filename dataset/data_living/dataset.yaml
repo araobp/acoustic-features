@@ -1,0 +1,6 @@
+feature: mel_spectrogram
+files: 50
+training_files: 40
+length: 64
+filters: 40
+stride: 64

@@ -6,10 +6,11 @@
 
 I am just interested in Acoustic Event Detection (AED) on "edge AI": ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
 
-## Project status (Nov 29, 2018)
+## Project status (Dec 12, 2018)
 
 - All the pre-processing features and the oscilloscope GUI have been implemented.
 - Several CNN models on Keras/TensorFlow have already been tested.
+- Inference engine based on Keras/TensorFlow has been implemented for Win10 and RasPi3.
 
 *** **I will come back to this project after CubeMX AI has been released (1Q/2018)** ***
 
@@ -34,10 +35,10 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
                                        (features)
                                             |
                                             | *** learning ***
-                                            +---> [Oscilloscope GUI(Tk)] --- (data set) ---> Keras/TensorFlow
+                                            +---> [oscilloscope.py/Win10 or RasPi3] --- (data set) ---> Keras/TensorFlow
                                             |
                                             | *** inference ***
-                                            +---> [agent.py/RasPi3] ---> Cloud
+                                            +---> [oscilloscope.py/Win10 or RasPi3] ---> Cloud
                                             :
                                             : *** inference (Note: *1) ***
                                             +- -> [CubeMX.AI/STM32] ---> [Communication module] ---> Cloud
@@ -63,7 +64,7 @@ I apply the system to potential edge AI use cases:
 - automatic questionnaire collection in a restaurant
 - bird recognition
 
-### CNN experiments 
+### CNN experiments (learning and inference)
 
 ![](./oscilloscope/screenshots/ml_inference_classical_guitar.jpg)
 
