@@ -26,9 +26,12 @@ import dsp
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("port", help="serial port identifier")
-parser.add_argument("-d", "--debug",
+parser.add_argument("-b", "--debug",
                     help="serial port identifier",
                     action="store_true")
+parser.add_argument("-d", "--data_save_folder",
+                    help="Data folder for saving feature data from the device",
+                    default='./data')
 parser.add_argument("-m", "--model_file",
                     help="Trained CNN model in hdf5 (.h5) format")
 parser.add_argument("-c", "--class_file",
@@ -87,7 +90,9 @@ if __name__ == '__main__':
                                     windows=windows)
     elif args.windows:
         windows = eval(args.windows)
-        
+
+    data_save_folder = args.data_save_folder
+
     root = Tk.Tk()
     root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
 
@@ -112,9 +117,9 @@ if __name__ == '__main__':
         func, data, window = last_operation
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
         if class_label == '':
-            filename = './data/{}-{}'.format(func.__name__, dt)
+            filename = data_save_folder + '/{}-{}'.format(func.__name__, dt)
         else:
-            filename = './data/{}-{}-{}'.format(class_label, func.__name__, dt)
+            filename = data_save_folder + '/{}-{}-{}'.format(class_label, func.__name__, dt)
             if window:
                 data = data[window[0]:window[1], :window[2]]
             data = data.flatten()
