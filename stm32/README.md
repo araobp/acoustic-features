@@ -107,10 +107,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 ```
 ## Filter banks
 
-Mel-scale spectrogram is used for training CNN
-
-- Mel-scale: 40 filters (512 samples divided by (40 + 1))
-- Linear-scale: 255 filters (512 samples divide by (255 + 1))
+Mel-scale filterbank is applied to the spectrogram to extract feature for training CNN: 40 filters (512 samples divided by (40 + 1)).
 
 ## log10 processing time issue
 
