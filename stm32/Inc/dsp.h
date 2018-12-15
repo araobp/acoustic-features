@@ -13,8 +13,7 @@
 #define NN 512
 
 // Pre-emphasis coefficient
-#define ALPHA 0.70f
-//#define ALPHA 0.97f
+#define ALPHA 0.97f
 
 // The number of filters
 #define NUM_FILTERS 40     // Mel-spectrogram and MFCCs
