@@ -63,6 +63,11 @@ typedef enum {
   DISABLED, FILTERBANK, ELAPSED_TIME
 } debug;
 
+// Angle
+typedef enum {
+  LEFT2, LEFT, CENTER, RIGHT, RIGHT2
+} angle_setting;
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
