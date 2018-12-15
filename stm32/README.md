@@ -84,7 +84,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 << Oscilloscope GUI >>
 ```
 
-- My conclusion is that 80_000_000(Hz)/64(clock divider)/64(FOSR) with pre-emphasis(HPF) is the best setting for obtaining the best images of mel-spectrogram.
+- My conclusion is that 80_000_000(Hz)/32(clock divider)/128(FOSR) with pre-emphasis(HPF) is the best setting for obtaining the best images of mel-spectrogram.
 - I use a triangler filter bank to obtain mel-spectrogram, and I make each triangle filter having a same amount of area.
 
 ## Frame/stride/overlap
