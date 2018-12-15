@@ -144,14 +144,30 @@ left                            right
 
 f_s = 80_000_000 / 32 / 128 = 19.5kHz
 s = 343 / f_s = 0.0176m = 17.6mm (length of one-sample shift)
-d = 40mm (distance between Mic1 and Mic2)
+d = 20mm (distance between Mic1 and Mic2)
 ```
 
 I have made a simulation on Jupyter Notebook to study beam forming :
 
 - [Beam forming simulation](../ipynb/Beam%20forming.ipynb)
 
-The conclusion: d = 20mm is the best to support both Broadside and Endfire, and to avoid aliases under the Nyquist frequency (19.5kHz/2): peak amplitude at theta=28, theta=90 and theta=152 degrees.
+The conclusion: d = 20mm is the best to support both Broadside and Endfire, and to avoid aliases at higher frequencies: zero power at theta=28, theta=90 and theta=152 degrees.
+
+The best settings:
+- Apply Broadside mode to caputer sound from the center direction (theta = 90 degrees).
+- Apply Endfire mode to capture sound from the left direction or the right direction.
+
+![](../ipynb/broadside_n%3D0.jpg)
+![](../ipynb/endfire_n%3D1.jpg)
+![](../ipynb/endfire_n%3D-1.jpg)
+
+LPF requirement:
+- Endfire mode attenuate power at lower frequencies.
+- Apply LPF to flatten the frequency response.
+
+### Simulation result
+
+
 
 ### The test board with d = 20mm
 
