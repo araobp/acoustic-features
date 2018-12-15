@@ -159,10 +159,6 @@ The best settings:
 ![](../ipynb/endfire_n%3D1.jpg)
 ![](../ipynb/endfire_n%3D-1.jpg)
 
-LPF requirement:
-- Endfire mode attenuate power at lower frequencies.
-- Apply LPF to flatten the frequency response.
-
 ### The test board with d = 20mm
 
 ![](./beam_forming_20mm_board.jpg)
