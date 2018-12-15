@@ -35,10 +35,10 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features-->[
                                        (features)
                                             |
                                             | *** learning ***
-                                            +---> [oscilloscope.py/Win10 or RasPi3] - (data set) -> Keras/TensorFlow
+                                            +--(dataset)--> [oscilloscope.py/Win10 or RasPi3] Keras/TensorFlow
                                             |
                                             | *** inference ***
-                                            +---> [oscilloscope.py/Win10 or RasPi3]
+                                            +--(dataset)--> [oscilloscope.py/Win10 or RasPi3] Keras/TensorFlow
 ```
 
 *1 CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50X00009yG1AUSA0/when-is-stm32cubeai-available
