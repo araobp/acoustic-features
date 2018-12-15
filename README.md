@@ -52,14 +52,13 @@ Platform:
 - [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 
-## Use cases of AED on edge AI
+## Potential use cases
 
-I apply the system to potential edge AI use cases:
 - musical instrument recognition and music performance analysis
 - human activity recognition
 - always-on automatic speech recogniton (e.g., "OK Google")
 - automatic questionnaire collection in a restaurant
-- bird recognition
+- birds chirping recognition
 
 ### CNN experiments (learning and inference)
 
