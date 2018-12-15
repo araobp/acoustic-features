@@ -1,6 +1,6 @@
 # Edge device for deep learning (STM32L4)
 
-This edge device is a sort of human ear: log scale, spectrogram and MEL scale. Connecting this device to Keras/TensorFlow mimics the human auditory system and the auditory perception.
+This edge device is a sort of human ear: log scale auditory perception and Fourier transform with Mel scaling as feature for training a brain. Connecting this device to Keras/TensorFlow mimics the human auditory system.
 
 ## STM32L4 configuration
 
