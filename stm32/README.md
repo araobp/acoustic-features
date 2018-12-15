@@ -147,9 +147,9 @@ s = 343 / f_s = 0.0176m = 17.6mm (length of one-sample shift)
 d = 20mm (distance between Mic1 and Mic2)
 ```
 
-### Beam 
+### Simulation on Jupyter Notebook
 
-I have made [a simulation on Jupyter Notebook]((../ipynb/Beam%20forming.ipynb)) to study beam forming.
+I have made [a simulation]((../ipynb/Beam%20forming.ipynb)) to study beam forming.
 
 The conclusion: d = 20mm is the best to support both Broadside and Endfire, and to avoid aliases at higher frequencies: zero power at theta=28, theta=90 and theta=152 degrees.
 
