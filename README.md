@@ -18,16 +18,17 @@ I am just interested in Acoustic Event Detection (AED) on "edge AI": ["New Archi
 Architecture:
 
 ```
-                                          ARM Cortex-M4(STM32L476RG)
-                                      ....................................
-                                      :   Filters for feature extraction :
-Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
-                                      :    |                   |         :
-                                      :    +------------+      |         :
-                                      :     +-----------|------+         :
-                                      :     |           |                :
-                                      :     V           V                :
-                                      :..[USART]......[DAC]..............:
+                                          *** pre-processing ***             *** inference (*1) ***
+                                          ARM Cortex-M4(STM32L476RG)        Another core of ARM Cortex-M
+                                      .................................... .............................
+                                      :   Filters for feature extraction : :    Inference on CNN       :
+Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features-->[CubeMX.AI or CMSIS-NN] :
+                                      :    |                   |         : :                           :
+                                      :    +------------+      |         : :                           :
+                                      :     +-----------|------+         : :                           :
+                                      :     |           |                : :                           :
+                                      :     V           V                : :                           :
+                                      :..[USART]......[DAC]..............: :...........................:
                                             |           |
                                             |           | *** monitoring ***
                                             |           +---> [Analog filter] --> head phone
@@ -37,10 +38,7 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+         :
                                             +---> [oscilloscope.py/Win10 or RasPi3] --- (data set) ---> Keras/TensorFlow
                                             |
                                             | *** inference ***
-                                            +---> [oscilloscope.py/Win10 or RasPi3] ---> Cloud
-                                            :
-                                            : *** inference (Note: *1) ***
-                                            +- -> [CubeMX.AI/STM32] ---> [Communication module] ---> Cloud
+                                            +---> [oscilloscope.py/Win10 or RasPi3]
 ```
 
 *1 CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50X00009yG1AUSA0/when-is-stm32cubeai-available
