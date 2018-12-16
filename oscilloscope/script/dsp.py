@@ -1,12 +1,9 @@
 # << Digial signal processing for oscilloscope GUI >>
 #
-# (1) Interface to the edge device (STM32L4 w/ my original
-#     MEMS mic Arduino shield)
-# (2) Plot the data with matplotlib
+# Interface to the edge device (STM32L4 w/ my original MEMS mic Arduino shield)
 #
 # Follow the definition in the include files below:
 # https://github.com/araobp/acoustic-event-detection/tree/master/stm32/Inc
-#
 
 import serial
 import pandas as pd
