@@ -114,11 +114,11 @@ class GUI:
             ax.set_ylabel('MFCC')     
 
         elif cmd == dsp.FILTERBANK: 
-            data = data.reshape(NUM_FILTERS+2, FILTER_LENGTH)
-            for m in range(1, NUM_FILTERS+1):
-                num_axis = hz_freqs_n[m]+FILTER_LENGTH
+            data = data.reshape(dsp.NUM_FILTERS+2, dsp.FILTER_LENGTH)
+            for m in range(1, dsp.NUM_FILTERS+1):
+                num_axis = hz_freqs_n[m]+dsp.FILTER_LENGTH
                 mel = np.zeros(num_axis)
-                mel[hz_freqs_n[m]:hz_freqs_n[m]+FILTER_LENGTH] = data[m]
+                mel[hz_freqs_n[m]:hz_freqs_n[m]+dsp.FILTER_LENGTH] = data[m]
                 ax.plot(mel)
                 
             ax.set_title('Mel filter bank')
