@@ -21,6 +21,7 @@ import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 
 import dsp
+import gui
 
 # Command arguments
 import argparse
@@ -42,14 +43,15 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
 
-    gui = dsp.GUI(port = args.port)
+    itfc = dsp.Interface(port=args.port)
+    gui = gui.GUI(interface=itfc)
 
     # Beam forming mode
     mode = dsp.ENDFIRE
 
     ### Default settings to DSP ###
-    gui.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
-    gui.enable_pre_emphasis(True)  # Pre emphasis enabled
+    itfc.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
+    itfc.enable_pre_emphasis(True)  # Pre emphasis enabled
     ###############################
 
     PADX = 6
@@ -218,7 +220,7 @@ if __name__ == '__main__':
     def beam_forming(angle):
         global mode
         angle = int(angle) + 2
-        gui.set_beam_forming(mode, ANGLE[angle])
+        itfc.set_beam_forming(mode, ANGLE[angle])
 
     def repeat_toggle():
         global repeat_action
@@ -232,10 +234,10 @@ if __name__ == '__main__':
     def pre_emphasis_toggle():
         if button_pre_emphasis.cget('bg') == 'lightblue':
             button_pre_emphasis.configure(bg='red')
-            gui.enable_pre_emphasis(True)
+            itfc.enable_pre_emphasis(True)
         else:       
             button_pre_emphasis.configure(bg='lightblue')
-            gui.enable_pre_emphasis(False)
+            itfc.enable_pre_emphasis(False)
             
     def savefig():
         global filename
@@ -270,19 +272,19 @@ if __name__ == '__main__':
         global mode
         mode = dsp.BROADSIDE
         angle = range_beam_forming.get() + 2
-        gui.set_beam_forming(mode, ANGLE[angle])
+        itfc.set_beam_forming(mode, ANGLE[angle])
 
     def endfire():
         global mode
         mode = dsp.ENDFIRE
         angle = int(range_beam_forming.get()) + 2
-        gui.set_beam_forming(mode, ANGLE[angle])
+        itfc.set_beam_forming(mode, ANGLE[angle])
 
     def left_mic_only():
-        gui.left_mic_only()
+        itfc.left_mic_only()
 
     def right_mic_only():
-        gui.right_mic_only()
+        itfc.right_mic_only()
 
     ### Key press event ###
 

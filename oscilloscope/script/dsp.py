@@ -13,7 +13,6 @@ import pandas as pd
 import numpy as np
 import traceback
 import threading
-import utils
 
 ### Constants #####
 
@@ -60,45 +59,10 @@ SHAPE[SPECTROGRAM] = (200, int(NN/2))
 SHAPE[MEL_SPECTROGRAM] = (200, NUM_FILTERS)
 SHAPE[MFCC] = (200, NUM_FILTERS)
 
-# Time axis and frequency axis
-TIME = {}
-FREQ = {}
-TIME[RAW_WAVE] = np.linspace(0, NUM_SAMPLES[RAW_WAVE]/Fs*1000.0, NUM_SAMPLES[RAW_WAVE])
-FREQ[FFT] = np.linspace(0, Fs/2, NUM_SAMPLES[FFT])
-TIME[SPECTROGRAM] = np.linspace(0, NUM_SAMPLES[RAW_WAVE]/Fs*200.0/2, 200)
-FREQ[SPECTROGRAM] = np.linspace(0, Nyq, int(NN/2))
-TIME[MEL_SPECTROGRAM] = np.linspace(0, NUM_SAMPLES[RAW_WAVE]/Fs*200.0/2, 200)
-FREQ[MEL_SPECTROGRAM] = np.linspace(1, NUM_FILTERS+1, NUM_FILTERS)
-TIME[MFCC] = np.linspace(0, NUM_SAMPLES[RAW_WAVE]/Fs*200.0/2, 200)
-FREQ[MFCC] = np.linspace(1, NUM_FILTERS, NUM_FILTERS)
-
-# Empty array
-EMPTY = np.array([])
-
-# Convert frequency to Mel
-def hz2mel(hz):
-  return 2595.0 * np.log10(hz/700.0 + 1.0);
-
-# Convert Mel to frequency
-def mel2hz(mel):
-  return 700.0 * (10.0**(mel/2595.0) - 1.0);
-
-# Convert n to frequency
-def n2hz(n):
-  return float(n)/NN * nyq_fs
-
-hz_freqs = np.zeros(NUM_FILTERS+2)
-hz_freqs_n = np.zeros(NUM_FILTERS+2, dtype=int)
-mel_delta = hz2mel(Nyq)/(NUM_FILTERS+2)
-
-for m in range(0, NUM_FILTERS+2):
-    hz_freqs[m] = mel2hz(mel_delta * m)
-    hz_freqs_n[m] = (int)(hz_freqs[m] / Nyq * NN / 2)
-
 ###################
 
-# GUI class
-class GUI:
+# Interface class
+class Interface:
     
     def __init__(self, port):
         # Serial interface
@@ -107,7 +71,7 @@ class GUI:
 
     # As an application processor, send a command
     # then receive and process the output.
-    def _serial_read(self, cmd, ssub=None):
+    def read(self, cmd, ssub=None):
 
         data = []
         with self.lock:
@@ -183,76 +147,3 @@ class GUI:
         ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
         ser.write(RIGHT_MIC_ONLY)
         ser.close()
-
-    # Use matplotlib to plot the output from the device
-    def plot_aed(self, ax, cmd, range_=None,
-                 cmap=None, ssub=None,
-                 window=None, data=EMPTY, shadow_sub=0):
-
-        if data is EMPTY:
-            data = self._serial_read(cmd, ssub)
-            
-        ax.clear()
-        
-        if cmd == RAW_WAVE:
-            ax.set_title('Time domain')
-            ax.plot(TIME[RAW_WAVE], data)
-            ax.set_xlabel('Time [msec]')
-            ax.set_ylabel('Amplitude')
-            ax.set_ylim([-range_, range_])
-
-        elif cmd == FFT:
-            ax.set_title('Frequency domain')
-            ax.plot(FREQ[FFT], data)
-            ax.set_xlabel('Frequency [Hz]')
-            ax.set_ylabel('PSD [dB]')
-            ax.set_ylim([-8, 127])
-
-        elif cmd == SPECTROGRAM:
-            ax.pcolormesh(TIME[SPECTROGRAM],
-                          FREQ[SPECTROGRAM][:range_],
-                          data.T[:range_],
-                          cmap=cmap)
-            ax.set_title('Spectrogram (PSD in dB)')
-            ax.set_xlabel('Time [sec]')
-            ax.set_ylabel('Frequency (Hz)')
-
-        elif cmd == MEL_SPECTROGRAM:
-            if window:
-                shadowed = utils.shadow(data, window, shadow_sub=10)
-            else:
-                shadowed = data
-            ax.pcolormesh(TIME[MEL_SPECTROGRAM],
-                          FREQ[MEL_SPECTROGRAM][:range_],
-                          shadowed.T[:range_],
-                          cmap=cmap)
-            ax.set_title('Mel-scale spectrogram (PSD in dB)')
-            ax.set_xlabel('Time [sec]')
-            ax.set_ylabel('Mel-scale filters')
-
-        elif cmd == MFCC:
-            if window:
-                shadowed = utils.shadow(data, window, shadow_sub=10)
-            else:
-                shadowed = data
-            ax.pcolormesh(TIME[MFCC],
-                          FREQ[MFCC][:range_],
-                          shadowed.T[:range_],
-                          cmap=cmap)
-            ax.set_title('MFCCs')
-            ax.set_xlabel('Time [sec]')
-            ax.set_ylabel('MFCC')     
-
-        elif cmd == FILTERBANK: 
-            data = data.reshape(NUM_FILTERS+2, FILTER_LENGTH)
-            for m in range(1, NUM_FILTERS+1):
-                num_axis = hz_freqs_n[m]+FILTER_LENGTH
-                mel = np.zeros(num_axis)
-                mel[hz_freqs_n[m]:hz_freqs_n[m]+FILTER_LENGTH] = data[m]
-                ax.plot(mel)
-                
-            ax.set_title('Mel filter bank')
-            ax.set_xlabel('n')
-            ax.set_ylabel('Magnitude')
-
-        return data
