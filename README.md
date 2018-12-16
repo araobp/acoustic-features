@@ -60,6 +60,34 @@ Platform:
 - automatic questionnaire collection in a restaurant
 - birds chirping recognition
 
+## Installing the device
+
+The device is fixed on the wall or on the tree in the horizontal direction:
+```
+            y ^    /
+              |   /
+              |  /
+              | / ) Theta
+             (z)---------->
+                          x
+         -----------
+         Wall or tree
+```
+
+In case of a living room:
+```
+
+   +-------------------------------------+
+   |TV set            y ^        Cubboard|
+   |       Table        |   Table Fridge |
+   |                   (z)---->   Kitchen|
+   |       Telephone [Device] x  Ventilation fan
+   +-+-----+---------------------+-----+-+
+      Door                        Door
+                              Washing machine
+
+```
+
 ### CNN experiments (learning and inference)
 
 ![](./oscilloscope/screenshots/ml_inference_classical_guitar.jpg)
