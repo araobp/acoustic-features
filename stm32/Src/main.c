@@ -98,7 +98,7 @@ mode filter_type = MFCC;  // Current filter bank
 uint8_t rxbuf[1];
 
 // Pre-emphasis toggle
-volatile bool enable_pre_emphasis = true;
+volatile bool pre_emphasis_enabled = true;
 
 // Beam forming setting
 volatile angle_setting angle = CENTER;  // center
@@ -207,9 +207,6 @@ void dsp(float32_t *s1, mode mode) {
   apply_ac_coupling(s1);  // remove DC
 
   if (mode >= FFT) {
-    if (enable_pre_emphasis) {
-      apply_pre_emphasis(s1);
-    }
     apply_hann(s1);
     apply_fft(s1);
     apply_psd_logscale(s1);
@@ -238,17 +235,27 @@ void dsp(float32_t *s1, mode mode) {
  * --- overlap dsp -------------
  *             :
  */
-void overlap_dsp(float32_t *buf, mode mode) {
+void overlap_dsp(float32_t *buf, mode mode, pre_emphasis_mode pre_emphasis) {
 
   float32_t signal[NN] = { 0.0f };
 
   arm_copy_f32(buf, signal, NN);
+  if (pre_emphasis == NORMAL) {
+    apply_pre_emphasis(signal);
+  } else if (pre_emphasis == WEAK) {
+    apply_weak_pre_emphasis(signal);
+  }
   dsp(signal, mode);  // (1/2)
   if (printing) {
     printing = uart_tx(signal, mode, false);  // false: UART output pending
   }
 
   arm_copy_f32(buf + NN_HALF, signal, NN);
+  if (pre_emphasis == NORMAL) {
+    apply_pre_emphasis(signal);
+  } else if (pre_emphasis == WEAK) {
+    apply_weak_pre_emphasis(signal);
+  }
   dsp(signal, mode);  // (2/2)
   if (printing) {
     printing = uart_tx(signal, mode, true);  // true: UART output
@@ -284,10 +291,10 @@ void dump(void) {
 /*
  * Apply beam forming
  */
-float32_t apply_beam_forming(float32_t *signal, int32_t *l, int32_t *r,
+pre_emphasis_mode apply_beam_forming(float32_t *signal, int32_t *l, int32_t *r,
     beam_forming mode, int direction) {
 
-  float32_t result;
+  pre_emphasis_mode pre_emphasis;
 
   switch (mode) {
   case BROADSIDE:
@@ -320,8 +327,16 @@ float32_t apply_beam_forming(float32_t *signal, int32_t *l, int32_t *r,
     break;
   }
 
-  arm_power_f32(signal, NN, &result);
-  return result;
+  if (pre_emphasis_enabled) {
+    if (mode == ENDFIRE && direction != 2) {
+      pre_emphasis = WEAK;
+    } else {
+      pre_emphasis = NORMAL;
+    }
+  } else {
+    pre_emphasis = NO_EMPHASIS;
+  }
+  return pre_emphasis;
 }
 
 /* USER CODE END 0 */
@@ -349,6 +364,9 @@ int main(void) {
 
   // n + NN
   int n_nn = 0;
+
+  // Pre-emphasis mode
+  pre_emphasis_mode pre_emphasis = NORMAL;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -420,11 +438,11 @@ int main(void) {
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
 
       // Beam forming
-      apply_beam_forming(signal_buf + NN_HALF, input_buf_l, input_buf_r,
+      pre_emphasis = apply_beam_forming(signal_buf + NN_HALF, input_buf_l, input_buf_r,
           beam_forming_mode, angle);
 
       // Overlap dsp
-      overlap_dsp(signal_buf, output_mode);
+      overlap_dsp(signal_buf, output_mode, pre_emphasis);
 
       // Output PCM data to DAC
       for (uint32_t n = 0; n < NN; n++) {
@@ -448,11 +466,11 @@ int main(void) {
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
 
       // Beam forming
-      apply_beam_forming(signal_buf + NN_HALF, input_buf_l + NN,
+      pre_emphasis = apply_beam_forming(signal_buf + NN_HALF, input_buf_l + NN,
           input_buf_r + NN, beam_forming_mode, angle);
 
       // Overlap dsp
-      overlap_dsp(signal_buf, output_mode);
+      overlap_dsp(signal_buf, output_mode, pre_emphasis);
 
       // Output PCM data to DAC
       for (uint32_t n = 0; n < NN; n++) {
@@ -588,10 +606,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
   // Pre-emphasis
   case 'P':
-    enable_pre_emphasis = true;
+    pre_emphasis_enabled = true;
     break;
   case 'p':
-    enable_pre_emphasis = false;
+    pre_emphasis_enabled = false;
     break;
 
     // Beam forming

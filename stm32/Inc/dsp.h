@@ -13,7 +13,8 @@
 #define NN 512
 
 // Pre-emphasis coefficient
-#define ALPHA 0.97f
+#define ALPHA 0.95f
+#define W_ALPHA 0.7f  // Weak pre-emphasis
 
 // The number of filters
 #define NUM_FILTERS 40     // Mel-spectrogram and MFCCs
@@ -40,6 +41,7 @@ void init_dsp(float32_t sampling_frequency);
 
 // DSP pipeline functions
 void apply_pre_emphasis(float32_t *signal);
+void apply_weak_pre_emphasis(float32_t *signal);
 void apply_ac_coupling(float32_t *signal);
 void apply_hann(float32_t *signal);
 void apply_fft(float32_t *signal);

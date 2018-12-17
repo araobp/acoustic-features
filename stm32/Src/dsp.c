@@ -17,6 +17,7 @@ float32_t nyq_fs = 0.0f;  // Nyquist frequency
 
 arm_rfft_fast_instance_f32 S;
 arm_fir_instance_f32 S_PRE;
+arm_fir_instance_f32 S_WPRE;
 arm_rfft_fast_instance_f32 S_DCT;
 
 float32_t filterbank[NUM_FILTERS+2][FILTER_LENGTH] = { { 0.0f } };
@@ -29,7 +30,9 @@ float32_t signal_buf[NN] = { 0.0f };
 
 // Pre-emphasis
 float32_t fir_coefficients[2] = {-ALPHA, 1.0f};
+float32_t fir_w_coefficients[2] = {-W_ALPHA, 1.0f};
 float32_t state_buf[NN+1] = { 0.0f };
+float32_t state_w_buf[NN+1] = { 0.0f };
 
 // Half sample shifter for DCT2
 float32_t half_sample_shifter[NUM_FILTERS*2] = { 0.0f };
@@ -135,6 +138,7 @@ void init_dsp(float32_t f_s) {
   arm_rfft_fast_init_f32(&S, NN);
   arm_rfft_fast_init_f32(&S_DCT, NUM_FILTERS*2);
   arm_fir_init_f32(&S_PRE, 2, fir_coefficients, state_buf, NN+1);
+  arm_fir_init_f32(&S_WPRE, 2, fir_w_coefficients, state_w_buf, NN+1);
   generate_filters();
   generate_half_sample_shifter();
 }
@@ -144,6 +148,10 @@ void init_dsp(float32_t f_s) {
 // Apply pre-emphasis
 void apply_pre_emphasis(float32_t *signal) {
   arm_fir_f32(&S_PRE, signal, signal, NN);
+}
+
+void apply_weak_pre_emphasis(float32_t *signal) {
+  arm_fir_f32(&S_WPRE, signal, signal, NN);
 }
 
 // AC coupling (to remove DC)

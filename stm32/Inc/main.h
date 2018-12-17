@@ -68,6 +68,11 @@ typedef enum {
   LEFT2, LEFT, CENTER, RIGHT, RIGHT2
 } angle_setting;
 
+// Pre-emphasis
+typedef enum {
+  NO_EMPHASIS, NORMAL, WEAK
+} pre_emphasis_mode;
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
