@@ -146,8 +146,8 @@ if __name__ == '__main__':
         if repeat_action:
             root.after(50, func)
 
-    def infer(data, pos=0):
-        probabilities = cnn_model.infer(data)
+    def infer(data, pos=0, remove_dc=False):
+        probabilities = cnn_model.infer(data, remove_dc)
         class_label, p = probabilities[pos][0]
         label_inference.configure(text='This is {} ({} %)'.format(class_label, int(p)))
         
@@ -225,7 +225,7 @@ if __name__ == '__main__':
             gui.plot(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
-            infer(data, pos)
+            infer(data, pos, remove_dc=True)
         last_operation = (mfcc, data, window)
         fig.tight_layout()
         canvas.draw()

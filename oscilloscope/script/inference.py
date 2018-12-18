@@ -24,7 +24,7 @@ class Model:
             self.activation_model = models.Model(inputs=_model.input, outputs=layer_outputs)
 
     # ML Inference
-    def infer(self, data):
+    def infer(self, data, remove_dc=False):
         probabilities = []
         data = data.astype(float)
         shape = data.shape
@@ -32,7 +32,10 @@ class Model:
         if self.activation_model:
             windowed_data = []
             for w in self.windows:
-                d = data[w[0]:w[1], :w[2], :]
+                if remove_dc:
+                    d = data[w[0]:w[1], 1:w[2], :]
+                else:
+                    d = data[w[0]:w[1], 0:w[2], :]                    
                 windowed_data.append(d)
             activations = self.activation_model.predict(np.array(windowed_data))
             result = (activations[-1]*100)  # The last layer
