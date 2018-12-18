@@ -1,7 +1,0 @@
-feature: mel_spectrogram
-files: 24
-training_files: 16
-length: 96
-filters: 40
-stride: 24
-cutout: true

@@ -23,14 +23,12 @@ class DataSet:
         self.test_files = self.files - self.training_files
         self.feature = attr['feature']
         self.stride = attr['stride']
-        if 'cutoff' in attr:
-            self.cutoff = attr['cutoff']
-        else:
+        self.cutoff = attr['cutoff']
+        self.window_pos = attr['window_pos']
+        if not self.cutoff:
             self.cutoff = self.filters
-        if 'cutout' in attr:
-            self.cutout = attr['cutout']
-        else:
-            self.cutout = False
+        if self.window_pos is None:
+            self.window_pos = -1
 
         self.class_labels = None
         self.train_data = None
@@ -41,17 +39,15 @@ class DataSet:
     def generate_windows(self):
         windows = []
         a, b, i = 0, 0, 0
-        if self.cutout:
-            windows.append([0, self.filters*self.length])
-        else:
-            while True:
-                a, b = self.filters*self.stride*i, self.filters*(self.stride*i+self.length)
-                if b > (200 * self.filters):
-                    break
-                windows.append([a, b])
-                i += 1
-        cutouts = len(windows)
-        return (windows, cutouts)
+        while True:
+            a, b = self.filters*self.stride*i, self.filters*(self.stride*i+self.length)
+            if b > (200 * self.filters):
+                break
+            windows.append([a, b])
+            i += 1
+        if self.window_pos >= 0:
+            windows = [windows[self.window_pos]]
+        return windows
         
     def generate(self):
 
@@ -75,7 +71,7 @@ class DataSet:
         training_set = []
         test_set = []
         
-        windows, cutouts = self.generate_windows()
+        windows = self.generate_windows()
 
         for k, v in data_set.items():
             files = v[0]
@@ -117,11 +113,17 @@ class DataSet:
             test_data.append(img)
             test_labels.append(label)
             
-        train_data = np.array(train_data, dtype='float32').reshape((self.training_files*len(class_labels)*cutouts, self.length, self.filters, 1))
-        train_data = train_data[:,:,:self.cutoff,:]
+        train_data = np.array(train_data, dtype='float32').reshape((self.training_files*len(class_labels)*len(windows), self.length, self.filters, 1))
+        if self.feature == 'mfcc':
+            train_data = train_data[:,:,1:self.cutoff,:]  # Remove DC
+        else:
+            train_data = train_data[:,:,0:self.cutoff,:]            
         train_labels = np.array(train_labels, dtype='uint8')
-        test_data = np.array(test_data, dtype='float32').reshape((self.test_files*len(class_labels)*cutouts, self.length, self.filters, 1))
-        test_data = test_data[:,:,:self.cutoff,:]
+        test_data = np.array(test_data, dtype='float32').reshape((self.test_files*len(class_labels)*len(windows), self.length, self.filters, 1))
+        if self.feature == 'mfcc':
+            test_data = test_data[:,:,1:self.cutoff,:]  # Remove DC
+        else:
+            test_data = test_data[:,:,0:self.cutoff,:]            
         test_lables = np.array(test_labels, dtype='uint8')
 
         train_labels=to_categorical(train_labels)
@@ -135,8 +137,11 @@ class DataSet:
         return (train_data, train_labels, test_data, test_labels)
 
     def get_shape(self):
-        return (self.length, self.cutoff)
-
+        if self.feature == 'mfcc':
+            return (self.length, self.cutoff-1)  # DC removed
+        else:
+            return (self.length, self.cutoff)
+        
     def get_class_labels(self):
         return self.class_labels
     

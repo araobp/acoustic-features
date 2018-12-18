@@ -55,7 +55,7 @@ class GUI:
         self.interface = interface
 
     # Use matplotlib to plot the output from the device
-    def plot_aed(self, ax, cmd, range_=None,
+    def plot(self, ax, cmd, range_=None,
                  cmap=None, ssub=None,
                  window=None, data=EMPTY, shadow_sub=0):
 
@@ -79,9 +79,13 @@ class GUI:
             ax.set_ylim([-8, 127])
 
         elif cmd == dsp.SPECTROGRAM:
+            if window:
+                shadowed = shadow(data, window, shadow_sub=10)
+            else:
+                shadowed = data          
             ax.pcolormesh(TIME[dsp.SPECTROGRAM],
                           FREQ[dsp.SPECTROGRAM][:range_],
-                          data.T[:range_],
+                          shadowed.T[:range_],
                           cmap=cmap)
             ax.set_title('Spectrogram (PSD in dB)')
             ax.set_xlabel('Time [sec]')
@@ -126,3 +130,13 @@ class GUI:
             ax.set_ylabel('Magnitude')
 
         return data
+
+    def plot_welch(self, ax, data, window):
+        data = data[window[0]:window[1], :window[2]]
+        num_samples = window[1] - window[0]
+        data = np.sum(data, axis=0)/num_samples
+        ax.set_title("Welch's method")
+        ax.stem(FREQ[dsp.FFT][:window[2]], data)
+        ax.set_xlabel('Frequency [Hz]')
+        ax.set_ylabel('PSD [dB]')
+        ax.set_ylim([-8, 127])

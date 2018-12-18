@@ -22,23 +22,26 @@ plt.style.use('dark_background')
 
 import dsp
 import gui
+import yaml
 
 # Command arguments
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("port", help="serial port identifier")
-parser.add_argument("-b", "--debug",
+parser.add_argument("-g", "--debug",
                     help="serial port identifier",
                     action="store_true")
-parser.add_argument("-d", "--data_save_folder",
+parser.add_argument("-d", "--dataset_folder",
                     help="Data folder for saving feature data from the device",
-                    default='./data')
+                    default='.')
 parser.add_argument("-m", "--model_file",
                     help="Trained CNN model in hdf5 (.h5) format")
 parser.add_argument("-c", "--class_file",
                     help="Class labels of the trained CNN model in YAML format")
 parser.add_argument("-w", "--windows",
                     help="Moving window applied to the input data for ML inference")
+parser.add_argument("-b", "--browser",
+                    help="Data browser", action="store_true")
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -93,23 +96,30 @@ if __name__ == '__main__':
     elif args.windows:
         windows = eval(args.windows)
 
-    data_save_folder = args.data_save_folder
+    dataset_folder = args.dataset_folder
 
     root = Tk.Tk()
     root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
 
-    fig = Figure(figsize=(11, 4), dpi=100)
-    ax = fig.add_subplot(111)
+    if args.browser:
+        fig, ax = plt.subplots(1, 1, figsize=(8, 4))
+        with open(args.dataset_folder + '/dataset.yaml') as f:
+            dataset = yaml.load(f)
+    else:
+        fig, ax = plt.subplots(1, 1, figsize=(11, 4))        
     fig.subplots_adjust(bottom=0.15)
-
+    
     frame = Tk.Frame(master=root)
     frame_row0 = Tk.Frame(master=frame)
+    frame_row0a = Tk.Frame(master=frame_row0)
+    frame_row0b = Tk.Frame(master=frame_row0, padx=PADX)
     frame_row1 = Tk.Frame(master=frame)
     frame_row2 = Tk.Frame(master=frame)
     frame_row3 = Tk.Frame(master=frame)
     frame_row4 = Tk.Frame(master=frame)
+    
 
-    canvas = FigureCanvasTkAgg(fig, master=frame_row0)
+    canvas = FigureCanvasTkAgg(fig, master=frame_row0a)
     canvas.draw()
 
     # Save training data for deep learning
@@ -119,11 +129,9 @@ if __name__ == '__main__':
         func, data, window = last_operation
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
         if class_label == '':
-            filename = data_save_folder + '/{}-{}'.format(func.__name__, dt)
+            filename = dataset_folder + '/data/{}-{}'.format(func.__name__, dt)
         else:
-            filename = data_save_folder + '/{}-{}-{}'.format(class_label, func.__name__, dt)
-            if window:
-                data = data[window[0]:window[1], :window[2]]
+            filename = dataset_folder + '/data/{}-{}-{}'.format(class_label, func.__name__, dt)
             data = data.flatten()
             with open(filename+'.csv', "w") as f:
                 f.write(','.join(data.astype(str)))
@@ -146,7 +154,7 @@ if __name__ == '__main__':
     def raw_wave(repeatable=True):
         global last_operation
         range_ = int(range_amplitude.get())
-        data = gui.plot_aed(ax, dsp.RAW_WAVE, range_=range_)
+        data = gui.plot(ax, dsp.RAW_WAVE, range_=range_)
         last_operation = (raw_wave, data, None)
         fig.tight_layout()
         canvas.draw()
@@ -156,20 +164,27 @@ if __name__ == '__main__':
     def fft(repeatable=True):
         global last_operation
         ssub = int(spectrum_subtraction.get())
-        data = gui.plot_aed(ax, dsp.FFT, ssub=ssub)
+        data = gui.plot(ax, dsp.FFT, ssub=ssub)
         last_operation = (fft, data, None)
         fig.tight_layout()
         canvas.draw()
         if repeatable:
             repeat(fft)
 
-    def spectrogram(repeatable=True):
-        global last_operation
+    def spectrogram(data=EMPTY, pos=0, repeatable=True):
+        global last_operation, windows
         ssub = int(spectrum_subtraction.get())    
         range_ = int(range_spectrogram.get())
         cmap_ = var_cmap.get()
-        data = gui.plot_aed(ax, dsp.SPECTROGRAM, range_, cmap_, ssub)
-        last_operation = (spectrogram, data, None)
+        if data is EMPTY:
+            window = windows[int(range_window.get())]
+            data = gui.plot(ax, dsp.SPECTROGRAM, range_, cmap_, ssub,
+                               window=window)
+        else:
+            window = windows[pos]
+            gui.plot(ax, dsp.SPECTROGRAM, range_, cmap_, ssub, data=data,
+                         window=window)
+        last_operation = (spectrogram, data, window)
         fig.tight_layout()
         canvas.draw()
         if repeatable:
@@ -182,11 +197,11 @@ if __name__ == '__main__':
         cmap_ = var_cmap.get()
         if data is EMPTY:
             window = windows[int(range_window.get())]
-            data = gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub,
+            data = gui.plot(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub,
                                window=window)
         else:
             window = windows[pos]
-            gui.plot_aed(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub, data=data,
+            gui.plot(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
             infer(data, pos)
@@ -203,11 +218,11 @@ if __name__ == '__main__':
         cmap_ = var_cmap.get()
         if data is EMPTY:
             window = windows[int(range_window.get())]
-            data = gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub,
+            data = gui.plot(ax, dsp.MFCC, range_, cmap_, ssub,
                                window=window)
         else:
             window = windows[pos]
-            gui.plot_aed(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
+            gui.plot(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
             infer(data, pos)
@@ -216,7 +231,17 @@ if __name__ == '__main__':
         canvas.draw()
         if repeatable:
             repeat(mfcc)
-            
+
+    def welch():
+        global last_operation
+        func, data, window = last_operation
+        if func == spectrogram:
+            gui.plot_welch(ax, data, window)
+        else:
+            print("Welch's method is for spectrogram only")
+        fig.tight_layout()
+        canvas.draw()
+
     def beam_forming(angle):
         global mode
         angle = int(angle) + 2
@@ -260,13 +285,13 @@ if __name__ == '__main__':
 
     def shadow(pos):
         last_operation[0](data=last_operation[1], pos=int(pos), repeatable=False)
-        
+
     def filterbank():
-        data = gui.plot_aed(ax, dsp.FILTERBANK)
+        data = gui.plot(ax, dsp.FILTERBANK)
         canvas.draw()
 
     def elapsed_time():
-        gui.plot_aed(ax, dsp.ELAPSED_TIME)
+        gui.plot(ax, dsp.ELAPSED_TIME)
 
     def broadside():
         global mode
@@ -310,8 +335,34 @@ if __name__ == '__main__':
                     func(repeatable=False)
         elif c == 'down':
             save()
-            
+
     canvas.mpl_connect('key_press_event', on_key_event)
+
+    ### File select event ###
+    def on_select(event):
+        widget = event.widget
+        index = int(widget. curselection()[0])
+        filename = widget.get(index)
+        func_name = filename.split('-')[1]
+
+        with open(args.dataset_folder + '/data/' + filename) as f:
+            data = np.array(f.read().split(','), dtype='float')
+        
+        filters = dataset['filters']
+        data = data.reshape(200, filters)
+        globals()[func_name](data=data)
+        
+    ### Row 0b ####
+    if args.browser:
+        list_files = Tk.Listbox(master=frame_row0b, width=30, height=20)
+        files = [f for f in os.listdir(args.dataset_folder+'/data')]
+        for f in files:
+            list_files.insert(Tk.END, f)
+        list_files.bind('<<ListboxSelect>>', on_select)
+    
+        scrollbar = Tk.Scrollbar(master=frame_row0b, orient="vertical")
+        scrollbar.config(command=list_files.yview)
+        list_files.config(yscrollcommand=scrollbar.set)
     
     ### Row 1 ####
     entry_class_label = Tk.Entry(master=frame_row1, width=14)
@@ -364,6 +415,8 @@ if __name__ == '__main__':
                                   from_=-1, to=1, showvalue=0, command=beam_forming)
     button_confirm = Tk.Button(master=frame_row2, text='Confirm', command=confirm,
                             bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+    button_welch = Tk.Button(master=frame_row2, text='Welch', command=welch,
+                            bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
 
     ### Row 3 ####
     button_filterbank = Tk.Button(master=frame_row3, text='Filterbank', command=filterbank,
@@ -392,6 +445,14 @@ if __name__ == '__main__':
     frame.pack(expand=True, fill=Tk.BOTH)
 
     ### Row 0: main canvas
+    if args.browser:
+        frame_row0a.grid(row=0, column=0)
+        frame_row0b.grid(row=0, column=1)
+        list_files.grid(row=0, column=0, padx=PADX_GRID)
+        list_files.pack(side="left", expand=True, fill=Tk.BOTH)
+        scrollbar.pack(side="right", expand=True, fill=Tk.BOTH)
+    else:
+        frame_row0a.pack(expand=True, fill=Tk.BOTH)
     frame_row0.pack(expand=True, fill=Tk.BOTH)
     canvas._tkcanvas.pack(expand=True, fill=Tk.BOTH)
 
@@ -442,10 +503,11 @@ if __name__ == '__main__':
     # Repeat, pre_emphasis, save fig and delete
     button_repeat.grid(row=0, column=4, padx=PADX_GRID)
     button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
-    button_confirm.grid(row=0, column=6, padx=PADX_GRID)
-    button_save.grid(row=0, column=7, padx=PADX_GRID)
-    button_remove.grid(row=0, column=8, padx=PADX_GRID)
-    button_savefig.grid(row=0, column=9, padx=PADX_GRID)
+    button_welch.grid(row=0, column=6, padx=PADX_GRID)
+    button_confirm.grid(row=0, column=7, padx=PADX_GRID)
+    button_save.grid(row=0, column=8, padx=PADX_GRID)
+    button_remove.grid(row=0, column=9, padx=PADX_GRID)
+    button_savefig.grid(row=0, column=10, padx=PADX_GRID)
         
     # Quit
     button_quit.grid(row=0, column=10, padx=PADX_GRID)

@@ -3,6 +3,6 @@ files: 30
 training_files: 20
 length: 96
 filters: 40
-cutoff: 12
-cutout: true
+cutoff: 36
 stride: 96
+window_pos: 0
