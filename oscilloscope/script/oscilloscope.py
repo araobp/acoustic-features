@@ -23,6 +23,7 @@ plt.style.use('dark_background')
 import dsp
 import gui
 import yaml
+import dataset
 
 # Command arguments
 import argparse
@@ -36,10 +37,6 @@ parser.add_argument("-d", "--dataset_folder",
                     default='.')
 parser.add_argument("-m", "--model_file",
                     help="Trained CNN model in hdf5 (.h5) format")
-parser.add_argument("-c", "--class_file",
-                    help="Class labels of the trained CNN model in YAML format")
-parser.add_argument("-w", "--windows",
-                    help="Moving window applied to the input data for ML inference")
 parser.add_argument("-b", "--browser",
                     help="Data browser", action="store_true")
 args = parser.parse_args()
@@ -82,21 +79,20 @@ if __name__ == '__main__':
     filename = None
     data = None
     cnn_model = None
-    windows = [(None, None, None)]
     last_operation = None
 
     EMPTY = np.array([])
 
-    if args.model_file and args.class_file and args.windows:
-        import inference
-        windows = eval(args.windows)
-        cnn_model = inference.Model(class_file=args.class_file,
-                                    model_file=args.model_file,
-                                    windows=windows)
-    elif args.windows:
-        windows = eval(args.windows)
+    dataset = dataset.DataSet(args.dataset_folder)
+    windows, window_pos = dataset.generate_windows()
+    print(windows)
+    class_file = args.dataset_folder + '/class_labels.yaml'
 
-    dataset_folder = args.dataset_folder
+    if dataset.model:
+        import inference
+        cnn_model = inference.Model(class_file=class_file,
+                                    model_file=args.dataset_folder + '/' + dataset.model,
+                                    windows=windows)
 
     root = Tk.Tk()
     root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
@@ -128,6 +124,10 @@ if __name__ == '__main__':
         class_label = entry_class_label.get()
         func, data, window = last_operation
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
+        if args.dataset_folder:
+            dataset_folder = args.dataset_folder
+        else:
+            dataset_folder = './data'
         if class_label == '':
             filename = dataset_folder + '/data/{}-{}'.format(func.__name__, dt)
         else:

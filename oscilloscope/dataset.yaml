@@ -1,0 +1,9 @@
+feature: mel_spectrogram
+files: 1
+training_files: 1
+length: 200
+filters: 256
+cutoff: null
+stride: 200
+window_pos: null
+model: null

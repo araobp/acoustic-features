@@ -6,3 +6,4 @@ filters: 40
 cutoff: 36
 stride: 96
 window_pos: 0
+model: cnn_for_aed_restaurant_20181218192021.h5

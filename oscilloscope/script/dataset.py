@@ -9,6 +9,15 @@ import time
 import glob
 from keras.utils import to_categorical
 
+'''
+   dataset_folder/ --+-- data/*.csv
+                     |
+                     +-- dataset.yaml
+                     |
+                     +-- class_labels.yaml
+                     |
+                     +-- *.h5
+'''
 class DataSet:
 
     def __init__(self, dataset_folder):
@@ -25,6 +34,8 @@ class DataSet:
         self.stride = attr['stride']
         self.cutoff = attr['cutoff']
         self.window_pos = attr['window_pos']
+        self.model = attr['model']
+        
         if not self.cutoff:
             self.cutoff = self.filters
         if self.window_pos is None:
@@ -37,19 +48,23 @@ class DataSet:
         self.test_labels = None
 
     def generate_windows(self):
+        '''
+        Generate windows
+        '''
         windows = []
         a, b, i = 0, 0, 0
         while True:
-            a, b = self.filters*self.stride*i, self.filters*(self.stride*i+self.length)
-            if b > (200 * self.filters):
+            a, b = self.stride*i, self.stride*i+self.length
+            if b > 200:
                 break
-            windows.append([a, b])
+            windows.append([a, b, self.cutoff])
             i += 1
-        if self.window_pos >= 0:
-            windows = [windows[self.window_pos]]
-        return windows
+        return (windows, self.window_pos)
         
     def generate(self):
+        '''
+        Generate training data set and test data set for Keras/TensorFlow
+        '''
 
         data_files = glob.glob(self.dataset_folder+'/data/*{}*.csv'.format(self.feature))
         class_labels = []
@@ -71,7 +86,7 @@ class DataSet:
         training_set = []
         test_set = []
         
-        windows = self.generate_windows()
+        windows, window_pos = self.generate_windows()
 
         for k, v in data_set.items():
             files = v[0]
@@ -80,14 +95,14 @@ class DataSet:
                 with open(file) as f:
                     data = np.array(f.read().split(',')).astype(float)
                     for w in windows:
-                        img = pp.scale(data[w[0]:w[1]])
+                        img = pp.scale(data[w[0]*self.filters:w[1]*self.filters])
                         training_set.append((img, class_number))
             files = v[1]
             for file in files:
                 with open(file) as f:
                     data = np.array(f.read().split(',')).astype(float)
                     for w in windows:
-                        img = pp.scale(data[w[0]:w[1]])
+                        img = pp.scale(data[w[0]*self.filters:w[1]*self.filters])
                         test_set.append((img, class_number))
 
         random.shuffle(training_set)
