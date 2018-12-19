@@ -84,8 +84,7 @@ if __name__ == '__main__':
     EMPTY = np.array([])
 
     dataset = dataset.DataSet(args.dataset_folder)
-    windows, window_pos = dataset.generate_windows()
-    print(windows)
+    windows = dataset.generate_windows()
     class_file = args.dataset_folder + '/class_labels.yaml'
 
     if dataset.model:
