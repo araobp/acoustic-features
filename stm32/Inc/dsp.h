@@ -24,7 +24,7 @@
 
 // Note: MFCC_STREAMING is tentative.
 typedef enum {
-  NONE, RAW_WAVE, FFT, SPECTROGRAM, MEL_SPECTROGRAM, MFCC
+  NONE, RAW_WAVE, FFT, SPECTROGRAM, MEL_SPECTROGRAM, MFCC, SHUTTER
 } mode;
 
 // The number of values in the mean value history

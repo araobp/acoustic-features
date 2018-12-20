@@ -54,6 +54,7 @@
 #include "math.h"
 #include "stdio.h"
 #include "dsp.h"
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -108,6 +109,11 @@ volatile beam_forming beam_forming_mode = ENDFIRE;
 volatile debug debug_output = ELAPSED_TIME;
 uint32_t elapsed_time = 0;
 
+// Buffers
+int8_t mel_spectrogram_buffer[NUM_FILTERS * 200] = { 0.0f };
+int8_t mfcc_buffer[NUM_FILTERS * 200] = { 0.0f };
+int pos = 0;
+
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -128,11 +134,12 @@ void SystemClock_Config(void);
 bool uart_tx(float32_t *in, mode mode, bool dma_start) {
 
   bool printing;
+  int a, b, c;
   static int cnt = 0;
   static int length = 0;
   static int idx = 0;
 
-  static char uart_buf[NN * 2] = { 0.0f };
+  static char uart_buf[NUM_FILTERS * 200 * 2] = { 0 };
 
   if (cnt == 0) {
     idx = 0;
@@ -160,6 +167,9 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
       cnt = 200;
       break;
 
+    case SHUTTER:
+      break;
+
     default:
       length = 0;
       break;
@@ -170,9 +180,18 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   // Quantization: convert float into int
   if (mode == RAW_WAVE) {
     for (int n = 0; n < length; n++) {
-      uart_buf[idx++] = (uint8_t) (((int16_t) in[n]) >> 8);
-      uart_buf[idx++] = (uint8_t) (((int16_t) in[n] & 0x00ff));
+      uart_buf[idx++] = (uint8_t) (((int16_t) in[n]) >> 8);      // MSB
+      uart_buf[idx++] = (uint8_t) (((int16_t) in[n] & 0x00ff));  // LSB
     }
+  } else if (mode == SHUTTER) {
+    a = pos * NUM_FILTERS;
+    b = (200 - pos) * NUM_FILTERS;
+    c = 200 * NUM_FILTERS;
+    // Time series order
+    memcpy(uart_buf + b, mel_spectrogram_buffer, a);
+    memcpy(uart_buf, mel_spectrogram_buffer + a, b);
+    memcpy(uart_buf + b + c, mfcc_buffer, a);
+    memcpy(uart_buf + c, mfcc_buffer + a, b);
   } else {
     for (int n = 0; n < length; n++) {
       uart_buf[idx++] = (int8_t) in[n];
@@ -180,8 +199,14 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   }
 
   // memory-to-peripheral DMA to UART
-  if (--cnt == 0) {
+  if (mode == SHUTTER) {
+    HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, NUM_FILTERS * 200 * 2);
+    printing = false;
+  } else if (--cnt == 0) {
     HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
+    printing = false;
+  } else if (mode == SHUTTER) {
+    HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, NUM_FILTERS * cnt * 2);
     printing = false;
   } else if (dma_start) {
     HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
@@ -204,8 +229,6 @@ void dsp(float32_t *s1, mode mode) {
 
   start = HAL_GetTick();
 
-  apply_ac_coupling(s1);  // remove DC
-
   if (mode >= FFT) {
     apply_hann(s1);
     apply_fft(s1);
@@ -213,10 +236,18 @@ void dsp(float32_t *s1, mode mode) {
   }
   if (mode >= MEL_SPECTROGRAM) {
     apply_filterbank(s1);
+    for (int i = 0; i < NUM_FILTERS; i++) {
+      mel_spectrogram_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
+    }
   }
   if (mode >= MFCC) {
     apply_dct2(s1);
+    for (int i = 0; i < NUM_FILTERS; i++) {
+      mfcc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
+    }
   }
+  if (++pos >= 200)
+    pos = 0;
 
   end = HAL_GetTick();
   elapsed_time = end - start;
@@ -240,6 +271,7 @@ void overlap_dsp(float32_t *buf, mode mode, pre_emphasis_mode pre_emphasis) {
   float32_t signal[NN] = { 0.0f };
 
   arm_copy_f32(buf, signal, NN);
+  apply_ac_coupling(signal);  // remove DC
   if (pre_emphasis == NORMAL) {
     apply_pre_emphasis(signal);
   } else if (pre_emphasis == WEAK) {
@@ -251,6 +283,7 @@ void overlap_dsp(float32_t *buf, mode mode, pre_emphasis_mode pre_emphasis) {
   }
 
   arm_copy_f32(buf + NN_HALF, signal, NN);
+  apply_ac_coupling(signal);  // remove DC
   if (pre_emphasis == NORMAL) {
     apply_pre_emphasis(signal);
   } else if (pre_emphasis == WEAK) {
@@ -311,7 +344,8 @@ pre_emphasis_mode apply_beam_forming(float32_t *signal, int32_t *l, int32_t *r,
       }
     } else {  // Synchronous addition of data from two microphones
       for (uint32_t n = 0; n < NN; n++) {
-        signal[n] = (float32_t) (l[n + 2] >> 9) + (float32_t) (r[n + 2] >> 9);
+        signal[n] = (float32_t) (l[n + 2] >> 9)
+            + (float32_t) (r[n + 2] >> 9);
       }
     }
     break;
@@ -414,11 +448,11 @@ int main(void) {
   // Enable DMA from DFSDM to buf (peripheral to memory)
   // Note: filter1 for left channel is started after filter 0 for right channel
   if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_r + 5,
-      NN * 2) != HAL_OK) {
+  NN * 2) != HAL_OK) {
     Error_Handler();
   }
   if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_l + 5,
-      NN * 2) != HAL_OK) {
+  NN * 2) != HAL_OK) {
     Error_Handler();
   }
 
@@ -438,13 +472,15 @@ int main(void) {
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
 
       // Beam forming
-      pre_emphasis = apply_beam_forming(signal_buf + NN_HALF, input_buf_l, input_buf_r,
-          beam_forming_mode, angle);
+      pre_emphasis = apply_beam_forming(signal_buf + NN_HALF, input_buf_l,
+          input_buf_r, beam_forming_mode, angle);
 
       // Overlap dsp
       overlap_dsp(signal_buf, output_mode, pre_emphasis);
 
       // Output PCM data to DAC
+      // Note: the signal affter dsp for ML should be something like artificial.
+      // Move the following code before dsp, if you want to monitor sound before dsp.
       for (uint32_t n = 0; n < NN; n++) {
         dac_out_buf_a[n] = (uint16_t) (((int32_t) signal_buf[n] >> 4) + 2048); // 12bit quantization
         dac_out_buf_b[n] = dac_out_buf_a[n];
@@ -646,7 +682,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   case 't':
     debug_output = ELAPSED_TIME;
     break;
-
     // The others
   default:
     output_mode = (mode) (cmd - 0x30);
