@@ -11,10 +11,10 @@ TIME[dsp.RAW_WAVE] = np.linspace(0, dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*1000.0,
 FREQ[dsp.FFT] = np.linspace(0, dsp.Fs/2, dsp.NUM_SAMPLES[dsp.FFT])
 TIME[dsp.SPECTROGRAM] = np.linspace(0, dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 200)
 FREQ[dsp.SPECTROGRAM] = np.linspace(0, dsp.Nyq, int(dsp.NN/2))
-TIME[dsp.MEL_SPECTROGRAM] = np.linspace(0, dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 200)
+TIME[dsp.MEL_SPECTROGRAM] = np.linspace(-dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 0, 200)
 FREQ[dsp.MEL_SPECTROGRAM] = np.linspace(1, dsp.NUM_FILTERS+1, dsp.NUM_FILTERS)
-TIME[dsp.MFCC] = np.linspace(0, dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 200)
-FREQ[dsp.MFCC] = np.linspace(1, dsp.NUM_FILTERS, dsp.NUM_FILTERS)
+TIME[dsp.MFCC] = np.linspace(-dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 0, 200)
+FREQ[dsp.MFCC] = np.linspace(0, dsp.NUM_FILTERS, dsp.NUM_FILTERS)
 
 # Convert frequency to Mel
 def hz2mel(hz):
@@ -57,9 +57,17 @@ class GUI:
     # Use matplotlib to plot the output from the device
     def plot(self, ax, cmd, range_=None,
                  cmap=None, ssub=None,
-                 window=None, data=EMPTY, shadow_sub=0):
+                 window=None, data=EMPTY,
+                 shadow_sub=0, remove_dc=False):
 
-        if data is EMPTY:
+        if (data is EMPTY) and (cmd == dsp.MEL_SPECTROGRAM or cmd == dsp.MFCC):
+            data = self.interface.read(dsp.SHUTTER, ssub)
+
+            if cmd == dsp.MEL_SPECTROGRAM:
+                data = data[:200,:]
+            elif cmd == dsp.MFCC:
+                data = data[200:,:]
+        elif data is EMPTY:
             data = self.interface.read(cmd, ssub)
             
         ax.clear()
@@ -109,7 +117,13 @@ class GUI:
                 shadowed = shadow(data, window, shadow_sub=10)
             else:
                 shadowed = data
-            ax.pcolormesh(TIME[dsp.MFCC],
+            if remove_dc:
+                ax.pcolormesh(TIME[dsp.MFCC],
+                          FREQ[dsp.MFCC][1:range_],
+                          shadowed.T[1:range_],
+                          cmap=cmap)                
+            else:
+                ax.pcolormesh(TIME[dsp.MFCC],
                           FREQ[dsp.MFCC][:range_],
                           shadowed.T[:range_],
                           cmap=cmap)

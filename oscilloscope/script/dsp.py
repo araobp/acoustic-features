@@ -27,6 +27,7 @@ FFT = b'2'
 SPECTROGRAM = b'3'
 MEL_SPECTROGRAM = b'4'
 MFCC = b'5'
+SHUTTER = b'6'
 
 # main.h
 FILTERBANK = b'f'
@@ -45,8 +46,9 @@ NUM_SAMPLES = {}            # The number of samples to receive from the device
 NUM_SAMPLES[RAW_WAVE] = 512
 NUM_SAMPLES[FFT] = 256
 NUM_SAMPLES[SPECTROGRAM] = int(NN/2) * 200
-NUM_SAMPLES[MEL_SPECTROGRAM] = 40 * 200
-NUM_SAMPLES[MFCC] = 40 * 200
+NUM_SAMPLES[MEL_SPECTROGRAM] = NUM_FILTERS * 200
+NUM_SAMPLES[MFCC] = NUM_FILTERS * 200
+NUM_SAMPLES[SHUTTER] = NUM_FILTERS * 200 * 2
 
 # Shapes
 SHAPE = {}
@@ -55,6 +57,7 @@ SHAPE[FFT] = None
 SHAPE[SPECTROGRAM] = (200, int(NN/2))
 SHAPE[MEL_SPECTROGRAM] = (200, NUM_FILTERS)
 SHAPE[MFCC] = (200, NUM_FILTERS)
+SHAPE[SHUTTER] = (400, NUM_FILTERS)
 
 ###################
 
@@ -76,6 +79,7 @@ class Interface:
             try:
                 ser = serial.Serial(self.port, BAUD_RATE, timeout=3, inter_byte_timeout=3)
                 ser.write(cmd)
+
                 if cmd == RAW_WAVE:  # 16bit quantization
                     rx = ser.read(NUM_SAMPLES[cmd]*2)
                     rx = zip(rx[0::2], rx[1::2])

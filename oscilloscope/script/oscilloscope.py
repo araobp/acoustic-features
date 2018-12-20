@@ -84,10 +84,10 @@ if __name__ == '__main__':
     EMPTY = np.array([])
 
     dataset = dataset.DataSet(args.dataset_folder)
-    windows = dataset.generate_windows()
+    windows, window_pos = dataset.generate_windows()
     class_file = args.dataset_folder + '/class_labels.yaml'
 
-    if dataset.model:
+    if dataset.model and not args.browser:
         import inference
         cnn_model = inference.Model(class_file=class_file,
                                     model_file=args.dataset_folder + '/' + dataset.model,
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
 
     if args.browser:
-        fig, ax = plt.subplots(1, 1, figsize=(8, 4))
+        fig, ax = plt.subplots(1, 1, figsize=(10, 4))
         with open(args.dataset_folder + '/dataset.yaml') as f:
             dataset = yaml.load(f)
     else:
@@ -218,11 +218,11 @@ if __name__ == '__main__':
         if data is EMPTY:
             window = windows[int(range_window.get())]
             data = gui.plot(ax, dsp.MFCC, range_, cmap_, ssub,
-                               window=window)
+                               window=window, remove_dc=True)
         else:
             window = windows[pos]
             gui.plot(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
-                         window=window)
+                         window=window, remove_dc=True)
         if cnn_model:
             infer(data, pos, remove_dc=True)
         last_operation = (mfcc, data, window)
@@ -335,7 +335,8 @@ if __name__ == '__main__':
         elif c == 'down':
             save()
 
-    canvas.mpl_connect('key_press_event', on_key_event)
+    if not args.browser:
+        canvas.mpl_connect('key_press_event', on_key_event)
 
     ### File select event ###
     def on_select(event):
@@ -349,7 +350,7 @@ if __name__ == '__main__':
         
         filters = dataset['filters']
         data = data.reshape(200, filters)
-        globals()[func_name](data=data)
+        globals()[func_name](data=data, repeatable=False)
         
     ### Row 0b ####
     if args.browser:
@@ -377,7 +378,7 @@ if __name__ == '__main__':
     range_spectrogram = Tk.Spinbox(master=frame_row1, width=4,
                                    values=[int(dsp.NN/2), int(dsp.NN/2.0*.7), int(dsp.NN/2.0*0.4)])
     range_mfcc = Tk.Spinbox(master=frame_row1, width=3,
-                            values=[25, 18, 13])
+                            values=[13, 20])
     spectrum_subtraction = Tk.Spinbox(master=frame_row1, width=3,
                                       values=[0, 10, 15, 20, 25])
     label_class = Tk.Label(master=frame_row1, text='Class label:')

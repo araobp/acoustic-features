@@ -9,16 +9,16 @@ import time
 import glob
 from keras.utils import to_categorical
 
-'''
-   dataset_folder/ --+-- data/*.csv
-                     |
-                     +-- dataset.yaml
-                     |
-                     +-- class_labels.yaml
-                     |
-                     +-- *.h5
-'''
 class DataSet:
+    '''
+     - /dataset_folder --+-- /data/*.csv
+                         |
+                         +-- /dataset.yaml
+                         |
+                         +-- /class_labels.yaml
+                         |
+                         +-- /*.h5
+    '''
 
     def __init__(self, dataset_folder):
 
@@ -88,6 +88,9 @@ class DataSet:
         
         windows, window_pos = self.generate_windows()
 
+        if window_pos >= 0:
+            windows = [windows[window_pos]]
+            
         for k, v in data_set.items():
             files = v[0]
             class_number = v[2]

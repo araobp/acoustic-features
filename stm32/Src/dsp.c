@@ -137,8 +137,8 @@ void init_dsp(float32_t f_s) {
   nyq_fs = f_s/2.0;
   arm_rfft_fast_init_f32(&S, NN);
   arm_rfft_fast_init_f32(&S_DCT, NUM_FILTERS*2);
-  arm_fir_init_f32(&S_PRE, 2, fir_coefficients, state_buf, NN+1);
-  arm_fir_init_f32(&S_WPRE, 2, fir_w_coefficients, state_w_buf, NN+1);
+  arm_fir_init_f32(&S_PRE, 2, fir_coefficients, state_buf, NN);
+  arm_fir_init_f32(&S_WPRE, 2, fir_w_coefficients, state_w_buf, NN);
   generate_filters();
   generate_half_sample_shifter();
 }
@@ -176,6 +176,15 @@ void apply_fft(float32_t *signal) {
   arm_copy_f32(signal_buf, signal, NN);
 }
 
+// PSD in logscale
+void apply_psd_logscale(float32_t *signal) {
+  arm_cmplx_mag_f32(signal, signal_buf, NN / 2);
+  arm_scale_f32(signal, RECIPROCAL_NN, signal, NN / 2);
+  for (int n = 0; n < NN / 2; n++) {
+    signal[n] = 20.0 * log10_approx(signal_buf[n]);
+  }
+}
+
 // Apply mel filter bank
 void apply_filterbank(float32_t *signal) {
   float32_t sum = 0.0f;
@@ -190,15 +199,6 @@ void apply_filterbank(float32_t *signal) {
     signal_buf[m-1] = sum;
   }
   arm_copy_f32(signal_buf, signal, NUM_FILTERS);
-}
-
-// PSD in logscale
-void apply_psd_logscale(float32_t *signal) {
-  arm_cmplx_mag_f32(signal, signal_buf, NN / 2);
-  arm_scale_f32(signal, RECIPROCAL_NN, signal, NN / 2);
-  for (int n = 0; n < NN / 2; n++) {
-    signal[n] = 20.0 * log10_approx(signal_buf[n]);
-  }
 }
 
 // DCT Type-II

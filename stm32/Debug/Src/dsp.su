@@ -11,6 +11,6 @@ dsp.c:153:6:apply_weak_pre_emphasis	0	static
 dsp.c:158:6:apply_ac_coupling	24	static
 dsp.c:168:6:apply_hann	0	static
 dsp.c:173:6:apply_fft	16	static
-dsp.c:180:6:apply_filterbank	40	static
-dsp.c:196:6:apply_psd_logscale	24	static
+dsp.c:180:6:apply_psd_logscale	24	static
+dsp.c:189:6:apply_filterbank	40	static
 dsp.c:205:6:apply_dct2	656	static

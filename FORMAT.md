@@ -3,12 +3,20 @@
 ## Dataset folder structure
 
 ```
- - dataset_folder/ --+-- data/*.csv
+ - /dataset_folder --+-- /data/*.csv
                      |
-                     +-- dataset.yaml
+                     +-- /dataset.yaml
                      |
-                     +-- class_labels.yaml
+                     +-- /class_labels.yaml
+                     |
+                     +-- /*.h5
 ```
+
+Operation:
+- Initial setup phase: You have to edit dataset.yaml manually
+- Data acquisition phase: oscilloscope.py saves csv files in /data
+- Training phase: Jupyter notebook generates class_labels.yaml and \*.h5
+- Inference phase: add the h5 file in dataset.yaml as a model
 
 ## Dataset format
 
@@ -41,7 +49,7 @@ Cutoff | |                 |                                   |
          |                |                |                |  | |
        ^ |                |                |                |  | |
 Cutoff | |                |                |                |  | | Filters(40 o 256)
-(12)   V |                |                |                |  | V
+(13)   V |                |                |                |  | V
          +----------------+----------------+----------------+--+
          <---- length ---->
              (64 or 96)
@@ -67,9 +75,10 @@ files: 30
 training_files: 20
 length: 96
 filters: 40
-cutoff: 12
+cutoff: 13
 stride: 96
 window_pos: 0
+model: cnn_for_aed_restaurant_20181220081540.h5
 ```
 
 "window_pos" is a position of window on a record:
