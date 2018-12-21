@@ -213,11 +213,9 @@ Data is send in int8_t.
 |cmd| description    | output size             | purpose               | mode      |
 |---|----------------|-------------------------|-----------------------|-----------+
 |1  | RAW_WAVE       | N x 1                   | Input to oscilloscope | one frame |
-|2  | PSD            | N/2 x 1                 | Input to ML           | one frame |
-|3  | FILTERBANK     | N/6 x NUM_FILTERS       | (for testing)         | --        |
-|4  | FILTERED_MEL   | NUM_FILTERS x 200       | Input to ML           | streaming |
-|5  | MFCC           | NUM_FILTERS x 200       | Input to ML           | streaming |
-|6  | SHUTTER        | NUM_FILTERS x 400       | Input to ML           | buffered  |
+|2  | FFT            | N/2 x 1                 | Input to oscilloscope | one frame |
+|3  | SPECTROGRAM    | N/2 x 200               | Input to oscilloscope | streaming |
+|4  | FEATURE        | NUM_FILTERS x 400       | Input to ML           | buffered  |
 
 ### Pre-emphasis
 
