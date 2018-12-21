@@ -120,7 +120,7 @@ if __name__ == '__main__':
     def save():
         global current_class_label, cnt, filename
         class_label = entry_class_label.get()
-        func, data, window = last_operation
+        func, data, window, pos = last_operation
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
         if args.dataset_folder:
             dataset_folder = args.dataset_folder
@@ -130,18 +130,13 @@ if __name__ == '__main__':
         if class_label == '':
             filename = dataset_folder+'/data/{}-{}'.format(func.__name__, dt)
         else:
-            filename = dataset_folder+'/data/{}-{}-{}'.format(class_label, func.__name__, dt)
             if func == mel_spectrogram or func == mfcc:  # Save both data at a time
-                data_mel_spectrogram = data[:200,:].flatten()
-                data_mfcc = data[200:,:].flatten()
-                files = {dataset_folder+'/data/{}-mel_spectrogram-{}.csv'.format(class_label, dt): data_mel_spectrogram,
-                         dataset_folder+'/data/{}-mfcc-{}.csv'.format(class_label, dt): data_mfcc}
+                filename = dataset_folder+'/data/{}-{}-{}-{}'.format(class_label, func.__name__, pos, dt)
             else:
-                files = {filename+'.csv': data.flatten()}
-
-            for k ,v in files.items():
-                with open(k, "w") as f:
-                    f.write(','.join(v.astype(str)))
+                filename = dataset_folder+'/data/{}-{}-{}'.format(class_label, func.__name__, dt)
+            data = data.flatten()
+            with open(filename+'.csv', "w") as f:
+                f.write(','.join(data.astype(str)))
 
             if current_class_label != class_label:
                 current_class_label = class_label
@@ -163,7 +158,7 @@ if __name__ == '__main__':
         global last_operation
         range_ = int(range_amplitude.get())
         data = gui.plot(ax, dsp.RAW_WAVE, range_=range_)
-        last_operation = (raw_wave, data, None)
+        last_operation = (raw_wave, data, None, None)
         fig.tight_layout()
         canvas.draw()
         if repeatable:
@@ -173,7 +168,7 @@ if __name__ == '__main__':
         global last_operation
         ssub = int(spectrum_subtraction.get())
         data = gui.plot(ax, dsp.FFT, ssub=ssub)
-        last_operation = (fft, data, None)
+        last_operation = (fft, data, None, None)
         fig.tight_layout()
         canvas.draw()
         if repeatable:
@@ -192,7 +187,7 @@ if __name__ == '__main__':
             window = windows[pos]
             gui.plot(ax, dsp.SPECTROGRAM, range_, cmap_, ssub, data=data,
                          window=window)
-        last_operation = (spectrogram, data, window)
+        last_operation = (spectrogram, data, window, pos)
         fig.tight_layout()
         canvas.draw()
         if repeatable:
@@ -213,7 +208,7 @@ if __name__ == '__main__':
                          window=window)
         if cnn_model:
             infer(data, pos)
-        last_operation = (mel_spectrogram, data, window)
+        last_operation = (mel_spectrogram, data, window, pos)
         fig.tight_layout()
         canvas.draw()
         if repeatable:
@@ -234,7 +229,7 @@ if __name__ == '__main__':
                          window=window, remove_dc=True)
         if cnn_model:
             infer(data, pos, remove_dc=True)
-        last_operation = (mfcc, data, window)
+        last_operation = (mfcc, data, window, pos)
         fig.tight_layout()
         canvas.draw()
         if repeatable:
@@ -352,13 +347,27 @@ if __name__ == '__main__':
         widget = event.widget
         index = int(widget. curselection()[0])
         filename = widget.get(index)
-        func_name = filename.split('-')[1]
+        params = filename.split('-')
+        func = globals()[params[1]]
 
         with open(args.dataset_folder + '/data/' + filename) as f:
             data = np.array(f.read().split(','), dtype='float')
         
-        data = data.reshape(200, dataset.filters)
-        globals()[func_name](data=data, repeatable=False)
+        if func == mel_spectrogram or func == mfcc:
+            try:
+                data = data.reshape(400, dataset.filters)
+                pos = int(params[2])
+                func(data=data, pos=pos, repeatable=False)
+            except:  # Backward compatibility (to be removed in future)
+                data = data.reshape(200, dataset.filters)
+                if func == mfcc:
+                    empty = np.zeros((400, dataset.filters))
+                    empty[200:,:] = data
+                    data = empty     
+                func(data=data, repeatable=False)
+        else:
+            data = data.reshape(200, dataset.filters)
+            func(data=data, repeatable=False)
         
     ### Row 0b ####
     if args.browser:

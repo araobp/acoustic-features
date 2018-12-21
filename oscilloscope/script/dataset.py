@@ -46,6 +46,11 @@ class DataSet:
         self.train_labels = None
         self.test_data = None
         self.test_labels = None
+        
+        if self.feature == 'mfcc':
+            self.shape = (self.length, self.cutoff-1)  # DC removed
+        else:
+            self.shape = (self.length, self.cutoff)
 
     def generate_windows(self):
         '''
@@ -59,7 +64,7 @@ class DataSet:
                 break
             windows.append([a, b, self.cutoff])
             i += 1
-        return (windows, self.window_pos)
+        return (windows, self.window_pos)   # Backward compatibility: window_pos is to be removed in future
         
     def generate(self):
         '''
@@ -95,18 +100,38 @@ class DataSet:
             files = v[0]
             class_number = v[2]
             for file in files:
+                params = file.split('-')
+                if len(params) > 3:
+                    pos = file.split('-')[2]
+                else:  # Backward compatibility (to be removed in future)
+                    pos = None
                 with open(file) as f:
                     data = np.array(f.read().split(',')).astype(float)
-                    for w in windows:
+                    if pos:
+                        w = windows[pos]
                         img = pp.scale(data[w[0]*self.filters:w[1]*self.filters])
-                        training_set.append((img, class_number))
+                        training_set.append((img, class_number))                        
+                    else:
+                        for w in windows:
+                            img = pp.scale(data[w[0]*self.filters:w[1]*self.filters])
+                            training_set.append((img, class_number))
             files = v[1]
             for file in files:
+                params = file.split('-')
+                if len(params) > 3:
+                    pos = int(file.split('-')[2])
+                else:  # Backward compatibility (to be removed in future)
+                    pos = None
                 with open(file) as f:
                     data = np.array(f.read().split(',')).astype(float)
-                    for w in windows:
+                    if pos:
+                        w = windows[pos]
                         img = pp.scale(data[w[0]*self.filters:w[1]*self.filters])
-                        test_set.append((img, class_number))
+                        training_set.append((img, class_number))                        
+                    else:
+                        for w in windows:
+                            img = pp.scale(data[w[0]*self.filters:w[1]*self.filters])
+                            test_set.append((img, class_number))
 
         random.shuffle(training_set)
         random.shuffle(test_set)
@@ -130,7 +155,7 @@ class DataSet:
         for img, label in test_set:
             test_data.append(img)
             test_labels.append(label)
-            
+
         train_data = np.array(train_data, dtype='float32').reshape((self.training_files*len(class_labels)*len(windows), self.length, self.filters, 1))
         if self.feature == 'mfcc':
             train_data = train_data[:,:,1:self.cutoff,:]  # Remove DC
