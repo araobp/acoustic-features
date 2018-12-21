@@ -1,6 +1,6 @@
-Configuration	acoustic_event_detection
+Configuration	audio_feature_camera
 STM32CubeMX 	5.0.0
-Date	11/25/2018
+Date	12/21/2018
 MCU	STM32L476RGTx
 
 
@@ -63,8 +63,8 @@ Pin Nb	PINs	FUNCTIONs	LABELs
 SOFTWARE PROJECT
 
 Project Settings : 
-Project Name : acoustic_event_detection
-Project Folder : C:\Users\shiny\Documents\GitHub\acoustic-event-detection\stm32
+Project Name : audio_feature_camera
+Project Folder : C:\Users\shiny\Documents\GitHub\audio-feature-camera\stm32
 Toolchain / IDE : TrueSTUDIO
 Firmware Package Name and Version : STM32Cube FW_L4 V1.13.0
 

@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/shiny/Documents/GitHub/acoustic-event-detection/stm32/Inc
+HeaderPath=C:/Users/shiny/Documents/GitHub/audio-feature-camera/stm32/Inc
 HeaderFiles=gpio.h;dac.h;dfsdm.h;dma.h;tim.h;usart.h;stm32l4xx_it.h;stm32l4xx_hal_conf.h;main.h;
-SourcePath=C:/Users/shiny/Documents/GitHub/acoustic-event-detection/stm32/Src
+SourcePath=C:/Users/shiny/Documents/GitHub/audio-feature-camera/stm32/Src
 SourceFiles=gpio.c;dac.c;dfsdm.c;dma.c;tim.c;usart.c;stm32l4xx_it.c;stm32l4xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]
