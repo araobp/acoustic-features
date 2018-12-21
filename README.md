@@ -13,9 +13,7 @@
 - Inference engine based on Keras/TensorFlow has been implemented for Win10 and RasPi3.
 - Working on beam forming with LPF to flatten the frequency response in Endfire mode.
 
-## AED system
-
-Architecture:
+## Architecture
 
 ```
                                           *** pre-processing ***             *** inference (*1) ***
