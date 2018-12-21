@@ -62,11 +62,6 @@ class GUI:
 
         if (data is EMPTY) and (cmd == dsp.MEL_SPECTROGRAM or cmd == dsp.MFCC):
             data = self.interface.read(dsp.SHUTTER, ssub)
-
-            if cmd == dsp.MEL_SPECTROGRAM:
-                data = data[:200,:]
-            elif cmd == dsp.MFCC:
-                data = data[200:,:]
         elif data is EMPTY:
             data = self.interface.read(cmd, ssub)
             
@@ -100,10 +95,11 @@ class GUI:
             ax.set_ylabel('Frequency (Hz)')
 
         elif cmd == dsp.MEL_SPECTROGRAM:
+            data_ = data[:200,:]
             if window:
-                shadowed = shadow(data, window, shadow_sub=10)
+                shadowed = shadow(data_, window, shadow_sub=10)
             else:
-                shadowed = data
+                shadowed = data_
             ax.pcolormesh(TIME[dsp.MEL_SPECTROGRAM],
                           FREQ[dsp.MEL_SPECTROGRAM][:range_],
                           shadowed.T[:range_],
@@ -113,10 +109,11 @@ class GUI:
             ax.set_ylabel('Mel-scale filters')
 
         elif cmd == dsp.MFCC:
+            data_ = data[200:,:]
             if window:
-                shadowed = shadow(data, window, shadow_sub=10)
+                shadowed = shadow(data_, window, shadow_sub=10)
             else:
-                shadowed = data
+                shadowed = data_
             if remove_dc:
                 ax.pcolormesh(TIME[dsp.MFCC],
                           FREQ[dsp.MFCC][1:range_],

@@ -210,28 +210,30 @@ Data is send in int8_t.
 
 ### Output
 
-|cmd|description     | output size             | purpose               |
-|---|----------------|-------------------------|-----------------------|
-|0  | RAW_WAVE       | N x 1                   | Input to oscilloscope |
-|1  | PSD            | N/2 x 1                 | Input to ML           |
-|2  | FILTERBANK     | N/6 x NUM_FILTERS       | (for testing)         |
-|3  | FILTERED_MEL   | NUM_FILTERS x 200       | Input to ML           |
-|4  | MFCC           | NUM_FILTERS x 200       | Input to ML           |
-|5  | MFCC_STREAMING | NUM_FILTERS x 07fffffff | (for testing)         |
-|6  | FILTERED_LINEAR| NUM_FILTERS x 200       | Input to ML           |
+|cmd| description    | output size             | purpose               | mode      |
+|---|----------------|-------------------------|-----------------------|-----------+
+|1  | RAW_WAVE       | N x 1                   | Input to oscilloscope | one frame |
+|2  | PSD            | N/2 x 1                 | Input to ML           | one frame |
+|3  | FILTERBANK     | N/6 x NUM_FILTERS       | (for testing)         | --        |
+|4  | FILTERED_MEL   | NUM_FILTERS x 200       | Input to ML           | streaming |
+|5  | MFCC           | NUM_FILTERS x 200       | Input to ML           | streaming |
+|6  | SHUTTER        | NUM_FILTERS x 400       | Input to ML           | buffered  |
 
 ### Pre-emphasis
 
-|cmd|description     | output size             | purpose               |
+|cmd| description    | output size             | purpose               |
 |---|----------------|-------------------------|-----------------------|
 |P  | Enable pre-emphasis |                    |                       |
 |p  | Disable pre-emphasis |                   |                       |
 
 ### Beam forming
 
-Set the direction for max amplitude.
+|cmd| description    | output size             | purpose               |
+|---|----------------|-------------------------|-----------------------|
+|b  | Broadside      |                         |                       |
+|e  | Endfire        |                         |                       |
 
-|cmd|description     | output size             | purpose               |
+|cmd| description    | output size             | purpose               |
 |---|----------------|-------------------------|-----------------------|
 |L  | theta left2    |                         | (for d=40mm)          |
 |l  | theta left1    |                         | when d=20mm, theta=152 degrees|

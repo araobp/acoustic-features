@@ -159,7 +159,4 @@ class DataSet:
             return (self.length, self.cutoff-1)  # DC removed
         else:
             return (self.length, self.cutoff)
-        
-    def get_class_labels(self):
-        return self.class_labels
-    
+ 

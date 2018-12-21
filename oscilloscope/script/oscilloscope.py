@@ -18,7 +18,6 @@ import time
 import os
 
 import matplotlib.pyplot as plt
-plt.style.use('dark_background')
 
 import dsp
 import gui
@@ -35,17 +34,19 @@ parser.add_argument("-g", "--debug",
 parser.add_argument("-d", "--dataset_folder",
                     help="Data folder for saving feature data from the device",
                     default='.')
-parser.add_argument("-m", "--model_file",
-                    help="Trained CNN model in hdf5 (.h5) format")
 parser.add_argument("-b", "--browser",
                     help="Data browser", action="store_true")
+parser.add_argument("-s", "--plot_style",
+                    help="Plot style", default='dark_background')
 args = parser.parse_args()
 
 if __name__ == '__main__':
 
+    plt.style.use(args.plot_style)
+
     itfc = dsp.Interface(port=args.port)
     gui = gui.GUI(interface=itfc)
-
+        
     # Beam forming mode
     mode = dsp.ENDFIRE
 
@@ -75,7 +76,7 @@ if __name__ == '__main__':
     cnt = 0
     repeat_action = False
     
-    class_label_ = ''
+    current_class_label = ''
     filename = None
     data = None
     cnn_model = None
@@ -98,8 +99,6 @@ if __name__ == '__main__':
 
     if args.browser:
         fig, ax = plt.subplots(1, 1, figsize=(10, 4))
-        with open(args.dataset_folder + '/dataset.yaml') as f:
-            dataset = yaml.load(f)
     else:
         fig, ax = plt.subplots(1, 1, figsize=(11, 4))        
     fig.subplots_adjust(bottom=0.15)
@@ -119,7 +118,7 @@ if __name__ == '__main__':
 
     # Save training data for deep learning
     def save():
-        global class_label_, cnt, filename
+        global current_class_label, cnt, filename
         class_label = entry_class_label.get()
         func, data, window = last_operation
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
@@ -127,15 +126,25 @@ if __name__ == '__main__':
             dataset_folder = args.dataset_folder
         else:
             dataset_folder = './data'
+
         if class_label == '':
-            filename = dataset_folder + '/data/{}-{}'.format(func.__name__, dt)
+            filename = dataset_folder+'/data/{}-{}'.format(func.__name__, dt)
         else:
-            filename = dataset_folder + '/data/{}-{}-{}'.format(class_label, func.__name__, dt)
-            data = data.flatten()
-            with open(filename+'.csv', "w") as f:
-                f.write(','.join(data.astype(str)))
-            if class_label_ != class_label:
-                class_label_ = class_label
+            filename = dataset_folder+'/data/{}-{}-{}'.format(class_label, func.__name__, dt)
+            if func == mel_spectrogram or func == mfcc:  # Save both data at a time
+                data_mel_spectrogram = data[:200,:].flatten()
+                data_mfcc = data[200:,:].flatten()
+                files = {dataset_folder+'/data/{}-mel_spectrogram-{}.csv'.format(class_label, dt): data_mel_spectrogram,
+                         dataset_folder+'/data/{}-mfcc-{}.csv'.format(class_label, dt): data_mfcc}
+            else:
+                files = {filename+'.csv': data.flatten()}
+
+            for k ,v in files.items():
+                with open(k, "w") as f:
+                    f.write(','.join(v.astype(str)))
+
+            if current_class_label != class_label:
+                current_class_label = class_label
                 cnt = 0
             cnt += 1
             counter.configure(text='({})'.format(str(cnt)))
@@ -334,7 +343,7 @@ if __name__ == '__main__':
                     func(repeatable=False)
         elif c == 'down':
             save()
-
+            
     if not args.browser:
         canvas.mpl_connect('key_press_event', on_key_event)
 
@@ -348,8 +357,7 @@ if __name__ == '__main__':
         with open(args.dataset_folder + '/data/' + filename) as f:
             data = np.array(f.read().split(','), dtype='float')
         
-        filters = dataset['filters']
-        data = data.reshape(200, filters)
+        data = data.reshape(200, dataset.filters)
         globals()[func_name](data=data, repeatable=False)
         
     ### Row 0b ####
@@ -460,29 +468,33 @@ if __name__ == '__main__':
 
     frame_row1.pack(pady=PADY_GRID)
 
-    # Class label entry
-    label_class.grid(row=0, column=0, padx=PADX_GRID)
-    entry_class_label.grid(row=0, column=1, padx=PADX_GRID)
-    counter.grid(row=0, column=2, padx=PADX_GRID)
+    if not cnn_model:
 
-    # Waveform
-    range_amplitude.grid(row=0, column=3, padx=PADX_GRID)
-    button_waveform.grid(row=0, column=4, padx=PADX_GRID)
+        # Class label entry
+        label_class.grid(row=0, column=0, padx=PADX_GRID)
+        entry_class_label.grid(row=0, column=1, padx=PADX_GRID)
+        counter.grid(row=0, column=2, padx=PADX_GRID)
 
-    # FFT (PSD)
-    button_psd.grid(row=0, column=5, padx=PADX_GRID)
+        # Waveform
+        range_amplitude.grid(row=0, column=3, padx=PADX_GRID)
+        button_waveform.grid(row=0, column=4, padx=PADX_GRID)
 
-    # Linear-scale Spectrogram (PSD)
-    range_spectrogram.grid(row=0, column=6, padx=PADX_GRID)
-    button_spectrogram.grid(row=0, column=7, padx=PADX_GRID)
+        # FFT (PSD)
+        button_psd.grid(row=0, column=5, padx=PADX_GRID)
 
-    # Mel-scale Spectrogram (PSD)
-    range_mel_spectrogram.grid(row=0, column=8, padx=PADX_GRID)
-    button_mel_spectrogram.grid(row=0, column=9, padx=PADX_GRID)
+        # Linear-scale Spectrogram (PSD)
+        range_spectrogram.grid(row=0, column=6, padx=PADX_GRID)
+        button_spectrogram.grid(row=0, column=7, padx=PADX_GRID)
+
+    if not cnn_model or (cnn_model and dataset.feature == 'mel_spectrogram'):
+        # Mel-scale Spectrogram (PSD)
+        range_mel_spectrogram.grid(row=0, column=8, padx=PADX_GRID)
+        button_mel_spectrogram.grid(row=0, column=9, padx=PADX_GRID)
 
     # MFCC
-    range_mfcc.grid(row=0, column=10, padx=PADX_GRID)
-    button_mfcc.grid(row=0, column=11, padx=PADX_GRID)
+    if not cnn_model or (cnn_model and dataset.feature == 'mfcc'):
+        range_mfcc.grid(row=0, column=10, padx=PADX_GRID)
+        button_mfcc.grid(row=0, column=11, padx=PADX_GRID)
 
     # CMAP
     label_image.grid(row=0, column=12, padx=PADX_GRID)
@@ -503,10 +515,11 @@ if __name__ == '__main__':
     # Repeat, pre_emphasis, save fig and delete
     button_repeat.grid(row=0, column=4, padx=PADX_GRID)
     button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
-    button_welch.grid(row=0, column=6, padx=PADX_GRID)
-    button_confirm.grid(row=0, column=7, padx=PADX_GRID)
-    button_save.grid(row=0, column=8, padx=PADX_GRID)
-    button_remove.grid(row=0, column=9, padx=PADX_GRID)
+    if not cnn_model:
+        button_welch.grid(row=0, column=6, padx=PADX_GRID)
+        button_confirm.grid(row=0, column=7, padx=PADX_GRID)
+        button_save.grid(row=0, column=8, padx=PADX_GRID)
+        button_remove.grid(row=0, column=9, padx=PADX_GRID)
     button_savefig.grid(row=0, column=10, padx=PADX_GRID)
         
     # Quit

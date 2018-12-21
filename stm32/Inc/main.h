@@ -56,22 +56,17 @@ extern "C" {
 // Beam forming: Broadside mode and Endfire mode
 typedef enum {
   BROADSIDE, ENDFIRE, LEFT_MIC_ONLY, RIGHT_MIC_ONLY
-} beam_forming;
-
-// Debug info
-typedef enum {
-  DISABLED, FILTERBANK, ELAPSED_TIME
-} debug;
+} beam_forming_setting;
 
 // Angle
 typedef enum {
   LEFT2, LEFT, CENTER, RIGHT, RIGHT2
 } angle_setting;
 
-// Pre-emphasis
+// Debug info
 typedef enum {
-  NO_EMPHASIS, NORMAL, WEAK
-} pre_emphasis_mode;
+  DISABLED, FILTERBANK, ELAPSED_TIME
+} debug;
 
 /* USER CODE END Includes */
 
