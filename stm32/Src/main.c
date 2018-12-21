@@ -92,8 +92,8 @@ volatile bool new_pcm_data_r_b = false;
 volatile bool printing = false;
 
 // UART output mode
-volatile mode output_mode = MFCC;
-mode filter_type = MFCC;  // Current filter bank
+volatile mode output_mode = SHUTTER;
+mode filter_type = SHUTTER;  // Current filter bank
 
 // UART one-byte input buffer
 uint8_t rxbuf[1];
@@ -158,12 +158,6 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
 
     case SPECTROGRAM:
       length = NN / 2;
-      cnt = 200;
-      break;
-
-    case MEL_SPECTROGRAM:
-    case MFCC:
-      length = NUM_FILTERS;
       cnt = 200;
       break;
 
@@ -233,13 +227,11 @@ void dsp(float32_t *s1, mode mode) {
     apply_fft(s1);
     apply_psd_logscale(s1);
   }
-  if (mode >= MEL_SPECTROGRAM) {
+  if (mode >= SHUTTER) {
     apply_filterbank(s1);
     for (int i = 0; i < NUM_FILTERS; i++) {
       mel_spectrogram_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
     }
-  }
-  if (mode >= MFCC) {
     apply_dct2(s1);
     for (int i = 0; i < NUM_FILTERS; i++) {
       mfcc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];

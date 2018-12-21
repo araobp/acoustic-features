@@ -21,33 +21,29 @@ NN = 512                    # The number of samples per frame
 
 FILTER_LENGTH = 32          # Filter length of each filter in the filter bank
 
-# main.c
+# Command
 RAW_WAVE = b'1'
 FFT = b'2'
 SPECTROGRAM = b'3'
-MEL_SPECTROGRAM = b'4'
-MFCC = b'5'
-SHUTTER = b'6'
-
-# main.h
+SHUTTER = b'4'
 FILTERBANK = b'f'
 ELAPSED_TIME = b't'
-
 ENABLE_PRE_EMPHASIS = b'P'
 DISABLE_PRE_EMPHASIS = b'p'
-
 LEFT_MIC_ONLY = b'['
 RIGHT_MIC_ONLY = b']'
 BROADSIDE = b'b'
 ENDFIRE = b'e'
+
+# Features
+MEL_SPECTROGRAM = b'98'
+MFCC = b'99'
 
 # main.c
 NUM_SAMPLES = {}            # The number of samples to receive from the device
 NUM_SAMPLES[RAW_WAVE] = 512
 NUM_SAMPLES[FFT] = 256
 NUM_SAMPLES[SPECTROGRAM] = int(NN/2) * 200
-NUM_SAMPLES[MEL_SPECTROGRAM] = NUM_FILTERS * 200
-NUM_SAMPLES[MFCC] = NUM_FILTERS * 200
 NUM_SAMPLES[SHUTTER] = NUM_FILTERS * 200 * 2
 
 # Shapes
@@ -55,9 +51,9 @@ SHAPE = {}
 SHAPE[RAW_WAVE] = None
 SHAPE[FFT] = None
 SHAPE[SPECTROGRAM] = (200, int(NN/2))
+SHAPE[SHUTTER] = (400, NUM_FILTERS)
 SHAPE[MEL_SPECTROGRAM] = (200, NUM_FILTERS)
 SHAPE[MFCC] = (200, NUM_FILTERS)
-SHAPE[SHUTTER] = (400, NUM_FILTERS)
 
 ###################
 
