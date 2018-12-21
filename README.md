@@ -4,7 +4,7 @@
 
 ## Background and motivation
 
-I am just interested in Acoustic Event Detection (AED) on "edge AI": ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
+["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
 
 ## Project status (Dec 15, 2018)
 
