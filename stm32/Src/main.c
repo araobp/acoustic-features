@@ -92,8 +92,8 @@ volatile bool new_pcm_data_r_b = false;
 volatile bool printing = false;
 
 // UART output mode
-volatile mode output_mode = SHUTTER;
-mode filter_type = SHUTTER;  // Current filter bank
+volatile mode output_mode = FEATURES;
+mode filter_type = FEATURES;  // Current filter bank
 
 // UART one-byte input buffer
 uint8_t rxbuf[1];
@@ -161,7 +161,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
       cnt = 200;
       break;
 
-    case SHUTTER:
+    case FEATURES:
       break;
 
     default:
@@ -177,7 +177,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
       uart_buf[idx++] = (uint8_t) (((int16_t) in[n]) >> 8);      // MSB
       uart_buf[idx++] = (uint8_t) (((int16_t) in[n] & 0x00ff));  // LSB
     }
-  } else if (mode == SHUTTER) {
+  } else if (mode == FEATURES) {
     a = pos * NUM_FILTERS;
     b = (200 - pos) * NUM_FILTERS;
     c = 200 * NUM_FILTERS;
@@ -193,7 +193,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   }
 
   // memory-to-peripheral DMA to UART
-  if (mode == SHUTTER) {
+  if (mode == FEATURES) {
     HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, NUM_FILTERS * 200 * 2);
     printing = false;
   } else if (--cnt == 0) {
@@ -227,7 +227,7 @@ void dsp(float32_t *s1, mode mode) {
     apply_fft(s1);
     apply_psd_logscale(s1);
   }
-  if (mode >= SHUTTER) {
+  if (mode >= FEATURES) {
     apply_filterbank(s1);
     for (int i = 0; i < NUM_FILTERS; i++) {
       mel_spectrogram_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];

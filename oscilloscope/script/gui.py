@@ -61,7 +61,7 @@ class GUI:
                  shadow_sub=0, remove_dc=False):
 
         if (data is EMPTY) and (cmd == dsp.MEL_SPECTROGRAM or cmd == dsp.MFCC):
-            data = self.interface.read(dsp.SHUTTER, ssub)
+            data = self.interface.read(dsp.FEATURES, ssub)
         elif data is EMPTY:
             data = self.interface.read(cmd, ssub)
             

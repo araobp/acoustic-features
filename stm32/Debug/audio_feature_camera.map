@@ -3718,7 +3718,7 @@ OUTPUT(audio_feature_camera.elf elf32-littlearm)
  .debug_line    0x0000a902       0xa2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
  .debug_line    0x0000a9a4      0x681 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
-.debug_str      0x00000000     0x7489
+.debug_str      0x00000000     0x748a
  .debug_str     0x00000000      0xc87 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
                                 0xd23 (size before relaxing)
  .debug_str     0x00000c87      0x3c3 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.o
@@ -3757,53 +3757,53 @@ OUTPUT(audio_feature_camera.elf elf32-littlearm)
                                0x1223 (size before relaxing)
  .debug_str     0x000068dd       0x1b Src\gpio.o
                                 0x937 (size before relaxing)
- .debug_str     0x000068f8      0x2b6 Src\main.o
-                               0x1ddf (size before relaxing)
- .debug_str     0x00006bae       0x1b Src\stm32l4xx_hal_msp.o
+ .debug_str     0x000068f8      0x2b7 Src\main.o
+                               0x1de0 (size before relaxing)
+ .debug_str     0x00006baf       0x1b Src\stm32l4xx_hal_msp.o
                                 0x39f (size before relaxing)
- .debug_str     0x00006bc9       0xf4 Src\stm32l4xx_it.o
+ .debug_str     0x00006bca       0xf4 Src\stm32l4xx_it.o
                                 0x854 (size before relaxing)
- .debug_str     0x00006cbd       0x3b Src\system_stm32l4xx.o
+ .debug_str     0x00006cbe       0x3b Src\system_stm32l4xx.o
                                 0x42a (size before relaxing)
- .debug_str     0x00006cf8       0x1c Src\tim.o
+ .debug_str     0x00006cf9       0x1c Src\tim.o
                                 0x8ae (size before relaxing)
- .debug_str     0x00006d14       0x1a Src\usart.o
+ .debug_str     0x00006d15       0x1a Src\usart.o
                                 0xe6e (size before relaxing)
- .debug_str     0x00006d2e      0x15d ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
+ .debug_str     0x00006d2f      0x15d ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
                                 0x239 (size before relaxing)
- .debug_str     0x00006e8b       0x32 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
+ .debug_str     0x00006e8c       0x32 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
                                 0x238 (size before relaxing)
- .debug_str     0x00006ebd       0x38 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
+ .debug_str     0x00006ebe       0x38 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
                                 0x23e (size before relaxing)
- .debug_str     0x00006ef5       0xd2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_str     0x00006ef6       0xd2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
                                 0x52a (size before relaxing)
- .debug_str     0x00006fc7       0x74 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_str     0x00006fc8       0x74 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
                                 0x307 (size before relaxing)
- .debug_str     0x0000703b      0x10e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_str     0x0000703c      0x10e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
                                 0x372 (size before relaxing)
- .debug_str     0x00007149       0x33 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
+ .debug_str     0x0000714a       0x33 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
                                 0x278 (size before relaxing)
- .debug_str     0x0000717c       0x69 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
+ .debug_str     0x0000717d       0x69 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
                                 0x2b3 (size before relaxing)
- .debug_str     0x000071e5       0x54 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
+ .debug_str     0x000071e6       0x54 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
                                 0x270 (size before relaxing)
- .debug_str     0x00007239       0x61 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
+ .debug_str     0x0000723a       0x61 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
                                 0x316 (size before relaxing)
- .debug_str     0x0000729a       0x41 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_str     0x0000729b       0x41 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
                                 0x255 (size before relaxing)
- .debug_str     0x000072db       0x34 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_str     0x000072dc       0x34 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
                                 0x255 (size before relaxing)
- .debug_str     0x0000730f       0x30 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_str     0x00007310       0x30 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
                                 0x242 (size before relaxing)
- .debug_str     0x0000733f       0x31 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
+ .debug_str     0x00007340       0x31 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
                                 0x245 (size before relaxing)
- .debug_str     0x00007370       0x6b ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
+ .debug_str     0x00007371       0x6b ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
                                 0x27d (size before relaxing)
- .debug_str     0x000073db       0x33 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
+ .debug_str     0x000073dc       0x33 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
                                 0x24b (size before relaxing)
- .debug_str     0x0000740e       0x2e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_str     0x0000740f       0x2e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_common_tables.o)
                                 0x717 (size before relaxing)
- .debug_str     0x0000743c       0x4d ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+ .debug_str     0x0000743d       0x4d ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
                                 0x269 (size before relaxing)
 
 .comment        0x00000000       0xea
