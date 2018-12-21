@@ -46,7 +46,7 @@ Platform:
 
 ## System components
 
-- [Edge device "audio feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32)
+- [Audio feature camera for deep learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 
