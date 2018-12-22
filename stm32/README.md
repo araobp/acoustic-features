@@ -210,7 +210,7 @@ Data is send in int8_t.
 
 ### Output
 
-|cmd| description    | output size             | purpose               | mode      |
+|cmd| description    | output size             | purpose               | transfer mode |
 |---|----------------|-------------------------|-----------------------|-----------|
 |1  | RAW_WAVE       | N x 1                   | Input to oscilloscope | one frame |
 |2  | FFT            | N/2 x 1                 | Input to oscilloscope | one frame |
