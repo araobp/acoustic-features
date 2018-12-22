@@ -6,12 +6,12 @@
 
 ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
 
-## Project status (Dec 15, 2018)
+## Project status (Dec 22, 2018)
 
+This project is still in development:
 - All the pre-processing features and the oscilloscope GUI have been implemented.
 - Several CNN models on Keras/TensorFlow have already been tested.
 - Inference engine based on Keras/TensorFlow has been implemented for Win10 and RasPi3.
-- Working on beam forming with LPF to flatten the frequency response in Endfire mode.
 
 ## Architecture
 
