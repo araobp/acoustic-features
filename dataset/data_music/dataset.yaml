@@ -1,9 +1,0 @@
-feature: mel_spectrogram
-files: 100
-training_files: 67
-length: 64
-filters: 40
-cutoff: null
-stride: 64
-window_pos: null
-model: cnn_for_aed_20181219094124.h5

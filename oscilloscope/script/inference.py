@@ -7,31 +7,21 @@ import dsp
 # Trained CNN model
 class Model:
 
-    def __init__(self, class_file, model_file, windows=None):
-
-        self.class_labels = None
-        self.activation_model = None
-        if windows:
-            self.windows = windows
-        else:
-            self.windows = ((0, dsp.NN))
-        
-        with open(class_file, 'r') as f:
-            self.class_labels = yaml.load(f)
-            _model = models.load_model(model_file)
-            _model.summary()
-            layer_outputs = [layer.output for layer in _model.layers]
-            self.activation_model = models.Model(inputs=_model.input, outputs=layer_outputs)
+    def __init__(self, dataset):
+        self.dataset = dataset
+        layer_outputs = [layer.output for layer in dataset.model.layers]
+        self.activation_model = models.Model(inputs=dataset.model.input, outputs=layer_outputs)
+        dataset.model.summary()
 
     # ML Inference
     def infer(self, data, remove_dc=False):
         probabilities = []
         data = data.astype(float)
         shape = data.shape
-        data = pp.scale(data.flatten()).reshape(shape[0], shape[1], 1)
+        data = pp.scale(data.flatten()).reshape(*shape, 1)
         if self.activation_model:
             windowed_data = []
-            for w in self.windows:
+            for w in self.dataset.windows:
                 if remove_dc:
                     d = data[w[0]:w[1], 1:w[2], :]
                 else:
@@ -43,7 +33,7 @@ class Model:
                 indexes = np.argsort(r)
                 p = []
                 for idx in reversed(indexes):
-                    p.append([self.class_labels[idx], r[idx]])
+                    p.append([self.dataset.class_labels[idx], r[idx]])
                 probabilities.append(p)
             return probabilities
         else:

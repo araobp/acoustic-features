@@ -85,14 +85,11 @@ if __name__ == '__main__':
     EMPTY = np.array([])
 
     dataset = dataset.DataSet(args.dataset_folder)
-    windows, window_pos = dataset.generate_windows()
     class_file = args.dataset_folder + '/class_labels.yaml'
 
     if dataset.model and not args.browser:
         import inference
-        cnn_model = inference.Model(class_file=class_file,
-                                    model_file=args.dataset_folder + '/' + dataset.model,
-                                    windows=windows)
+        cnn_model = inference.Model(dataset)
 
     root = Tk.Tk()
     root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
@@ -121,6 +118,7 @@ if __name__ == '__main__':
         global current_class_label, cnt, filename
         class_label = entry_class_label.get()
         func, data, window, pos = last_operation
+        angle = range_beam_forming.get()
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
         if args.dataset_folder:
             dataset_folder = args.dataset_folder
@@ -128,12 +126,12 @@ if __name__ == '__main__':
             dataset_folder = './data'
 
         if class_label == '':
-            filename = dataset_folder+'/data/{}-{}'.format(func.__name__, dt)
+            filename = dataset_folder+'/data/{}-{}'.format(dt, func.__name__)
         else:
             if func == mel_spectrogram or func == mfcc:  # Save both data at a time
-                filename = dataset_folder+'/data/{}-{}-{}-{}'.format(class_label, func.__name__, pos, dt)
+                filename = dataset_folder+'/data/{}-features-{}-{}-{}'.format(dt, class_label, pos, ANGLE[angle+2])
             else:
-                filename = dataset_folder+'/data/{}-{}-{}'.format(class_label, func.__name__, dt)
+                filename = dataset_folder+'/data/{}-{}-{}'.format(dt, class_label, func.__name__)
             data = data.flatten()
             with open(filename+'.csv', "w") as f:
                 f.write(','.join(data.astype(str)))
@@ -175,35 +173,35 @@ if __name__ == '__main__':
             repeat(fft)
 
     def spectrogram(data=EMPTY, pos=0, repeatable=True):
-        global last_operation, windows
+        global last_operation, dataset
         ssub = int(spectrum_subtraction.get())    
         range_ = int(range_spectrogram.get())
         cmap_ = var_cmap.get()
         if data is EMPTY:
-            window = windows[int(range_window.get())]
+            window = dataset.windows[int(range_window.get())]
             data = gui.plot(ax, dsp.SPECTROGRAM, range_, cmap_, ssub,
-                               window=window)
+                               window=None)
         else:
-            window = windows[pos]
+            window = dataset.windows[pos]
             gui.plot(ax, dsp.SPECTROGRAM, range_, cmap_, ssub, data=data,
-                         window=window)
+                         window=None)
         last_operation = (spectrogram, data, window, pos)
         fig.tight_layout()
         canvas.draw()
         if repeatable:
             repeat(spectrogram)
 
-    def mel_spectrogram(data=EMPTY, pos=0, repeatable=True):
-        global last_operation, windows
+    def mel_spectrogram(data=EMPTY, pos=None, repeatable=True):
+        global last_operation, dataset
         ssub = int(spectrum_subtraction.get())
         range_ = int(range_mel_spectrogram.get())
         cmap_ = var_cmap.get()
-        if data is EMPTY:
-            window = windows[int(range_window.get())]
+        if data is EMPTY or pos is None:
+            window = dataset.windows[int(range_window.get())]
             data = gui.plot(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub,
                                window=window)
         else:
-            window = windows[pos]
+            window = dataset.windows[pos]
             gui.plot(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
@@ -214,17 +212,17 @@ if __name__ == '__main__':
         if repeatable:
             repeat(mel_spectrogram)
 
-    def mfcc(data=EMPTY, pos=0, repeatable=True):
-        global last_operation, windows
+    def mfcc(data=EMPTY, pos=None, repeatable=True):
+        global last_operation, dataset
         ssub = int(spectrum_subtraction.get())    
         range_ = int(range_mfcc.get())
         cmap_ = var_cmap.get()
-        if data is EMPTY:
-            window = windows[int(range_window.get())]
+        if data is EMPTY or pos is None:
+            window = dataset.windows[int(range_window.get())]
             data = gui.plot(ax, dsp.MFCC, range_, cmap_, ssub,
                                window=window, remove_dc=True)
         else:
-            window = windows[pos]
+            window = dataset.windows[pos]
             gui.plot(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
                          window=window, remove_dc=True)
         if cnn_model:
@@ -320,7 +318,7 @@ if __name__ == '__main__':
         c = event.key
         pos = range_window.get()
         if c == 'right':
-            if pos < len(windows) - 1:
+            if pos < len(dataset.windows) - 1:
                 pos += 1
                 range_window.set(pos)
         elif c == 'left':
@@ -348,23 +346,18 @@ if __name__ == '__main__':
         index = int(widget. curselection()[0])
         filename = widget.get(index)
         params = filename.split('-')
-        func = globals()[params[1]]
+        func = globals()[dataset.feature]
 
         with open(args.dataset_folder + '/data/' + filename) as f:
             data = np.array(f.read().split(','), dtype='float')
         
         if func == mel_spectrogram or func == mfcc:
-            try:
-                data = data.reshape(400, dataset.filters)
-                pos = int(params[2])
-                func(data=data, pos=pos, repeatable=False)
-            except:  # Backward compatibility (to be removed in future)
-                data = data.reshape(200, dataset.filters)
-                if func == mfcc:
-                    empty = np.zeros((400, dataset.filters))
-                    empty[200:,:] = data
-                    data = empty     
-                func(data=data, repeatable=False)
+            data = data.reshape(400, dataset.filters)
+            pos = params[3]
+            if pos == '*':
+                func(data=data, pos=None, repeatable=False)
+            else:
+                func(data=data, pos=int(pos), repeatable=False)                
         else:
             data = data.reshape(200, dataset.filters)
             func(data=data, repeatable=False)
@@ -452,7 +445,7 @@ if __name__ == '__main__':
     ### Row 4 ####
     label_window = Tk.Label(master=frame_row4, text='Window:')
     range_window = Tk.Scale(master=frame_row4, orient=Tk.HORIZONTAL, length=120,
-                                from_=0, to=len(windows)-1, command=shadow, tickinterval=1)
+                                from_=0, to=len(dataset.windows)-1, command=shadow, tickinterval=1)
     if cnn_model:
         label_inference = Tk.Label(master=frame_row4, width=40, fg='DeepSkyBlue4', padx=PADX)
         label_inference.config(font=("Arial", 20))

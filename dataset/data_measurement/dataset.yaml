@@ -5,5 +5,4 @@ length: 96
 filters: 40
 cutoff: 40
 stride: 12
-window_pos: null
 model: null

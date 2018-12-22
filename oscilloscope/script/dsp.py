@@ -64,6 +64,11 @@ class Interface:
         # Serial interface
         self.port = port
         self.lock = threading.Lock()
+        try:
+            ser = serial.Serial(self.port, BAUD_RATE)
+            ser.close()
+        except:
+            print('*** Cannot open {}!'.format(port))
 
     # As an application processor, send a command
     # then receive and process the output.
@@ -113,7 +118,7 @@ class Interface:
                 ser.close()
             except:
                 print('*** serial timeout!')
-                traceback.print_exc()
+                #traceback.print_exc()
 
         return data
 

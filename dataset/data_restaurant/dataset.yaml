@@ -1,9 +1,0 @@
-feature: mfcc
-files: 30
-training_files: 20
-length: 96
-filters: 40
-cutoff: 13
-stride: 96
-window_pos: 0
-model: cnn_for_aed_restaurant_20181220081540.h5

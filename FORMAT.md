@@ -77,10 +77,5 @@ length: 96
 filters: 40
 cutoff: 13
 stride: 96
-window_pos: 0
 model: cnn_for_aed_restaurant_20181220081540.h5
 ```
-
-"window_pos" is a position of window on a record:
-- "0" means windows[0] MUST be applied to the record.
-- "null" means all the windows in a window list SHOULD be applied to the record.
