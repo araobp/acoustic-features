@@ -1,6 +1,6 @@
 # Audio feature camera for deep learning
 
-![](./oscilloscope/screenshots/spectrogram(psd)_small.jpg)
+![](./oscilloscope/screenshots/piano.jpg)
 
 ## Background and motivation
 
@@ -88,6 +88,6 @@ In case of a living room:
 
 ### CNN experiments (learning and inference)
 
-![](./oscilloscope/screenshots/ml_inference_classical_guitar.jpg)
+![](./oscilloscope/screenshots/inference.jpg)
 
 - [CNN experiments with Keras/TensorFlow](./tensorflow)
