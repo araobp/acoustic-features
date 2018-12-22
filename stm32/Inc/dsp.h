@@ -22,6 +22,9 @@
 // Adjust mel filterbank so that the output to uart does not become too small
 #define ADJUST_MEL_FILTERBANK 2.0f
 
+// Adjust MFCCs so that the output to uart does not become too large
+#define ADJUST_MFCCS 0.2f
+
 // Note: MFCC_STREAMING is tentative.
 typedef enum {
   NONE, RAW_WAVE, FFT, SPECTROGRAM, FEATURES

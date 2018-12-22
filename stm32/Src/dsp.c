@@ -213,6 +213,6 @@ void apply_dct2(float32_t *signal) {
   arm_scale_f32 (out, 2.0, out, NUM_FILTERS*2);
   arm_cmplx_mult_cmplx_f32(out, half_sample_shifter, out, NUM_FILTERS);
   for (int n = 0; n < NUM_FILTERS; n++) {
-    signal[n] = out[n*2];
+    signal[n] = out[n*2] * ADJUST_MFCCS;
   }
 }

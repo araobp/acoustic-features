@@ -78,7 +78,7 @@ class GUI:
             ax.set_title('Frequency domain')
             ax.plot(FREQ[dsp.FFT], data)
             ax.set_xlabel('Frequency [Hz]')
-            ax.set_ylabel('PSD [dB]')
+            ax.set_ylabel('Power [dB]')
             ax.set_ylim([-8, 127])
 
         elif cmd == dsp.SPECTROGRAM:
@@ -90,7 +90,7 @@ class GUI:
                           FREQ[dsp.SPECTROGRAM][:range_],
                           shadowed.T[:range_],
                           cmap=cmap)
-            ax.set_title('Spectrogram (PSD in dB)')
+            ax.set_title('Spectrogram')
             ax.set_xlabel('Time [sec]')
             ax.set_ylabel('Frequency (Hz)')
 
@@ -104,9 +104,9 @@ class GUI:
                           FREQ[dsp.MEL_SPECTROGRAM][:range_],
                           shadowed.T[:range_],
                           cmap=cmap)
-            ax.set_title('Mel-scale spectrogram (PSD in dB)')
+            ax.set_title('Mel-scale spectrogram')
             ax.set_xlabel('Time [sec]')
-            ax.set_ylabel('Mel-scale filters')
+            ax.set_ylabel('Mel-scale filter')
 
         elif cmd == dsp.MFCC:
             data_ = data[200:,:]
