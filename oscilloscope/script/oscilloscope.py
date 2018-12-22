@@ -38,6 +38,8 @@ parser.add_argument("-b", "--browser",
                     help="Data browser", action="store_true")
 parser.add_argument("-s", "--plot_style",
                     help="Plot style", default='dark_background')
+parser.add_argument("-o", "--oscilloscope_mode",
+                    help="Oscilloscope mode", action="store_true")
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -59,7 +61,8 @@ if __name__ == '__main__':
     PADX_GRID = 2
     PADY_GRID = 2
     WIDTH = 7
-
+    BG = 'darkturquoise'
+    
     CMAP_LIST = ('hot',
                  'viridis',
                  'gray',
@@ -109,7 +112,6 @@ if __name__ == '__main__':
     frame_row3 = Tk.Frame(master=frame)
     frame_row4 = Tk.Frame(master=frame)
     
-
     canvas = FigureCanvasTkAgg(fig, master=frame_row0a)
     canvas.draw()
 
@@ -254,23 +256,21 @@ if __name__ == '__main__':
         global repeat_action
         if repeat_action == True:
             repeat_action = False
-            button_repeat.configure(bg='lightblue')
+            button_repeat.configure(bg=BG)
         else:
             repeat_action = True
             button_repeat.configure(bg='red')
             
     def pre_emphasis_toggle():
-        if button_pre_emphasis.cget('bg') == 'lightblue':
+        if button_pre_emphasis.cget('bg') == BG:
             button_pre_emphasis.configure(bg='red')
             itfc.enable_pre_emphasis(True)
         else:       
-            button_pre_emphasis.configure(bg='lightblue')
+            button_pre_emphasis.configure(bg=BG)
             itfc.enable_pre_emphasis(False)
             
     def savefig():
-        global filename
-        if filename:
-            fig.savefig(filename+'.png')
+        fig.savefig('screen_shot.png')
 
     def remove():
         global filename, cnt
@@ -381,6 +381,7 @@ if __name__ == '__main__':
     var_cmap = Tk.StringVar()
     var_cmap.set('hot')
     cmap = Tk.OptionMenu(frame_row1, var_cmap, *CMAP_LIST)
+    cmap.config(bg=BG, activebackground='paleturquoise')
     counter = Tk.Label(master=frame_row1)
     counter.configure(text='({})'.format(str(0)))
     range_amplitude = Tk.Spinbox(master=frame_row1, width=6,
@@ -397,11 +398,11 @@ if __name__ == '__main__':
     label_image = Tk.Label(master=frame_row1, text='Subtraction:')
     label_color = Tk.Label(master=frame_row1, text='Color:')
     button_waveform = Tk.Button(master=frame_row1, text='Wave', command=raw_wave,
-                                bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+                                bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_psd = Tk.Button(master=frame_row1, text='FFT', command=fft,
-                           bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+                           bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_spectrogram = Tk.Button(master=frame_row1, text='Spec', command=spectrogram,
-                                   bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+                                   bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_mel_spectrogram = Tk.Button(master=frame_row1, text='Mel spec', command=mel_spectrogram,
                                        bg='pink', activebackground='grey', padx=PADX, width=WIDTH)
     button_mfcc = Tk.Button(master=frame_row1, text='MFCCs', command=mfcc,
@@ -409,15 +410,15 @@ if __name__ == '__main__':
 
     ### Row 2 ####
     button_repeat = Tk.Button(master=frame_row2, text='Repeat', command=repeat_toggle,
-                              bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+                              bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_pre_emphasis = Tk.Button(master=frame_row2, text='Emphasis', command=pre_emphasis_toggle,
                                     bg='red', activebackground='grey', padx=PADX, width=WIDTH)
     button_savefig = Tk.Button(master=frame_row2, text='Savefig', command=savefig,
-                               bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+                               bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_remove = Tk.Button(master=frame_row2, text='Remove', command=remove,
-                              bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+                              bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_save = Tk.Button(master=frame_row2, text='Save', command=save,
-                              bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+                              bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_quit = Tk.Button(master=frame_row2, text='Quit', command=quit,
                             bg='yellow', activebackground='grey', padx=PADX, width=WIDTH)
     label_beam_forming = Tk.Label(master=frame_row2, text='Beam forming:')
@@ -426,28 +427,28 @@ if __name__ == '__main__':
     range_beam_forming = Tk.Scale(master=frame_row2, orient=Tk.HORIZONTAL, length=70,
                                   from_=-1, to=1, showvalue=0, command=beam_forming)
     button_confirm = Tk.Button(master=frame_row2, text='Confirm', command=confirm,
-                            bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+                            bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_welch = Tk.Button(master=frame_row2, text='Welch', command=welch,
-                            bg='lightblue', activebackground='grey', padx=PADX, width=WIDTH)
+                            bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
 
     ### Row 3 ####
     button_filterbank = Tk.Button(master=frame_row3, text='Filterbank', command=filterbank,
-                                  bg='lightblue', activebackground='grey', padx=PADX)
+                                  bg=BG, activebackground='grey', padx=PADX)
     button_elapsed_time = Tk.Button(master=frame_row3, text='Elapsed time', command=elapsed_time,
-                                    bg='lightblue', activebackground='grey', padx=PADX)
+                                    bg=BG, activebackground='grey', padx=PADX)
     button_broadside = Tk.Button(master=frame_row3, text='Broadside', command=broadside,
-                                 bg='lightblue', activebackground='grey', padx=PADX)
+                                 bg=BG, activebackground='grey', padx=PADX)
     button_endfire = Tk.Button(master=frame_row3, text='Endfire', command=endfire,
-                               bg='lightblue', activebackground='grey', padx=PADX)
+                               bg=BG, activebackground='grey', padx=PADX)
     button_left_mic_only = Tk.Button(master=frame_row3, text='Left mic only', command=left_mic_only,
-                                     bg='lightblue', activebackground='grey', padx=PADX)
+                                     bg=BG, activebackground='grey', padx=PADX)
     button_right_mic_only = Tk.Button(master=frame_row3, text='Right mic only', command=right_mic_only,
-                                      bg='lightblue', activebackground='grey', padx=PADX)
+                                      bg=BG, activebackground='grey', padx=PADX)
 
     ### Row 4 ####
     label_window = Tk.Label(master=frame_row4, text='Window:')
     range_window = Tk.Scale(master=frame_row4, orient=Tk.HORIZONTAL, length=120,
-                                from_=0, to=len(dataset.windows)-1, command=shadow, tickinterval=1)
+                            from_=0, to=len(dataset.windows)-1, command=shadow, tickinterval=1)
     if cnn_model:
         label_inference = Tk.Label(master=frame_row4, width=40, fg='DeepSkyBlue4', padx=PADX)
         label_inference.config(font=("Arial", 20))
@@ -474,10 +475,11 @@ if __name__ == '__main__':
 
     if not cnn_model:
 
-        # Class label entry
-        label_class.grid(row=0, column=0, padx=PADX_GRID)
-        entry_class_label.grid(row=0, column=1, padx=PADX_GRID)
-        counter.grid(row=0, column=2, padx=PADX_GRID)
+        if not args.oscilloscope_mode:
+            # Class label entry
+            label_class.grid(row=0, column=0, padx=PADX_GRID)
+            entry_class_label.grid(row=0, column=1, padx=PADX_GRID)
+            counter.grid(row=0, column=2, padx=PADX_GRID)
 
         # Waveform
         range_amplitude.grid(row=0, column=3, padx=PADX_GRID)
@@ -521,13 +523,14 @@ if __name__ == '__main__':
     button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
     if not cnn_model:
         button_welch.grid(row=0, column=6, padx=PADX_GRID)
-        button_confirm.grid(row=0, column=7, padx=PADX_GRID)
-        button_save.grid(row=0, column=8, padx=PADX_GRID)
-        button_remove.grid(row=0, column=9, padx=PADX_GRID)
+        if not args.oscilloscope_mode:
+            button_confirm.grid(row=0, column=7, padx=PADX_GRID)
+            button_save.grid(row=0, column=8, padx=PADX_GRID)
+            button_remove.grid(row=0, column=9, padx=PADX_GRID)
     button_savefig.grid(row=0, column=10, padx=PADX_GRID)
         
     # Quit
-    button_quit.grid(row=0, column=10, padx=PADX_GRID)
+    button_quit.grid(row=0, column=11, padx=PADX_GRID)
 
     ### Row 3 ####
 
@@ -542,12 +545,13 @@ if __name__ == '__main__':
         button_right_mic_only.grid(row=0, column=5, padx=PADX_GRID)    
 
     ### Row 4 ####
-    frame_row4.pack(pady=PADY_GRID)
-    label_window.grid(row=0, column=0, padx=PADX_GRID)
-    range_window.grid(row=0, column=1, padx=PADX_GRID)
-    if cnn_model:
-        label_inference.grid(row=0, column=2, padx=PADX_GRID)
-        label_inference.configure(text='...')
+    if not args.oscilloscope_mode:
+        frame_row4.pack(pady=PADY_GRID)
+        label_window.grid(row=0, column=0, padx=PADX_GRID)
+        range_window.grid(row=0, column=1, padx=PADX_GRID)
+        if cnn_model:
+            label_inference.grid(row=0, column=2, padx=PADX_GRID)
+            label_inference.configure(text='...')
 
     ##### loop forever #####
     Tk.mainloop()

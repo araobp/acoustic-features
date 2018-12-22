@@ -69,16 +69,19 @@ class Interface:
             ser.close()
         except:
             print('*** Cannot open {}!'.format(port))
+   
+    def serial_port(self):
+        return serial.Serial(self.port, BAUD_RATE, timeout=3)
 
     # As an application processor, send a command
     # then receive and process the output.
     def read(self, cmd, ssub=None):
-
+        
         data = []
         with self.lock:
             n = 0
             try:
-                ser = serial.Serial(self.port, BAUD_RATE, timeout=3, inter_byte_timeout=3)
+                ser = self.serial_port()
                 ser.write(cmd)
 
                 if cmd == RAW_WAVE:  # 16bit quantization
@@ -124,7 +127,7 @@ class Interface:
 
     # Enable/disable pre-emphasis
     def enable_pre_emphasis(self, enable):
-        ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
+        ser = self.serial_port()
         if enable:
             ser.write(ENABLE_PRE_EMPHASIS)
         else:
@@ -133,19 +136,19 @@ class Interface:
 
     # Enable/disable beam forming
     def set_beam_forming(self, mode, angle):
-        ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
+        ser = self.serial_port()
         ser.write(mode)
         ser.write(angle.encode('ascii'))
         ser.close()
 
     # Left mic only
     def left_mic_only(self):
-        ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
+        ser = self.serial_port()
         ser.write(LEFT_MIC_ONLY)
         ser.close()
 
     # Right mic only
     def right_mic_only(self):
-        ser = serial.Serial(self.port, BAUD_RATE, timeout=3)
+        ser = self.serial_port()
         ser.write(RIGHT_MIC_ONLY)
         ser.close()
