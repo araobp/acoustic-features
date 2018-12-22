@@ -147,7 +147,9 @@ if __name__ == '__main__':
         if repeat_action:
             root.after(50, func)
 
-    def infer(data, pos=0, remove_dc=False):
+    def infer(data, pos=None, remove_dc=False):
+        if pos is None:
+            pos = 0
         probabilities = cnn_model.infer(data, remove_dc)
         class_label, p = probabilities[pos][0]
         label_inference.configure(text='This is {} ({} %)'.format(class_label, int(p)))
@@ -235,7 +237,7 @@ if __name__ == '__main__':
 
     def welch():
         global last_operation
-        func, data, window = last_operation
+        func, data, window, pos = last_operation
         if func == spectrogram:
             gui.plot_welch(ax, data, window)
         else:
@@ -354,7 +356,7 @@ if __name__ == '__main__':
         if func == mel_spectrogram or func == mfcc:
             data = data.reshape(400, dataset.filters)
             pos = params[3]
-            if pos == '*':
+            if pos == 'a':
                 func(data=data, pos=None, repeatable=False)
             else:
                 func(data=data, pos=int(pos), repeatable=False)                

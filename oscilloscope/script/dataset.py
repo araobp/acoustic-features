@@ -62,7 +62,8 @@ class DataSet:
         self.class_labels = None
         class_labels_file = dataset_folder + '/class_labels.yaml'
         if os.path.isfile(class_labels_file):
-            self.class_labels = yaml.load(class_labels_file)
+            with open(class_labels_file, 'r') as f:
+                self.class_labels = yaml.load(f)
             
     def generate(self):
         '''
