@@ -118,12 +118,12 @@ class GUI:
                 ax.pcolormesh(TIME[dsp.MFCC],
                           FREQ[dsp.MFCC][1:range_],
                           shadowed.T[1:range_],
-                          cmap=cmap)                
+                          cmap='bwr')                
             else:
                 ax.pcolormesh(TIME[dsp.MFCC],
                           FREQ[dsp.MFCC][:range_],
                           shadowed.T[:range_],
-                          cmap=cmap)
+                          cmap='bwr')
             ax.set_title('MFCCs')
             ax.set_xlabel('Time [sec]')
             ax.set_ylabel('MFCC')     
