@@ -103,7 +103,13 @@ class GUI:
                 shadowed = shadow(data_, window, shadow_sub=10)
             else:
                 shadowed = data_
-            ax.pcolormesh(TIME[dsp.MEL_SPECTROGRAM],
+            if remove_dc:
+                ax.pcolormesh(TIME[dsp.MEL_SPECTROGRAM],
+                          FREQ[dsp.MEL_SPECTROGRAM][1:range_],
+                          shadowed.T[1:range_],
+                          cmap=cmap)                
+            else:
+                ax.pcolormesh(TIME[dsp.MEL_SPECTROGRAM],
                           FREQ[dsp.MEL_SPECTROGRAM][:range_],
                           shadowed.T[:range_],
                           cmap=cmap)

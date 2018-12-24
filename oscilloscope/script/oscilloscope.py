@@ -203,13 +203,13 @@ if __name__ == '__main__':
         if data is EMPTY or pos is None:
             window = dataset.windows[int(range_window.get())]
             data = gui.plot(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub,
-                               window=window)
+                               window=window, remove_dc=True)
         else:
             window = dataset.windows[pos]
             gui.plot(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub, data=data,
-                         window=window)
+                         window=window, remove_dc=True)
         if cnn_model:
-            infer(data, pos)
+            infer(data, pos, remove_dc=True)
         last_operation = (mel_spectrogram, data, window, pos)
         fig.tight_layout()
         canvas.draw()

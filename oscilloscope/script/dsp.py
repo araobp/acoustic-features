@@ -57,6 +57,10 @@ SHAPE[MFCC] = (200, NUM_FILTERS)
 
 ###################
 
+
+b16_to_int = lambda msb, lsb, signed: int.from_bytes([msb, lsb], byteorder='big', signed=signed)
+b8_to_int = lambda d, signed: int.from_bytes([d], byteorder='big', signed=signed)
+
 # Interface class
 class Interface:
     
@@ -87,7 +91,7 @@ class Interface:
                     rx = ser.read(NUM_SAMPLES[cmd]*2)
                     rx = zip(rx[0::2], rx[1::2])
                     for msb, lsb in rx:
-                        d = int.from_bytes([msb, lsb], byteorder='big', signed=True)
+                        d = b16_to_int(msb, lsb, True)
                         data.append(d)
                     data = np.array(data, dtype=np.int16)
                 elif cmd == FILTERBANK:
@@ -109,13 +113,11 @@ class Interface:
                     half = int(NUM_SAMPLES[cmd]/2)
                     for d in rx:
                         if n < half:
-                            d = int.from_bytes([d], byteorder='big', signed=False)
-                            if ssub and (ssub > 0):
-                                d = d - ssub
-                                if d < 0:
-                                    d = 0.0
+                            d = b8_to_int(d, False)
+                            if ssub:
+                                d = d - sub if d > sub else 0.0
                         else:
-                            d = int.from_bytes([d], byteorder='big', signed=True) 
+                            d = b8_to_int(d, True)
                         n += 1
                         data.append(d)
                     data = np.array(data, dtype=np.int)
@@ -123,11 +125,9 @@ class Interface:
                 else:  # 8bit quantization
                     rx = ser.read(NUM_SAMPLES[cmd])
                     for d in rx:
-                        d = int.from_bytes([d], byteorder='big', signed=False)
-                        if ssub and (ssub > 0):
-                            d = d - ssub
-                            if d < 0:
-                                d = 0.0
+                        d  = b8_to_int(d, False)
+                        if ssub:
+                            d = d - sub if d > sub else 0.0              
                         data.append(d)
                     data = np.array(data, dtype=np.int)
                     if SHAPE[cmd]:
