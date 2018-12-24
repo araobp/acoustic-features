@@ -79,7 +79,6 @@ class Interface:
         
         data = []
         with self.lock:
-            n = 0
             try:
                 ser = self.serial_port()
                 ser.write(cmd)
@@ -88,8 +87,7 @@ class Interface:
                     rx = ser.read(NUM_SAMPLES[cmd]*2)
                     rx = zip(rx[0::2], rx[1::2])
                     for msb, lsb in rx:
-                        n += 1
-                        d =  int.from_bytes([msb, lsb], byteorder='big', signed=True)
+                        d = int.from_bytes([msb, lsb], byteorder='big', signed=True)
                         data.append(d)
                     data = np.array(data, dtype=np.int16)
                 elif cmd == FILTERBANK:
@@ -105,17 +103,33 @@ class Interface:
                 elif cmd == ELAPSED_TIME:
                     data = ser.readline().decode('ascii').rstrip('\n,')
                     print(data)
+                elif cmd == FEATURES:
+                    rx = ser.read(NUM_SAMPLES[cmd])
+                    n = 0
+                    half = int(NUM_SAMPLES[cmd]/2)
+                    for d in rx:
+                        if n < half:
+                            d = int.from_bytes([d], byteorder='big', signed=False)
+                            if ssub and (ssub > 0):
+                                d = d - ssub
+                                if d < 0:
+                                    d = 0.0
+                        else:
+                            d = int.from_bytes([d], byteorder='big', signed=True) 
+                        n += 1
+                        data.append(d)
+                    data = np.array(data, dtype=np.int)
+                    data = data.reshape(SHAPE[cmd])                    
                 else:  # 8bit quantization
                     rx = ser.read(NUM_SAMPLES[cmd])
                     for d in rx:
-                        n += 1
-                        d =  int.from_bytes([d], byteorder='big', signed=True)
+                        d = int.from_bytes([d], byteorder='big', signed=False)
                         if ssub and (ssub > 0):
                             d = d - ssub
                             if d < 0:
                                 d = 0.0
                         data.append(d)
-                    data = np.array(data, dtype=np.int8)
+                    data = np.array(data, dtype=np.int)
                     if SHAPE[cmd]:
                         data = data.reshape(SHAPE[cmd])
                 ser.close()

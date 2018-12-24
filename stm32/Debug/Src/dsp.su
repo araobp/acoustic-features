@@ -1,5 +1,5 @@
 dsp.c:41:6:hann	24	static
-dsp.c:56:11:log10_approx	24	static
+dsp.c:56:11:log10_approx	16	static
 dsp.c:65:11:hz2mel	8	static
 dsp.c:70:11:mel2hz	8	static
 dsp.c:75:11:n2hz	0	static
@@ -11,6 +11,6 @@ dsp.c:153:6:apply_weak_pre_emphasis	0	static
 dsp.c:158:6:apply_ac_coupling	24	static
 dsp.c:168:6:apply_hann	0	static
 dsp.c:173:6:apply_fft	16	static
-dsp.c:180:6:apply_psd_logscale	24	static
-dsp.c:189:6:apply_filterbank	40	static
-dsp.c:205:6:apply_dct2	656	static
+dsp.c:180:6:apply_psd_logscale	32	static
+dsp.c:190:6:apply_filterbank	40	static
+dsp.c:206:6:apply_dct2	656	static

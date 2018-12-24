@@ -110,7 +110,7 @@ volatile debug debug_output = ELAPSED_TIME;
 uint32_t elapsed_time = 0;
 
 // Buffers
-int8_t mel_spectrogram_buffer[NUM_FILTERS * 200] = { 0.0f };
+uint8_t mel_spectrogram_buffer[NUM_FILTERS * 200] = { 0.0f };
 int8_t mfcc_buffer[NUM_FILTERS * 200] = { 0.0f };
 int pos = 0;
 
@@ -188,7 +188,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     memcpy(uart_buf + c, mfcc_buffer + a, b);
   } else {
     for (int n = 0; n < length; n++) {
-      uart_buf[idx++] = (int8_t) in[n];
+      uart_buf[idx++] = (uint8_t) in[n];
     }
   }
 
@@ -230,7 +230,7 @@ void dsp(float32_t *s1, mode mode) {
   if (mode >= FEATURES) {
     apply_filterbank(s1);
     for (int i = 0; i < NUM_FILTERS; i++) {
-      mel_spectrogram_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
+      mel_spectrogram_buffer[pos * NUM_FILTERS + i] = (uint8_t) s1[i];
     }
     apply_dct2(s1);
     for (int i = 0; i < NUM_FILTERS; i++) {

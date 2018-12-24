@@ -16,6 +16,9 @@ FREQ[dsp.MEL_SPECTROGRAM] = np.linspace(1, dsp.NUM_FILTERS+1, dsp.NUM_FILTERS)
 TIME[dsp.MFCC] = np.linspace(-dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 0, 200)
 FREQ[dsp.MFCC] = np.linspace(0, dsp.NUM_FILTERS, dsp.NUM_FILTERS)
 
+# Adjustment for 8bit quantization: see "dsp.h" in C language
+ADJUST_PSD = 2.0
+
 # Convert frequency to Mel
 def hz2mel(hz):
   return 2595.0 * np.log10(hz/700.0 + 1.0);
@@ -76,16 +79,16 @@ class GUI:
 
         elif cmd == dsp.FFT:
             ax.set_title('Frequency domain')
-            ax.plot(FREQ[dsp.FFT], data)
+            ax.plot(FREQ[dsp.FFT], data/ADJUST_PSD)
             ax.set_xlabel('Frequency [Hz]')
             ax.set_ylabel('Power [dB]')
             ax.set_ylim([-8, 127])
 
         elif cmd == dsp.SPECTROGRAM:
             if window:
-                shadowed = shadow(data, window, shadow_sub=10)
+                shadowed = shadow(data/ADJUST_PSD, window, shadow_sub=10)
             else:
-                shadowed = data          
+                shadowed = data/ADJUST_PSD          
             ax.pcolormesh(TIME[dsp.SPECTROGRAM],
                           FREQ[dsp.SPECTROGRAM][:range_],
                           shadowed.T[:range_],
@@ -95,7 +98,7 @@ class GUI:
             ax.set_ylabel('Frequency (Hz)')
 
         elif cmd == dsp.MEL_SPECTROGRAM:
-            data_ = data[:200,:]
+            data_ = data[:200,:]/ADJUST_PSD
             if window:
                 shadowed = shadow(data_, window, shadow_sub=10)
             else:
@@ -109,7 +112,7 @@ class GUI:
             ax.set_ylabel('Mel-scale filter')
 
         elif cmd == dsp.MFCC:
-            data_ = data[200:,:]
+            data_ = data[200:,:]/ADJUST_PSD
             if window:
                 shadowed = shadow(data_, window, shadow_sub=10)
             else:
@@ -118,12 +121,12 @@ class GUI:
                 ax.pcolormesh(TIME[dsp.MFCC],
                           FREQ[dsp.MFCC][1:range_],
                           shadowed.T[1:range_],
-                          cmap='bwr')                
+                          cmap=cmap)                
             else:
                 ax.pcolormesh(TIME[dsp.MFCC],
                           FREQ[dsp.MFCC][:range_],
                           shadowed.T[:range_],
-                          cmap='bwr')
+                          cmap=cmap)
             ax.set_title('MFCCs')
             ax.set_xlabel('Time [sec]')
             ax.set_ylabel('MFCC')     

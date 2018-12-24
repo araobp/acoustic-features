@@ -66,13 +66,13 @@ if __name__ == '__main__':
     CMAP_LIST = ('hot',
                  'viridis',
                  'gray',
-                 'binary',
-                 'ocean',
                  'magma',
                  'cubehelix',
-                 'cool',
-                 'winter',
-                 'summer')
+                 'BrBG',
+                 'RdBu',
+                 'bwr',
+                 'coolwarm',
+                 'seismic')
 
     ANGLE = ('L', 'l', 'c', 'r', 'R')
 

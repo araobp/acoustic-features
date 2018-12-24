@@ -58,7 +58,7 @@ float32_t log10_approx(float32_t x) {
   int e;
   f = frexpf(fabsf(x), &e);
   l = LOG10_2 * (C[0]*f*f*f + C[1]*f*f + C[2]*f + C[3] + e);
-  return (l > 0.000001) ? l : 0.000001;  // for numerical stability
+  return (l >= 0.0) ? l : 0.0;  // regard a negative value as featureless
 }
 
 // Frequency in Hz to Mel-scale
@@ -101,7 +101,7 @@ void generate_filters(void) {
     freq_m_minus_1 = n2hz(left_n);
     freq_m = n2hz(center_n);
     freq_m_plus_1 = n2hz(right_n);
-    divider = (float32_t)(right_n - left_n) / ADJUST_MEL_FILTERBANK;
+    divider = (float32_t)(right_n - left_n);
 
     for (int n = left_n; n < center_n; n++) {
       filterbank[m][n - left_n] = (n2hz(n) - freq_m_minus_1)/(freq_m - freq_m_minus_1)/divider;
@@ -183,6 +183,7 @@ void apply_psd_logscale(float32_t *signal) {
   for (int n = 0; n < NN / 2; n++) {
     signal[n] = 20.0 * log10_approx(signal_buf[n]);
   }
+  arm_scale_f32(signal, ADJUST_PSD, signal, NN / 2);
 }
 
 // Apply mel filter bank
