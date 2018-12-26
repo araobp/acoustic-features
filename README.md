@@ -1,4 +1,4 @@
-# Acoustic features for deep learning
+# Acoustic features for deep learning with stm32
 
 ![](./oscilloscope/screenshots/piano.jpg)
 
