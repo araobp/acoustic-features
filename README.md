@@ -1,4 +1,4 @@
-# Acoustic features for deep learning with stm32
+# Acoustic features (MFSCs and MFCCs) for machine learning with stm32 and Keras/TensorFlow
 
 ![](./oscilloscope/screenshots/piano.jpg)
 
