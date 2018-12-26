@@ -1,4 +1,4 @@
-# Audio feature camera for deep learning
+# Acoustic features for deep learning
 
 ![](./oscilloscope/screenshots/piano.jpg)
 
