@@ -1,4 +1,4 @@
-# Audio feature camera (STM32L4 with MEMS microphones)
+# Acoustic feature camera (STM32L4 with MEMS microphones)
 
 This device is a sort of human ear: log scale auditory perception and Fourier transform with Mel scaling as feature for training a brain. Connecting this device to Keras/TensorFlow mimics the human auditory system.
 
