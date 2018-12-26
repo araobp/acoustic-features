@@ -1,4 +1,4 @@
-# Acoustic features for machine learning
+# Acoustic features for deep learning
 
 ![](./oscilloscope/screenshots/piano.jpg)
 
