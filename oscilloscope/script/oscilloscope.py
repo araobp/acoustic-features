@@ -24,11 +24,22 @@ import gui
 import yaml
 import dataset
 
+CMAP_LIST = ('hot',
+             'viridis',
+             'gray',
+             'magma',
+             'cubehelix',
+             'BrBG',
+             'RdBu',
+             'bwr',
+             'coolwarm',
+             'seismic')
+
 # Command arguments
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("port", help="serial port identifier")
-parser.add_argument("-g", "--debug",
+parser.add_argument("-D", "--debug",
                     help="serial port identifier",
                     action="store_true")
 parser.add_argument("-d", "--dataset_folder",
@@ -40,6 +51,10 @@ parser.add_argument("-s", "--plot_style",
                     help="Plot style", default='dark_background')
 parser.add_argument("-o", "--oscilloscope_mode",
                     help="Oscilloscope mode", action="store_true")
+parser.add_argument("-f", "--fullscreen_mode",
+                    help="Fullscreen mode", default=None)
+parser.add_argument("-c", "--color_map",
+                    help="Color map", default=','.join(CMAP_LIST))
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -47,7 +62,7 @@ if __name__ == '__main__':
     plt.style.use(args.plot_style)
 
     itfc = dsp.Interface(port=args.port)
-    gui = gui.GUI(interface=itfc)
+    gui = gui.GUI(interface=itfc, fullscreen=args.fullscreen_mode)
         
     # Beam forming mode
     mode = dsp.ENDFIRE
@@ -63,18 +78,9 @@ if __name__ == '__main__':
     WIDTH = 7
     BG = 'darkturquoise'
     
-    CMAP_LIST = ('hot',
-                 'viridis',
-                 'gray',
-                 'magma',
-                 'cubehelix',
-                 'BrBG',
-                 'RdBu',
-                 'bwr',
-                 'coolwarm',
-                 'seismic')
-
     ANGLE = ('L', 'l', 'c', 'r', 'R')
+    
+    cmap_list = args.color_map.split(',')
 
     cnt = 0
     repeat_action = False
@@ -95,7 +101,10 @@ if __name__ == '__main__':
         cnn_model = inference.Model(dataset)
 
     root = Tk.Tk()
-    root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
+    if args.fullscreen_mode:
+        root.wm_title("")
+    else:
+        root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
 
     if args.browser:
         fig, ax = plt.subplots(1, 1, figsize=(10, 4))
@@ -130,7 +139,7 @@ if __name__ == '__main__':
         if class_label == '':
             filename = dataset_folder+'/data/{}-{}'.format(dt, func.__name__)
         else:
-            if func == mel_spectrogram or func == mfcc:  # Save both data at a time
+            if func == mfsc or func == mfcc:  # Save both data at a time
                 filename = dataset_folder+'/data/{}-features-{}-{}-{}'.format(dt, class_label, pos, ANGLE[angle+2])
             else:
                 filename = dataset_folder+'/data/{}-{}-{}'.format(dt, class_label, func.__name__)
@@ -195,26 +204,26 @@ if __name__ == '__main__':
         if repeatable:
             repeat(spectrogram)
 
-    def mel_spectrogram(data=EMPTY, pos=None, repeatable=True):
+    def mfsc(data=EMPTY, pos=None, repeatable=True):
         global last_operation, dataset
         ssub = int(spectrum_subtraction.get())
-        range_ = int(range_mel_spectrogram.get())
+        range_ = int(range_mfsc.get())
         cmap_ = var_cmap.get()
         if data is EMPTY or pos is None:
             window = dataset.windows[int(range_window.get())]
-            data = gui.plot(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub,
-                               window=window, remove_dc=True)
+            data = gui.plot(ax, dsp.MFSC, range_, cmap_, ssub,
+                               window=window, remove_dc=False)
         else:
             window = dataset.windows[pos]
-            gui.plot(ax, dsp.MEL_SPECTROGRAM, range_, cmap_, ssub, data=data,
-                         window=window, remove_dc=True)
+            gui.plot(ax, dsp.MFSC, range_, cmap_, ssub, data=data,
+                         window=window, remove_dc=False)
         if cnn_model:
-            infer(data, pos, remove_dc=True)
-        last_operation = (mel_spectrogram, data, window, pos)
+            infer(data, pos, remove_dc=False)
+        last_operation = (mfsc, data, window, pos)
         fig.tight_layout()
         canvas.draw()
         if repeatable:
-            repeat(mel_spectrogram)
+            repeat(mfsc)
 
     def mfcc(data=EMPTY, pos=None, repeatable=True):
         global last_operation, dataset
@@ -238,12 +247,7 @@ if __name__ == '__main__':
             repeat(mfcc)
 
     def welch():
-        global last_operation
-        func, data, window, pos = last_operation
-        if func == spectrogram:
-            gui.plot_welch(ax, data, window)
-        else:
-            print("Welch's method is for spectrogram only")
+        gui.plot_welch(ax)
         fig.tight_layout()
         canvas.draw()
 
@@ -332,7 +336,7 @@ if __name__ == '__main__':
                 print('Up key becomes effective after executing an operations.')
             else:
                 func = last_operation[0]
-                if func in (mel_spectrogram, mfcc):
+                if func in (mfsc, mfcc):
                     func(pos=int(range_window.get()), repeatable=False)
                 else:
                     func(repeatable=False)
@@ -353,7 +357,7 @@ if __name__ == '__main__':
         with open(args.dataset_folder + '/data/' + filename) as f:
             data = np.array(f.read().split(','), dtype='float')
         
-        if func == mel_spectrogram or func == mfcc:
+        if func == mfsc or func == mfcc:
             data = data.reshape(400, dataset.filters)
             pos = params[3]
             if pos == 'a':
@@ -379,14 +383,14 @@ if __name__ == '__main__':
     ### Row 1 ####
     entry_class_label = Tk.Entry(master=frame_row1, width=14)
     var_cmap = Tk.StringVar()
-    var_cmap.set('hot')
-    cmap = Tk.OptionMenu(frame_row1, var_cmap, *CMAP_LIST)
+    var_cmap.set(cmap_list[0])
+    cmap = Tk.OptionMenu(frame_row1, var_cmap, *cmap_list)
     cmap.config(bg=BG, activebackground='paleturquoise')
     counter = Tk.Label(master=frame_row1)
     counter.configure(text='({})'.format(str(0)))
     range_amplitude = Tk.Spinbox(master=frame_row1, width=6,
                                  values=[2**8, 2**9, 2**11, 2**13, 2**15])
-    range_mel_spectrogram = Tk.Spinbox(master=frame_row1, width=3,
+    range_mfsc = Tk.Spinbox(master=frame_row1, width=3,
                                        values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
     range_spectrogram = Tk.Spinbox(master=frame_row1, width=4,
                                    values=[int(dsp.NN/2), int(dsp.NN/2.0*.7), int(dsp.NN/2.0*0.4)])
@@ -403,7 +407,7 @@ if __name__ == '__main__':
                            bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_spectrogram = Tk.Button(master=frame_row1, text='Spec', command=spectrogram,
                                    bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
-    button_mel_spectrogram = Tk.Button(master=frame_row1, text='Mel spec', command=mel_spectrogram,
+    button_mfsc = Tk.Button(master=frame_row1, text='MFSCs', command=mfsc,
                                        bg='pink', activebackground='grey', padx=PADX, width=WIDTH)
     button_mfcc = Tk.Button(master=frame_row1, text='MFCCs', command=mfcc,
                             bg='yellowgreen', activebackground='grey', padx=PADX, width=WIDTH)
@@ -469,89 +473,96 @@ if __name__ == '__main__':
     frame_row0.pack(expand=True, fill=Tk.BOTH)
     canvas._tkcanvas.pack(expand=True, fill=Tk.BOTH)
 
-    ### Row 1: operation ####
+    if args.fullscreen_mode:
+        repeat_action = True
+        func = globals()[args.fullscreen_mode]
+        if func in (raw_wave, fft, spectrogram, mfsc, mfcc):
+            func(repeatable=True)
+    else:
 
-    frame_row1.pack(pady=PADY_GRID)
+        ### Row 1: operation ####
 
-    if not cnn_model:
+        frame_row1.pack(pady=PADY_GRID)
 
+        if not cnn_model:
+
+            if not args.oscilloscope_mode:
+                # Class label entry
+                label_class.grid(row=0, column=0, padx=PADX_GRID)
+                entry_class_label.grid(row=0, column=1, padx=PADX_GRID)
+                counter.grid(row=0, column=2, padx=PADX_GRID)
+
+            # Waveform
+            range_amplitude.grid(row=0, column=3, padx=PADX_GRID)
+            button_waveform.grid(row=0, column=4, padx=PADX_GRID)
+
+            # FFT (PSD)
+            button_psd.grid(row=0, column=5, padx=PADX_GRID)
+
+            # Linear-scale Spectrogram (PSD)
+            range_spectrogram.grid(row=0, column=6, padx=PADX_GRID)
+            button_spectrogram.grid(row=0, column=7, padx=PADX_GRID)
+
+        if not cnn_model or (cnn_model and dataset.feature == 'mfsc'):
+            # Mel-scale Spectrogram (PSD)
+            range_mfsc.grid(row=0, column=8, padx=PADX_GRID)
+            button_mfsc.grid(row=0, column=9, padx=PADX_GRID)
+
+        # MFCC
+        if not cnn_model or (cnn_model and dataset.feature == 'mfcc'):
+            range_mfcc.grid(row=0, column=10, padx=PADX_GRID)
+            button_mfcc.grid(row=0, column=11, padx=PADX_GRID)
+
+        # CMAP
+        label_image.grid(row=0, column=12, padx=PADX_GRID)
+        label_image.grid(row=0, column=13, padx=PADX_GRID)
+        spectrum_subtraction.grid(row=0, column=14, padx=PADX_GRID)
+        cmap.grid(row=0, column=15, padx=PADX_GRID)
+
+        ### Row 2 ####
+
+        frame_row2.pack(pady=PADY_GRID)
+
+        # Beam forming
+        label_beam_forming.grid(row=0, column=0, padx=PADX_GRID)
+        label_left.grid(row=0, column=1, padx=PADX_GRID)
+        range_beam_forming.grid(row=0, column=2, padx=PADX_GRID)
+        label_right.grid(row=0, column=3, padx=PADX_GRID)
+
+        # Repeat, pre_emphasis, save fig and delete
+        button_repeat.grid(row=0, column=4, padx=PADX_GRID)
+        button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
+        if not cnn_model:
+            button_welch.grid(row=0, column=6, padx=PADX_GRID)
+            if not args.oscilloscope_mode:
+                button_confirm.grid(row=0, column=7, padx=PADX_GRID)
+                button_save.grid(row=0, column=8, padx=PADX_GRID)
+                button_remove.grid(row=0, column=9, padx=PADX_GRID)
+        button_savefig.grid(row=0, column=10, padx=PADX_GRID)
+
+        # Quit
+        button_quit.grid(row=0, column=11, padx=PADX_GRID)
+
+        ### Row 3 ####
+
+        # DEBUG
+        if args.debug:
+            frame_row3.pack(pady=PADY_GRID)
+            button_filterbank.grid(row=0, column=0, padx=PADX_GRID)
+            button_elapsed_time.grid(row=0, column=1, padx=PADX_GRID)
+            button_broadside.grid(row=0, column=2, padx=PADX_GRID)    
+            button_endfire.grid(row=0, column=3, padx=PADX_GRID)            
+            button_left_mic_only.grid(row=0, column=4, padx=PADX_GRID)    
+            button_right_mic_only.grid(row=0, column=5, padx=PADX_GRID)    
+
+        ### Row 4 ####
         if not args.oscilloscope_mode:
-            # Class label entry
-            label_class.grid(row=0, column=0, padx=PADX_GRID)
-            entry_class_label.grid(row=0, column=1, padx=PADX_GRID)
-            counter.grid(row=0, column=2, padx=PADX_GRID)
-
-        # Waveform
-        range_amplitude.grid(row=0, column=3, padx=PADX_GRID)
-        button_waveform.grid(row=0, column=4, padx=PADX_GRID)
-
-        # FFT (PSD)
-        button_psd.grid(row=0, column=5, padx=PADX_GRID)
-
-        # Linear-scale Spectrogram (PSD)
-        range_spectrogram.grid(row=0, column=6, padx=PADX_GRID)
-        button_spectrogram.grid(row=0, column=7, padx=PADX_GRID)
-
-    if not cnn_model or (cnn_model and dataset.feature == 'mel_spectrogram'):
-        # Mel-scale Spectrogram (PSD)
-        range_mel_spectrogram.grid(row=0, column=8, padx=PADX_GRID)
-        button_mel_spectrogram.grid(row=0, column=9, padx=PADX_GRID)
-
-    # MFCC
-    if not cnn_model or (cnn_model and dataset.feature == 'mfcc'):
-        range_mfcc.grid(row=0, column=10, padx=PADX_GRID)
-        button_mfcc.grid(row=0, column=11, padx=PADX_GRID)
-
-    # CMAP
-    label_image.grid(row=0, column=12, padx=PADX_GRID)
-    label_image.grid(row=0, column=13, padx=PADX_GRID)
-    spectrum_subtraction.grid(row=0, column=14, padx=PADX_GRID)
-    cmap.grid(row=0, column=15, padx=PADX_GRID)
-
-    ### Row 2 ####
-
-    frame_row2.pack(pady=PADY_GRID)
-
-    # Beam forming
-    label_beam_forming.grid(row=0, column=0, padx=PADX_GRID)
-    label_left.grid(row=0, column=1, padx=PADX_GRID)
-    range_beam_forming.grid(row=0, column=2, padx=PADX_GRID)
-    label_right.grid(row=0, column=3, padx=PADX_GRID)
-
-    # Repeat, pre_emphasis, save fig and delete
-    button_repeat.grid(row=0, column=4, padx=PADX_GRID)
-    button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
-    if not cnn_model:
-        button_welch.grid(row=0, column=6, padx=PADX_GRID)
-        if not args.oscilloscope_mode:
-            button_confirm.grid(row=0, column=7, padx=PADX_GRID)
-            button_save.grid(row=0, column=8, padx=PADX_GRID)
-            button_remove.grid(row=0, column=9, padx=PADX_GRID)
-    button_savefig.grid(row=0, column=10, padx=PADX_GRID)
-        
-    # Quit
-    button_quit.grid(row=0, column=11, padx=PADX_GRID)
-
-    ### Row 3 ####
-
-    # DEBUG
-    if args.debug:
-        frame_row3.pack(pady=PADY_GRID)
-        button_filterbank.grid(row=0, column=0, padx=PADX_GRID)
-        button_elapsed_time.grid(row=0, column=1, padx=PADX_GRID)
-        button_broadside.grid(row=0, column=2, padx=PADX_GRID)    
-        button_endfire.grid(row=0, column=3, padx=PADX_GRID)            
-        button_left_mic_only.grid(row=0, column=4, padx=PADX_GRID)    
-        button_right_mic_only.grid(row=0, column=5, padx=PADX_GRID)    
-
-    ### Row 4 ####
-    if not args.oscilloscope_mode:
-        frame_row4.pack(pady=PADY_GRID)
-        label_window.grid(row=0, column=0, padx=PADX_GRID)
-        range_window.grid(row=0, column=1, padx=PADX_GRID)
-        if cnn_model:
-            label_inference.grid(row=0, column=2, padx=PADX_GRID)
-            label_inference.configure(text='...')
+            frame_row4.pack(pady=PADY_GRID)
+            label_window.grid(row=0, column=0, padx=PADX_GRID)
+            range_window.grid(row=0, column=1, padx=PADX_GRID)
+            if cnn_model:
+                label_inference.grid(row=0, column=2, padx=PADX_GRID)
+                label_inference.configure(text='...')
 
     ##### loop forever #####
     Tk.mainloop()

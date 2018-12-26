@@ -20,7 +20,7 @@ The trained CNN model will work OK if the following condition is satisfied:
 
 ### Class labels and data set
 
-#### Mel-spectrogram feature set
+#### MFSC feature set
 
 ##### Pattern 1
 

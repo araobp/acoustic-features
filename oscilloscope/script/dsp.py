@@ -15,7 +15,7 @@ import threading
 
 Fs = 80000000.0/128.0/32.0  # Sampling frequency
 Nyq = Fs/2.0                # Nyquist frequency
-NUM_FILTERS = 40            # The number of filters in the filter bank
+NUM_FILTERS = 64            # The number of filters in the filter bank
 BAUD_RATE = 460800          # UART baud rate
 NN = 512                    # The number of samples per frame
 
@@ -36,7 +36,7 @@ BROADSIDE = b'b'
 ENDFIRE = b'e'
 
 # Features
-MEL_SPECTROGRAM = b'98'
+MFSC = b'98'
 MFCC = b'99'
 
 # main.c
@@ -52,7 +52,7 @@ SHAPE[RAW_WAVE] = None
 SHAPE[FFT] = None
 SHAPE[SPECTROGRAM] = (200, int(NN/2))
 SHAPE[FEATURES] = (400, NUM_FILTERS)
-SHAPE[MEL_SPECTROGRAM] = (200, NUM_FILTERS)
+SHAPE[MFSC] = (200, NUM_FILTERS)
 SHAPE[MFCC] = (200, NUM_FILTERS)
 
 ###################
@@ -96,14 +96,17 @@ class Interface:
                     data = np.array(data, dtype=np.int16)
                 elif cmd == FILTERBANK:
                     filterbank = []
+                    k_range = []
                     while True:
                         rx = ser.readline().decode('ascii').rstrip('\n,')
                         if rx == 'e':
                             break
                         temp = rx.split(',')
-                        print(temp)
-                        filterbank.extend(temp)
-                    data = np.array(filterbank, dtype=float)
+                        k_range.append(np.array(temp[0].split(':'), dtype=int))
+                        filterbank.append(np.array(temp[1:], dtype=float))
+                    #print(k_range)
+                    #print(filterbank)
+                    data = (k_range, filterbank)
                 elif cmd == ELAPSED_TIME:
                     data = ser.readline().decode('ascii').rstrip('\n,')
                     print(data)
@@ -112,12 +115,10 @@ class Interface:
                     n = 0
                     half = int(NUM_SAMPLES[cmd]/2)
                     for d in rx:
+                        d = b8_to_int(d, True)
                         if n < half:
-                            d = b8_to_int(d, False)
                             if ssub:
-                                d = d - sub if d > sub else 0.0
-                        else:
-                            d = b8_to_int(d, True)
+                                d = d - sub if d > sub else -sub
                         n += 1
                         data.append(d)
                     data = np.array(data, dtype=np.int)
@@ -125,7 +126,7 @@ class Interface:
                 else:  # 8bit quantization
                     rx = ser.read(NUM_SAMPLES[cmd])
                     for d in rx:
-                        d  = b8_to_int(d, False)
+                        d  = b8_to_int(d, True)
                         if ssub:
                             d = d - sub if d > sub else 0.0              
                         data.append(d)

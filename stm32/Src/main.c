@@ -110,7 +110,7 @@ volatile debug debug_output = ELAPSED_TIME;
 uint32_t elapsed_time = 0;
 
 // Buffers
-uint8_t mel_spectrogram_buffer[NUM_FILTERS * 200] = { 0.0f };
+int8_t mfsc_buffer[NUM_FILTERS * 200] = { 0.0f };
 int8_t mfcc_buffer[NUM_FILTERS * 200] = { 0.0f };
 int pos = 0;
 
@@ -182,13 +182,14 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     b = (200 - pos) * NUM_FILTERS;
     c = 200 * NUM_FILTERS;
     // Time series order
-    memcpy(uart_buf + b, mel_spectrogram_buffer, a);
-    memcpy(uart_buf, mel_spectrogram_buffer + a, b);
+    memcpy(uart_buf + b, mfsc_buffer, a);
+    memcpy(uart_buf, mfsc_buffer + a, b);
     memcpy(uart_buf + b + c, mfcc_buffer, a);
     memcpy(uart_buf + c, mfcc_buffer + a, b);
   } else {
     for (int n = 0; n < length; n++) {
-      uart_buf[idx++] = (uint8_t) in[n];
+      if (in[n] < -128.0f) in[n] = -128.0f;
+      uart_buf[idx++] = (int8_t) in[n];
     }
   }
 
@@ -225,16 +226,19 @@ void dsp(float32_t *s1, mode mode) {
   if (mode >= FFT) {
     apply_hann(s1);
     apply_fft(s1);
-    apply_psd_logscale(s1);
-  }
-  if (mode >= FEATURES) {
-    apply_filterbank(s1);
-    for (int i = 0; i < NUM_FILTERS; i++) {
-      mel_spectrogram_buffer[pos * NUM_FILTERS + i] = (uint8_t) s1[i];
-    }
-    apply_dct2(s1);
-    for (int i = 0; i < NUM_FILTERS; i++) {
-      mfcc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
+    apply_psd(s1);
+    if (mode < FEATURES) {
+      apply_psd_logscale(s1);
+    } else {
+      apply_filterbank(s1);
+      apply_filterbank_logscale(s1);
+      for (int i = 0; i < NUM_FILTERS; i++) {
+        mfsc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
+      }
+      apply_dct2(s1);
+      for (int i = 0; i < NUM_FILTERS; i++) {
+        mfcc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
+      }
     }
   }
   if (++pos >= 200)
@@ -283,6 +287,7 @@ void dump(void) {
     switch (debug_output) {
     case FILTERBANK:
       for (int m = 0; m < NUM_FILTERS + 2; m++) {
+        printf("%d:%d,", k_range[m][0], k_range[m][1]);
         for (int n = 0; n < FILTER_LENGTH; n++) {
           printf("%.3f,", filterbank[m][n]);
         }
@@ -301,7 +306,7 @@ void dump(void) {
 }
 
 /*
- * Apply beam forming and pre-emphasis
+ * Apply beam forming
  */
 void beam_forming(float32_t *signal, int32_t *l, int32_t *r,
     beam_forming_setting mode, int direction) {
@@ -339,6 +344,9 @@ void beam_forming(float32_t *signal, int32_t *l, int32_t *r,
 
 }
 
+/*
+ * Apply pre emphasis
+ */
 void pre_emphasis(float32_t *signal, int direction) {
   if (pre_emphasis_enabled) {
     if (beam_forming_mode == ENDFIRE && direction != 2) {

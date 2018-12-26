@@ -1,5 +1,6 @@
 import numpy as np
 import dsp
+from scipy.fftpack import dct
 
 # Empty array
 EMPTY = np.array([])
@@ -11,13 +12,10 @@ TIME[dsp.RAW_WAVE] = np.linspace(0, dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*1000.0,
 FREQ[dsp.FFT] = np.linspace(0, dsp.Fs/2, dsp.NUM_SAMPLES[dsp.FFT])
 TIME[dsp.SPECTROGRAM] = np.linspace(0, dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 200)
 FREQ[dsp.SPECTROGRAM] = np.linspace(0, dsp.Nyq, int(dsp.NN/2))
-TIME[dsp.MEL_SPECTROGRAM] = np.linspace(-dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 0, 200)
-FREQ[dsp.MEL_SPECTROGRAM] = np.linspace(1, dsp.NUM_FILTERS+1, dsp.NUM_FILTERS)
+TIME[dsp.MFSC] = np.linspace(-dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 0, 200)
+FREQ[dsp.MFSC] = np.linspace(1, dsp.NUM_FILTERS+1, dsp.NUM_FILTERS)
 TIME[dsp.MFCC] = np.linspace(-dsp.NUM_SAMPLES[dsp.RAW_WAVE]/dsp.Fs*200.0/2, 0, 200)
 FREQ[dsp.MFCC] = np.linspace(0, dsp.NUM_FILTERS, dsp.NUM_FILTERS)
-
-# Adjustment for 8bit quantization: see "dsp.h" in C language
-ADJUST_PSD = 2.0
 
 # Convert frequency to Mel
 def hz2mel(hz):
@@ -53,9 +51,21 @@ def shadow(pixels, window, shadow_sub):
 # GUI class
 class GUI:
     
-    def __init__(self, interface):
+    def __init__(self, interface, fullscreen=None):
         # Serial interface
         self.interface = interface
+        self.fullscreen = True if fullscreen else False
+
+    def set_labels(self, ax, title, xlabel, ylabel, ylim=None):
+        if self.fullscreen:
+            ax.set_xticks([])
+            ax.set_yticks([])
+        else:
+            ax.set_title(title)
+            ax.set_xlabel(xlabel)
+            ax.set_ylabel(ylabel)
+        if ylim:
+            ax.set_ylim(ylim)
 
     # Use matplotlib to plot the output from the device
     def plot(self, ax, cmd, range_=None,
@@ -63,7 +73,7 @@ class GUI:
                  window=None, data=EMPTY,
                  shadow_sub=0, remove_dc=False):
 
-        if (data is EMPTY) and (cmd == dsp.MEL_SPECTROGRAM or cmd == dsp.MFCC):
+        if (data is EMPTY) and (cmd == dsp.MFSC or cmd == dsp.MFCC):
             data = self.interface.read(dsp.FEATURES, ssub)
         elif data is EMPTY:
             data = self.interface.read(cmd, ssub)
@@ -71,54 +81,50 @@ class GUI:
         ax.clear()
         
         if cmd == dsp.RAW_WAVE:
-            ax.set_title('Time domain')
             ax.plot(TIME[dsp.RAW_WAVE], data)
-            ax.set_xlabel('Time [msec]')
-            ax.set_ylabel('Amplitude')
-            ax.set_ylim([-range_, range_])
+            self.set_labels(ax, 'Time domain', 'Time [msec]', 'Amplitude', [-range_, range_])
 
         elif cmd == dsp.FFT:
-            ax.set_title('Frequency domain')
-            ax.plot(FREQ[dsp.FFT], data/ADJUST_PSD)
-            ax.set_xlabel('Frequency [Hz]')
-            ax.set_ylabel('Power [dB]')
-            ax.set_ylim([-8, 127])
+            ax.plot(FREQ[dsp.FFT], data)
+            self.set_labels(ax, 'Frequency domain', 'Frequency [Hz]', 'Power [dB]', [-128, 90])
 
         elif cmd == dsp.SPECTROGRAM:
             if window:
-                shadowed = shadow(data/ADJUST_PSD, window, shadow_sub=10)
+                shadowed = shadow(data, window, shadow_sub=10)
             else:
-                shadowed = data/ADJUST_PSD          
+                shadowed = data          
             ax.pcolormesh(TIME[dsp.SPECTROGRAM],
                           FREQ[dsp.SPECTROGRAM][:range_],
                           shadowed.T[:range_],
                           cmap=cmap)
-            ax.set_title('Spectrogram')
-            ax.set_xlabel('Time [sec]')
-            ax.set_ylabel('Frequency (Hz)')
+            self.set_labels(ax, 'Spectrogram', 'Time [sec]', 'Frequency (Hz)')
 
-        elif cmd == dsp.MEL_SPECTROGRAM:
-            data_ = data[:200,:]/ADJUST_PSD
+        elif cmd == dsp.MFSC:
+            data_ = data[:200,:]
+            print('MFSC max abs: {}'.format(np.max(np.abs(data_))))
             if window:
                 shadowed = shadow(data_, window, shadow_sub=10)
             else:
                 shadowed = data_
             if remove_dc:
-                ax.pcolormesh(TIME[dsp.MEL_SPECTROGRAM],
-                          FREQ[dsp.MEL_SPECTROGRAM][1:range_],
+                ax.pcolormesh(TIME[dsp.MFSC],
+                          FREQ[dsp.MFSC][1:range_],
                           shadowed.T[1:range_],
                           cmap=cmap)                
             else:
-                ax.pcolormesh(TIME[dsp.MEL_SPECTROGRAM],
-                          FREQ[dsp.MEL_SPECTROGRAM][:range_],
+                ax.pcolormesh(TIME[dsp.MFSC],
+                          FREQ[dsp.MFSC][:range_],
                           shadowed.T[:range_],
                           cmap=cmap)
-            ax.set_title('Mel-scale spectrogram')
-            ax.set_xlabel('Time [sec]')
-            ax.set_ylabel('Mel-scale filter')
+            self.set_labels(ax, 'MFSCs', 'Time [sec]', 'MFSC')
 
         elif cmd == dsp.MFCC:
-            data_ = data[200:,:]/ADJUST_PSD
+            # Debug
+            print('mfsc: {}'.format(data[0]))
+            print('mfcc stm32: {}'.format(data[200][1:]))
+            print('mfcc python: {}'.format(dct(data[0]/10.0).astype(int)[1:]))
+            data_ = data[200:,:]
+            print('MFCC max abs: {}'.format(np.max(np.abs(data_[:,1:]))))
             if window:
                 shadowed = shadow(data_, window, shadow_sub=10)
             else:
@@ -133,30 +139,23 @@ class GUI:
                           FREQ[dsp.MFCC][:range_],
                           shadowed.T[:range_],
                           cmap=cmap)
-            ax.set_title('MFCCs')
-            ax.set_xlabel('Time [sec]')
-            ax.set_ylabel('MFCC')     
+            self.set_labels(ax, 'MFCCs', 'Time [sec]', 'MFCC')
 
-        elif cmd == dsp.FILTERBANK: 
-            data = data.reshape(dsp.NUM_FILTERS+2, dsp.FILTER_LENGTH)
+        elif cmd == dsp.FILTERBANK:
+            k_range, filterbank = data
             for m in range(1, dsp.NUM_FILTERS+1):
-                num_axis = hz_freqs_n[m]+dsp.FILTER_LENGTH
-                mel = np.zeros(num_axis)
-                mel[hz_freqs_n[m]:hz_freqs_n[m]+dsp.FILTER_LENGTH] = data[m]
-                ax.plot(mel)
-                
-            ax.set_title('Mel filter bank')
-            ax.set_xlabel('n')
-            ax.set_ylabel('Magnitude')
+                h = np.zeros(int(dsp.NN/2))
+                k_left, len = k_range[m]
+                h[k_left:k_left+len] = filterbank[m][:len]
+                ax.plot(h)
+            self.set_labels(ax, 'Mel filter ban k', 'n', 'Magnitude')
 
         return data
 
-    def plot_welch(self, ax, data, window):
-        data = data[window[0]:window[1], :window[2]]
-        num_samples = window[1] - window[0]
-        data = np.sum(data, axis=0)/num_samples
-        ax.set_title("Welch's method")
-        ax.stem(FREQ[dsp.FFT][:window[2]], data)
-        ax.set_xlabel('Frequency [Hz]')
-        ax.set_ylabel('PSD [dB]')
-        ax.set_ylim([-8, 127])
+    def plot_welch(self, ax):
+        data = self.interface.read(dsp.SPECTROGRAM)
+        ax.clear()
+
+        data = np.sum(data, axis=0)/(dsp.NN/2)
+        ax.plot(FREQ[dsp.FFT], data)
+        self.set_labels(ax, "Welch's method", 'Frequency [Hz]', 'Power [dB]', [-128, 90])

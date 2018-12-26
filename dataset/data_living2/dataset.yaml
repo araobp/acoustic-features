@@ -1,4 +1,4 @@
-feature: mel_spectrogram
+feature: mfsc
 files: 50
 training_files: 40
 length: 64

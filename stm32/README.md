@@ -12,7 +12,7 @@ The configuration below assumes [my original "Knowles MEMS mic Arduino shield"](
 
 STMicro's HAL library supports "HAL_DFSDM_FilterRegConvHalfCpltCallback" that is very useful to implemente ring-buffer-like buffering for real-time processing.
 
-I splitted buffers for DMA into two segments: segment A and segment B.
+I split buffers for DMA into two segments: segment A and segment B.
 
 ```
                                                   Interrupt
@@ -69,7 +69,9 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
          |             |
   [     PSD      ]-----+  arm_cmplx_mag_f32(), arm_scale_f32()
          |             |
-  [Mel-spectrogram]----+  arm_dot_prod_f32()
+  [Filterbank(MFSCs)]--+  arm_dot_prod_f32()
+         |             |
+     [Log scale]-------+  arm_scale_f32() with log10 approximation
          |             |
  [DCT Type-II(MFCCs)]  |  arm_rfft_fast_f32(), arm_scale_f32(), arm_cmplx_mult_cmplx_f32()
          |             |
@@ -83,9 +85,6 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
          V
 << Oscilloscope GUI >>
 ```
-
-- My conclusion is that 80_000_000(Hz)/32(clock divider)/128(FOSR) with pre-emphasis(HPF) is the best setting for obtaining the best images of mel-spectrogram.
-- I use a triangler filter bank to obtain mel-spectrogram, and I make each triangle filter having a same amount of area.
 
 ## Frame/stride/overlap
 
@@ -107,11 +106,11 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 ```
 ## Filter banks
 
-Mel-scale filterbank is applied to the spectrogram to extract feature for training CNN: 40 filters (512 samples divided by (40 + 1)).
+Mel-scale filterbank is applied to the spectrogram to extract MFSCs for training CNN: 40 filters (512 samples divided by (40 + 1)).
 
 ## log10 processing time issue
 
-PSD caliculation uses log10 math function, but CMSIS-DSP does not support log10. log10 on the standard "math.h" is too slow. I tried math.h log10, and the time required for caluculating log10(x) does not fit into the time slot of sound frame, so I decided to adopt [log10 approximation](../ipynb/log10%20fast%20approximation.ipynb). The approximation has been working perfect so far.
+PSD calculation uses log10 math function, but CMSIS-DSP does not support log10. log10 on the standard "math.h" is too slow. I tried math.h log10, and the time required for calculating log10(x) does not fit into the time slot of sound frame, so I decided to adopt [log10 approximation](../ipynb/log10%20fast%20approximation.ipynb). The approximation has been working perfect so far.
 
 ### Processing time (actual measurement)
 
@@ -151,7 +150,7 @@ I have made [a simulation](../ipynb/Beam%20forming.ipynb) to study beam forming.
 The conclusion: d = 20mm is the best to support both Broadside and Endfire, and to avoid aliases at higher frequencies: zero power at theta=28, theta=90 and theta=152 degrees.
 
 The best settings:
-- Apply Broadside mode to caputer sound from the center direction (theta = 90 degrees).
+- Apply Broadside mode to capture sound from the center direction (theta = 90 degrees).
 - Apply Endfire mode to capture sound from the left direction or the right direction.
 
 ![](../ipynb/broadside_n%3D0.jpg)
