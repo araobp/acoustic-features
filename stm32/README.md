@@ -104,9 +104,13 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
   --- overlap dsp -------------
               :
 ```
-## Filter banks
+## Mel filter bank
 
-Mel-scale filterbank is applied to the spectrogram to extract MFSCs for training CNN: 40 filters (512 samples divided by (40 + 1)).
+The number of filters: 64
+
+The filter bank is applied to the spectrogram to extract MFSCs and MFCCs for training CNN.
+
+I have developed DCT Type-II function in C language to calculate MFCCs.
 
 ## log10 processing time issue
 
