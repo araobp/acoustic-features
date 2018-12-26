@@ -4,7 +4,9 @@
 
 ## Background and motivation
 
-["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
+- ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
+- [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset)
+- [Speech Processing for Machine Learning: Filter banks, Mel-Frequency Cepstral Coefficients (MFCCs) and What's In-Between](https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html)
 
 ## Project status (Dec 26, 2018)
 
