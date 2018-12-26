@@ -1,4 +1,4 @@
-# Acoustic features for machine learning with stm32 and Keras/TensorFlow
+# Acoustic features for machine learning
 
 ![](./oscilloscope/screenshots/piano.jpg)
 
@@ -6,12 +6,15 @@
 
 ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
 
-## Project status (Dec 22, 2018)
+## Project status (Dec 26, 2018)
 
 This project is still in development:
 - All the pre-processing features and the oscilloscope GUI have been implemented.
 - Several CNN models on Keras/TensorFlow have already been tested.
 - Inference engine based on Keras/TensorFlow has been implemented for Win10 and RasPi3.
+- Implementation of DCT Type-II (for MFCCs) on STM32 has been completed.
+
+And I am currently working on 8bit quantization for MFSCs/MFCCs.
 
 ## Architecture
 
