@@ -53,6 +53,11 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+/* USER CODE END Includes */
+
+/* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
+
 // Beam forming: Broadside mode and Endfire mode
 typedef enum {
   BROADSIDE, ENDFIRE, LEFT_MIC_ONLY, RIGHT_MIC_ONLY
@@ -67,11 +72,6 @@ typedef enum {
 typedef enum {
   DISABLED, FILTERBANK, ELAPSED_TIME
 } debug;
-
-/* USER CODE END Includes */
-
-/* Exported types ------------------------------------------------------------*/
-/* USER CODE BEGIN ET */
 
 /* USER CODE END ET */
 
