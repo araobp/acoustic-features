@@ -7,6 +7,7 @@
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
 - [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset)
 - [Speech Processing for Machine Learning: Filter banks, Mel-Frequency Cepstral Coefficients (MFCCs) and What's In-Between](https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html)
+- [STM32 Cube.AI](https://www.st.com/content/st_com/en/stm32-ann.html)
 
 ## Project status (Dec 26, 2018)
 
@@ -16,7 +17,7 @@ This project is still in development:
 - Inference engine based on Keras/TensorFlow has been implemented for Win10 and RasPi3.
 - Implementation of DCT Type-II (for MFCCs) on STM32 has been completed.
 
-And I am currently working on 8bit quantization for MFSCs/MFCCs.
+And I am currently working on STM32 Cube.AI
 
 ## Architecture
 
@@ -25,7 +26,7 @@ And I am currently working on 8bit quantization for MFSCs/MFCCs.
                                           ARM Cortex-M4(STM32L476RG)        Another core of ARM Cortex-M
                                       .................................... .............................
                                       :   Filters for feature extraction : :    Inference on CNN       :
-Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features-->[CubeMX.AI or CMSIS-NN] :
+Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features-->[Cube.AI]               :
                                       :    |                   |         : :                           :
                                       :    +------------+      |         : :                           :
                                       :     +-----------|------+         : :                           :
@@ -43,8 +44,6 @@ Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features-->[
                                             | *** inference ***
                                             +--(dataset)--> [oscilloscope.py/Win10 or RasPi3] Keras/TensorFlow
 ```
-
-*1 CubeMX.AI will be available in 1Q/2019: https://community.st.com/s/question/0D50X00009yG1AUSA0/when-is-stm32cubeai-available
 
 Platform:
 - [Platform and tool chain](./PLATFORM.md)
