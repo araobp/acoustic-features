@@ -59,10 +59,12 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
 
+    dataset = dataset.DataSet(args.dataset_folder)
+    class_file = args.dataset_folder + '/class_labels.yaml'
+
     plt.style.use(args.plot_style)
 
-    itfc = dsp.Interface(port=args.port)
-    gui = gui.GUI(interface=itfc, fullscreen=args.fullscreen_mode)
+    itfc = dsp.Interface(port=args.port, dataset=dataset)
         
     # Beam forming mode
     mode = dsp.ENDFIRE
@@ -93,8 +95,7 @@ if __name__ == '__main__':
 
     EMPTY = np.array([])
 
-    dataset = dataset.DataSet(args.dataset_folder)
-    class_file = args.dataset_folder + '/class_labels.yaml'
+    gui = gui.GUI(interface=itfc, dataset=dataset, fullscreen=args.fullscreen_mode)
 
     if dataset.model and not args.browser:
         import inference
@@ -178,7 +179,7 @@ if __name__ == '__main__':
     def fft(repeatable=True):
         global last_operation
         ssub = int(spectrum_subtraction.get())
-        data = gui.plot(ax, dsp.FFT, ssub=ssub)
+        data = gui.plot(ax, dsp.FFT)
         last_operation = (fft, data, None, None)
         fig.tight_layout()
         canvas.draw()
@@ -192,8 +193,7 @@ if __name__ == '__main__':
         cmap_ = var_cmap.get()
         if data is EMPTY:
             window = dataset.windows[int(range_window.get())]
-            data = gui.plot(ax, dsp.SPECTROGRAM, range_, cmap_, ssub,
-                               window=None)
+            data = gui.plot(ax, dsp.SPECTROGRAM, range_, cmap_, ssub)
         else:
             window = dataset.windows[pos]
             gui.plot(ax, dsp.SPECTROGRAM, range_, cmap_, ssub, data=data,
@@ -212,13 +212,13 @@ if __name__ == '__main__':
         if data is EMPTY or pos is None:
             window = dataset.windows[int(range_window.get())]
             data = gui.plot(ax, dsp.MFSC, range_, cmap_, ssub,
-                               window=window, remove_dc=False)
+                               window=window)
         else:
             window = dataset.windows[pos]
             gui.plot(ax, dsp.MFSC, range_, cmap_, ssub, data=data,
-                         window=window, remove_dc=False)
+                         window=window)
         if cnn_model:
-            infer(data, pos, remove_dc=False)
+            infer(data, pos)
         last_operation = (mfsc, data, window, pos)
         fig.tight_layout()
         canvas.draw()
@@ -233,13 +233,13 @@ if __name__ == '__main__':
         if data is EMPTY or pos is None:
             window = dataset.windows[int(range_window.get())]
             data = gui.plot(ax, dsp.MFCC, range_, cmap_, ssub,
-                               window=window, remove_dc=True)
+                               window=window)
         else:
             window = dataset.windows[pos]
             gui.plot(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
-                         window=window, remove_dc=True)
+                         window=window)
         if cnn_model:
-            infer(data, pos, remove_dc=True)
+            infer(data, pos)
         last_operation = (mfcc, data, window, pos)
         fig.tight_layout()
         canvas.draw()
@@ -391,15 +391,15 @@ if __name__ == '__main__':
     range_amplitude = Tk.Spinbox(master=frame_row1, width=6,
                                  values=[2**8, 2**9, 2**11, 2**13, 2**15])
     range_mfsc = Tk.Spinbox(master=frame_row1, width=3,
-                                       values=[dsp.NUM_FILTERS, int(dsp.NUM_FILTERS*.8), int(dsp.NUM_FILTERS*0.6)])
+                                       values=[dataset.filters, int(dataset.filters*.8), int(dataset.filters*0.6)])
     range_spectrogram = Tk.Spinbox(master=frame_row1, width=4,
                                    values=[int(dsp.NN/2), int(dsp.NN/2.0*.7), int(dsp.NN/2.0*0.4)])
     range_mfcc = Tk.Spinbox(master=frame_row1, width=3,
-                            values=[13, 20])
+                            values=[16, 25, 40])
     spectrum_subtraction = Tk.Spinbox(master=frame_row1, width=3,
-                                      values=[0, 10, 15, 20, 25])
+                                      values=[-60, -40, -30, -25, -20])
     label_class = Tk.Label(master=frame_row1, text='Class label:')
-    label_image = Tk.Label(master=frame_row1, text='Subtraction:')
+    label_image = Tk.Label(master=frame_row1, text='Mask:')
     label_color = Tk.Label(master=frame_row1, text='Color:')
     button_waveform = Tk.Button(master=frame_row1, text='Wave', command=raw_wave,
                                 bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
@@ -407,6 +407,8 @@ if __name__ == '__main__':
                            bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_spectrogram = Tk.Button(master=frame_row1, text='Spec', command=spectrogram,
                                    bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
+    button_welch = Tk.Button(master=frame_row1, text='Welch', command=welch,
+                            bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_mfsc = Tk.Button(master=frame_row1, text='MFSCs', command=mfsc,
                                        bg='pink', activebackground='grey', padx=PADX, width=WIDTH)
     button_mfcc = Tk.Button(master=frame_row1, text='MFCCs', command=mfcc,
@@ -431,8 +433,6 @@ if __name__ == '__main__':
     range_beam_forming = Tk.Scale(master=frame_row2, orient=Tk.HORIZONTAL, length=70,
                                   from_=-1, to=1, showvalue=0, command=beam_forming)
     button_confirm = Tk.Button(master=frame_row2, text='Confirm', command=confirm,
-                            bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
-    button_welch = Tk.Button(master=frame_row2, text='Welch', command=welch,
                             bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
 
     ### Row 3 ####
@@ -503,21 +503,24 @@ if __name__ == '__main__':
             range_spectrogram.grid(row=0, column=6, padx=PADX_GRID)
             button_spectrogram.grid(row=0, column=7, padx=PADX_GRID)
 
+            # Welch's method
+            button_welch.grid(row=0, column=8, padx=PADX_GRID)
+
         if not cnn_model or (cnn_model and dataset.feature == 'mfsc'):
             # Mel-scale Spectrogram (PSD)
-            range_mfsc.grid(row=0, column=8, padx=PADX_GRID)
-            button_mfsc.grid(row=0, column=9, padx=PADX_GRID)
+            range_mfsc.grid(row=0, column=9, padx=PADX_GRID)
+            button_mfsc.grid(row=0, column=10, padx=PADX_GRID)
 
         # MFCC
         if not cnn_model or (cnn_model and dataset.feature == 'mfcc'):
-            range_mfcc.grid(row=0, column=10, padx=PADX_GRID)
-            button_mfcc.grid(row=0, column=11, padx=PADX_GRID)
+            range_mfcc.grid(row=0, column=11, padx=PADX_GRID)
+            button_mfcc.grid(row=0, column=12, padx=PADX_GRID)
 
         # CMAP
-        label_image.grid(row=0, column=12, padx=PADX_GRID)
         label_image.grid(row=0, column=13, padx=PADX_GRID)
-        spectrum_subtraction.grid(row=0, column=14, padx=PADX_GRID)
-        cmap.grid(row=0, column=15, padx=PADX_GRID)
+        label_image.grid(row=0, column=14, padx=PADX_GRID)
+        spectrum_subtraction.grid(row=0, column=15, padx=PADX_GRID)
+        cmap.grid(row=0, column=16, padx=PADX_GRID)
 
         ### Row 2 ####
 
@@ -533,7 +536,6 @@ if __name__ == '__main__':
         button_repeat.grid(row=0, column=4, padx=PADX_GRID)
         button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
         if not cnn_model:
-            button_welch.grid(row=0, column=6, padx=PADX_GRID)
             if not args.oscilloscope_mode:
                 button_confirm.grid(row=0, column=7, padx=PADX_GRID)
                 button_save.grid(row=0, column=8, padx=PADX_GRID)

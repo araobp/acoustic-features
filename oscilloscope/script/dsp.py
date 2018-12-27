@@ -15,11 +15,8 @@ import threading
 
 Fs = 80000000.0/128.0/32.0  # Sampling frequency
 Nyq = Fs/2.0                # Nyquist frequency
-NUM_FILTERS = 64            # The number of filters in the filter bank
 BAUD_RATE = 460800          # UART baud rate
 NN = 512                    # The number of samples per frame
-
-FILTER_LENGTH = 32          # Filter length of each filter in the filter bank
 
 # Command
 RAW_WAVE = b'1'
@@ -39,24 +36,7 @@ ENDFIRE = b'e'
 MFSC = b'98'
 MFCC = b'99'
 
-# main.c
-NUM_SAMPLES = {}            # The number of samples to receive from the device
-NUM_SAMPLES[RAW_WAVE] = 512
-NUM_SAMPLES[FFT] = 256
-NUM_SAMPLES[SPECTROGRAM] = int(NN/2) * 200
-NUM_SAMPLES[FEATURES] = NUM_FILTERS * 200 * 2
-
-# Shapes
-SHAPE = {}
-SHAPE[RAW_WAVE] = None
-SHAPE[FFT] = None
-SHAPE[SPECTROGRAM] = (200, int(NN/2))
-SHAPE[FEATURES] = (400, NUM_FILTERS)
-SHAPE[MFSC] = (200, NUM_FILTERS)
-SHAPE[MFCC] = (200, NUM_FILTERS)
-
 ###################
-
 
 b16_to_int = lambda msb, lsb, signed: int.from_bytes([msb, lsb], byteorder='big', signed=signed)
 b8_to_int = lambda d, signed: int.from_bytes([d], byteorder='big', signed=signed)
@@ -64,22 +44,40 @@ b8_to_int = lambda d, signed: int.from_bytes([d], byteorder='big', signed=signed
 # Interface class
 class Interface:
     
-    def __init__(self, port):
+    def __init__(self, port, dataset):
         # Serial interface
         self.port = port
+        self.filters = dataset.filters
+        self.length = dataset.length
         self.lock = threading.Lock()
         try:
             ser = serial.Serial(self.port, BAUD_RATE)
             ser.close()
         except:
             print('*** Cannot open {}!'.format(port))
-   
+            
+        # main.c
+        self.num_samples = {}            # The number of samples to receive from the device
+        self.num_samples[RAW_WAVE] = NN
+        self.num_samples[FFT] = int(NN/2)
+        self.num_samples[SPECTROGRAM] = int(NN/2) * self.length
+        self.num_samples[FEATURES] = self.filters * self.length * 2
+
+        # Shapes
+        self.shape = {}
+        self.shape[RAW_WAVE] = None
+        self.shape[FFT] = None
+        self.shape[SPECTROGRAM] = (self.length, int(NN/2))
+        self.shape[FEATURES] = (self.length * 2, self.filters)
+        self.shape[MFSC] = (self.length, self.filters)
+        self.shape[MFCC] = (self.length, self.filters)
+
     def serial_port(self):
         return serial.Serial(self.port, BAUD_RATE, timeout=3)
 
     # As an application processor, send a command
     # then receive and process the output.
-    def read(self, cmd, ssub=None):
+    def read(self, cmd):
         
         data = []
         with self.lock:
@@ -88,7 +86,7 @@ class Interface:
                 ser.write(cmd)
 
                 if cmd == RAW_WAVE:  # 16bit quantization
-                    rx = ser.read(NUM_SAMPLES[cmd]*2)
+                    rx = ser.read(self.num_samples[cmd]*2)
                     rx = zip(rx[0::2], rx[1::2])
                     for msb, lsb in rx:
                         d = b16_to_int(msb, lsb, True)
@@ -104,35 +102,27 @@ class Interface:
                         temp = rx.split(',')
                         k_range.append(np.array(temp[0].split(':'), dtype=int))
                         filterbank.append(np.array(temp[1:], dtype=float))
-                    #print(k_range)
-                    #print(filterbank)
                     data = (k_range, filterbank)
                 elif cmd == ELAPSED_TIME:
                     data = ser.readline().decode('ascii').rstrip('\n,')
                     print(data)
                 elif cmd == FEATURES:
-                    rx = ser.read(NUM_SAMPLES[cmd])
+                    rx = ser.read(self.num_samples[cmd])
                     n = 0
-                    half = int(NUM_SAMPLES[cmd]/2)
+                    half = int(self.num_samples[cmd]/2)
                     for d in rx:
                         d = b8_to_int(d, True)
-                        if n < half:
-                            if ssub:
-                                d = d - sub if d > sub else -sub
-                        n += 1
                         data.append(d)
                     data = np.array(data, dtype=np.int)
-                    data = data.reshape(SHAPE[cmd])                    
+                    data = data.reshape(self.shape[cmd])                    
                 else:  # 8bit quantization
-                    rx = ser.read(NUM_SAMPLES[cmd])
+                    rx = ser.read(self.num_samples[cmd])
                     for d in rx:
                         d  = b8_to_int(d, True)
-                        if ssub:
-                            d = d - sub if d > sub else 0.0              
                         data.append(d)
                     data = np.array(data, dtype=np.int)
-                    if SHAPE[cmd]:
-                        data = data.reshape(SHAPE[cmd])
+                    if self.shape[cmd]:
+                        data = data.reshape(self.shape[cmd])
                 ser.close()
             except:
                 print('*** serial timeout!')

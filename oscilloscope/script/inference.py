@@ -14,7 +14,7 @@ class Model:
         dataset.model.summary()
 
     # ML Inference
-    def infer(self, data, remove_dc=False):
+    def infer(self, data):
         probabilities = []
         data = data.astype(float)
         shape = data.shape
@@ -22,7 +22,7 @@ class Model:
         if self.activation_model:
             windowed_data = []
             for w in self.dataset.windows:
-                if remove_dc:
+                if self.dataset.feature == 'mfcc':
                     d = data[w[0]:w[1], 1:w[2], :]
                 else:
                     d = data[w[0]:w[1], 0:w[2], :]                    
