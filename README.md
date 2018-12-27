@@ -17,7 +17,8 @@ This project is still in development:
 - Inference engine based on Keras/TensorFlow has been implemented for Win10 and RasPi3.
 - Implementation of DCT Type-II (for MFCCs) on STM32 has been completed.
 
-And I am currently working on STM32 Cube.AI
+And I am currently working on STM32 Cube.AI: [Getting started with STM32Cube.AI (youtube)](https://www.youtube.com/watch?v=grgNXdkmzzQ&list=PLnMKNibPkDnG9IC5Nl9vJg1CKMAO1kODW&t=141s&index=2)
+
 
 ## Architecture
 
