@@ -92,8 +92,6 @@ In case of a living room:
 
 ### CNN experiments (learning and inference)
 
-![](./oscilloscope/screenshots/inference.jpg)
-
 - [CNN experiments with Keras/TensorFlow](./tensorflow)
 
 ## References
