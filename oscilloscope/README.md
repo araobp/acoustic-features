@@ -32,3 +32,16 @@ Down: save the data
 
 The window on the screen is highlighted.
 
+## Screen shots
+
+![Raw wave](./screenshots/gui_raw_wave.jpg)
+
+![Raw wave](./screenshots/gui_fft.jpg)
+
+![Raw wave](./screenshots/gui_spectrogram.jpg)
+
+![Raw wave](./screenshots/gui_welch.jpg)
+
+![Raw wave](./screenshots/gui_mfsc.jpg)
+
+![Raw wave](./screenshots/gui_mfcc.jpg)
