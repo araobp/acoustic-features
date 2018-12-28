@@ -1,10 +1,12 @@
 # Acoustic features for deep learning
 
-## Acoustic feature gallery (2D images)
-
 ![](./oscilloscope/screenshots/spectrogram_framenco.png)
 
-**=>[GALLERY](./GALLERY.md)**
+**=>[Acoustic feature gallery (2D images)](./GALLERY.md)**
+
+## Goal
+
+Develop "edge AI" on a MCU for acoustic event detection.
 
 ## Project status (Dec 26, 2018)
 
