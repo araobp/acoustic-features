@@ -53,6 +53,10 @@ Platform:
 - [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 
+## Calibration
+
+- [DFSDM calibration for Knowles MEMS microphones](.oscilloscope/CALIBRATION.md)
+
 ## Potential use cases
 
 - musical instrument recognition and music performance analysis
