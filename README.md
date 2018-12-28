@@ -50,8 +50,12 @@ Platform:
 ## System components
 
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32)
-- [Arduino shield of two MEMS microphones with beam forming support (KiCAD)](./kicad)
+- [Arduino shield of two Knowles MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
+
+## Calibration
+
+- [DFSDM calibration for Knowles MEMS microphones](./oscilloscope/CALIBRATION.md)
 
 ## Potential use cases
 
