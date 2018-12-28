@@ -1,6 +1,9 @@
 # Acoustic features for deep learning
 
-![](./oscilloscope/screenshots/piano.jpg)
+## Acoustic feature gallery (2D images)
+
+- [MFSCs of chirp signal](./oscilloscope/screenshots/mfsc_chirp.png)
+- [MFCCs of chirp signal](./oscilloscope/screenshots/mfcc_chirp.png)
 
 ## Background and motivation
 
