@@ -6,7 +6,7 @@ This device is a sort of human ear: log scale auditory perception and Fourier tr
 
 The configuration below assumes [my original "Knowles MEMS mic Arduino shield"](https://github.com/araobp/acoustic-event-detection/tree/master/kicad).
 
-- [CubeMX file](./acoustic_feature_camera.ioc) for STM32L476RG and the Arduino shield
+- [CubeMX report](./acoustic_feature_camera.pdf) for STM32L476RG and the Arduino shield
 
 ## Making use of DMA
 
