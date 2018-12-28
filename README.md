@@ -4,7 +4,7 @@
 
 ![](./oscilloscope/screenshots/spectrogram_framenco.png)
 
-[GALLERY](./GALLERY.md)
+**=>[GALLERY](./GALLERY.md)**
 
 ## Background and motivation
 
