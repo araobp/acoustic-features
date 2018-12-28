@@ -55,7 +55,7 @@ Platform:
 
 ## Calibration
 
-- [DFSDM calibration for Knowles MEMS microphones](.oscilloscope/CALIBRATION.md)
+- [DFSDM calibration for Knowles MEMS microphones](./oscilloscope/CALIBRATION.md)
 
 ## Potential use cases
 
