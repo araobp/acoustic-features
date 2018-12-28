@@ -18,7 +18,11 @@
 #define W_ALPHA 0.7f  // Weak pre-emphasis
 
 // The number of filters
-#define NUM_FILTERS 64     // MFSCs and MFCCs
+#ifdef FILTERS_40
+  #define NUM_FILTERS 40     // Note: MFCCs does not work in this setting
+#else
+  #define NUM_FILTERS 64     // MFSCs and MFCCs
+#endif
 
 // Adjust MFCCs so that the output to uart does not become too large
 #define ADJUST_MFCCS 0.1f

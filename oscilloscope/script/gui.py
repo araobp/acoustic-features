@@ -32,18 +32,18 @@ class GUI:
         # Serial interface
         self.interface = interface
         self.filters = dataset.filters
-        self.length = dataset.length
+        self.samples = dataset.samples
         self.fullscreen = True if fullscreen else False
         # Time axis and frequency axis
         self.time = {}
         self.freq = {}
         self.time[dsp.RAW_WAVE] = np.linspace(0, self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*1000.0, self.interface.num_samples[dsp.RAW_WAVE])
         self.freq[dsp.FFT] = np.linspace(0, dsp.Fs/2, self.interface.num_samples[dsp.FFT])
-        self.time[dsp.SPECTROGRAM] = np.linspace(0, self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*self.length/2, self.length)
+        self.time[dsp.SPECTROGRAM] = np.linspace(0, self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*self.samples/2, self.samples)
         self.freq[dsp.SPECTROGRAM] = np.linspace(0, dsp.Nyq, int(dsp.NN/2))
-        self.time[dsp.MFSC] = np.linspace(-self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*self.length/2, 0, self.length)
+        self.time[dsp.MFSC] = np.linspace(-self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*self.samples/2, 0, self.samples)
         self.freq[dsp.MFSC] = np.linspace(1, self.filters+1, self.filters)
-        self.time[dsp.MFCC] = np.linspace(-self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*self.length/2, 0, self.length)
+        self.time[dsp.MFCC] = np.linspace(-self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*self.samples/2, 0, self.samples)
         self.freq[dsp.MFCC] = np.linspace(0, self.filters, self.filters)
 
     def set_labels(self, ax, title, xlabel, ylabel, ylim=None):
@@ -91,9 +91,9 @@ class GUI:
 
             # Debug
             print('mfsc stm32: {}'.format(data[0]))
-            print('mfcc stm32: {}'.format(data[self.length]))
+            print('mfcc stm32: {}'.format(data[self.samples]))
 
-            data_ = spectrum_subtraction(data[:self.length,:], ssub)
+            data_ = spectrum_subtraction(data[:self.samples,:], ssub)
             data_ = shadow(data_, window, shadow_sub=10)
             ax.pcolormesh(self.time[dsp.MFSC],
                           self.freq[dsp.MFSC][:range_],
@@ -105,10 +105,10 @@ class GUI:
             
             # Debug
             print('mfsc stm32: {}'.format(data[0]))
-            print('mfcc stm32: {}'.format(data[self.length]))
+            print('mfcc stm32: {}'.format(data[self.samples]))
             print('mfcc python: {}'.format(dct(data[0]/10.0).astype(int)))
 
-            data_ = spectrum_subtraction(data[self.length:,:], ssub)
+            data_ = spectrum_subtraction(data[self.samples:,:], ssub)
             data_ = shadow(data_, window, shadow_sub=10)
             ax.pcolormesh(self.time[dsp.MFCC],
                           self.freq[dsp.MFCC][1:range_],
@@ -131,6 +131,6 @@ class GUI:
         data = self.interface.read(dsp.SPECTROGRAM)
         ax.clear()
 
-        data = np.sum(data, axis=0)/self.length
+        data = np.sum(data, axis=0)/self.samples
         ax.plot(self.freq[dsp.FFT], data)
         self.set_labels(ax, "Welch's method", 'Frequency [Hz]', 'Power [dB]', [-70, 90])

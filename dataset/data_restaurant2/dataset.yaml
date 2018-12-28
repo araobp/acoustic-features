@@ -1,6 +1,7 @@
 feature: mfcc
 files: 30
 training_files: 20
+samples: 200
 length: 96
 filters: 40
 cutoff: 13

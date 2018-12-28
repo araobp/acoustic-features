@@ -159,10 +159,10 @@ if __name__ == '__main__':
         if repeat_action:
             root.after(50, func)
 
-    def infer(data, pos=None, remove_dc=False):
+    def infer(data, pos=None):
         if pos is None:
             pos = 0
-        probabilities = cnn_model.infer(data, remove_dc)
+        probabilities = cnn_model.infer(data)
         class_label, p = probabilities[pos][0]
         label_inference.configure(text='This is {} ({} %)'.format(class_label, int(p)))
         
@@ -206,15 +206,16 @@ if __name__ == '__main__':
 
     def mfsc(data=EMPTY, pos=None, repeatable=True):
         global last_operation, dataset
+        print(pos)
         ssub = int(spectrum_subtraction.get())
         range_ = int(range_mfsc.get())
         cmap_ = var_cmap.get()
-        if data is EMPTY or pos is None:
+        if data is EMPTY:
             window = dataset.windows[int(range_window.get())]
             data = gui.plot(ax, dsp.MFSC, range_, cmap_, ssub,
                                window=window)
         else:
-            window = dataset.windows[pos]
+            window = dataset.windows[pos] if pos else None
             gui.plot(ax, dsp.MFSC, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
@@ -230,11 +231,12 @@ if __name__ == '__main__':
         ssub = int(spectrum_subtraction.get())    
         range_ = int(range_mfcc.get())
         cmap_ = var_cmap.get()
-        if data is EMPTY or pos is None:
+        if data is EMPTY:
             window = dataset.windows[int(range_window.get())]
             data = gui.plot(ax, dsp.MFCC, range_, cmap_, ssub,
                                window=window)
         else:
+            window = dataset.windows[pos] if pos else None
             window = dataset.windows[pos]
             gui.plot(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
                          window=window)
@@ -343,8 +345,8 @@ if __name__ == '__main__':
         elif c == 'down':
             save()
             
-    if not args.browser:
-        canvas.mpl_connect('key_press_event', on_key_event)
+        if not args.browser:
+            canvas.mpl_connect('key_press_event', on_key_event)
 
     ### File select event ###
     def on_select(event):
@@ -358,14 +360,14 @@ if __name__ == '__main__':
             data = np.array(f.read().split(','), dtype='float')
         
         if func == mfsc or func == mfcc:
-            data = data.reshape(400, dataset.filters)
+            data = data.reshape(dataset.samples*2, dataset.filters)
             pos = params[3]
             if pos == 'a':
                 func(data=data, pos=None, repeatable=False)
             else:
                 func(data=data, pos=int(pos), repeatable=False)                
         else:
-            data = data.reshape(200, dataset.filters)
+            data = data.reshape(dataset.samples, dataset.filters)
             func(data=data, repeatable=False)
         
     ### Row 0b ####

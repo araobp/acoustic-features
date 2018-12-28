@@ -48,7 +48,7 @@ class Interface:
         # Serial interface
         self.port = port
         self.filters = dataset.filters
-        self.length = dataset.length
+        self.samples = dataset.samples
         self.lock = threading.Lock()
         try:
             ser = serial.Serial(self.port, BAUD_RATE)
@@ -60,17 +60,17 @@ class Interface:
         self.num_samples = {}            # The number of samples to receive from the device
         self.num_samples[RAW_WAVE] = NN
         self.num_samples[FFT] = int(NN/2)
-        self.num_samples[SPECTROGRAM] = int(NN/2) * self.length
-        self.num_samples[FEATURES] = self.filters * self.length * 2
+        self.num_samples[SPECTROGRAM] = int(NN/2) * self.samples
+        self.num_samples[FEATURES] = self.filters * self.samples * 2
 
         # Shapes
         self.shape = {}
         self.shape[RAW_WAVE] = None
         self.shape[FFT] = None
-        self.shape[SPECTROGRAM] = (self.length, int(NN/2))
-        self.shape[FEATURES] = (self.length * 2, self.filters)
-        self.shape[MFSC] = (self.length, self.filters)
-        self.shape[MFCC] = (self.length, self.filters)
+        self.shape[SPECTROGRAM] = (self.samples, int(NN/2))
+        self.shape[FEATURES] = (self.samples * 2, self.filters)
+        self.shape[MFSC] = (self.samples, self.filters)
+        self.shape[MFCC] = (self.samples, self.filters)
 
     def serial_port(self):
         return serial.Serial(self.port, BAUD_RATE, timeout=3)

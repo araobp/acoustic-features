@@ -3,9 +3,12 @@
 
 import glob
 
-DATA_FOLDER = './data/'
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("-d", "--dataset_folder", help="Dataset folder")
+args = parser.parse_args()
 
-data_files = glob.glob(DATA_FOLDER+'*mel_spectrogram*.csv')
+data_files = glob.glob(args.dataset_folder + '/*features*.csv')
 class_labels = {}
 
 for file in data_files:

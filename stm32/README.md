@@ -116,6 +116,8 @@ The filter bank is applied to the spectrogram to extract MFSCs and MFCCs for tra
 
 I have developed DCT Type-II function in C language to calculate MFCCs on STM32 in real time.
 
+If MFCCs are not use for training CNN, you can decrease the number to 40 by adding a symbol "FILTERS_40" to GCC preprocessor and re-building the firmware.
+
 ## log10 processing time issue
 
 PSD calculation uses log10 math function, but CMSIS-DSP does not support log10. log10 on the standard "math.h" is too slow. I tried math.h log10, and the time required for calculating log10(x) does not fit into the time slot of sound frame, so I decided to adopt [log10 approximation](../ipynb/log10%20fast%20approximation.ipynb). The approximation has been working perfect so far.

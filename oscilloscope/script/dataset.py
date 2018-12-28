@@ -28,6 +28,7 @@ class DataSet:
             attr = yaml.load(f)
         self.filters = attr['filters']
         self.files = attr['files']
+        self.samples = attr['samples']
         self.length = attr['length']
         self.training_files = attr['training_files']
         self.test_files = self.files - self.training_files
