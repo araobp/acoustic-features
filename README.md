@@ -2,8 +2,9 @@
 
 ## Acoustic feature gallery (2D images)
 
-- [MFSCs of chirp signal](./oscilloscope/screenshots/mfsc_chirp.png)
-- [MFCCs of chirp signal](./oscilloscope/screenshots/mfcc_chirp.png)
+![MFSCs of chirp signal](./oscilloscope/screenshots/mfsc_chirp.png)
+
+[GARELLY](./GARELLY.md)
 
 ## Background and motivation
 
