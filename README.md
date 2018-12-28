@@ -2,7 +2,7 @@
 
 ## Acoustic feature gallery (2D images)
 
-![MFSCs of chirp signal](./oscilloscope/screenshots/mfsc_chirp.png)
+![](./oscilloscope/screenshots/spectrogram_framenco.png)
 
 [GALLERY](./GALLERY.md)
 
