@@ -2283,319 +2283,320 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../l
                 0x0800398c      0x134 Src\dsp.o
                 0x0800398c                generate_filters
  .text.generate_half_sample_shifter
-                0x08003ac0       0x80 Src\dsp.o
+                0x08003ac0       0x7c Src\dsp.o
                 0x08003ac0                generate_half_sample_shifter
  .text.init_dsp
-                0x08003b40       0x94 Src\dsp.o
-                0x08003b40                init_dsp
+                0x08003b3c       0x94 Src\dsp.o
+                0x08003b3c                init_dsp
  .text.apply_pre_emphasis
-                0x08003bd4       0x14 Src\dsp.o
-                0x08003bd4                apply_pre_emphasis
+                0x08003bd0       0x14 Src\dsp.o
+                0x08003bd0                apply_pre_emphasis
  .text.apply_weak_pre_emphasis
-                0x08003be8       0x14 Src\dsp.o
-                0x08003be8                apply_weak_pre_emphasis
+                0x08003be4       0x14 Src\dsp.o
+                0x08003be4                apply_weak_pre_emphasis
  .text.apply_ac_coupling
-                0x08003bfc       0x44 Src\dsp.o
-                0x08003bfc                apply_ac_coupling
+                0x08003bf8       0x44 Src\dsp.o
+                0x08003bf8                apply_ac_coupling
  .text.apply_hann
-                0x08003c40       0x10 Src\dsp.o
-                0x08003c40                apply_hann
+                0x08003c3c       0x10 Src\dsp.o
+                0x08003c3c                apply_hann
  .text.apply_fft
-                0x08003c50       0x2c Src\dsp.o
-                0x08003c50                apply_fft
+                0x08003c4c       0x2c Src\dsp.o
+                0x08003c4c                apply_fft
  .text.apply_psd
-                0x08003c7c       0x2c Src\dsp.o
-                0x08003c7c                apply_psd
+                0x08003c78       0x2c Src\dsp.o
+                0x08003c78                apply_psd
  .text.apply_psd_logscale
-                0x08003ca8       0x2a Src\dsp.o
-                0x08003ca8                apply_psd_logscale
- *fill*         0x08003cd2        0x2 
+                0x08003ca4       0x2a Src\dsp.o
+                0x08003ca4                apply_psd_logscale
+ *fill*         0x08003cce        0x2 
  .text.apply_filterbank
-                0x08003cd4       0x6c Src\dsp.o
-                0x08003cd4                apply_filterbank
+                0x08003cd0       0x6c Src\dsp.o
+                0x08003cd0                apply_filterbank
  .text.apply_filterbank_logscale
-                0x08003d40       0x2a Src\dsp.o
-                0x08003d40                apply_filterbank_logscale
- *fill*         0x08003d6a        0x2 
+                0x08003d3c       0x2a Src\dsp.o
+                0x08003d3c                apply_filterbank_logscale
+ *fill*         0x08003d66        0x2 
  .text.apply_dct2
-                0x08003d6c       0x7c Src\dsp.o
-                0x08003d6c                apply_dct2
+                0x08003d68       0x80 Src\dsp.o
+                0x08003d68                apply_dct2
  .text.MX_GPIO_Init
                 0x08003de8       0x7c Src\gpio.o
                 0x08003de8                MX_GPIO_Init
  .text.uart_tx  0x08003e64      0x19c Src\main.o
                 0x08003e64                uart_tx
- .text.dsp      0x08004000       0xb4 Src\main.o
+ .text.dsp      0x08004000       0xb0 Src\main.o
                 0x08004000                dsp
  .text.overlap_dsp
-                0x080040b4       0x6c Src\main.o
-                0x080040b4                overlap_dsp
- .text.dump     0x08004120       0xa4 Src\main.o
-                0x08004120                dump
+                0x080040b0       0x6c Src\main.o
+                0x080040b0                overlap_dsp
+ .text.dump     0x0800411c       0xa4 Src\main.o
+                0x0800411c                dump
  .text.beam_forming
-                0x080041c4       0xe6 Src\main.o
-                0x080041c4                beam_forming
- *fill*         0x080042aa        0x2 
+                0x080041c0       0xe6 Src\main.o
+                0x080041c0                beam_forming
+ *fill*         0x080042a6        0x2 
  .text.pre_emphasis
-                0x080042ac       0x28 Src\main.o
-                0x080042ac                pre_emphasis
+                0x080042a8       0x28 Src\main.o
+                0x080042a8                pre_emphasis
  .text.SystemClock_Config
-                0x080042d4       0x90 Src\main.o
-                0x080042d4                SystemClock_Config
+                0x080042d0       0x90 Src\main.o
+                0x080042d0                SystemClock_Config
  .text.startup.main
-                0x08004364      0x2bc Src\main.o
-                0x08004364                main
+                0x08004360      0x2bc Src\main.o
+                0x08004360                main
  .text.HAL_DFSDM_FilterRegConvHalfCpltCallback
-                0x08004620       0x24 Src\main.o
-                0x08004620                HAL_DFSDM_FilterRegConvHalfCpltCallback
+                0x0800461c       0x24 Src\main.o
+                0x0800461c                HAL_DFSDM_FilterRegConvHalfCpltCallback
  .text.HAL_DFSDM_FilterRegConvCpltCallback
-                0x08004644       0x24 Src\main.o
-                0x08004644                HAL_DFSDM_FilterRegConvCpltCallback
- .text._write   0x08004668       0x18 Src\main.o
-                0x08004668                _write
+                0x08004640       0x24 Src\main.o
+                0x08004640                HAL_DFSDM_FilterRegConvCpltCallback
+ .text._write   0x08004664       0x18 Src\main.o
+                0x08004664                _write
  .text.HAL_GPIO_EXTI_Callback
-                0x08004680        0x2 Src\main.o
-                0x08004680                HAL_GPIO_EXTI_Callback
- *fill*         0x08004682        0x2 
+                0x0800467c        0x2 Src\main.o
+                0x0800467c                HAL_GPIO_EXTI_Callback
+ *fill*         0x0800467e        0x2 
  .text.HAL_UART_RxCpltCallback
-                0x08004684       0xb0 Src\main.o
-                0x08004684                HAL_UART_RxCpltCallback
+                0x08004680       0xb0 Src\main.o
+                0x08004680                HAL_UART_RxCpltCallback
  .text.Error_Handler
-                0x08004734        0x2 Src\main.o
-                0x08004734                Error_Handler
- *fill*         0x08004736        0x2 
+                0x08004730        0x2 Src\main.o
+                0x08004730                Error_Handler
+ *fill*         0x08004732        0x2 
  .text.HAL_MspInit
-                0x08004738       0x30 Src\stm32l4xx_hal_msp.o
-                0x08004738                HAL_MspInit
+                0x08004734       0x30 Src\stm32l4xx_hal_msp.o
+                0x08004734                HAL_MspInit
  .text.SVC_Handler
-                0x08004768        0x2 Src\stm32l4xx_it.o
-                0x08004768                SVC_Handler
+                0x08004764        0x2 Src\stm32l4xx_it.o
+                0x08004764                SVC_Handler
  .text.PendSV_Handler
-                0x0800476a        0x2 Src\stm32l4xx_it.o
-                0x0800476a                PendSV_Handler
+                0x08004766        0x2 Src\stm32l4xx_it.o
+                0x08004766                PendSV_Handler
  .text.SysTick_Handler
-                0x0800476c        0x4 Src\stm32l4xx_it.o
-                0x0800476c                SysTick_Handler
+                0x08004768        0x4 Src\stm32l4xx_it.o
+                0x08004768                SysTick_Handler
  .text.DMA1_Channel3_IRQHandler
-                0x08004770        0xc Src\stm32l4xx_it.o
-                0x08004770                DMA1_Channel3_IRQHandler
+                0x0800476c        0xc Src\stm32l4xx_it.o
+                0x0800476c                DMA1_Channel3_IRQHandler
  .text.DMA1_Channel4_IRQHandler
-                0x0800477c        0xc Src\stm32l4xx_it.o
-                0x0800477c                DMA1_Channel4_IRQHandler
+                0x08004778        0xc Src\stm32l4xx_it.o
+                0x08004778                DMA1_Channel4_IRQHandler
  .text.DMA1_Channel5_IRQHandler
-                0x08004788        0xc Src\stm32l4xx_it.o
-                0x08004788                DMA1_Channel5_IRQHandler
+                0x08004784        0xc Src\stm32l4xx_it.o
+                0x08004784                DMA1_Channel5_IRQHandler
  .text.DMA1_Channel7_IRQHandler
-                0x08004794        0xc Src\stm32l4xx_it.o
-                0x08004794                DMA1_Channel7_IRQHandler
+                0x08004790        0xc Src\stm32l4xx_it.o
+                0x08004790                DMA1_Channel7_IRQHandler
  .text.USART2_IRQHandler
-                0x080047a0        0xc Src\stm32l4xx_it.o
-                0x080047a0                USART2_IRQHandler
+                0x0800479c        0xc Src\stm32l4xx_it.o
+                0x0800479c                USART2_IRQHandler
  .text.EXTI15_10_IRQHandler
-                0x080047ac        0x8 Src\stm32l4xx_it.o
-                0x080047ac                EXTI15_10_IRQHandler
+                0x080047a8        0x8 Src\stm32l4xx_it.o
+                0x080047a8                EXTI15_10_IRQHandler
  .text.DMA2_Channel5_IRQHandler
-                0x080047b4        0xc Src\stm32l4xx_it.o
-                0x080047b4                DMA2_Channel5_IRQHandler
+                0x080047b0        0xc Src\stm32l4xx_it.o
+                0x080047b0                DMA2_Channel5_IRQHandler
  .text.SystemInit
-                0x080047c0       0x48 Src\system_stm32l4xx.o
-                0x080047c0                SystemInit
+                0x080047bc       0x48 Src\system_stm32l4xx.o
+                0x080047bc                SystemInit
  .text.MX_TIM6_Init
-                0x08004808       0x48 Src\tim.o
-                0x08004808                MX_TIM6_Init
+                0x08004804       0x48 Src\tim.o
+                0x08004804                MX_TIM6_Init
  .text.HAL_TIM_Base_MspInit
-                0x08004850       0x28 Src\tim.o
-                0x08004850                HAL_TIM_Base_MspInit
+                0x0800484c       0x28 Src\tim.o
+                0x0800484c                HAL_TIM_Base_MspInit
  .text.MX_USART2_UART_Init
-                0x08004878       0x3c Src\usart.o
-                0x08004878                MX_USART2_UART_Init
+                0x08004874       0x3c Src\usart.o
+                0x08004874                MX_USART2_UART_Init
  .text.HAL_UART_MspInit
-                0x080048b4       0xa8 Src\usart.o
-                0x080048b4                HAL_UART_MspInit
+                0x080048b0       0xa8 Src\usart.o
+                0x080048b0                HAL_UART_MspInit
  .text.Reset_Handler
-                0x0800495c       0x50 startup\startup_stm32l476xx.o
-                0x0800495c                Reset_Handler
+                0x08004958       0x50 startup\startup_stm32l476xx.o
+                0x08004958                Reset_Handler
  .text.Default_Handler
-                0x080049ac        0x2 startup\startup_stm32l476xx.o
-                0x080049ac                RTC_Alarm_IRQHandler
-                0x080049ac                EXTI2_IRQHandler
-                0x080049ac                TIM8_TRG_COM_IRQHandler
-                0x080049ac                TIM8_CC_IRQHandler
-                0x080049ac                DebugMon_Handler
-                0x080049ac                TIM1_CC_IRQHandler
-                0x080049ac                TSC_IRQHandler
-                0x080049ac                HardFault_Handler
-                0x080049ac                TAMP_STAMP_IRQHandler
-                0x080049ac                NMI_Handler
-                0x080049ac                EXTI3_IRQHandler
-                0x080049ac                LPTIM2_IRQHandler
-                0x080049ac                DFSDM1_FLT1_IRQHandler
-                0x080049ac                I2C3_ER_IRQHandler
-                0x080049ac                DFSDM1_FLT2_IRQHandler
-                0x080049ac                EXTI0_IRQHandler
-                0x080049ac                I2C2_EV_IRQHandler
-                0x080049ac                CAN1_RX0_IRQHandler
-                0x080049ac                FPU_IRQHandler
-                0x080049ac                TIM1_UP_TIM16_IRQHandler
-                0x080049ac                UsageFault_Handler
-                0x080049ac                ADC1_2_IRQHandler
-                0x080049ac                SPI1_IRQHandler
-                0x080049ac                TIM6_DAC_IRQHandler
-                0x080049ac                TIM8_UP_IRQHandler
-                0x080049ac                DMA2_Channel2_IRQHandler
-                0x080049ac                SAI2_IRQHandler
-                0x080049ac                DFSDM1_FLT3_IRQHandler
-                0x080049ac                USART3_IRQHandler
-                0x080049ac                CAN1_RX1_IRQHandler
-                0x080049ac                LCD_IRQHandler
-                0x080049ac                UART5_IRQHandler
-                0x080049ac                ADC3_IRQHandler
-                0x080049ac                TIM4_IRQHandler
-                0x080049ac                DMA2_Channel1_IRQHandler
-                0x080049ac                QUADSPI_IRQHandler
-                0x080049ac                I2C1_EV_IRQHandler
-                0x080049ac                DMA1_Channel6_IRQHandler
-                0x080049ac                UART4_IRQHandler
-                0x080049ac                DMA2_Channel4_IRQHandler
-                0x080049ac                TIM3_IRQHandler
-                0x080049ac                RCC_IRQHandler
-                0x080049ac                DMA1_Channel1_IRQHandler
-                0x080049ac                Default_Handler
-                0x080049ac                DMA2_Channel7_IRQHandler
-                0x080049ac                TIM7_IRQHandler
-                0x080049ac                SDMMC1_IRQHandler
-                0x080049ac                TIM5_IRQHandler
-                0x080049ac                I2C3_EV_IRQHandler
-                0x080049ac                EXTI9_5_IRQHandler
-                0x080049ac                RTC_WKUP_IRQHandler
-                0x080049ac                PVD_PVM_IRQHandler
-                0x080049ac                SPI2_IRQHandler
-                0x080049ac                MemManage_Handler
-                0x080049ac                CAN1_TX_IRQHandler
-                0x080049ac                EXTI4_IRQHandler
-                0x080049ac                RNG_IRQHandler
-                0x080049ac                TIM1_TRG_COM_TIM17_IRQHandler
-                0x080049ac                COMP_IRQHandler
-                0x080049ac                WWDG_IRQHandler
-                0x080049ac                LPUART1_IRQHandler
-                0x080049ac                DMA2_Channel6_IRQHandler
-                0x080049ac                TIM2_IRQHandler
-                0x080049ac                EXTI1_IRQHandler
-                0x080049ac                DFSDM1_FLT0_IRQHandler
-                0x080049ac                I2C2_ER_IRQHandler
-                0x080049ac                DMA1_Channel2_IRQHandler
-                0x080049ac                TIM8_BRK_IRQHandler
-                0x080049ac                CAN1_SCE_IRQHandler
-                0x080049ac                FLASH_IRQHandler
-                0x080049ac                BusFault_Handler
-                0x080049ac                USART1_IRQHandler
-                0x080049ac                OTG_FS_IRQHandler
-                0x080049ac                SPI3_IRQHandler
-                0x080049ac                I2C1_ER_IRQHandler
-                0x080049ac                FMC_IRQHandler
-                0x080049ac                SWPMI1_IRQHandler
-                0x080049ac                LPTIM1_IRQHandler
-                0x080049ac                SAI1_IRQHandler
-                0x080049ac                DMA2_Channel3_IRQHandler
-                0x080049ac                TIM1_BRK_TIM15_IRQHandler
- *fill*         0x080049ae        0x2 
+                0x080049a8        0x2 startup\startup_stm32l476xx.o
+                0x080049a8                RTC_Alarm_IRQHandler
+                0x080049a8                EXTI2_IRQHandler
+                0x080049a8                TIM8_TRG_COM_IRQHandler
+                0x080049a8                TIM8_CC_IRQHandler
+                0x080049a8                DebugMon_Handler
+                0x080049a8                TIM1_CC_IRQHandler
+                0x080049a8                TSC_IRQHandler
+                0x080049a8                HardFault_Handler
+                0x080049a8                TAMP_STAMP_IRQHandler
+                0x080049a8                NMI_Handler
+                0x080049a8                EXTI3_IRQHandler
+                0x080049a8                LPTIM2_IRQHandler
+                0x080049a8                DFSDM1_FLT1_IRQHandler
+                0x080049a8                I2C3_ER_IRQHandler
+                0x080049a8                DFSDM1_FLT2_IRQHandler
+                0x080049a8                EXTI0_IRQHandler
+                0x080049a8                I2C2_EV_IRQHandler
+                0x080049a8                CAN1_RX0_IRQHandler
+                0x080049a8                FPU_IRQHandler
+                0x080049a8                TIM1_UP_TIM16_IRQHandler
+                0x080049a8                UsageFault_Handler
+                0x080049a8                ADC1_2_IRQHandler
+                0x080049a8                SPI1_IRQHandler
+                0x080049a8                TIM6_DAC_IRQHandler
+                0x080049a8                TIM8_UP_IRQHandler
+                0x080049a8                DMA2_Channel2_IRQHandler
+                0x080049a8                SAI2_IRQHandler
+                0x080049a8                DFSDM1_FLT3_IRQHandler
+                0x080049a8                USART3_IRQHandler
+                0x080049a8                CAN1_RX1_IRQHandler
+                0x080049a8                LCD_IRQHandler
+                0x080049a8                UART5_IRQHandler
+                0x080049a8                ADC3_IRQHandler
+                0x080049a8                TIM4_IRQHandler
+                0x080049a8                DMA2_Channel1_IRQHandler
+                0x080049a8                QUADSPI_IRQHandler
+                0x080049a8                I2C1_EV_IRQHandler
+                0x080049a8                DMA1_Channel6_IRQHandler
+                0x080049a8                UART4_IRQHandler
+                0x080049a8                DMA2_Channel4_IRQHandler
+                0x080049a8                TIM3_IRQHandler
+                0x080049a8                RCC_IRQHandler
+                0x080049a8                DMA1_Channel1_IRQHandler
+                0x080049a8                Default_Handler
+                0x080049a8                DMA2_Channel7_IRQHandler
+                0x080049a8                TIM7_IRQHandler
+                0x080049a8                SDMMC1_IRQHandler
+                0x080049a8                TIM5_IRQHandler
+                0x080049a8                I2C3_EV_IRQHandler
+                0x080049a8                EXTI9_5_IRQHandler
+                0x080049a8                RTC_WKUP_IRQHandler
+                0x080049a8                PVD_PVM_IRQHandler
+                0x080049a8                SPI2_IRQHandler
+                0x080049a8                MemManage_Handler
+                0x080049a8                CAN1_TX_IRQHandler
+                0x080049a8                EXTI4_IRQHandler
+                0x080049a8                RNG_IRQHandler
+                0x080049a8                TIM1_TRG_COM_TIM17_IRQHandler
+                0x080049a8                COMP_IRQHandler
+                0x080049a8                WWDG_IRQHandler
+                0x080049a8                LPUART1_IRQHandler
+                0x080049a8                DMA2_Channel6_IRQHandler
+                0x080049a8                TIM2_IRQHandler
+                0x080049a8                EXTI1_IRQHandler
+                0x080049a8                DFSDM1_FLT0_IRQHandler
+                0x080049a8                I2C2_ER_IRQHandler
+                0x080049a8                DMA1_Channel2_IRQHandler
+                0x080049a8                TIM8_BRK_IRQHandler
+                0x080049a8                CAN1_SCE_IRQHandler
+                0x080049a8                FLASH_IRQHandler
+                0x080049a8                BusFault_Handler
+                0x080049a8                USART1_IRQHandler
+                0x080049a8                OTG_FS_IRQHandler
+                0x080049a8                SPI3_IRQHandler
+                0x080049a8                I2C1_ER_IRQHandler
+                0x080049a8                FMC_IRQHandler
+                0x080049a8                SWPMI1_IRQHandler
+                0x080049a8                LPTIM1_IRQHandler
+                0x080049a8                SAI1_IRQHandler
+                0x080049a8                DMA2_Channel3_IRQHandler
+                0x080049a8                TIM1_BRK_TIM15_IRQHandler
+ *fill*         0x080049aa        0x2 
  .text.arm_fill_f32
-                0x080049b0       0x3c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
-                0x080049b0                arm_fill_f32
+                0x080049ac       0x3c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
+                0x080049ac                arm_fill_f32
  .text.arm_copy_f32
-                0x080049ec       0x60 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
-                0x080049ec                arm_copy_f32
+                0x080049e8       0x60 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
+                0x080049e8                arm_copy_f32
  .text.arm_mean_f32
-                0x08004a4c       0x68 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
-                0x08004a4c                arm_mean_f32
+                0x08004a48       0x68 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
+                0x08004a48                arm_mean_f32
  .text.arm_rfft_fast_init_f32
-                0x08004ab4      0x104 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x08004ab4                arm_rfft_fast_init_f32
+                0x08004ab0      0x104 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x08004ab0                arm_rfft_fast_init_f32
  .text.arm_rfft_fast_f32
-                0x08004bb8      0x188 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
-                0x08004bb8                arm_rfft_fast_f32
+                0x08004bb4      0x188 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+                0x08004bb4                arm_rfft_fast_f32
  .text.arm_cfft_radix8by2_f32
-                0x08004d40      0x1a0 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
-                0x08004d40                arm_cfft_radix8by2_f32
+                0x08004d3c      0x1a0 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+                0x08004d3c                arm_cfft_radix8by2_f32
  .text.arm_cfft_radix8by4_f32
-                0x08004ee0      0x4bc ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
-                0x08004ee0                arm_cfft_radix8by4_f32
+                0x08004edc      0x4bc ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+                0x08004edc                arm_cfft_radix8by4_f32
  .text.arm_cfft_f32
-                0x0800539c       0xf4 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
-                0x0800539c                arm_cfft_f32
+                0x08005398       0xf4 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+                0x08005398                arm_cfft_f32
  .text.arm_fir_init_f32
-                0x08005490       0x24 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
-                0x08005490                arm_fir_init_f32
+                0x0800548c       0x24 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
+                0x0800548c                arm_fir_init_f32
  .text.arm_fir_f32
-                0x080054b4      0x4c8 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
-                0x080054b4                arm_fir_f32
+                0x080054b0      0x4c8 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
+                0x080054b0                arm_fir_f32
  .text.arm_cmplx_mult_cmplx_f32
-                0x0800597c      0x140 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
-                0x0800597c                arm_cmplx_mult_cmplx_f32
+                0x08005978      0x140 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
+                0x08005978                arm_cmplx_mult_cmplx_f32
  .text.arm_cmplx_mag_f32
-                0x08005abc      0x1d0 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
-                0x08005abc                arm_cmplx_mag_f32
+                0x08005ab8      0x1d0 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
+                0x08005ab8                arm_cmplx_mag_f32
  .text.arm_sin_f32
-                0x08005c8c       0x9c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
-                0x08005c8c                arm_sin_f32
+                0x08005c88       0x9c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+                0x08005c88                arm_sin_f32
  .text.arm_cos_f32
-                0x08005d28       0x80 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
-                0x08005d28                arm_cos_f32
+                0x08005d24       0x80 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+                0x08005d24                arm_cos_f32
  .text.arm_scale_f32
-                0x08005da8       0x6c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
-                0x08005da8                arm_scale_f32
+                0x08005da4       0x6c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+                0x08005da4                arm_scale_f32
  .text.arm_offset_f32
-                0x08005e14       0x6c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
-                0x08005e14                arm_offset_f32
+                0x08005e10       0x6c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
+                0x08005e10                arm_offset_f32
  .text.arm_mult_f32
-                0x08005e80       0x8c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
-                0x08005e80                arm_mult_f32
+                0x08005e7c       0x8c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
+                0x08005e7c                arm_mult_f32
  .text.arm_dot_prod_f32
-                0x08005f0c       0x8c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
-                0x08005f0c                arm_dot_prod_f32
+                0x08005f08       0x8c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
+                0x08005f08                arm_dot_prod_f32
  .text.arm_radix8_butterfly_f32
-                0x08005f98      0x5e4 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
-                0x08005f98                arm_radix8_butterfly_f32
+                0x08005f94      0x5e4 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+                0x08005f94                arm_radix8_butterfly_f32
  .text.__libc_init_array
-                0x0800657c       0x48 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-init.o)
-                0x0800657c                __libc_init_array
- .text.memcpy   0x080065c4       0x16 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcpy-stub.o)
-                0x080065c4                memcpy
- .text.memset   0x080065da       0x10 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memset.o)
-                0x080065da                memset
- .text.__cvt    0x080065ea       0xc2 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_float.o)
-                0x080065ea                __cvt
+                0x08006578       0x48 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-init.o)
+                0x08006578                __libc_init_array
+ .text.memcpy   0x080065c0       0x16 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcpy-stub.o)
+                0x080065c0                memcpy
+ .text.memset   0x080065d6       0x10 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memset.o)
+                0x080065d6                memset
+ .text.__cvt    0x080065e6       0xc2 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_float.o)
+                0x080065e6                __cvt
  .text.__exponent
-                0x080066ac       0x6a c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_float.o)
-                0x080066ac                __exponent
- *fill*         0x08006716        0x2 
+                0x080066a8       0x6a c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_float.o)
+                0x080066a8                __exponent
+ *fill*         0x08006712        0x2 
  .text._printf_float
-                0x08006718      0x480 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_float.o)
-                0x08006718                _printf_float
+                0x08006714      0x480 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_float.o)
+                0x08006714                _printf_float
  .text._printf_common
-                0x08006b98       0xec c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x08006b98                _printf_common
+                0x08006b94       0xec c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x08006b94                _printf_common
  .text._printf_i
-                0x08006c84      0x240 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x08006c84                _printf_i
- .text.printf   0x08006ec4       0x30 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-printf.o)
-                0x08006ec4                iprintf
-                0x08006ec4                printf
- .text.putchar  0x08006ef4       0x28 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-putchar.o)
-                0x08006ef4                putchar
- .text._puts_r  0x08006f1c       0xb8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-puts.o)
-                0x08006f1c                _puts_r
- .text.puts     0x08006fd4       0x10 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-puts.o)
-                0x08006fd4                puts
- .text.frexpf   0x08006fe4       0x54 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-sf_frexp.o)
-                0x08006fe4                frexpf
+                0x08006c80      0x240 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x08006c80                _printf_i
+ .text.printf   0x08006ec0       0x30 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-printf.o)
+                0x08006ec0                iprintf
+                0x08006ec0                printf
+ .text.putchar  0x08006ef0       0x28 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-putchar.o)
+                0x08006ef0                putchar
+ .text._puts_r  0x08006f18       0xb8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-puts.o)
+                0x08006f18                _puts_r
+ .text.puts     0x08006fd0       0x10 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-puts.o)
+                0x08006fd0                puts
+ .text.frexpf   0x08006fe0       0x54 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-sf_frexp.o)
+                0x08006fe0                frexpf
  .text.__swbuf_r
-                0x08007038       0xa4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-wbuf.o)
-                0x08007038                __swbuf_r
+                0x08007034       0xa4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-wbuf.o)
+                0x08007034                __swbuf_r
  .text.__swsetup_r
-                0x080070dc       0xdc c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-wsetup.o)
-                0x080070dc                __swsetup_r
- .text.quorem   0x080071b8      0x118 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-dtoa.o)
+                0x080070d8       0xdc c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-wsetup.o)
+                0x080070d8                __swsetup_r
+ .text.quorem   0x080071b4      0x118 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-dtoa.o)
+ *fill*         0x080072cc        0x4 
  .text._dtoa_r  0x080072d0      0xb9c c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-dtoa.o)
                 0x080072d0                _dtoa_r
  .text.__sflush_r
@@ -3034,7 +3035,7 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../l
  .igot.plt      0x200001f0        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu/crtbegin.o
                 0x200001f0                . = ALIGN (0x4)
 
-.bss            0x200001f0     0xb8f0 load address 0x0801e978
+.bss            0x200001f0    0x11170 load address 0x0801e978
                 0x200001f0                _sbss = .
                 0x200001f0                __bss_start__ = _sbss
  *(.bss)
@@ -3049,116 +3050,116 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../l
  .bss.HAL_RCC_DFSDM1_CLK_ENABLED
                 0x20000234        0x4 Src\dfsdm.o
  .bss.filterbank
-                0x20000238     0x1500 Src\dsp.o
+                0x20000238     0x2100 Src\dsp.o
                 0x20000238                filterbank
- .bss.fs        0x20001738        0x4 Src\dsp.o
-                0x20001738                fs
+ .bss.fs        0x20002338        0x4 Src\dsp.o
+                0x20002338                fs
  .bss.half_sample_shifter
-                0x2000173c      0x140 Src\dsp.o
-                0x2000173c                half_sample_shifter
+                0x2000233c      0x200 Src\dsp.o
+                0x2000233c                half_sample_shifter
  .bss.hann_window
-                0x2000187c      0x800 Src\dsp.o
-                0x2000187c                hann_window
- .bss.k_range   0x2000207c      0x150 Src\dsp.o
-                0x2000207c                k_range
+                0x2000253c      0x800 Src\dsp.o
+                0x2000253c                hann_window
+ .bss.k_range   0x20002d3c      0x210 Src\dsp.o
+                0x20002d3c                k_range
  .bss.mean_hist.11930
-                0x200021cc       0x40 Src\dsp.o
- .bss.nyq_fs    0x2000220c        0x4 Src\dsp.o
-                0x2000220c                nyq_fs
+                0x20002f4c       0x40 Src\dsp.o
+ .bss.nyq_fs    0x20002f8c        0x4 Src\dsp.o
+                0x20002f8c                nyq_fs
  .bss.signal_buf
-                0x20002210      0x800 Src\dsp.o
-                0x20002210                signal_buf
+                0x20002f90      0x800 Src\dsp.o
+                0x20002f90                signal_buf
  .bss.state_buf
-                0x20002a10      0x804 Src\dsp.o
-                0x20002a10                state_buf
+                0x20003790      0x804 Src\dsp.o
+                0x20003790                state_buf
  .bss.state_w_buf
-                0x20003214      0x804 Src\dsp.o
-                0x20003214                state_w_buf
+                0x20003f94      0x804 Src\dsp.o
+                0x20003f94                state_w_buf
  .bss.cnt.12579
-                0x20003a18        0x4 Src\main.o
+                0x20004798        0x4 Src\main.o
  .bss.elapsed_time
-                0x20003a1c        0x4 Src\main.o
-                0x20003a1c                elapsed_time
+                0x2000479c        0x4 Src\main.o
+                0x2000479c                elapsed_time
  .bss.idx.12581
-                0x20003a20        0x4 Src\main.o
+                0x200047a0        0x4 Src\main.o
  .bss.length.12580
-                0x20003a24        0x4 Src\main.o
+                0x200047a4        0x4 Src\main.o
  .bss.mfcc_buffer
-                0x20003a28     0x1f40 Src\main.o
-                0x20003a28                mfcc_buffer
+                0x200047a8     0x3200 Src\main.o
+                0x200047a8                mfcc_buffer
  .bss.mfsc_buffer
-                0x20005968     0x1f40 Src\main.o
-                0x20005968                mfsc_buffer
+                0x200079a8     0x3200 Src\main.o
+                0x200079a8                mfsc_buffer
  .bss.new_pcm_data_l_a
-                0x200078a8        0x1 Src\main.o
-                0x200078a8                new_pcm_data_l_a
+                0x2000aba8        0x1 Src\main.o
+                0x2000aba8                new_pcm_data_l_a
  .bss.new_pcm_data_l_b
-                0x200078a9        0x1 Src\main.o
-                0x200078a9                new_pcm_data_l_b
+                0x2000aba9        0x1 Src\main.o
+                0x2000aba9                new_pcm_data_l_b
  .bss.new_pcm_data_r_a
-                0x200078aa        0x1 Src\main.o
-                0x200078aa                new_pcm_data_r_a
+                0x2000abaa        0x1 Src\main.o
+                0x2000abaa                new_pcm_data_r_a
  .bss.new_pcm_data_r_b
-                0x200078ab        0x1 Src\main.o
-                0x200078ab                new_pcm_data_r_b
- .bss.pos       0x200078ac        0x4 Src\main.o
-                0x200078ac                pos
- .bss.printing  0x200078b0        0x1 Src\main.o
-                0x200078b0                printing
+                0x2000abab        0x1 Src\main.o
+                0x2000abab                new_pcm_data_r_b
+ .bss.pos       0x2000abac        0x4 Src\main.o
+                0x2000abac                pos
+ .bss.printing  0x2000abb0        0x1 Src\main.o
+                0x2000abb0                printing
  .bss.uart_buf.12582
-                0x200078b1     0x3e80 Src\main.o
- *fill*         0x2000b731        0x3 
+                0x2000abb1     0x6400 Src\main.o
+ *fill*         0x20010fb1        0x3 
  .bss.__malloc_free_list
-                0x2000b734        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-mallocr.o)
-                0x2000b734                __malloc_free_list
+                0x20010fb4        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-mallocr.o)
+                0x20010fb4                __malloc_free_list
  .bss.__malloc_sbrk_start
-                0x2000b738        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-mallocr.o)
-                0x2000b738                __malloc_sbrk_start
+                0x20010fb8        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-mallocr.o)
+                0x20010fb8                __malloc_sbrk_start
  .bss.heap_end.5239
-                0x2000b73c        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libnosys.a(sbrk.o)
+                0x20010fbc        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libnosys.a(sbrk.o)
  *(COMMON)
- COMMON         0x2000b740        0x4 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
-                0x2000b740                uwTick
- COMMON         0x2000b744       0xa4 Src\dac.o
-                0x2000b744                hdac1
-                0x2000b758                hdma_dac_ch1
-                0x2000b7a0                hdma_dac_ch2
- COMMON         0x2000b7e8      0x1a8 Src\dfsdm.o
-                0x2000b7e8                hdfsdm1_filter0
-                0x2000b83c                hdfsdm1_channel3
-                0x2000b874                hdma_dfsdm1_flt1
-                0x2000b8bc                hdma_dfsdm1_flt0
-                0x2000b904                hdfsdm1_filter1
-                0x2000b958                hdfsdm1_channel2
- COMMON         0x2000b990       0x48 Src\dsp.o
-                0x2000b990                S_DCT
-                0x2000b9a8                S_WPRE
-                0x2000b9b4                S
-                0x2000b9cc                S_PRE
- COMMON         0x2000b9d8        0x1 Src\main.o
-                0x2000b9d8                rxbuf
- *fill*         0x2000b9d9        0x3 
- COMMON         0x2000b9dc       0x40 Src\tim.o
-                0x2000b9dc                htim6
- COMMON         0x2000ba1c       0xc0 Src\usart.o
-                0x2000ba1c                hdma_usart2_tx
-                0x2000ba64                huart2
- COMMON         0x2000badc        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-reent.o)
-                0x2000badc                errno
-                0x2000bae0                . = ALIGN (0x4)
-                0x2000bae0                _ebss = .
-                0x2000bae0                __bss_end__ = _ebss
+ COMMON         0x20010fc0        0x4 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
+                0x20010fc0                uwTick
+ COMMON         0x20010fc4       0xa4 Src\dac.o
+                0x20010fc4                hdac1
+                0x20010fd8                hdma_dac_ch1
+                0x20011020                hdma_dac_ch2
+ COMMON         0x20011068      0x1a8 Src\dfsdm.o
+                0x20011068                hdfsdm1_filter0
+                0x200110bc                hdfsdm1_channel3
+                0x200110f4                hdma_dfsdm1_flt1
+                0x2001113c                hdma_dfsdm1_flt0
+                0x20011184                hdfsdm1_filter1
+                0x200111d8                hdfsdm1_channel2
+ COMMON         0x20011210       0x48 Src\dsp.o
+                0x20011210                S_DCT
+                0x20011228                S_WPRE
+                0x20011234                S
+                0x2001124c                S_PRE
+ COMMON         0x20011258        0x1 Src\main.o
+                0x20011258                rxbuf
+ *fill*         0x20011259        0x3 
+ COMMON         0x2001125c       0x40 Src\tim.o
+                0x2001125c                htim6
+ COMMON         0x2001129c       0xc0 Src\usart.o
+                0x2001129c                hdma_usart2_tx
+                0x200112e4                huart2
+ COMMON         0x2001135c        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-reent.o)
+                0x2001135c                errno
+                0x20011360                . = ALIGN (0x4)
+                0x20011360                _ebss = .
+                0x20011360                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x2000bae0      0x600 load address 0x0801e978
-                0x2000bae0                . = ALIGN (0x4)
-                0x2000bae0                PROVIDE (end, .)
+                0x20011360      0x600 load address 0x0801e978
+                0x20011360                . = ALIGN (0x4)
+                0x20011360                PROVIDE (end, .)
                 [!provide]                PROVIDE (_end, .)
-                0x2000bce0                . = (. + _Min_Heap_Size)
- *fill*         0x2000bae0      0x200 
-                0x2000c0e0                . = (. + _Min_Stack_Size)
- *fill*         0x2000bce0      0x400 
-                0x2000c0e0                . = ALIGN (0x4)
+                0x20011560                . = (. + _Min_Heap_Size)
+ *fill*         0x20011360      0x200 
+                0x20011960                . = (. + _Min_Stack_Size)
+ *fill*         0x20011560      0x400 
+                0x20011960                . = ALIGN (0x4)
 
 /DISCARD/
  libc.a(*)
@@ -3414,7 +3415,7 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../l
                 0x0000187a       0x22 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu/crtn.o
 OUTPUT(acoustic_feature_camera.elf elf32-littlearm)
 
-.debug_info     0x00000000    0x1cd59
+.debug_info     0x00000000    0x1cd5a
  .debug_info    0x00000000      0xc2a Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
  .debug_info    0x00000c2a      0xf6d Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.o
  .debug_info    0x00001b97      0xb95 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dac.o
@@ -3434,32 +3435,32 @@ OUTPUT(acoustic_feature_camera.elf elf32-littlearm)
  .debug_info    0x0001123c      0x6cb Src\dma.o
  .debug_info    0x00011907     0x1eeb Src\dsp.o
  .debug_info    0x000137f2      0x7a9 Src\gpio.o
- .debug_info    0x00013f9b     0x2cd8 Src\main.o
- .debug_info    0x00016c73      0x398 Src\stm32l4xx_hal_msp.o
- .debug_info    0x0001700b      0x85a Src\stm32l4xx_it.o
- .debug_info    0x00017865      0x5cf Src\system_stm32l4xx.o
- .debug_info    0x00017e34      0x998 Src\tim.o
- .debug_info    0x000187cc      0xe3d Src\usart.o
- .debug_info    0x00019609       0x84 startup\startup_stm32l476xx.o
- .debug_info    0x0001968d      0x145 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
- .debug_info    0x000197d2      0x14a ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
- .debug_info    0x0001991c      0x155 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
- .debug_info    0x00019a71      0x4c7 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_info    0x00019f38      0x70d ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
- .debug_info    0x0001a645      0x685 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
- .debug_info    0x0001acca      0x1a5 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
- .debug_info    0x0001ae6f      0x382 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
- .debug_info    0x0001b1f1      0x1c9 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
- .debug_info    0x0001b3ba      0x296 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
- .debug_info    0x0001b650      0x183 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_info    0x0001b7d3      0x181 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_info    0x0001b954      0x158 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
- .debug_info    0x0001baac      0x158 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
- .debug_info    0x0001bc04      0x1c9 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
- .debug_info    0x0001bdcd      0x12a ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
- .debug_info    0x0001bef7      0x9b1 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_common_tables.o)
- .debug_info    0x0001c8a8       0x98 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
- .debug_info    0x0001c940      0x419 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+ .debug_info    0x00013f9b     0x2cd9 Src\main.o
+ .debug_info    0x00016c74      0x398 Src\stm32l4xx_hal_msp.o
+ .debug_info    0x0001700c      0x85a Src\stm32l4xx_it.o
+ .debug_info    0x00017866      0x5cf Src\system_stm32l4xx.o
+ .debug_info    0x00017e35      0x998 Src\tim.o
+ .debug_info    0x000187cd      0xe3d Src\usart.o
+ .debug_info    0x0001960a       0x84 startup\startup_stm32l476xx.o
+ .debug_info    0x0001968e      0x145 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
+ .debug_info    0x000197d3      0x14a ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
+ .debug_info    0x0001991d      0x155 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
+ .debug_info    0x00019a72      0x4c7 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_info    0x00019f39      0x70d ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_info    0x0001a646      0x685 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_info    0x0001accb      0x1a5 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
+ .debug_info    0x0001ae70      0x382 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
+ .debug_info    0x0001b1f2      0x1c9 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
+ .debug_info    0x0001b3bb      0x296 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
+ .debug_info    0x0001b651      0x183 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_info    0x0001b7d4      0x181 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_info    0x0001b955      0x158 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_info    0x0001baad      0x158 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
+ .debug_info    0x0001bc05      0x1c9 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
+ .debug_info    0x0001bdce      0x12a ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
+ .debug_info    0x0001bef8      0x9b1 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_info    0x0001c8a9       0x98 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
+ .debug_info    0x0001c941      0x419 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
 .debug_abbrev   0x00000000     0x47ff
  .debug_abbrev  0x00000000      0x29d Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
@@ -3508,7 +3509,7 @@ OUTPUT(acoustic_feature_camera.elf elf32-littlearm)
  .debug_abbrev  0x00004743       0x14 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
  .debug_abbrev  0x00004757       0xa8 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
-.debug_loc      0x00000000    0x10baf
+.debug_loc      0x00000000    0x10bad
  .debug_loc     0x00000000      0x149 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
  .debug_loc     0x00000149      0x4fb Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.o
  .debug_loc     0x00000644      0x6b7 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dac.o
@@ -3526,26 +3527,26 @@ OUTPUT(acoustic_feature_camera.elf elf32-littlearm)
  .debug_loc     0x0000a461       0x63 Src\dac.o
  .debug_loc     0x0000a4c4       0xb0 Src\dfsdm.o
  .debug_loc     0x0000a574      0x549 Src\dsp.o
- .debug_loc     0x0000aabd      0x7e7 Src\main.o
- .debug_loc     0x0000b2a4      0x1be Src\system_stm32l4xx.o
- .debug_loc     0x0000b462       0x63 Src\usart.o
- .debug_loc     0x0000b4c5      0x116 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
- .debug_loc     0x0000b5db      0x174 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
- .debug_loc     0x0000b74f      0x197 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
- .debug_loc     0x0000b8e6      0x1eb ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_loc     0x0000bad1      0xfa9 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
- .debug_loc     0x0000ca7a     0x1067 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
- .debug_loc     0x0000dae1       0xc2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
- .debug_loc     0x0000dba3     0x138e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
- .debug_loc     0x0000ef31      0x3ce ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
- .debug_loc     0x0000f2ff      0x6f8 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
- .debug_loc     0x0000f9f7       0xf4 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_loc     0x0000faeb       0x96 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_loc     0x0000fb81      0x1d6 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
- .debug_loc     0x0000fd57      0x1d0 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
- .debug_loc     0x0000ff27      0x252 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
- .debug_loc     0x00010179      0x195 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
- .debug_loc     0x0001030e      0x8a1 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+ .debug_loc     0x0000aabd      0x7e5 Src\main.o
+ .debug_loc     0x0000b2a2      0x1be Src\system_stm32l4xx.o
+ .debug_loc     0x0000b460       0x63 Src\usart.o
+ .debug_loc     0x0000b4c3      0x116 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
+ .debug_loc     0x0000b5d9      0x174 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
+ .debug_loc     0x0000b74d      0x197 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
+ .debug_loc     0x0000b8e4      0x1eb ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_loc     0x0000bacf      0xfa9 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_loc     0x0000ca78     0x1067 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_loc     0x0000dadf       0xc2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
+ .debug_loc     0x0000dba1     0x138e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
+ .debug_loc     0x0000ef2f      0x3ce ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
+ .debug_loc     0x0000f2fd      0x6f8 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
+ .debug_loc     0x0000f9f5       0xf4 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_loc     0x0000fae9       0x96 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_loc     0x0000fb7f      0x1d6 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_loc     0x0000fd55      0x1d0 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
+ .debug_loc     0x0000ff25      0x252 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
+ .debug_loc     0x00010177      0x195 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
+ .debug_loc     0x0001030c      0x8a1 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
 .debug_aranges  0x00000000     0x12d0
  .debug_aranges
@@ -3684,7 +3685,7 @@ OUTPUT(acoustic_feature_camera.elf elf32-littlearm)
  .debug_ranges  0x00001558       0x10 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
  .debug_ranges  0x00001568       0x10 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
-.debug_line     0x00000000     0xb074
+.debug_line     0x00000000     0xb073
  .debug_line    0x00000000      0x455 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o
  .debug_line    0x00000455      0x451 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.o
  .debug_line    0x000008a6      0x4c5 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dac.o
@@ -3702,34 +3703,34 @@ OUTPUT(acoustic_feature_camera.elf elf32-littlearm)
  .debug_line    0x0000637e      0x2c0 Src\dac.o
  .debug_line    0x0000663e      0x369 Src\dfsdm.o
  .debug_line    0x000069a7      0x202 Src\dma.o
- .debug_line    0x00006ba9      0x58e Src\dsp.o
- .debug_line    0x00007137      0x215 Src\gpio.o
- .debug_line    0x0000734c      0x758 Src\main.o
- .debug_line    0x00007aa4      0x1e7 Src\stm32l4xx_hal_msp.o
- .debug_line    0x00007c8b      0x2c3 Src\stm32l4xx_it.o
- .debug_line    0x00007f4e      0x248 Src\system_stm32l4xx.o
- .debug_line    0x00008196      0x286 Src\tim.o
- .debug_line    0x0000841c      0x2d1 Src\usart.o
- .debug_line    0x000086ed       0x7f startup\startup_stm32l476xx.o
- .debug_line    0x0000876c      0x156 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
- .debug_line    0x000088c2      0x15c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
- .debug_line    0x00008a1e      0x167 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
- .debug_line    0x00008b85      0x1b5 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_line    0x00008d3a      0x2b2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
- .debug_line    0x00008fec      0x73e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
- .debug_line    0x0000972a      0x157 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
- .debug_line    0x00009881      0x31c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
- .debug_line    0x00009b9d      0x1c8 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
- .debug_line    0x00009d65      0x216 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
- .debug_line    0x00009f7b      0x17c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_line    0x0000a0f7      0x175 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_line    0x0000a26c      0x168 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
- .debug_line    0x0000a3d4      0x169 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
- .debug_line    0x0000a53d      0x175 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
- .debug_line    0x0000a6b2      0x16a ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
- .debug_line    0x0000a81c      0x135 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_common_tables.o)
- .debug_line    0x0000a951       0xa2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
- .debug_line    0x0000a9f3      0x681 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+ .debug_line    0x00006ba9      0x58d Src\dsp.o
+ .debug_line    0x00007136      0x215 Src\gpio.o
+ .debug_line    0x0000734b      0x758 Src\main.o
+ .debug_line    0x00007aa3      0x1e7 Src\stm32l4xx_hal_msp.o
+ .debug_line    0x00007c8a      0x2c3 Src\stm32l4xx_it.o
+ .debug_line    0x00007f4d      0x248 Src\system_stm32l4xx.o
+ .debug_line    0x00008195      0x286 Src\tim.o
+ .debug_line    0x0000841b      0x2d1 Src\usart.o
+ .debug_line    0x000086ec       0x7f startup\startup_stm32l476xx.o
+ .debug_line    0x0000876b      0x156 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fill_f32.o)
+ .debug_line    0x000088c1      0x15c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_copy_f32.o)
+ .debug_line    0x00008a1d      0x167 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mean_f32.o)
+ .debug_line    0x00008b84      0x1b5 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_line    0x00008d39      0x2b2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_line    0x00008feb      0x73e ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_line    0x00009729      0x157 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_init_f32.o)
+ .debug_line    0x00009880      0x31c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_fir_f32.o)
+ .debug_line    0x00009b9c      0x1c8 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mult_cmplx_f32.o)
+ .debug_line    0x00009d64      0x216 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o)
+ .debug_line    0x00009f7a      0x17c ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_line    0x0000a0f6      0x175 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_line    0x0000a26b      0x168 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_line    0x0000a3d3      0x169 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_offset_f32.o)
+ .debug_line    0x0000a53c      0x175 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_mult_f32.o)
+ .debug_line    0x0000a6b1      0x16a ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_dot_prod_f32.o)
+ .debug_line    0x0000a81b      0x135 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_line    0x0000a950       0xa2 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
+ .debug_line    0x0000a9f2      0x681 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
 .debug_str      0x00000000     0x7491
  .debug_str     0x00000000      0xc84 Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.o

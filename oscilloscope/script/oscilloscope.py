@@ -345,8 +345,8 @@ if __name__ == '__main__':
         elif c == 'down':
             save()
             
-        if not args.browser:
-            canvas.mpl_connect('key_press_event', on_key_event)
+    if not args.browser:
+        canvas.mpl_connect('key_press_event', on_key_event)
 
     ### File select event ###
     def on_select(event):

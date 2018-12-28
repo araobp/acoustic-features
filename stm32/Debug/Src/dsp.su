@@ -2,7 +2,7 @@ dsp.c:55:11:log10_approx	16	static
 dsp.c:65:6:hann	24	static
 dsp.c:74:11:freq2mel	8	static
 dsp.c:79:11:mel2freq	8	static
-dsp.c:84:6:generate_filters	208	static
+dsp.c:84:6:generate_filters	304	static
 dsp.c:115:6:generate_half_sample_shifter	40	static
 dsp.c:131:6:init_dsp	24	static
 dsp.c:147:6:apply_pre_emphasis	0	static
@@ -14,4 +14,4 @@ dsp.c:178:6:apply_psd	16	static
 dsp.c:184:6:apply_psd_logscale	24	static
 dsp.c:191:6:apply_filterbank	40	static
 dsp.c:205:6:apply_filterbank_logscale	24	static
-dsp.c:212:6:apply_dct2	336	static
+dsp.c:212:6:apply_dct2	528	static
