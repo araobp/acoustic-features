@@ -16,17 +16,16 @@ This project is still in development:
 - Inference engine based on Keras/TensorFlow has been implemented for Win10 and RasPi3.
 - Implementation of DCT Type-II (for MFCCs) on STM32 has been completed.
 
-And I am currently working on STM32 Cube.AI: [Getting started with STM32Cube.AI (youtube)](https://www.youtube.com/watch?v=grgNXdkmzzQ&list=PLnMKNibPkDnG9IC5Nl9vJg1CKMAO1kODW&t=141s&index=2)
-
+And I am currently evaluating X-CUBE-AI in this project: https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/AI
 
 ## Architecture
 
 ```
-                                          *** pre-processing ***             *** inference (*1) ***
+                                          *** pre-processing ***             *** inference ***
                                           ARM Cortex-M4(STM32L476RG)        Another core of ARM Cortex-M
                                       .................................... .............................
                                       :   Filters for feature extraction : :    Inference on CNN       :
-Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features-->[Cube.AI]               :
+Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features---->[X-CUBE-AI]           :
                                       :    |                   |         : :                           :
                                       :    +------------+      |         : :                           :
                                       :     +-----------|------+         : :                           :
