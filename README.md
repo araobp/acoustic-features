@@ -2,7 +2,7 @@
 
 ![](./oscilloscope/screenshots/spectrogram_framenco.png)
 
-**=>[Acoustic feature gallery (2D images)](./GALLERY.md)**
+**=> [Acoustic feature gallery (2D images)](./GALLERY.md)**
 
 ## Goal
 
