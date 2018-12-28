@@ -36,6 +36,8 @@ The window on the screen is highlighted.
 
 ## Screen shots
 
+Sine wave tone at a constant frequency is visualized by using the oscilloscope GUI in various methods.
+
 ![Raw wave](./screenshots/gui_raw_wave.jpg)
 
 ![Raw wave](./screenshots/gui_fft.jpg)
