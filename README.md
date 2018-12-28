@@ -4,7 +4,7 @@
 
 ![MFSCs of chirp signal](./oscilloscope/screenshots/mfsc_chirp.png)
 
-[GALLERY](./GARELLY.md)
+[GALLERY](./GALLERY.md)
 
 ## Background and motivation
 
