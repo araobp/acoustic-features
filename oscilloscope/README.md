@@ -11,6 +11,8 @@ Sound ))) [MEMS mic]--[Edge device(STM32L476RG)]<-- USB serial -->[Oscilloscope 
 
 Run "[run_measurement.bat](./run_measurement.bat)" to obtain feature data set for training CNN.
 
+![](./screenshots/gui_mfsc_measurement.jpg)
+
 [Step 1] Enter a class label into the class label entry on the GUI.
 
 [Step 2] Press "MFSCs" or "MFCCs" button to check if the edge device can transfer feature data to the GUI.
@@ -32,3 +34,16 @@ Down: save the data
 
 The window on the screen is highlighted.
 
+## Screen shots
+
+![Raw wave](./screenshots/gui_raw_wave.jpg)
+
+![Raw wave](./screenshots/gui_fft.jpg)
+
+![Raw wave](./screenshots/gui_spectrogram.jpg)
+
+![Raw wave](./screenshots/gui_welch.jpg)
+
+![Raw wave](./screenshots/gui_mfsc.jpg)
+
+![Raw wave](./screenshots/gui_mfcc.jpg)
