@@ -6,13 +6,6 @@
 
 **=>[GALLERY](./GALLERY.md)**
 
-## Background and motivation
-
-- ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
-- [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset)
-- [Speech Processing for Machine Learning: Filter banks, Mel-Frequency Cepstral Coefficients (MFCCs) and What's In-Between](https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html)
-- [STM32 Cube.AI](https://www.st.com/content/st_com/en/stm32-ann.html)
-
 ## Project status (Dec 26, 2018)
 
 This project is still in development:
@@ -100,3 +93,11 @@ In case of a living room:
 ![](./oscilloscope/screenshots/inference.jpg)
 
 - [CNN experiments with Keras/TensorFlow](./tensorflow)
+
+## References
+
+- ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
+- [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset)
+- [Speech Processing for Machine Learning: Filter banks, Mel-Frequency Cepstral Coefficients (MFCCs) and What's In-Between](https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html)
+- [STM32 Cube.AI](https://www.st.com/content/st_com/en/stm32-ann.html)
+
