@@ -15,8 +15,9 @@ This project is still in development:
 - Several CNN models on Keras/TensorFlow have already been tested.
 - Inference engine based on Keras/TensorFlow has been implemented for Win10 and RasPi3.
 - Implementation of DCT Type-II (for MFCCs) on STM32 has been completed.
+- Evaluation on X-CUBE-AI has been completed in [another project](https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/AI)
 
-And I am currently evaluating X-CUBE-AI in this project: https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/AI
+Since X-CUBE-AI does not seem so stable, I will implement AI part on another board (NUCLEO-F401RE or STM32F4-Discovery).
 
 ## Architecture
 
