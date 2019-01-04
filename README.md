@@ -53,6 +53,7 @@ Platform:
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32)
 - [Arduino shield of two Knowles MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
+- Inference engine (X-CUBE-AI with Keras/TensorFlow)
 
 ## Calibration
 
