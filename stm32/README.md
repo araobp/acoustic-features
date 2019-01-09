@@ -73,7 +73,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
          |             |
      [Log scale]-------+  arm_scale_f32() with log10 approximation
          |             |
- [DCT Type-II(MFCCs)]  |  arm_rfft_fast_f32(), arm_scale_f32(), arm_cmplx_mult_cmplx_f32()
+ [DCT Type-II(MFCCs)]  |  my original "dct_f32()" function based on CMSIS-DSP
          |             |
          +<------------+
          |
