@@ -397,9 +397,9 @@ if __name__ == '__main__':
     range_spectrogram = Tk.Spinbox(master=frame_row1, width=4,
                                    values=[int(dsp.NN/2), int(dsp.NN/2.0*.7), int(dsp.NN/2.0*0.4)])
     range_mfcc = Tk.Spinbox(master=frame_row1, width=3,
-                            values=[16, 25, 40])
+                            values=[13, 20, 40])
     spectrum_subtraction = Tk.Spinbox(master=frame_row1, width=3,
-                                      values=[-60, -40, -30, -25, -20])
+                                      values=[0, -60, -40, -30, -25, -20])
     label_class = Tk.Label(master=frame_row1, text='Class label:')
     label_image = Tk.Label(master=frame_row1, text='Mask:')
     label_color = Tk.Label(master=frame_row1, text='Color:')

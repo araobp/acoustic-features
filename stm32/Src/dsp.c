@@ -13,17 +13,18 @@
 #include "math.h"
 #include "arm_const_structs.h"
 #include "main.h"
+#include "dct.h"
 
 const float32_t RECIPROCAL_NN = 1.0 / (float32_t) NN;
 
 float32_t fs = 0.0f;      // Sampling frequency
 float32_t nyq_fs = 0.0f;  // Nyquist frequency
 
-// RFFT and FIR instances
+// RFFT, FIR and DCT2 instances
 arm_rfft_fast_instance_f32 S;
 arm_fir_instance_f32 S_PRE;
 arm_fir_instance_f32 S_WPRE;
-arm_rfft_fast_instance_f32 S_DCT;
+dct2_instance_f32 S_DCT;
 
 // Pre-emphasis
 float32_t fir_coefficients[2] = { -ALPHA, 1.0f };
@@ -34,9 +35,6 @@ float32_t state_w_buf[NN + 1] = { 0.0f };
 // Mel filter bank
 float32_t filterbank[NUM_FILTERS + 2][FILTER_LENGTH] = { { 0.0f } };
 int k_range[NUM_FILTERS + 2][2] = { { 0 } };
-
-// Half sample shifter for DCT2 calculation with RFFT
-float32_t half_sample_shifter[NUM_FILTERS * 2] = { 0.0f };
 
 // Hann window
 float32_t hann_window[NN] = { 0.0f };
@@ -111,20 +109,6 @@ void generate_filters(void) {
   }
 }
 
-// Generate half sample shifter for DCT2
-void generate_half_sample_shifter(void) {
-  int re, im;
-  float32_t num_filters_2 = (float32_t) NUM_FILTERS * 2;
-  for (int k = 0; k < NUM_FILTERS; k++) {
-    re = k * 2;
-    im = re + 1;
-    half_sample_shifter[re] = arm_cos_f32(
-        -1.0 * PI * (float32_t) k / num_filters_2);
-    half_sample_shifter[im] = arm_sin_f32(
-        -1.0 * PI * (float32_t) k / num_filters_2);
-  }
-}
-
 /*
  * DSP pipeline initialization
  */
@@ -134,11 +118,10 @@ void init_dsp(float32_t f_s) {
   fs = f_s;
   nyq_fs = f_s / 2.0;
   arm_rfft_fast_init_f32(&S, NN);
-  arm_rfft_fast_init_f32(&S_DCT, NUM_FILTERS * 2);
   arm_fir_init_f32(&S_PRE, 2, fir_coefficients, state_buf, NN);
   arm_fir_init_f32(&S_WPRE, 2, fir_w_coefficients, state_w_buf, NN);
   generate_filters();
-  generate_half_sample_shifter();
+  dct2_init_f32(&S_DCT, NUM_FILTERS);
 }
 
 //--- DSP pipeline functions -----------------------------//
@@ -210,14 +193,8 @@ void apply_filterbank_logscale(float32_t *signal) {
 
 // DCT Type-II
 void apply_dct2(float32_t *signal) {
-  float32_t out[NUM_FILTERS * 2] = { 0.0f };
   arm_copy_f32(signal, signal_buf, NUM_FILTERS);
-  for (int n = 0; n < NUM_FILTERS; n++) {
-    signal_buf[NUM_FILTERS + n] = signal[NUM_FILTERS - n - 1];
-  }
-  arm_rfft_fast_f32(&S_DCT, signal_buf, out, 0);
-  arm_cmplx_mult_cmplx_f32(out, half_sample_shifter, out, NUM_FILTERS);
-  for (int n = 0; n < NUM_FILTERS; n++) {
-    signal[n] = out[n * 2] * ADJUST_MFCCS;
-  }
+  // DCT Type-II
+  dct2_f32(&S_DCT, signal_buf, signal, 0);
+  signal[0] = 0.0;  // Remove DC
 }

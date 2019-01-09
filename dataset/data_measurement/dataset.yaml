@@ -1,9 +1,9 @@
-feature: mfsc
+feature: mfcc
 files: 30
 training_files: 20
 samples: 200
 length: 96
-filters: 64
-cutoff: 64
+filters: 40
+cutoff: null
 stride: 12
 model: null

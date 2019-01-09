@@ -22,10 +22,7 @@ class Model:
         if self.activation_model:
             windowed_data = []
             for w in self.dataset.windows:
-                if self.dataset.feature == 'mfcc':
-                    d = data[w[0]:w[1], 1:w[2], :]
-                else:
-                    d = data[w[0]:w[1], 0:w[2], :]                    
+                d = data[w[0]:w[1], :w[2], :]                    
                 windowed_data.append(d)
             activations = self.activation_model.predict(np.array(windowed_data))
             result = (activations[-1]*100)  # The last layer

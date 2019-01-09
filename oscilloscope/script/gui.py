@@ -106,13 +106,15 @@ class GUI:
             # Debug
             print('mfsc stm32: {}'.format(data[0]))
             print('mfcc stm32: {}'.format(data[self.samples]))
-            print('mfcc python: {}'.format(dct(data[0]/10.0).astype(int)))
+            dcted = dct(data[0], norm='ortho').astype(int)
+            dcted[0] = 0.0  # Remove DC
+            print('mfcc python: {}'.format(dcted))
 
             data_ = spectrum_subtraction(data[self.samples:,:], ssub)
             data_ = shadow(data_, window, shadow_sub=10)
             ax.pcolormesh(self.time[dsp.MFCC],
-                          self.freq[dsp.MFCC][1:range_],
-                          data_.T[1:range_],
+                          self.freq[dsp.MFCC][:range_],
+                          data_.T[:range_],
                           cmap=cmap)                
             self.set_labels(ax, 'MFCCs', 'Time [sec]', 'MFCC')
 

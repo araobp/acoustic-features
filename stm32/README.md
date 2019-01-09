@@ -106,17 +106,11 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 ```
 ## Mel filter bank
 
-The number of filters: 64
-
-The reasons why I choose 64 (2^6) rather than 40 are:
-- it is a good number for RFFT supported by CMSIS-DSP, since I can use RFFT without zero-padding to calculate DCT Type-II.
-- [VGGish model](https://github.com/tensorflow/models/tree/master/research/audioset) uses 64 mel filters as well.
+The number of filters is 40. The reasons why I choose 40 is that most of the technical papers I have read uses 40 filters.
 
 The filter bank is applied to the spectrogram to extract MFSCs and MFCCs for training CNN.
 
-I have developed DCT Type-II function in C language to calculate MFCCs on STM32 in real time.
-
-If MFCCs are not use for training CNN, you can decrease the number to 40 by adding a symbol "FILTERS_40" to GCC preprocessor and re-building the firmware.
+I have developed DCT Type-II function in C language based on CMSIS-DSP to calculate MFCCs on STM32 in real time.
 
 ## log10 processing time issue
 

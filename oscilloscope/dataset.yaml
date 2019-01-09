@@ -3,7 +3,7 @@ files: 1
 training_files: 1
 samples: 200
 length: 200
-filters: 64
+filters: 40
 cutoff: null
 stride: 200
 model: null
