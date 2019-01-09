@@ -106,11 +106,9 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 ```
 ## Mel filter bank
 
-The number of filters is 40. The reasons why I choose 40 is that most of the technical papers I have read uses 40 filters.
-
-The filter bank is applied to the spectrogram to extract MFSCs and MFCCs for training CNN.
-
-I have developed DCT Type-II function in C language based on CMSIS-DSP to calculate MFCCs on STM32 in real time.
+- The number of filters is 40. The reason is that most of the technical papers I have read uses 40 filters.
+- The filter bank is applied to the spectrogram to extract MFSCs and MFCCs for training a neural network.
+- I have developed DCT Type-II function in C language based on CMSIS-DSP to calculate MFCCs on STM32 in real time.
 
 ## log10 processing time issue
 
