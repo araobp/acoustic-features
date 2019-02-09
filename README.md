@@ -1,6 +1,6 @@
 # Acoustic features for deep learning
 
-![](./oscilloscope/screenshots/spectrogram_framenco.png)
+<img src="./oscilloscope/screenshots/spectrogram_framenco.png" width="600">
 
 **=> [Acoustic feature gallery (2D images)](./GALLERY.md)**
 
@@ -106,8 +106,8 @@ In case of a living room:
 - [CNN model used for this performance test](./tensorflow/CNN_for_AED_music.ipynb)
 - [X-CUBE-AI screen shot](./stm32/ai_test/performance/screenshot1.jpg)
 
-![](./stm32/ai_test/performance/screenshot2.jpg)
-
+<img src="./stm32/ai_test/performance/screenshot2.jpg" height="300">
+  
 ```
 Running PerfTest on "network" with random inputs (16 iterations)...
 ................
