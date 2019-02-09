@@ -96,8 +96,8 @@ Results for "network", 16 inferences @80MHz/80MHz (complexity: 340270 MACC)
 The window size for learning/infering a musical instrument: 13.2mec x 64 frames = 0.83 sec
 
 Conclusion:
-[1] One core CPU @ 80MHz with 100kbytes RAM is sufficent for musical instrument recognition.
-[2] The duration of 50 msec might be too long for key word detection. Use MFCCs rather than MFSCs to save time and memory.
+- One core CPU @ 80MHz with 100kbytes RAM is sufficent for musical instrument recognition.
+- The duration of 50 msec might be too long for key word detection. Use MFCCs rather than MFSCs to save time and memory.
 
 Note: X-CUBE-AI still seems to generate a network_runtime.a having a liker problem for "Application Template", so I choose "System Performance" on CubeMX instead to generate code of a neural network, then remove the part of system performance test code.
 
