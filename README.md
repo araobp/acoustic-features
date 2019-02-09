@@ -123,7 +123,9 @@ Results for "network", 16 inferences @80MHz/80MHz (complexity: 340270 MACC)
 
 The window size for learning/infering a musical instrument: 13.2mec x 64 frames = 0.83 sec
 
-It will require another core to focus on inference in real-time for the use case of keyword detection.
+Conclusion:
+- One core suffices for musical instrument recognition.
+- It will require another core to focus on inference for keyword detection.
 
 ## References
 
