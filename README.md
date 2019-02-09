@@ -127,6 +127,8 @@ Conclusion:
 - One core suffices for musical instrument recognition.
 - It will require another core to focus on inference for keyword detection.
 
+Note: X-CUBE-AI still seems to generate a network-runtime.a having a liker problem for "Application Template", so I choose System Performance instead to generate code of a neural network, then remove the part of system performance test.
+
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
