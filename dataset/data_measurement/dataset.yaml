@@ -2,7 +2,7 @@ feature: mfcc
 files: 30
 training_files: 20
 samples: 200
-length: 96
+length: 64
 filters: 40
 cutoff: null
 stride: 12

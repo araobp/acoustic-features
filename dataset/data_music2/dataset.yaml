@@ -1,9 +1,0 @@
-feature: mfsc
-files: 100
-training_files: 67
-samples: 200
-length: 64
-filters: 40
-cutoff: null
-stride: 64
-model: cnn_for_aed_20181222135830.h5
