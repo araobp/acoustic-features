@@ -39,8 +39,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "MEMS mic shield"
-Date "2018-11-13"
-Rev ""
+Date "2018-11-25"
+Rev "ver 0.2"
 Comp "https://github.com/araobp"
 Comment1 ""
 Comment2 ""
@@ -68,17 +68,6 @@ F 2 "mcu:MEMS_mic" H 5400 3750 60  0001 C CNN
 F 3 "" H 5400 3750 60  0001 C CNN
 	1    5400 3750
 	1    0    0    -1  
-$EndComp
-$Comp
-L Conn_01x08_Male J6
-U 1 1 5BEA0A3B
-P 8250 2300
-F 0 "J6" H 8250 2700 50  0000 C CNN
-F 1 "Conn_01x08_Male" H 8250 1800 50  0000 C CNN
-F 2 "mcu:Pin Header 8P" H 8250 2300 50  0001 C CNN
-F 3 "" H 8250 2300 50  0001 C CNN
-	1    8250 2300
-	-1   0    0    -1  
 $EndComp
 $Comp
 L +3.3V #PWR01
@@ -118,10 +107,10 @@ NoConn ~ 8050 2700
 Text Notes 8300 2650 0    60   ~ 0
 PC7 (DFSDM_DATAIN2)
 $Comp
-L Conn_01x08_Male J7
+L Conn_01x08_Male J5
 U 1 1 5BEA0DD0
 P 8250 5450
-F 0 "J7" H 8250 5850 50  0000 C CNN
+F 0 "J5" H 8250 5850 50  0000 C CNN
 F 1 "Conn_01x08_Male" H 8250 4950 50  0000 C CNN
 F 2 "mcu:Pin Header 8P" H 8250 5450 50  0001 C CNN
 F 3 "" H 8250 5450 50  0001 C CNN
@@ -139,10 +128,10 @@ NoConn ~ 8050 5450
 NoConn ~ 8050 5550
 NoConn ~ 8050 5650
 $Comp
-L Conn_01x06_Male J3
+L Conn_01x06_Male J2
 U 1 1 5BEA152F
 P 2400 5550
-F 0 "J3" H 2400 5850 50  0000 C CNN
+F 0 "J2" H 2400 5850 50  0000 C CNN
 F 1 "Conn_01x06_Male" H 2400 5150 50  0000 C CNN
 F 2 "mcu:Pin Header 6P" H 2400 5550 50  0001 C CNN
 F 3 "" H 2400 5550 50  0001 C CNN
@@ -178,10 +167,6 @@ F 3 "" V 3700 1100 60  0001 C CNN
 	1    3650 1050
 	0    1    1    0   
 $EndComp
-NoConn ~ 3350 1150
-NoConn ~ 4050 1150
-Text Notes 6100 6700 1    60   ~ 0
-GND
 Wire Wire Line
 	5900 3000 6600 3000
 Wire Wire Line
@@ -220,15 +205,11 @@ Wire Wire Line
 	4750 2400 6300 2400
 Connection ~ 6300 2400
 Wire Wire Line
-	8050 5850 5650 5850
-Wire Wire Line
-	5650 5850 5650 6250
-Wire Wire Line
 	2600 2000 3000 2000
 Wire Wire Line
-	3000 2000 3000 950 
+	3000 2000 3000 1150
 Wire Wire Line
-	3000 950  3350 950 
+	3000 1150 3350 1150
 $Comp
 L GND #PWR03
 U 1 1 5BEA39CA
@@ -241,7 +222,7 @@ F 3 "" H 4300 1700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4050 950  4300 950 
+	4050 1150 4300 1150
 Wire Wire Line
 	2600 2300 3450 2300
 Wire Wire Line
@@ -290,77 +271,60 @@ Wire Wire Line
 	4850 6000 4500 6000
 Connection ~ 4500 6000
 Wire Wire Line
-	4300 950  4300 1700
+	4300 1150 4300 1700
 Text Notes 3950 7450 1    60   ~ 0
 PC2 (DFSDM_CKOUT)
-$Comp
-L Conn_01x06_Female J4
-U 1 1 5BEA871C
-P 5850 6450
-F 0 "J4" H 5850 6750 50  0000 C CNN
-F 1 "Conn_01x06_Female" H 5850 6050 50  0000 C CNN
-F 2 "mcu:Pin Header 6P" H 5850 6450 50  0001 C CNN
-F 3 "" H 5850 6450 50  0001 C CNN
-	1    5850 6450
-	0    1    1    0   
-$EndComp
-Text Notes 5900 6650 1    60   ~ 0
-5V
-Text Notes 5800 6650 1    60   ~ 0
-RX
-Text Notes 5700 6650 1    60   ~ 0
-TX
-Wire Wire Line
-	6050 6250 6050 5400
-Wire Wire Line
-	6050 5400 4500 5400
 Connection ~ 4500 5400
-$Comp
-L Conn_01x06_Male J1
-U 1 1 5BEA8FE6
-P 2400 2200
-F 0 "J1" H 2400 2500 50  0000 C CNN
-F 1 "Conn_01x06_Male" H 2400 1800 50  0000 C CNN
-F 2 "mcu:Pin Header 6P" H 2400 2200 50  0001 C CNN
-F 3 "" H 2400 2200 50  0001 C CNN
-	1    2400 2200
-	1    0    0    -1  
-$EndComp
 Text Notes 2200 2250 0    60   ~ 0
 5V\n
-Wire Wire Line
-	2600 2200 3000 2200
-Wire Wire Line
-	3000 2200 3000 5200
-Wire Wire Line
-	3000 5200 5850 5200
-Wire Wire Line
-	5850 5200 5850 6250
-Wire Wire Line
-	8050 5750 5750 5750
-Wire Wire Line
-	5750 5750 5750 6250
 NoConn ~ 2600 2400
 NoConn ~ 2600 2500
 $Comp
-L Conn_01x01_Male J2
+L Conn_01x01_Male J3
 U 1 1 5BEA9234
 P 3900 6450
-F 0 "J2" H 3900 6550 50  0000 C CNN
+F 0 "J3" H 3900 6550 50  0000 C CNN
 F 1 "Conn_01x01_Male" H 3900 6350 50  0000 C CNN
 F 2 "mcu:Pin_header_1P" H 3900 6450 50  0001 C CNN
 F 3 "" H 3900 6450 50  0001 C CNN
 	1    3900 6450
 	0    -1   -1   0   
 $EndComp
-Text Notes 5550 6950 0    60   ~ 0
-Microchip RN4020\nBLE module
-NoConn ~ 5550 6250
-NoConn ~ 5950 6250
 NoConn ~ -1000 1500
 NoConn ~ -950 1450
 Text Notes 4950 3200 0    60   ~ 0
 Mic R
 Text Notes 4950 4100 0    60   ~ 0
 Mic L
+NoConn ~ 8050 5750
+NoConn ~ 8050 5850
+NoConn ~ 2600 2200
+$Comp
+L Conn_01x08_Male J1
+U 1 1 5C5A0EE3
+P 2400 2100
+F 0 "J1" H 2400 2500 50  0000 C CNN
+F 1 "Conn_01x08_Male" H 2400 1600 50  0000 C CNN
+F 2 "mcu:Pin Header 8P" H 2400 2100 50  0001 C CNN
+F 3 "" H 2400 2100 50  0001 C CNN
+	1    2400 2100
+	1    0    0    -1  
+$EndComp
+NoConn ~ 2600 1800
+NoConn ~ 2600 1900
+$Comp
+L Conn_01x10_Male J4
+U 1 1 5C5A0FF3
+P 8250 2200
+F 0 "J4" H 8250 2700 50  0000 C CNN
+F 1 "Conn_01x10_Male" H 8250 1600 50  0000 C CNN
+F 2 "mcu:Pin Header 10P" H 8250 2200 50  0001 C CNN
+F 3 "" H 8250 2200 50  0001 C CNN
+	1    8250 2200
+	-1   0    0    -1  
+$EndComp
+NoConn ~ 8050 1900
+NoConn ~ 8050 1800
+NoConn ~ 3350 950 
+NoConn ~ 4050 950 
 $EndSCHEMATC
