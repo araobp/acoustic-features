@@ -1,6 +1,6 @@
 # Acoustic features for deep learning
 
-<img src="./oscilloscope/screenshots/spectrogram_framenco.png" width="600">
+<img src="./oscilloscope/screenshots/spectrogram_framenco.png" width="700">
 
 **=> [Acoustic feature gallery (2D images)](./GALLERY.md)**
 
