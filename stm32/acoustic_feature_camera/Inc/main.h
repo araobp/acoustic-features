@@ -52,7 +52,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "dsp.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -72,6 +72,10 @@ typedef enum {
 typedef enum {
   DISABLED, FILTERBANK, ELAPSED_TIME
 } debug;
+
+extern int8_t mfsc_buffer[NUM_FILTERS * 200];
+extern int8_t mfcc_buffer[NUM_FILTERS * 200];
+extern int pos;
 
 /* USER CODE END ET */
 

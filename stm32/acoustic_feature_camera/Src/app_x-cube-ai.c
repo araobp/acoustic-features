@@ -56,6 +56,8 @@
 #include "ai_datatypes_defines.h"
 
 #include "ai.h"
+#include "dsp.h"
+#include "stdio.h"
 /*************************************************************************
   *
   */
@@ -70,6 +72,36 @@ void MX_X_CUBE_AI_Init(void)
 void MX_X_CUBE_AI_Process(void)
 {
     /* USER CODE BEGIN 1 */
+  char class_labels[AI_NETWORK_OUT_1_SIZE][20] = {
+      "Piano",
+      "Classical guitar",
+      "Framenco guitar",
+      "Blues harp",
+      "Tin whistle",
+      "silence"
+  };
+
+  ai_float in_data[AI_NETWORK_IN_1_SIZE];
+  ai_float out_data[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
+
+  int window_start_idx;
+
+  if ((pos >= 64) && (pos % 64) == 0) {
+    window_start_idx = (pos - 64) * NUM_FILTERS;
+    for (int j=0;j<64;j++) {
+      for (int i=0;i<NUM_FILTERS;i++) {
+        in_data[j*NUM_FILTERS+i] = (ai_float)(mfsc_buffer[window_start_idx+j*NUM_FILTERS+i]);
+      }
+    }
+    ai_infer(in_data, out_data);
+
+  }
+
+  // Output to console
+  printf("\n--- Inference ---\n");
+  for (int i=0; i<AI_NETWORK_OUT_1_SIZE; i++) {
+    printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
+  }
     /* USER CODE END 1 */
 }
 
