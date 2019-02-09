@@ -121,6 +121,10 @@ Results for "network", 16 inferences @80MHz/80MHz (complexity: 340270 MACC)
  used heap    : 0:0 0:0 (req:allocated,req:released) cfg=0
  ```
 
+The window size for learning/infering a musical instrument: 13.2mec x 64 frames = 0.83 sec
+
+It will require another core to focus on inference in real-time for the use case of keyword detection.
+
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
