@@ -8,7 +8,7 @@
 
 Develop "edge AI" on a MCU for acoustic event detection.
 
-## Project status (Jan 9, 2019)
+## Project status (Feb 9, 2019)
 
 This project is still in development:
 - All the pre-processing features and the oscilloscope GUI have been implemented.
