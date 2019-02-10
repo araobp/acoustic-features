@@ -8,7 +8,7 @@
 
 Develop "edge AI" on a MCU for acoustic event detection.
 
-## Project status (Feb 9, 2019)
+## Project status (Feb 10, 2019)
 
 This project is still in development:
 - All the pre-processing features and the oscilloscope GUI have been implemented.
@@ -17,7 +17,7 @@ This project is still in development:
 - Implementation of DCT Type-II (for MFCCs) on STM32 has been completed.
 - Evaluation on X-CUBE-AI has been completed in [another project](https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/AI)
 
-At the moment, I am working on integrating the current system with X-CUBE-AI.
+At the moment, I am testing the current code integrated with X-CUBE-AI.
 
 ## Architecture
 
