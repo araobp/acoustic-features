@@ -101,6 +101,34 @@ Conclusion:
 
 Note: X-CUBE-AI still seems to generate a network_runtime.a having a liker problem for "Application Template", so I choose "System Performance" on CubeMX instead to generate code of a neural network, then remove the part of system performance test code.
 
+### Integration with my original Keras model
+
+I used X-CUBE-AI to generate code on my original Keras model "musical instrument recognition" that uses MFSCs. The integrated code did not fit into the RAM, so I added "#ifdef MFCC ... #endif" on the code to remove MFCC-related parts that are not used for the model.
+
+- [Keras model of musical instrument recognition](./tensorflow/CNN_for_AED_music.ipynb)
+- [Its trained model](./dataset/data_music)
+
+I played a classical guitar music "Recuerdos de la Alhambra", and the result was as follows:
+
+```
+--- Inference ---
+ Piano         0%
+ Classical guitar 96%
+ Framenco guitar  0%
+ Blues harp    2%
+ Tin whistle   0%
+ silence       0%
+
+--- Inference ---
+ Piano         0%
+ Classical guitar 94%
+ Framenco guitar  2%
+ Blues harp    2%
+ Tin whistle   0%
+ silence       0%
+       :
+```
+
 ## Installing the device
 
 The device is fixed on the wall or on the tree in the horizontal direction:
