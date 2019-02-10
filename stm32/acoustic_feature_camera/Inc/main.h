@@ -74,7 +74,9 @@ typedef enum {
 } debug;
 
 extern int8_t mfsc_buffer[NUM_FILTERS * 200];
+#ifdef MFCC
 extern int8_t mfcc_buffer[NUM_FILTERS * 200];
+#endif
 extern int pos;
 
 /* USER CODE END ET */
@@ -112,7 +114,7 @@ void Error_Handler(void);
 #define SWO_GPIO_Port GPIOB
 void   MX_USART2_UART_Init(void);
 /* USER CODE BEGIN Private defines */
-
+//#define MFCC
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

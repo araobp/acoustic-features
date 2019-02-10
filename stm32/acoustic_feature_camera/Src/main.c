@@ -113,7 +113,9 @@ uint32_t elapsed_time = 0;
 
 // Buffers
 int8_t mfsc_buffer[NUM_FILTERS * 200] = { 0.0f };
+#ifdef MFCC
 int8_t mfcc_buffer[NUM_FILTERS * 200] = { 0.0f };
+#endif
 int pos = 0;
 
 /* Private variables ---------------------------------------------------------*/
@@ -136,7 +138,10 @@ void SystemClock_Config(void);
 bool uart_tx(float32_t *in, mode mode, bool dma_start) {
 
   bool printing;
-  int a, b, c;
+  int a, b;
+#ifdef MFCC
+  int c;
+#endif
   static int cnt = 0;
   static int length = 0;
   static int idx = 0;
@@ -182,12 +187,16 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
   } else if (mode == FEATURES) {
     a = pos * NUM_FILTERS;
     b = (200 - pos) * NUM_FILTERS;
+#ifdef MFCC
     c = 200 * NUM_FILTERS;
+#endif
     // Time series order
     memcpy(uart_buf + b, mfsc_buffer, a);
     memcpy(uart_buf, mfsc_buffer + a, b);
+#ifdef MFCC
     memcpy(uart_buf + b + c, mfcc_buffer, a);
     memcpy(uart_buf + c, mfcc_buffer + a, b);
+#endif
   } else {
     for (int n = 0; n < length; n++) {
       if (in[n] < -128.0f) in[n] = -128.0f;
@@ -237,10 +246,12 @@ void dsp(float32_t *s1, mode mode) {
       for (int i = 0; i < NUM_FILTERS; i++) {
         mfsc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
       }
+#ifdef MFCC
       apply_dct2(s1);
       for (int i = 0; i < NUM_FILTERS; i++) {
         mfcc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
       }
+#endif
     }
   }
   if (++pos >= 200)
@@ -516,7 +527,7 @@ int main(void)
 
     /* USER CODE END WHILE */
 
-  MX_X_CUBE_AI_Process();
+    MX_X_CUBE_AI_Process();
     /* USER CODE BEGIN 3 */
 
   }

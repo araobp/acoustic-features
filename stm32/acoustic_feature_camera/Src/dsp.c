@@ -121,7 +121,9 @@ void init_dsp(float32_t f_s) {
   arm_fir_init_f32(&S_PRE, 2, fir_coefficients, state_buf, NN);
   arm_fir_init_f32(&S_WPRE, 2, fir_w_coefficients, state_w_buf, NN);
   generate_filters();
+#ifdef MFCC
   dct2_init_f32(&S_DCT, NUM_FILTERS);
+#endif
 }
 
 //--- DSP pipeline functions -----------------------------//
@@ -191,6 +193,7 @@ void apply_filterbank_logscale(float32_t *signal) {
   }
 }
 
+#ifdef MFCC
 // DCT Type-II
 void apply_dct2(float32_t *signal) {
   arm_copy_f32(signal, signal_buf, NUM_FILTERS);
@@ -198,3 +201,4 @@ void apply_dct2(float32_t *signal) {
   dct2_f32(&S_DCT, signal_buf, signal, 0);
   signal[0] = 0.0;  // Remove DC
 }
+#endif

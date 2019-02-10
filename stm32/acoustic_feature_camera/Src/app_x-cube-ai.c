@@ -95,12 +95,12 @@ void MX_X_CUBE_AI_Process(void)
     }
     ai_infer(in_data, out_data);
 
-  }
+    // Output to console
+    printf("\n--- Inference ---\n");
+    for (int i=0; i<AI_NETWORK_OUT_1_SIZE; i++) {
+      printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
+    }
 
-  // Output to console
-  printf("\n--- Inference ---\n");
-  for (int i=0; i<AI_NETWORK_OUT_1_SIZE; i++) {
-    printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
   }
     /* USER CODE END 1 */
 }
