@@ -108,6 +108,8 @@ I used X-CUBE-AI to generate code on my original Keras model "musical instrument
 - [Keras model of musical instrument recognition](./tensorflow/CNN_for_AED_music.ipynb)
 - [Its trained model](./dataset/data_music)
 
+<img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
+
 I played a classical guitar music "Recuerdos de la Alhambra", and the result was as follows:
 
 ```
@@ -131,7 +133,7 @@ I played a classical guitar music "Recuerdos de la Alhambra", and the result was
 
 ## Installing the device
 
-The device is fixed on the wall or on the tree in the horizontal direction:
+The device is fixed on the wall in the horizontal direction:
 ```
             y ^    /
               |   /
