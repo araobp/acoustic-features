@@ -8,6 +8,14 @@
 
 Develop "edge AI" on a MCU for acoustic event detection.
 
+## Potential use cases
+
+- musical instrument recognition and music performance analysis
+- human activity recognition
+- birds chirping recognition
+- always-on key word detection (e.g., "OK Google" or "Alexa!")
+- automatic questionnaire collection in a restaurant
+
 ## Project status (Feb 10, 2019)
 
 This project is still in development:
@@ -19,22 +27,33 @@ This project is still in development:
 
 At the moment, I am testing the current code integrated with X-CUBE-AI.
 
+## Modeling a neural network
+
+To run a neural network on MCU (STM32 in this project), it is necessary to make the network small to fit it into the RAM:
+- Adopt a CNN model that is relatively smaller than other network models (e.g., DNN).
+- Perform pre-processing based on signal processing to extract features for CNN.
+
+Usually, raw sound data (PCM) is transformed into the following "coefficients" as features for AED (Acoustic Event Detection) on CNN:
+- MFSCs (Mel Frequency Spectral Coefficients): the technique is to mimic the human auditory system.
+- MFCCs (Mel Frequency Cepstral Coefficients): the technique is similar to JPEG/MPEG's data compression.
+
 ## Architecture
 
 ```
-                                          *** pre-processing ***             *** inference ***
-                                          ARM Cortex-M4(STM32L476RG)        Another core of ARM Cortex-M
-                                      .................................... .............................
-                                      :   Filters for feature extraction : :    Inference on CNN       :
-Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features---->[X-CUBE-AI]           :
-                                      :    |                   |         : :                           :
-                                      :    +------------+      |         : :                           :
-                                      :     +-----------|------+         : :                           :
-                                      :     |           |                : :                           :
-                                      :     V           V                : :                           :
-                                      :..[USART]......[DAC]..............: :...........................:
+                                                         ARM Cortex-M4(STM32L476RG)
+                                         ***** pre-processing *****           ***** inference *****
+                                      ................................................................
+                                      :   Filters for feature extraction        Inference on CNN     :
+                                      :                                         ..................   :
+Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features--->: code generated :   :
+                                      :    |                   |                : by X-CUBE-AI   :   :
+                                      :    +------------+      |                ..................   :
+                                      :     +-----------|------+                                     :
+                                      :     |           |                                            :
+                                      :     V           V                                            :
+                                      :..[USART]......[DAC]..........................................:
                                             |           |
-                                            |           | *** monitoring ***
+                                            |           | *** monitoring raw sound ***
                                             |           +---> [Analog filter] --> head phone
                                        (features)
                                             |
@@ -50,30 +69,23 @@ Platform:
 
 ## System components
 
+I have developed the following components:
+
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32/acoustic_feature_camera)
 - [Arduino shield of two Knowles MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
-- Inference engine (X-CUBE-AI with Keras/TensorFlow)
 
-## Calibration
+## CNN (Convolutional Neural Network)
 
-- [DFSDM calibration for Knowles MEMS microphones](./oscilloscope/CALIBRATION.md)
+### [Learning] Training CNN models on Jupyter Notebook
 
-## Potential use cases
+I run Jupyter Notebook on my PC for training CNN.
 
-- musical instrument recognition and music performance analysis
-- human activity recognition
-- always-on automatic speech recogniton (e.g., "OK Google")
-- automatic questionnaire collection in a restaurant
-- birds chirping recognition
+- [Training CNN models on Jupyter Notebook with Keras/TensorFlow](./tensorflow)
 
-## CNN experiments (learning and inference)
+### [Inference] Running the trained CNN models on STM32
 
-### On Jupyter
-
-- [CNN experiments with Keras/TensorFlow](./tensorflow)
-
-### System performance test code generated by [X-CUBE-AI](https://www.st.com/en/embedded-software/x-cube-ai.html) for STM32L476RG
+#### System performance test code generated by [X-CUBE-AI](https://www.st.com/en/embedded-software/x-cube-ai.html) for STM32L476RG
 
 - [CNN model used for this performance test](./tensorflow/CNN_for_AED_music.ipynb)
 - [X-CUBE-AI screen shot](./stm32/ai_test/performance/screenshot1.jpg)
@@ -101,7 +113,7 @@ Conclusion:
 
 Note: X-CUBE-AI still seems to generate a network_runtime.a having a liker problem for "Application Template", so I choose "System Performance" on CubeMX instead to generate code of a neural network, then remove the part of system performance test code.
 
-### Integration with my original Keras model
+#### Integration with my original Keras model
 
 I used X-CUBE-AI to generate code on my original Keras model "musical instrument recognition" that uses MFSCs. The integrated code did not fit into the RAM, so I added "#ifdef MFCC ... #endif" on the code to remove MFCC-related parts that are not used for the model.
 
@@ -129,7 +141,7 @@ I played a classical guitar music "Recuerdos de la Alhambra", and the result was
        :
 ```
 
-### RAM usage
+#### RAM usage
 
 <img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
 
@@ -140,9 +152,9 @@ I played a classical guitar music "Recuerdos de la Alhambra", and the result was
 
 Note: "dct.c" includes "calloc" calls that allocate additional memory spaces on RAM at run time, so the RAM usages above should be smaller than about 70% (DCT-pre-processing reduces the size of CNN instead). 
 
-## Installing the device
+## Device installing plan (not tested yet)
 
-The device is fixed on the wall in the horizontal direction:
+The device will be fixed on the wall in the horizontal direction:
 ```
             y ^    /
               |   /
