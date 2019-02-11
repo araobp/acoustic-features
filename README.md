@@ -129,9 +129,20 @@ I played a classical guitar music "Recuerdos de la Alhambra", and the result was
        :
 ```
 
+### RAM usage
+
+<img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
+
+| Running mode     | RAM usage      | Description                                    |
+|------------------|----------------|------------------------------------------------|
+|#define INFERENCE | 66.82% of 96KB | UART output processing is masked by the define |
+|no define         | 57.76% of 96KB | Inference processing is masked by the define   |
+
+Note: "dct.c" includes "calloc" calls that allocate additional memory spaces on RAM at run time, so the RAM usages above should be smaller than about 70% (DCT-pre-processing reduces the size of CNN instead). 
+
 ## Installing the device
 
-The device is fixed on the wall or on the tree in the horizontal direction:
+The device is fixed on the wall in the horizontal direction:
 ```
             y ^    /
               |   /
