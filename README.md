@@ -8,6 +8,14 @@
 
 Develop "edge AI" on a MCU for acoustic event detection.
 
+## Potential use cases
+
+- musical instrument recognition and music performance analysis
+- human activity recognition
+- birds chirping recognition
+- always-on key word detection (e.g., "OK Google" or "Alexa!")
+- automatic questionnaire collection in a restaurant
+
 ## Project status (Feb 10, 2019)
 
 This project is still in development:
@@ -59,14 +67,6 @@ Platform:
 ## Calibration
 
 - [DFSDM calibration for Knowles MEMS microphones](./oscilloscope/CALIBRATION.md)
-
-## Potential use cases
-
-- musical instrument recognition and music performance analysis
-- human activity recognition
-- always-on automatic speech recogniton (e.g., "OK Google")
-- automatic questionnaire collection in a restaurant
-- birds chirping recognition
 
 ## CNN (Convolutional Neural Network)
 
