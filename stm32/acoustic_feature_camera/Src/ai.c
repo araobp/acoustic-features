@@ -3,7 +3,9 @@
 #include "ai_platform.h"
 #include "math.h"
 #include <stdio.h>
+#include "main.h"
 
+#ifdef INFERENCE
 #define AI_BUFFER_NULL(ptr_)  \
   AI_BUFFER_OBJ_INIT( \
     AI_BUFFER_FORMAT_NONE|AI_BUFFER_FMT_FLAG_CONST, \
@@ -101,3 +103,4 @@ void ai_infer(ai_float *input_data, ai_float *output_data) {
     output_data[i] = ((ai_float *) (ai_output[0].data))[i];
   }
 }
+#endif

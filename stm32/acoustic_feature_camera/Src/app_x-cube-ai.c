@@ -65,27 +65,35 @@ void MX_X_CUBE_AI_Init(void)
 {
     MX_UARTx_Init();
     /* USER CODE BEGIN 0 */
+#ifdef INFERENCE
     ai_init();
+#endif
     /* USER CODE END 0 */
 }
 
 void MX_X_CUBE_AI_Process(void)
 {
     /* USER CODE BEGIN 1 */
+
+  // Aliases of class labels.
+  // Note: class labels are just number like 0, 1, 2... on CNN.
   char class_labels[AI_NETWORK_OUT_1_SIZE][20] = {
       "Piano",
       "Classical guitar",
       "Framenco guitar",
       "Blues harp",
       "Tin whistle",
-      "silence"
+      "Silence"
   };
 
+  // Input data and output data of CNN
   ai_float in_data[AI_NETWORK_IN_1_SIZE];
   ai_float out_data[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
 
   int window_start_idx;
 
+  // This model is trained by Keras with input data the size of 64 frames.
+  // "mfsc_buffer" and "mfcc_buffer" are defined in "main.h" and "main.c".
   if ((pos >= 64) && (pos % 64) == 0) {
     window_start_idx = (pos - 64) * NUM_FILTERS;
     for (int j=0;j<64;j++) {
@@ -93,9 +101,9 @@ void MX_X_CUBE_AI_Process(void)
         in_data[j*NUM_FILTERS+i] = (ai_float)(mfsc_buffer[window_start_idx+j*NUM_FILTERS+i]);
       }
     }
-    ai_infer(in_data, out_data);
+    ai_infer(in_data, out_data);  // Infer
 
-    // Output to console
+    // Output the inference result to a console
     printf("\n--- Inference ---\n");
     for (int i=0; i<AI_NETWORK_OUT_1_SIZE; i++) {
       printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
