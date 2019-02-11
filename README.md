@@ -8,6 +8,10 @@
 
 Develop "edge AI" on a MCU for acoustic event detection.
 
+## Demo video on YouTube
+
+==> **[Edge AI demo](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
+
 ## Potential use cases
 
 - musical instrument recognition and music performance analysis
