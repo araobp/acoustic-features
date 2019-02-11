@@ -7,9 +7,9 @@ Connect PC to the edge device with a USB cable, and run "[run.bat](./run.bat)" t
 Sound ))) [MEMS mic]--[Edge device(STM32L476RG)]<-- USB serial -->[Oscilloscope GUI (oscilloscope.py)]
 ```
 
-### Callibration
+### Calibration of DFSDM and MEMS microphones with the oscilloscope GUI
 
-==> **[DFSDM calibration for Knowles MEMS microphones](./CALLIBRATION.md)**
+==> **[Calibration](./CALIBRATION.md)**
 
 ### Using the oscilloscope GUI to collect data for training CNN
 
