@@ -55,9 +55,11 @@
 #include "bsp_ai.h"
 #include "ai_datatypes_defines.h"
 
+#include <stdio.h>
+#include "main.h"
 #include "ai.h"
-#include "dsp.h"
-#include "stdio.h"
+#include "lcd.h"
+#include "i2c.h"
 /*************************************************************************
   *
   */
@@ -65,9 +67,8 @@ void MX_X_CUBE_AI_Init(void)
 {
     MX_UARTx_Init();
     /* USER CODE BEGIN 0 */
-#ifdef INFERENCE
     ai_init();
-#endif
+    lcd_init(&hi2c1);
     /* USER CODE END 0 */
 }
 
@@ -86,9 +87,32 @@ void MX_X_CUBE_AI_Process(void)
       "Silence"
   };
 
+  char lcd_line1[5][16] = {
+      "It is           ",
+      "It is .         ",
+      "It is ..        ",
+      "It is ...       ",
+      "It is ....      "
+  };
+
+  char lcd_line2[AI_NETWORK_OUT_1_SIZE][16] = {
+      "PIANO           ",
+      "CLASSICAL GUITAR",
+      "FRAMENCO GUITAR ",
+      "BLUES HARP      ",
+      "TIN WHISTLE     ",
+      "SILENCE         "
+  };
+
   // Input data and output data of CNN
   ai_float in_data[AI_NETWORK_IN_1_SIZE];
   ai_float out_data[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
+
+  // Moving average
+  static ai_float out_hist[5][AI_NETWORK_OUT_1_SIZE] = { { 0.0 } };
+  static int current = 0;
+  ai_float out_sum[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
+  int class;
 
   int window_start_idx;
 
@@ -103,11 +127,31 @@ void MX_X_CUBE_AI_Process(void)
     }
     ai_infer(in_data, out_data);  // Infer
 
-    // Output the inference result to a console
+    // Output the inference result to console
     printf("\n--- Inference ---\n");
     for (int i=0; i<AI_NETWORK_OUT_1_SIZE; i++) {
       printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
+      out_hist[current][i] = out_data[i];
+      out_sum[i] = 0.0;
     }
+    if (++current >= 5) current = 0;
+
+    // Output the result to LCD
+    for (int j=0; j<5; j++) {
+      for (int i=0; i<AI_NETWORK_OUT_1_SIZE; i++) {
+        out_sum[i] += out_hist[j][i];
+      }
+    }
+    class = 0;
+    for (int i=1; i<AI_NETWORK_OUT_1_SIZE; i++) {
+      if (out_sum[class] < out_sum[i]) {
+        class = i;
+      }
+    }
+    lcd_clear();
+    lcd_string(lcd_line1[current], 16);
+    lcd_newline();
+    lcd_string(lcd_line2[class], 16);
 
   }
     /* USER CODE END 1 */

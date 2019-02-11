@@ -44,6 +44,7 @@
 #include "dac.h"
 #include "dfsdm.h"
 #include "dma.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -416,6 +417,7 @@ int main(void)
   MX_TIM6_Init();
   MX_DFSDM1_Init();
   MX_CRC_Init();
+  MX_I2C1_Init();
   MX_X_CUBE_AI_Init();
   /* USER CODE BEGIN 2 */
 
@@ -521,9 +523,8 @@ int main(void)
     dump();
 
     /* USER CODE END WHILE */
-#ifdef INFERENCE
-    MX_X_CUBE_AI_Process();
-#endif
+
+  MX_X_CUBE_AI_Process();
     /* USER CODE BEGIN 3 */
 
   }
@@ -569,8 +570,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_DFSDM1;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_I2C1
+                              |RCC_PERIPHCLK_DFSDM1;
   PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+  PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
   PeriphClkInit.Dfsdm1ClockSelection = RCC_DFSDM1CLKSOURCE_PCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
