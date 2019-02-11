@@ -22,19 +22,20 @@ At the moment, I am testing the current code integrated with X-CUBE-AI.
 ## Architecture
 
 ```
-                                          *** pre-processing ***             *** inference ***
-                                          ARM Cortex-M4(STM32L476RG)        Another core of ARM Cortex-M
-                                      .................................... .............................
-                                      :   Filters for feature extraction : :    Inference on CNN       :
-Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features---->[X-CUBE-AI]           :
-                                      :    |                   |         : :                           :
-                                      :    +------------+      |         : :                           :
-                                      :     +-----------|------+         : :                           :
-                                      :     |           |                : :                           :
-                                      :     V           V                : :                           :
-                                      :..[USART]......[DAC]..............: :...........................:
+                                                         ARM Cortex-M4(STM32L476RG)
+                                         ***** pre-processing *****           ***** inference *****
+                                      ................................................................
+                                      :   Filters for feature extraction        Inference on CNN     :
+                                      :                                         ..................   :
+Sound/voice ))) [MEMS mic]--PDM-->[DFSDM]--+->[]->[]->[]->[]---+----Features--->: code generated :   :
+                                      :    |                   |                : by X-CUBE-AI   :   :
+                                      :    +------------+      |                ..................   :
+                                      :     +-----------|------+                                     :
+                                      :     |           |                                            :
+                                      :     V           V                                            :
+                                      :..[USART]......[DAC]..........................................:
                                             |           |
-                                            |           | *** monitoring ***
+                                            |           | *** monitoring raw sound ***
                                             |           +---> [Analog filter] --> head phone
                                        (features)
                                             |
