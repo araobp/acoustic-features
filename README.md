@@ -140,9 +140,9 @@ I played a classical guitar music "Recuerdos de la Alhambra", and the result was
 
 Note: "dct.c" includes "calloc" calls that allocate additional memory spaces on RAM at run time, so the RAM usages above should be smaller than about 70% (DCT-pre-processing reduces the size of CNN instead). 
 
-## Installing the device
+## Device installing plan (not tested yet)
 
-The device is fixed on the wall in the horizontal direction:
+The device will be fixed on the wall in the horizontal direction:
 ```
             y ^    /
               |   /
