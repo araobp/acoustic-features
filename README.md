@@ -59,18 +59,17 @@ Platform:
 
 ## System components
 
+I have developed the following components:
+
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32/acoustic_feature_camera)
 - [Arduino shield of two Knowles MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
-- Inference engine (X-CUBE-AI with Keras/TensorFlow)
-
-## Calibration
-
-- [DFSDM calibration for Knowles MEMS microphones](./oscilloscope/CALIBRATION.md)
 
 ## CNN (Convolutional Neural Network)
 
 ### [Learning] Training CNN models on Jupyter Notebook
+
+I run Jupyter Notebook on my PC for training CNN.
 
 - [Training CNN models on Jupyter Notebook with Keras/TensorFlow](./tensorflow)
 
