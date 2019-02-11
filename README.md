@@ -27,6 +27,16 @@ This project is still in development:
 
 At the moment, I am testing the current code integrated with X-CUBE-AI.
 
+## Modeling a neural network
+
+To run a neural network on MCU (STM32 in this project), it is necessary to make the network small to fit it into the RAM:
+- Adopt a CNN model that is relatively smaller than other network models (e.g., DNN).
+- Perform pre-processing based on signal processing to extract features for CNN.
+
+Usually, raw sound data (PCM) is transformed into the following "coefficients" as features for AED (Acoustic Event Detection) on CNN:
+- MFSCs (Mel Frequency Spectral Coefficients): the technique is to mimic the human auditory system.
+- MFCCs (Mel Frequency Cepstral Coefficients): the technique is similar to JPEG/MPEG's data compression.
+
 ## Architecture
 
 ```
