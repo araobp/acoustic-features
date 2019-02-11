@@ -28,3 +28,4 @@ All the tools below are free:
 - Jupyter_Notebook/python3 with Keras/TensorFlow/numpy/pandas/matplotlib for CNN training and some simulation.
 - IDLE/python3 and numpy/pandas/matplotlib/Tkinter for developing Oscilloscope GUI.
 - vim/python3 to develop CNN inference programs running on RasPi3.
+- STMicro's [X-CUBE-AI](https://www.st.com/en/embedded-software/x-cube-ai.html) to generate CNN code for STM32.
