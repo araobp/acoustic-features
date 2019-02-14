@@ -64,6 +64,8 @@ I have developed the following components:
 - [Arduino shield of two Knowles MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 
+Note: I am considering to migrate from matpoltlib/Tkinter to Qt because of its slowness...
+
 ## CNN (Convolutional Neural Network)
 
 ### [Learning] Training CNN models on Jupyter Notebook
