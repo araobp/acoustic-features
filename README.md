@@ -1,12 +1,12 @@
-# Acoustic features for deep learning
+# Acoustic features for edge AI
 
 <img src="./oscilloscope/screenshots/spectrogram_framenco.png" width="700">
 
 **=> [Acoustic feature gallery (2D images)](./GALLERY.md)**
 
-## Goal
+## Demo video on YouTube
 
-Develop "edge AI" on a MCU for acoustic event detection.
+**=> [Edge AI demo](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
 
 ## Potential use cases
 
@@ -15,17 +15,6 @@ Develop "edge AI" on a MCU for acoustic event detection.
 - birds chirping recognition
 - always-on key word detection (e.g., "OK Google" or "Alexa!")
 - automatic questionnaire collection in a restaurant
-
-## Project status (Feb 10, 2019)
-
-This project is still in development:
-- All the pre-processing features and the oscilloscope GUI have been implemented.
-- Several CNN models on Keras/TensorFlow have already been tested.
-- Inference engine based on Keras/TensorFlow has been implemented for Win10 and RasPi3.
-- Implementation of DCT Type-II (for MFCCs) on STM32 has been completed.
-- Evaluation on X-CUBE-AI has been completed in [another project](https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/AI)
-
-At the moment, I am testing the current code integrated with X-CUBE-AI.
 
 ## Modeling a neural network
 
@@ -74,6 +63,8 @@ I have developed the following components:
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32/acoustic_feature_camera)
 - [Arduino shield of two Knowles MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
+
+Note: I am considering to migrate from matpoltlib/Tkinter to Qt because of its slowness...
 
 ## CNN (Convolutional Neural Network)
 
