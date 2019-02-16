@@ -155,10 +155,11 @@ The best settings:
 - Apply Broadside mode to capture sound from the center direction (theta = 90 degrees).
 - Apply Endfire mode to capture sound from the left direction or the right direction.
 
-![](../ipynb/broadside_n%3D0.jpg)
+![](../../ipynb/broadside_n%3D0.jpg)
 
-![](../ipynb/endfire_n%3D1.jpg)
-![](../ipynb/endfire_n%3D-1.jpg)
+![](../../ipynb/endfire_n%3D1.jpg)
+
+![](../../ipynb/endfire_n%3D-1.jpg)
 
 ### The test board with d = 20mm
 
