@@ -115,6 +115,7 @@ uint32_t elapsed_time = 0;
 // Buffers
 int8_t mfsc_buffer[NUM_FILTERS * 200] = { 0.0f };
 int8_t mfcc_buffer[NUM_FILTERS * 200] = { 0.0f };
+int32_t mfsc_power[200] = { 0 };
 int pos = 0;
 
 /* Private variables ---------------------------------------------------------*/
@@ -238,8 +239,10 @@ void dsp(float32_t *s1, mode mode) {
     } else {
       apply_filterbank(s1);
       apply_filterbank_logscale(s1);
+      mfsc_power[pos] = 0;
       for (int i = 0; i < NUM_FILTERS; i++) {
         mfsc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
+        mfsc_power[pos] += (int32_t)s1;
       }
       apply_dct2(s1);
       for (int i = 0; i < NUM_FILTERS; i++) {

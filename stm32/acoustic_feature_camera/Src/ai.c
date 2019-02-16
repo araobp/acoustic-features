@@ -1,4 +1,4 @@
-#include <ai.h>
+#include "ai.h"
 #include <bsp_ai.h>
 #include "ai_platform.h"
 #include "math.h"
@@ -45,6 +45,50 @@ void normalize(ai_float *in_data, ai_float *normalized_data, int len) {
     normalized_data[i] = (in_data[i] - mean) / std;
   }
 
+}
+
+/**
+ * Monitor voice activity
+ *
+ * Case 1: pos >= length
+ *                         pos
+ *                          v
+ * mfsc_power [0|1|2|3 ... |99|....]
+ *                   ----->
+ *                   length
+ *
+ * Case 2: else
+ *                  pos
+ *                   v
+ * mfsc_power [0|1|2|3|....|       ]
+ *                          ^
+ *                  200-(length-pos)
+ */
+bool voice_active(int length, int32_t threshold) {
+  int32_t power_sum = 0;
+  bool start_inference = false;
+  static bool active = false;
+
+  if (pos >= length) {
+    for (int i=pos-length; i<length; i++) {
+        power_sum += mfsc_power[i];
+    }
+  } else {
+    for (int i=0; i<pos; i++) {
+        power_sum += mfsc_power[i];
+    }
+    for (int i=200-(length-pos); i<200; i++) {
+        power_sum += mfsc_power[i];
+    }
+  }
+
+  if (power_sum > threshold) {
+    active = true;
+  } else if (active == true) {
+    start_inference = true;
+    active = false;
+  }
+  return start_inference;
 }
 
 // Initialize the neural network

@@ -75,6 +75,7 @@ typedef enum {
 
 extern int8_t mfsc_buffer[NUM_FILTERS * 200];
 extern int8_t mfcc_buffer[NUM_FILTERS * 200];
+extern int32_t mfsc_power[200];
 extern int pos;
 
 /* USER CODE END ET */
@@ -114,7 +115,7 @@ void   MX_USART2_UART_Init(void);
 /* USER CODE BEGIN Private defines */
 
 // Comment out the following define to enable inference by X-CUBE-AI.
-#define INFERENCE
+//#define INFERENCE
 
 /* USER CODE END Private defines */
 

@@ -115,15 +115,15 @@ class GUI:
             ax.pcolormesh(self.time[dsp.MFCC],
                           self.freq[dsp.MFCC][:range_],
                           data_.T[:range_],
-                          cmap=cmap)                
+                          cmap=cmap)
             self.set_labels(ax, 'MFCCs', 'Time [sec]', 'MFCC')
 
         elif cmd == dsp.FILTERBANK:
             k_range, filterbank = data
             for m in range(1, self.filters+1):
                 h = np.zeros(int(dsp.NN/2))
-                k_left, len = k_range[m]
-                h[k_left:k_left+len] = filterbank[m][:len]
+                k_left, len_ = k_range[m]
+                h[k_left:k_left+len_] = filterbank[m][:len_]
                 ax.plot(h)
             self.set_labels(ax, 'Mel filter bank', 'n', 'Magnitude')
 

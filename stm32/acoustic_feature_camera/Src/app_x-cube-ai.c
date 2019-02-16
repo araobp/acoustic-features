@@ -1,54 +1,53 @@
-
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 /**
-  ******************************************************************************
-  * @file           : app_x-cube-ai.c
-  * @brief          : AI program body
-  ******************************************************************************
-  * This notice applies to any and all portions of this file
-  * that are not between comment pairs USER CODE BEGIN and
-  * USER CODE END. Other portions of this file, whether
-  * inserted by the user or by software development tools
-  * are owned by their respective copyright owners.
-  *
-  * Copyright (c) 2018 STMicroelectronics International N.V.
-  * All rights reserved.
-  *
-  * Redistribution and use in source and binary forms, with or without
-  * modification, are permitted, provided that the following conditions are met:
-  *
-  * 1. Redistribution of source code must retain the above copyright notice,
-  *    this list of conditions and the following disclaimer.
-  * 2. Redistributions in binary form must reproduce the above copyright notice,
-  *    this list of conditions and the following disclaimer in the documentation
-  *    and/or other materials provided with the distribution.
-  * 3. Neither the name of STMicroelectronics nor the names of other
-  *    contributors to this software may be used to endorse or promote products
-  *    derived from this software without specific written permission.
-  * 4. This software, including modifications and/or derivative works of this
-  *    software, must execute solely and exclusively on microcontroller or
-  *    microprocessor devices manufactured by or for STMicroelectronics.
-  * 5. Redistribution and use of this software other than as permitted under
-  *    this license is void and will automatically terminate your rights under
-  *    this license.
-  *
-  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT
-  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
-  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT
-  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : app_x-cube-ai.c
+ * @brief          : AI program body
+ ******************************************************************************
+ * This notice applies to any and all portions of this file
+ * that are not between comment pairs USER CODE BEGIN and
+ * USER CODE END. Other portions of this file, whether
+ * inserted by the user or by software development tools
+ * are owned by their respective copyright owners.
+ *
+ * Copyright (c) 2018 STMicroelectronics International N.V.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted, provided that the following conditions are met:
+ *
+ * 1. Redistribution of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of STMicroelectronics nor the names of other
+ *    contributors to this software may be used to endorse or promote products
+ *    derived from this software without specific written permission.
+ * 4. This software, including modifications and/or derivative works of this
+ *    software, must execute solely and exclusively on microcontroller or
+ *    microprocessor devices manufactured by or for STMicroelectronics.
+ * 5. Redistribution and use of this software other than as permitted under
+ *    this license is void and will automatically terminate your rights under
+ *    this license.
+ *
+ * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+ * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT
+ * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ ******************************************************************************
+ */
 /* Includes ------------------------------------------------------------------*/
 #include <string.h>
 #include "app_x-cube-ai.h"
@@ -61,48 +60,51 @@
 #include "lcd.h"
 #include "i2c.h"
 /*************************************************************************
-  *
-  */
-void MX_X_CUBE_AI_Init(void)
-{
-    MX_UARTx_Init();
-    /* USER CODE BEGIN 0 */
-    ai_init();
-    lcd_init(&hi2c1);
-    /* USER CODE END 0 */
+ *
+ */
+void MX_X_CUBE_AI_Init(void) {
+  MX_UARTx_Init();
+  /* USER CODE BEGIN 0 */
+#ifdef INFERENCE
+  ai_init();
+  lcd_init(&hi2c1);
+#endif
+  /* USER CODE END 0 */
 }
 
-void MX_X_CUBE_AI_Process(void)
-{
-    /* USER CODE BEGIN 1 */
+void MX_X_CUBE_AI_Process(void) {
+  /* USER CODE BEGIN 1 */
+
+#ifdef INFERENCE
+  char lcd_line1[5][16] = { "It is           ", "It is .         ",
+      "It is ..        ", "It is ...       ", "It is ....      " };
 
   // Aliases of class labels.
   // Note: class labels are just number like 0, 1, 2... on CNN.
-  char class_labels[AI_NETWORK_OUT_1_SIZE][20] = {
-      "Piano",
-      "Classical guitar",
-      "Framenco guitar",
-      "Blues harp",
-      "Tin whistle",
-      "Silence"
+#ifdef MUSICAL_INSTRUMENT_RECOGNITION
+  char class_labels[][20] = { "Piano", "Classical guitar", "Framenco guitar",
+      "Blues harp", "Tin whistle", "Silence" };
+  char lcd_line2[][16] = { "PIANO           ", "CLASSICAL GUITAR",
+      "FRAMENCO GUITAR ", "BLUES HARP      ", "TIN WHISTLE     ",
+      "SILENCE         " };
+  int length = 64;
+#elif KEY_WORD_DETECIONG
+  char class_labels[][20] = {
+    "umai",
+    "mazui",
+    "others",
+    "oishii"
   };
-
-  char lcd_line1[5][16] = {
-      "It is           ",
-      "It is .         ",
-      "It is ..        ",
-      "It is ...       ",
-      "It is ....      "
+  char lcd_line2[][16] = {
+    "UMAI            ",
+    "MAZUI           ",
+    "OTHERS          ",
+    "OISHII          "
   };
-
-  char lcd_line2[AI_NETWORK_OUT_1_SIZE][16] = {
-      "PIANO           ",
-      "CLASSICAL GUITAR",
-      "FRAMENCO GUITAR ",
-      "BLUES HARP      ",
-      "TIN WHISTLE     ",
-      "SILENCE         "
-  };
+  int length = 96;
+  int activity_detection_period = 10;
+  int32_t threshold = 0;
+#endif
 
   // Input data and output data of CNN
   ai_float in_data[AI_NETWORK_IN_1_SIZE];
@@ -116,34 +118,38 @@ void MX_X_CUBE_AI_Process(void)
 
   int window_start_idx;
 
-  // This model is trained by Keras with input data the size of 64 frames.
-  // "mfsc_buffer" and "mfcc_buffer" are defined in "main.h" and "main.c".
-  if ((pos >= 64) && (pos % 64) == 0) {
-    window_start_idx = (pos - 64) * NUM_FILTERS;
-    for (int j=0;j<64;j++) {
-      for (int i=0;i<NUM_FILTERS;i++) {
-        in_data[j*NUM_FILTERS+i] = (ai_float)(mfsc_buffer[window_start_idx+j*NUM_FILTERS+i]);
+#ifdef MUSICAL_INSTRUMENT_RECOGNITION
+  if ((pos >= length) && (pos % length) == 0) {
+#elif KEY_WORD_DETECTION
+  if (voice_active(activity_detection_period, threshold)) {
+#endif
+    window_start_idx = (pos - length) * NUM_FILTERS;
+    for (int j = 0; j < length; j++) {
+      for (int i = 0; i < NUM_FILTERS; i++) {
+        in_data[j * NUM_FILTERS + i] = (ai_float) (mfsc_buffer[window_start_idx
+            + j * NUM_FILTERS + i]);
       }
     }
     ai_infer(in_data, out_data);  // Infer
 
     // Output the inference result to console
     printf("\n--- Inference ---\n");
-    for (int i=0; i<AI_NETWORK_OUT_1_SIZE; i++) {
+    for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
       printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
       out_hist[current][i] = out_data[i];
       out_sum[i] = 0.0;
     }
-    if (++current >= 5) current = 0;
+    if (++current >= 5)
+      current = 0;
 
     // Output the result to LCD
-    for (int j=0; j<5; j++) {
-      for (int i=0; i<AI_NETWORK_OUT_1_SIZE; i++) {
+    for (int j = 0; j < 5; j++) {
+      for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
         out_sum[i] += out_hist[j][i];
       }
     }
     class = 0;
-    for (int i=1; i<AI_NETWORK_OUT_1_SIZE; i++) {
+    for (int i = 1; i < AI_NETWORK_OUT_1_SIZE; i++) {
       if (out_sum[class] < out_sum[i]) {
         class = i;
       }
@@ -154,7 +160,8 @@ void MX_X_CUBE_AI_Process(void)
     lcd_string(lcd_line2[class], 16);
 
   }
-    /* USER CODE END 1 */
+#endif
+  /* USER CODE END 1 */
 }
 
 /* Multiple network support --------------------------------------------------*/
@@ -162,228 +169,204 @@ void MX_X_CUBE_AI_Process(void)
 #include <string.h>
 #include "ai_datatypes_defines.h"
 
-static const ai_network_entry_t networks[AI_MNETWORK_NUMBER] = {
-    {
-        .name = (const char *)AI_NETWORK_MODEL_NAME,
-        .config = AI_NETWORK_DATA_CONFIG,
-        .ai_get_info = ai_network_get_info,
-        .ai_create = ai_network_create,
-        .ai_destroy = ai_network_destroy,
-        .ai_get_error = ai_network_get_error,
-        .ai_init = ai_network_init,
-        .ai_run = ai_network_run,
-        .ai_forward = ai_network_forward,
-        .ai_data_weights_get_default = ai_network_data_weights_get,
-        .params = { AI_NETWORK_DATA_WEIGHTS(0),
-                AI_NETWORK_DATA_ACTIVATIONS(0)},
-    },
-};
+static const ai_network_entry_t networks[AI_MNETWORK_NUMBER] = { { .name =
+    (const char *) AI_NETWORK_MODEL_NAME, .config = AI_NETWORK_DATA_CONFIG,
+    .ai_get_info = ai_network_get_info, .ai_create = ai_network_create,
+    .ai_destroy = ai_network_destroy, .ai_get_error = ai_network_get_error,
+    .ai_init = ai_network_init, .ai_run = ai_network_run, .ai_forward =
+        ai_network_forward, .ai_data_weights_get_default =
+        ai_network_data_weights_get, .params = { AI_NETWORK_DATA_WEIGHTS(0),
+    AI_NETWORK_DATA_ACTIVATIONS(0) }, }, };
 
 struct network_instance {
-     const ai_network_entry_t *entry;
-     ai_handle handle;
-     ai_network_params params;
+  const ai_network_entry_t *entry;
+  ai_handle handle;
+  ai_network_params params;
 };
 
 /* Number of instance is aligned on the number of network */
-AI_STATIC struct network_instance gnetworks[AI_MNETWORK_NUMBER] = {0};
+AI_STATIC struct network_instance gnetworks[AI_MNETWORK_NUMBER] = { 0 };
 
 AI_DECLARE_STATIC
-ai_bool ai_mnetwork_is_valid(const char* name,
-        const ai_network_entry_t *entry)
-{
-    if (name && (strlen(entry->name) == strlen(name)) &&
-            (strncmp(entry->name, name, strlen(entry->name)) == 0))
-        return true;
-    return false;
+ai_bool ai_mnetwork_is_valid(const char* name, const ai_network_entry_t *entry) {
+  if (name && (strlen(entry->name) == strlen(name))
+      && (strncmp(entry->name, name, strlen(entry->name)) == 0))
+    return true;
+  return false;
 }
 
 AI_DECLARE_STATIC
-struct network_instance *ai_mnetwork_handle(struct network_instance *inst)
-{
-    for (int i=0; i<AI_MNETWORK_NUMBER; i++) {
-        if ((inst) && (&gnetworks[i] == inst))
-            return inst;
-        else if ((!inst) && (gnetworks[i].entry == NULL))
-            return &gnetworks[i];
-    }
-    return NULL;
+struct network_instance *ai_mnetwork_handle(struct network_instance *inst) {
+  for (int i = 0; i < AI_MNETWORK_NUMBER; i++) {
+    if ((inst) && (&gnetworks[i] == inst))
+      return inst;
+    else if ((!inst) && (gnetworks[i].entry == NULL))
+      return &gnetworks[i];
+  }
+  return NULL;
 }
 
 AI_DECLARE_STATIC
-void ai_mnetwork_release_handle(struct network_instance *inst)
-{
-    for (int i=0; i<AI_MNETWORK_NUMBER; i++) {
-        if ((inst) && (&gnetworks[i] == inst)) {
-            gnetworks[i].entry = NULL;
-            return;
-        }
+void ai_mnetwork_release_handle(struct network_instance *inst) {
+  for (int i = 0; i < AI_MNETWORK_NUMBER; i++) {
+    if ((inst) && (&gnetworks[i] == inst)) {
+      gnetworks[i].entry = NULL;
+      return;
     }
+  }
 }
 
 AI_API_ENTRY
-const char* ai_mnetwork_find(const char *name, ai_int idx)
-{
-    const ai_network_entry_t *entry;
+const char* ai_mnetwork_find(const char *name, ai_int idx) {
+  const ai_network_entry_t *entry;
 
-    for (int i=0; i<AI_MNETWORK_NUMBER; i++) {
-        entry = &networks[i];
-        if (ai_mnetwork_is_valid(name, entry))
-            return entry->name;
-        else {
-            if (!idx--)
-                return entry->name;
-        }
+  for (int i = 0; i < AI_MNETWORK_NUMBER; i++) {
+    entry = &networks[i];
+    if (ai_mnetwork_is_valid(name, entry))
+      return entry->name;
+    else {
+      if (!idx--)
+        return entry->name;
     }
-    return NULL;
+  }
+  return NULL;
 }
 
 AI_API_ENTRY
 ai_error ai_mnetwork_create(const char *name, ai_handle* network,
-        const ai_buffer* network_config)
-{
-    const ai_network_entry_t *entry;
-    const ai_network_entry_t *found = NULL;
-    ai_error err;
-    struct network_instance *inst = ai_mnetwork_handle(NULL);
+    const ai_buffer* network_config) {
+  const ai_network_entry_t *entry;
+  const ai_network_entry_t *found = NULL;
+  ai_error err;
+  struct network_instance *inst = ai_mnetwork_handle(NULL);
 
-    if (!inst) {
-        err.type = AI_ERROR_ALLOCATION_FAILED;
-        err.code = AI_ERROR_CODE_NETWORK;
-        return err;
+  if (!inst) {
+    err.type = AI_ERROR_ALLOCATION_FAILED;
+    err.code = AI_ERROR_CODE_NETWORK;
+    return err;
+  }
+
+  for (int i = 0; i < AI_MNETWORK_NUMBER; i++) {
+    entry = &networks[i];
+    if (ai_mnetwork_is_valid(name, entry)) {
+      found = entry;
+      break;
     }
+  }
 
-    for (int i=0; i<AI_MNETWORK_NUMBER; i++) {
-        entry = &networks[i];
-        if (ai_mnetwork_is_valid(name, entry)) {
-            found = entry;
-            break;
-        }
+  if (!found) {
+    err.type = AI_ERROR_INVALID_PARAM;
+    err.code = AI_ERROR_CODE_NETWORK;
+    return err;
+  }
+
+  if (network_config == NULL)
+    err = found->ai_create(network, found->config);
+  else
+    err = found->ai_create(network, network_config);
+  if ((err.code == AI_ERROR_CODE_NONE) && (err.type == AI_ERROR_NONE)) {
+    inst->entry = found;
+    inst->handle = *network;
+    *network = (ai_handle*) inst;
+  }
+
+  return err;
+}
+
+AI_API_ENTRY
+ai_handle ai_mnetwork_destroy(ai_handle network) {
+  struct network_instance *inn;
+  inn = ai_mnetwork_handle((struct network_instance *) network);
+  if (inn) {
+    ai_handle hdl = inn->entry->ai_destroy(inn->handle);
+    if (hdl != inn->handle) {
+      ai_mnetwork_release_handle(inn);
+      network = AI_HANDLE_NULL;
     }
+  }
+  return network;
+}
 
-    if (!found) {
-        err.type = AI_ERROR_INVALID_PARAM;
-        err.code = AI_ERROR_CODE_NETWORK;
-        return err;
-    }
+AI_API_ENTRY
+ai_bool ai_mnetwork_get_info(ai_handle network, ai_network_report* report) {
+  struct network_instance *inn;
+  inn = ai_mnetwork_handle((struct network_instance *) network);
+  if (inn)
+    return inn->entry->ai_get_info(inn->handle, report);
+  else
+    return false;
+}
 
-    if (network_config == NULL)
-        err = found->ai_create(network, found->config);
-    else
-        err = found->ai_create(network, network_config);
-    if ((err.code == AI_ERROR_CODE_NONE) && (err.type == AI_ERROR_NONE)) {
-        inst->entry = found;
-        inst->handle = *network;
-        *network = (ai_handle*)inst;
-    }
+AI_API_ENTRY
+ai_error ai_mnetwork_get_error(ai_handle network) {
+  struct network_instance *inn;
+  ai_error err;
+  err.type = AI_ERROR_INVALID_PARAM;
+  err.code = AI_ERROR_CODE_NETWORK;
 
+  inn = ai_mnetwork_handle((struct network_instance *) network);
+  if (inn)
+    return inn->entry->ai_get_error(inn->handle);
+  else
     return err;
 }
 
 AI_API_ENTRY
-ai_handle ai_mnetwork_destroy(ai_handle network)
-{
-    struct network_instance *inn;
-    inn =  ai_mnetwork_handle((struct network_instance *)network);
-    if (inn) {
-        ai_handle hdl = inn->entry->ai_destroy(inn->handle);
-        if (hdl != inn->handle) {
-            ai_mnetwork_release_handle(inn);
-            network = AI_HANDLE_NULL;
-        }
-    }
-    return network;
-}
+ai_bool ai_mnetwork_init(ai_handle network, const ai_network_params* params) {
+  struct network_instance *inn;
+  ai_network_params par;
 
-AI_API_ENTRY
-ai_bool ai_mnetwork_get_info(ai_handle network, ai_network_report* report)
-{
-    struct network_instance *inn;
-    inn =  ai_mnetwork_handle((struct network_instance *)network);
-    if (inn)
-        return inn->entry->ai_get_info(inn->handle, report);
+  /* TODO: adding check ai_buffer activations/weights shape coherence */
+
+  inn = ai_mnetwork_handle((struct network_instance *) network);
+  if (inn) {
+    par = inn->entry->params;
+    if (params->activations.n_batches)
+      par.activations = params->activations;
     else
-        return false;
-}
-
-AI_API_ENTRY
-ai_error ai_mnetwork_get_error(ai_handle network)
-{
-    struct network_instance *inn;
-    ai_error err;
-    err.type = AI_ERROR_INVALID_PARAM;
-    err.code = AI_ERROR_CODE_NETWORK;
-
-    inn =  ai_mnetwork_handle((struct network_instance *)network);
-    if (inn)
-        return inn->entry->ai_get_error(inn->handle);
+      par.activations.data = params->activations.data;
+    if (params->params.n_batches)
+      par.params = params->params;
     else
-        return err;
-}
-
-AI_API_ENTRY
-ai_bool ai_mnetwork_init(ai_handle network, const ai_network_params* params)
-{
-    struct network_instance *inn;
-    ai_network_params par;
-
-    /* TODO: adding check ai_buffer activations/weights shape coherence */
-
-    inn =  ai_mnetwork_handle((struct network_instance *)network);
-    if (inn) {
-        par = inn->entry->params;
-        if (params->activations.n_batches)
-            par.activations = params->activations;
-        else
-            par.activations.data = params->activations.data;
-        if (params->params.n_batches)
-            par.params = params->params;
-        else
-            par.params.data = inn->entry->ai_data_weights_get_default();
-        return inn->entry->ai_init(inn->handle, &par);
-    }
-    else
-        return false;
+      par.params.data = inn->entry->ai_data_weights_get_default();
+    return inn->entry->ai_init(inn->handle, &par);
+  } else
+    return false;
 }
 
 AI_API_ENTRY
 ai_i32 ai_mnetwork_run(ai_handle network, const ai_buffer* input,
-        ai_buffer* output)
-{
-    struct network_instance* inn;
-    inn =  ai_mnetwork_handle((struct network_instance *)network);
-    if (inn)
-        return inn->entry->ai_run(inn->handle, input, output);
-    else
-        return 0;
+    ai_buffer* output) {
+  struct network_instance* inn;
+  inn = ai_mnetwork_handle((struct network_instance *) network);
+  if (inn)
+    return inn->entry->ai_run(inn->handle, input, output);
+  else
+    return 0;
 }
 
 AI_API_ENTRY
-ai_i32 ai_mnetwork_forward(ai_handle network, const ai_buffer* input)
-{
-    struct network_instance *inn;
-    inn =  ai_mnetwork_handle((struct network_instance *)network);
-    if (inn)
-        return inn->entry->ai_forward(inn->handle, input);
-    else
-        return 0;
+ai_i32 ai_mnetwork_forward(ai_handle network, const ai_buffer* input) {
+  struct network_instance *inn;
+  inn = ai_mnetwork_handle((struct network_instance *) network);
+  if (inn)
+    return inn->entry->ai_forward(inn->handle, input);
+  else
+    return 0;
 }
 
 AI_API_ENTRY
- int ai_mnetwork_get_private_handle(ai_handle network,
-         ai_handle *phandle,
-         ai_network_params *pparams)
- {
-     struct network_instance* inn;
-     inn =  ai_mnetwork_handle((struct network_instance *)network);
-     if (inn && phandle && pparams) {
-         *phandle = inn->handle;
-         *pparams = inn->params;
-         return 0;
-     }
-     else
-         return -1;
- }
+int ai_mnetwork_get_private_handle(ai_handle network, ai_handle *phandle,
+    ai_network_params *pparams) {
+  struct network_instance* inn;
+  inn = ai_mnetwork_handle((struct network_instance *) network);
+  if (inn && phandle && pparams) {
+    *phandle = inn->handle;
+    *pparams = inn->params;
+    return 0;
+  } else
+    return -1;
+}
 #ifdef __cplusplus
 }
 #endif
