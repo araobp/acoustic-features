@@ -185,11 +185,6 @@ The best settings:
 
 ![](./beam_forming_test_20mm_endfire_left.png)
 
-## References
-
-- [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
-- [AcousticBF(by STMicro)](https://www.st.com/content/ccc/resource/technical/document/user_manual/group0/40/93/ec/80/3c/61/4e/d0/DM00391112/files/DM00391112.pdf/jcr:content/translations/en.DM00391112.pdf)
-
 ## Command over UART (USB-serial)
 
 UART baudrate: 460800bps
@@ -240,3 +235,22 @@ Data is send in int8_t.
 |c  | theta center   |                         | when d=20mm, theta=90 degrees |
 |r  | theta right1   |                         | when d=20mm, theta=28 degrees |
 |R  | theta right2   |                         | (for d=40mm)          |
+
+### Data format of features
+
+The PC issues "FEATURES" command to the device to fetch features that are the last 2.6sec MFSCs and MFCCs buffered in a memory. 
+
+```
+      shape: (200, 40, 1)       shape: (200, 40, 1)
+   +------------------------+------------------------+
+   |    MFSCs (40 * 200)    |    MFCCs (40 * 200)    |
+   +------------------------+------------------------+
+```
+
+The GUI flatten features and convert it into CSV to save it as a csv file in a dataset folder.
+
+## References
+
+- [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
+- [AcousticBF(by STMicro)](https://www.st.com/content/ccc/resource/technical/document/user_manual/group0/40/93/ec/80/3c/61/4e/d0/DM00391112/files/DM00391112.pdf/jcr:content/translations/en.DM00391112.pdf)
+
