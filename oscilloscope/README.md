@@ -9,7 +9,7 @@ Sound ))) [MEMS mic]--[Edge device(STM32L476RG)]<-- USB serial -->[Oscilloscope 
 
 ### Using the oscilloscope GUI to collect data for training CNN
 
-Run "[run_measurement.bat](./run_measurement.bat)" to obtain feature data set for training CNN.
+Run "[run_measurement.bat](./run_measurement.bat)" to obtain feature data set for training CNN. Data acquired by the GUI is stored in [this default dataset folder](./dataset/data_measurement).
 
 ![](./screenshots/gui_mfsc_measurement.jpg)
 
