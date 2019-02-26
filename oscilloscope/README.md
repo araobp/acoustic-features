@@ -7,10 +7,6 @@ Connect PC to the edge device with a USB cable, and run "[run.bat](./run.bat)" t
 Sound ))) [MEMS mic]--[Edge device(STM32L476RG)]<-- USB serial -->[Oscilloscope GUI (oscilloscope.py)]
 ```
 
-### Calibration of DFSDM and MEMS microphones with the oscilloscope GUI
-
-==> **[Calibration](./CALIBRATION.md)**
-
 ### Using the oscilloscope GUI to collect data for training CNN
 
 Run "[run_measurement.bat](./run_measurement.bat)" to obtain feature data set for training CNN.
@@ -53,3 +49,9 @@ Sine wave tone at a constant frequency is visualized by using the oscilloscope G
 ![Raw wave](./screenshots/gui_mfsc.jpg)
 
 ![Raw wave](./screenshots/gui_mfcc.jpg)
+
+### Using the oscilloscope GUI to calibrate DFSDM and MEMS microphones
+
+==> **[Calibration](./CALIBRATION.md)**
+
+
