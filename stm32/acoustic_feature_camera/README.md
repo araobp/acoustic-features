@@ -253,6 +253,8 @@ The GUI flatten features and convert it into CSV to save it as a csv file in a d
 
 ## References
 
+### Beam forming
+
 - [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
 - [AcousticBF(by STMicro)](https://www.st.com/content/ccc/resource/technical/document/user_manual/group0/40/93/ec/80/3c/61/4e/d0/DM00391112/files/DM00391112.pdf/jcr:content/translations/en.DM00391112.pdf)
 
