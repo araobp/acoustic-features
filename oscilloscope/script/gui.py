@@ -42,9 +42,9 @@ class GUI:
         self.time[dsp.SPECTROGRAM] = np.linspace(0, self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*self.samples/2, self.samples)
         self.freq[dsp.SPECTROGRAM] = np.linspace(0, dsp.Nyq, int(dsp.NN/2))
         self.time[dsp.MFSC] = np.linspace(-self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*self.samples/2, 0, self.samples)
-        self.freq[dsp.MFSC] = np.linspace(1, self.filters+1, self.filters)
+        self.freq[dsp.MFSC] = np.linspace(0, self.filters-1, self.filters)
         self.time[dsp.MFCC] = np.linspace(-self.interface.num_samples[dsp.RAW_WAVE]/dsp.Fs*self.samples/2, 0, self.samples)
-        self.freq[dsp.MFCC] = np.linspace(0, self.filters, self.filters)
+        self.freq[dsp.MFCC] = np.linspace(0, self.filters-1, self.filters)
 
     def set_labels(self, ax, title, xlabel, ylabel, ylim=None):
         if self.fullscreen:
@@ -94,10 +94,10 @@ class GUI:
             print('mfcc stm32: {}'.format(data[self.samples]))
 
             data_ = spectrum_subtraction(data[:self.samples,:], ssub)
-            data_ = shadow(data_, window, shadow_sub=10)
+            data_ = shadow(data_, window, shadow_sub=shadow_sub)
             ax.pcolormesh(self.time[dsp.MFSC],
-                          self.freq[dsp.MFSC][:range_],
-                          data_.T[:range_],
+                          self.freq[dsp.MFSC][:range_+1],
+                          data_.T[:range_+1],
                           cmap=cmap)
             self.set_labels(ax, 'MFSCs', 'Time [sec]', 'MFSC')
 
@@ -111,10 +111,10 @@ class GUI:
             print('mfcc python: {}'.format(dcted))
 
             data_ = spectrum_subtraction(data[self.samples:,:], ssub)
-            data_ = shadow(data_, window, shadow_sub=10)
+            data_ = shadow(data_, window, shadow_sub=shadow_sub)
             ax.pcolormesh(self.time[dsp.MFCC],
-                          self.freq[dsp.MFCC][:range_],
-                          data_.T[:range_],
+                          self.freq[dsp.MFCC][:range_+1],
+                          data_.T[:range_+1],
                           cmap=cmap)
             self.set_labels(ax, 'MFCCs', 'Time [sec]', 'MFCC')
 
