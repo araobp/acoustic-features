@@ -94,7 +94,7 @@ class GUI:
             print('mfcc stm32: {}'.format(data[self.samples]))
 
             data_ = spectrum_subtraction(data[:self.samples,:], ssub)
-            data_ = shadow(data_, window, shadow_sub=shadow_sub)
+            data_ = shadow(data_, window, shadow_sub=10)
             ax.pcolormesh(self.time[dsp.MFSC],
                           self.freq[dsp.MFSC][:range_+1],
                           data_.T[:range_+1],
@@ -111,7 +111,7 @@ class GUI:
             print('mfcc python: {}'.format(dcted))
 
             data_ = spectrum_subtraction(data[self.samples:,:], ssub)
-            data_ = shadow(data_, window, shadow_sub=shadow_sub)
+            data_ = shadow(data_, window, shadow_sub=10)
             ax.pcolormesh(self.time[dsp.MFCC],
                           self.freq[dsp.MFCC][:range_+1],
                           data_.T[:range_+1],
