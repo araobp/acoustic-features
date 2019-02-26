@@ -1,6 +1,8 @@
 # Acoustic feature camera (STM32L4 with MEMS microphones)
 
-This device is a sort of human ear: log scale auditory perception and Fourier transform with Mel scaling as feature for training a brain. Connecting this device to Keras/TensorFlow mimics the human auditory system.
+This device is a sort of human ear: log-scale auditory perception and Fourier transform with Mel scaling as feature for training a brain. Connecting this device to Keras/TensorFlow mimics the human auditory system.
+
+STM32L476RG as a core of this device seems a right choice, since the core of [STMicro's sensor tile](https://www.st.com/en/evaluation-tools/steval-stlkt01v1.html) is also STM32L476.
 
 ## STM32L4 configuration
 
@@ -108,7 +110,7 @@ So the sampling frequency of MEMS mic should be around 20kHz: 20kHz/2 = 10kHz ([
 
 - The number of filters is 40. The reason is that most of the technical papers I have read uses 40 filters.
 - The filter bank is applied to the spectrogram to extract MFSCs and MFCCs for training a neural network.
-- I have developed DCT Type-II function in C language based on CMSIS-DSP to calculate MFCCs on STM32 in real time.
+- I have developed [DCT Type-II function in C language based on CMSIS-DSP](https://github.com/araobp/stm32-mcu/tree/master/NUCLEO-F401RE/DCT) to calculate MFCCs on STM32 in real time.
 
 ## log10 processing time issue
 
@@ -155,10 +157,11 @@ The best settings:
 - Apply Broadside mode to capture sound from the center direction (theta = 90 degrees).
 - Apply Endfire mode to capture sound from the left direction or the right direction.
 
-![](../ipynb/broadside_n%3D0.jpg)
+![](../../ipynb/broadside_n%3D0.jpg)
 
-![](../ipynb/endfire_n%3D1.jpg)
-![](../ipynb/endfire_n%3D-1.jpg)
+![](../../ipynb/endfire_n%3D1.jpg)
+
+![](../../ipynb/endfire_n%3D-1.jpg)
 
 ### The test board with d = 20mm
 
@@ -183,11 +186,6 @@ The best settings:
 ##### Beam forming to the left
 
 ![](./beam_forming_test_20mm_endfire_left.png)
-
-## References
-
-- [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
-- [AcousticBF(by STMicro)](https://www.st.com/content/ccc/resource/technical/document/user_manual/group0/40/93/ec/80/3c/61/4e/d0/DM00391112/files/DM00391112.pdf/jcr:content/translations/en.DM00391112.pdf)
 
 ## Command over UART (USB-serial)
 
@@ -239,3 +237,24 @@ Data is send in int8_t.
 |c  | theta center   |                         | when d=20mm, theta=90 degrees |
 |r  | theta right1   |                         | when d=20mm, theta=28 degrees |
 |R  | theta right2   |                         | (for d=40mm)          |
+
+### Data format of features
+
+The PC issues "FEATURES" command to the device to fetch features that are the last 2.6sec MFSCs and MFCCs buffered in a memory. 
+
+```
+      shape: (200, 40, 1)       shape: (200, 40, 1)
+   +------------------------+------------------------+
+   |    MFSCs (40 * 200)    |    MFCCs (40 * 200)    |
+   +------------------------+------------------------+
+```
+
+The GUI flatten features and convert it into CSV to save it as a csv file in a dataset folder.
+
+## References
+
+### Beam forming
+
+- [Basics(by InvenSense)](https://www.invensense.com/wp-content/uploads/2015/02/Microphone-Array-Beamforming.pdf)
+- [AcousticBF(by STMicro)](https://www.st.com/content/ccc/resource/technical/document/user_manual/group0/40/93/ec/80/3c/61/4e/d0/DM00391112/files/DM00391112.pdf/jcr:content/translations/en.DM00391112.pdf)
+
