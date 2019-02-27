@@ -26,6 +26,10 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 - MFSCs (Mel Frequency Spectral Coefficients): the technique is to mimic the human auditory system.
 - MFCCs (Mel Frequency Cepstral Coefficients): the technique is similar to JPEG/MPEG's data compression.
 
+### CNN rather than DNN
+
+I experimeted several times by capturing sound data with the **real** MEMS mics, and observed that **MFSCs+CNN outperformed MFCCs+DNN** for acoustic event detection. The reason is that a CNN model becomes **more generic** than a DNN model. DNN works OK on Jupyter Notebook, but when it comes to a real world (real microphones), DNN does not work.
+
 ## Architecture
 
 ```
