@@ -320,8 +320,8 @@ STMicroelectronics.X-CUBE-AI.3.3.0.ModelKind-21c240f25d15185a4f893c210986644fea5
 STMicroelectronics.X-CUBE-AI.3.3.0.ModelMacc-21c240f25d15185a4f893c210986644fea570aaa718b8410822ca24bac27f578=340270
 STMicroelectronics.X-CUBE-AI.3.3.0.ModelNameList=network
 STMicroelectronics.X-CUBE-AI.3.3.0.ModelRamOccupation-21c240f25d15185a4f893c210986644fea570aaa718b8410822ca24bac27f578=12750
-STMicroelectronics.X-CUBE-AI.3.3.0.ModelStructureFile-21c240f25d15185a4f893c210986644fea570aaa718b8410822ca24bac27f578=C\:\\Users\\shiny\\Documents\\GitHub\\acoustic-features\\dataset\\data_music\\cnn_for_aed_20190209171246.h5
-STMicroelectronics.X-CUBE-AI.3.3.0.ModelType-21c240f25d15185a4f893c210986644fea570aaa718b8410822ca24bac27f578=Model and Topology
+STMicroelectronics.X-CUBE-AI.3.3.0.ModelStructureFile-21c240f25d15185a4f893c210986644fea570aaa718b8410822ca24bac27f578=C\:\\Users\\shiny\\Documents\\GitHub\\acoustic-features\\dataset\\data_music\\cnn_for_aed_20190227082016.h5
+STMicroelectronics.X-CUBE-AI.3.3.0.ModelType-21c240f25d15185a4f893c210986644fea570aaa718b8410822ca24bac27f578=Saved model
 STMicroelectronics.X-CUBE-AI.3.3.00.BSP.STBoard=false
 STMicroelectronics.X-CUBE-AI.3.3.00.BSP.api=Unknown
 STMicroelectronics.X-CUBE-AI.3.3.00.BSP.component=

@@ -1,0 +1,4 @@
+ai.c:26:6:normalize	48	static
+ai.c:67:6:voice_active	16	static
+ai.c:95:5:ai_init	48	static
+ai.c:129:6:ai_infer	24	static

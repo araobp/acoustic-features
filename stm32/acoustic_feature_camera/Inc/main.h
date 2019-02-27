@@ -115,7 +115,7 @@ void   MX_USART2_UART_Init(void);
 /* USER CODE BEGIN Private defines */
 
 // Comment out the following define to enable inference by X-CUBE-AI.
-//#define INFERENCE
+#define INFERENCE
 
 /* USER CODE END Private defines */
 

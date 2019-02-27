@@ -18,7 +18,10 @@
 #define W_ALPHA 0.7f  // Weak pre-emphasis
 
 // The number of filters
-#define NUM_FILTERS 40
+#define NUM_FILTERS 40U
+#define FEATURE_MFSC
+//#define FEATURE_MFCC
+//#define CUTOFF 13U
 
 // Note: FEATURES includes both MFSCs and MFCCs
 typedef enum {

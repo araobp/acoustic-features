@@ -38,7 +38,7 @@ CMAP_LIST = ('hot',
 # Command arguments
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument("port", help="serial port identifier")
+parser.add_argument("-p", "--port", help="serial port identifier", default=None)
 parser.add_argument("-D", "--debug",
                     help="serial port identifier",
                     action="store_true")
@@ -70,8 +70,9 @@ if __name__ == '__main__':
     mode = dsp.ENDFIRE
 
     ### Default settings to DSP ###
-    itfc.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
-    itfc.enable_pre_emphasis(True)  # Pre emphasis enabled
+    if itfc.is_active():
+        itfc.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
+        itfc.enable_pre_emphasis(True)  # Pre emphasis enabled
     ###############################
 
     PADX = 6

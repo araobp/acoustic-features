@@ -66,7 +66,7 @@ class DataSet:
             with open(class_labels_file, 'r') as f:
                 self.class_labels = yaml.load(f)
             
-    def generate(self):
+    def generate(self, flatten=False):
         '''
         Generate training data set and test data set for Keras/TensorFlow
         '''
@@ -163,18 +163,24 @@ class DataSet:
             len_windows = len(self.windows)
         else:
             len_windows = 1
+       
         train_data = np.array(train_data, dtype='float32').reshape((self.training_files*len(class_labels)*len_windows, self.length, self.filters, 1))
         if self.feature == 'mfcc':
             train_data = train_data[:,:,1:self.cutoff,:]  # Remove DC
         else:
             train_data = train_data[:,:,0:self.cutoff,:]            
+        if flatten:
+            train_data = train_data.reshape((train_data.shape[0], -1))
         train_labels = np.array(train_labels, dtype='uint8')
+       
         test_data = np.array(test_data, dtype='float32').reshape((self.test_files*len(class_labels)*len_windows, self.length, self.filters, 1))
         if self.feature == 'mfcc':
             test_data = test_data[:,:,1:self.cutoff,:]  # Remove DC
         else:
             test_data = test_data[:,:,0:self.cutoff,:]            
-        test_lables = np.array(test_labels, dtype='uint8')
+        if flatten:
+            test_data = test_data.reshape((test_data.shape[0], -1))
+        test_labels = np.array(test_labels, dtype='uint8')
 
         train_labels=to_categorical(train_labels)
         test_labels=to_categorical(test_labels)

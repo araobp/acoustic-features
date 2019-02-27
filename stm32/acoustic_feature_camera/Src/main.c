@@ -113,6 +113,7 @@ volatile debug debug_output = ELAPSED_TIME;
 uint32_t elapsed_time = 0;
 
 // Buffers
+// Note: these variables are declared as "extern(al)".
 int8_t mfsc_buffer[NUM_FILTERS * 200] = { 0.0f };
 int8_t mfcc_buffer[NUM_FILTERS * 200] = { 0.0f };
 int32_t mfsc_power[200] = { 0 };

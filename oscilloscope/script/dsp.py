@@ -50,12 +50,15 @@ class Interface:
         self.filters = dataset.filters
         self.samples = dataset.samples
         self.lock = threading.Lock()
-        try:
-            ser = serial.Serial(self.port, BAUD_RATE)
-            ser.close()
-        except:
-            print('*** Cannot open {}!'.format(port))
-            
+        self.active = False
+        if self.port:
+            try:
+                ser = serial.Serial(self.port, BAUD_RATE)
+                ser.close()
+                self.active = True
+            except:
+                print('*** Cannot open {}!'.format(port))
+
         # main.c
         self.num_samples = {}            # The number of samples to receive from the device
         self.num_samples[RAW_WAVE] = NN
@@ -71,6 +74,9 @@ class Interface:
         self.shape[FEATURES] = (self.samples * 2, self.filters)
         self.shape[MFSC] = (self.samples, self.filters)
         self.shape[MFCC] = (self.samples, self.filters)
+
+    def is_active(self):
+        return self.active
 
     def serial_port(self):
         return serial.Serial(self.port, BAUD_RATE, timeout=3)
