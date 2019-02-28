@@ -458,6 +458,9 @@ int main(void)
   // from an application processor
   HAL_UART_Receive_IT(&huart2, rxbuf, 1);
 
+#ifdef DISABLE_BEAMFORMING
+  beam_forming_mode = RIGHT_MIC_ONLY;
+#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */

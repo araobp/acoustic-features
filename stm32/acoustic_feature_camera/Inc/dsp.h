@@ -19,10 +19,10 @@
 
 // The number of filters
 #define NUM_FILTERS 40U
-//#define FEATURE_MFSC
-#define FEATURE_MFCC
-#define CUTOFF 13U
-#define WINDOW_LENGTH 96
+#define FEATURE_MFSC
+//#define FEATURE_MFCC
+//#define CUTOFF 13U
+#define WINDOW_LENGTH 64
 
 // Note: FEATURES includes both MFSCs and MFCCs
 typedef enum {
@@ -40,6 +40,9 @@ typedef enum {
 // Note: "+2" means both edges, i.e., zero and the max number
 extern float32_t filterbank[NUM_FILTERS+2][FILTER_LENGTH];
 int k_range[NUM_FILTERS+2][2];
+
+// Disable beam forming
+#define DISABLE_BEAMFORMING
 
 //----- Function declarations -----------------------------------//
 
