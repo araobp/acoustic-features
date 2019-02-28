@@ -98,10 +98,10 @@ void MX_X_CUBE_AI_Process(void)
       "SILENCE         " };
 #endif
 #ifdef ENVIRONMENTAL_SOUND_CLASSIFICATION
-  char class_labels[][20] = { "Train", "Station", "Mcdonald's",
+  char class_labels[][20] = { "Train", "Station", "Cafe",
       "Mall", "Port", "Street" };
   char lcd_line2[][16] = { "TRAIN          ", "STATION         ",
-      "MCDONALD'S      ",  "MALL           ", "PORT            ",
+      "CAFE            ",  "MALL           ", "PORT            ",
       "STREET          " };
 #endif
 #ifdef KEY_WORD_DETECITION

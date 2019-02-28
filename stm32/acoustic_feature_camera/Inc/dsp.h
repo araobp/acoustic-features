@@ -19,10 +19,10 @@
 
 // The number of filters
 #define NUM_FILTERS 40U
-#define FEATURE_MFSC
-//#define FEATURE_MFCC
-//#define CUTOFF 13U
-#define WINDOW_LENGTH 64
+//#define FEATURE_MFSC
+#define FEATURE_MFCC
+#define CUTOFF 13U
+#define WINDOW_LENGTH 96
 
 // Note: FEATURES includes both MFSCs and MFCCs
 typedef enum {

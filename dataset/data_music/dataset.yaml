@@ -1,9 +1,9 @@
-feature: mfcc
+feature: mfsc
 files: 100
 training_files: 64
 samples: 200
 length: 64
 filters: 40
-cutoff: 13
+cutoff: null
 stride: 12
-model: dnn_for_aed_20190227084441.h5
+model: null
