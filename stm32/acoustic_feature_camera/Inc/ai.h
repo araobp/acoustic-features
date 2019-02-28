@@ -25,8 +25,9 @@ extern "C" {
 /**
  * Acoustic event detection use cases
  */
-#define MUSICAL_INSTRUMENT_RECOGNITION
+//#define MUSICAL_INSTRUMENT_RECOGNITION
 //#define KEY_WORD_DETECTION
+#define ENVIRONMENTAL_SOUND_CLASSIFICATION
 
 bool voice_active(int length, int32_t threshold);
 

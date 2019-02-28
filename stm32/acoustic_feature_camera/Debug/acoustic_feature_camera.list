@@ -23,31 +23,31 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   9 .ARM.attributes 00000034  00000000  00000000  00040740  2**0
                   CONTENTS, READONLY
- 10 .debug_info   0002f47f  00000000  00000000  00040774  2**0
+ 10 .debug_info   0002f478  00000000  00000000  00040774  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_abbrev 00006c33  00000000  00000000  0006fbf3  2**0
+ 11 .debug_abbrev 00006c26  00000000  00000000  0006fbec  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00015da2  00000000  00000000  00076826  2**0
+ 12 .debug_loc    00015da2  00000000  00000000  00076812  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_aranges 000017f0  00000000  00000000  0008c5c8  2**3
+ 13 .debug_aranges 000017f0  00000000  00000000  0008c5b8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_ranges 00001c30  00000000  00000000  0008ddb8  2**3
+ 14 .debug_ranges 00001c30  00000000  00000000  0008dda8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_line   0000fa6a  00000000  00000000  0008f9e8  2**0
+ 15 .debug_line   0000fa6d  00000000  00000000  0008f9d8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_str    00009868  00000000  00000000  0009f452  2**0
+ 16 .debug_str    00009868  00000000  00000000  0009f445  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .comment      00002f02  00000000  00000000  000a8cba  2**0
+ 17 .comment      00002f02  00000000  00000000  000a8cad  2**0
                   CONTENTS, READONLY
- 18 .iar.rtmodel  00000218  00000000  00000000  000abbbc  2**0
+ 18 .iar.rtmodel  00000218  00000000  00000000  000abbaf  2**0
                   CONTENTS, READONLY
- 19 .iar_vfe_header 0000001c  00000000  00000000  000abdd4  2**2
+ 19 .iar_vfe_header 0000001c  00000000  00000000  000abdc8  2**2
                   CONTENTS, READONLY
- 20 .debug_frame  000079ec  00000000  00000000  000abdf0  2**2
+ 20 .debug_frame  000079ec  00000000  00000000  000abde4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 21 .stab         00000084  00000000  00000000  000b37dc  2**2
+ 21 .stab         00000084  00000000  00000000  000b37d0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 22 .stabstr      00000117  00000000  00000000  000b3860  2**0
+ 22 .stabstr      00000117  00000000  00000000  000b3854  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -5470,7 +5470,7 @@ HAL_StatusTypeDef HAL_CRC_Init(CRC_HandleTypeDef *hcrc)
  800371a:	7702      	strb	r2, [r0, #28]
     /* Init the low level hardware */
     HAL_CRC_MspInit(hcrc);
- 800371c:	f002 feb2 	bl	8006484 <HAL_CRC_MspInit>
+ 800371c:	f002 feb0 	bl	8006480 <HAL_CRC_MspInit>
   }
 
   hcrc->State = HAL_CRC_STATE_BUSY;
@@ -5661,7 +5661,7 @@ HAL_StatusTypeDef HAL_DAC_Init(DAC_HandleTypeDef* hdac)
 #else
     /* Init the low level hardware */
     HAL_DAC_MspInit(hdac);
- 80037d0:	f002 fe9a 	bl	8006508 <HAL_DAC_MspInit>
+ 80037d0:	f002 fe98 	bl	8006504 <HAL_DAC_MspInit>
 #endif /* USE_HAL_DAC_REGISTER_CALLBACKS */
   }
 
@@ -11746,8 +11746,8 @@ __weak void HAL_UARTEx_WakeupCallback(UART_HandleTypeDef *huart)
 	...
 
 08005d3c <ai_network_data_weights_get>:
-    0xa1, 0xbd, 0x5b, 0xd8, 0x81, 0x3d, 0x5e, 0x55, 0xce,
-    0x3c, 0x74, 0x86, 0x33, 0xbe, 0xb0, 0x12, 0xd6, 0x3d
+    0x36, 0xbc, 0x1e, 0xab, 0xa4, 0xbb, 0xed, 0x5b, 0x9f,
+    0xbd, 0x17, 0x8f, 0x68, 0x3c, 0x1f, 0x68, 0x5f, 0x3c
   };
 
   return AI_HANDLE_PTR(s_network_weights);
@@ -11949,89 +11949,89 @@ ai_bool ai_network_init(
   if ( !net_ctx ) return false;
  8005e80:	2800      	cmp	r0, #0
  8005e82:	d06c      	beq.n	8005f5e <ai_network_init+0xe6>
-    conv2d_13_weights_array.format |= AI_FMT_FLAG_CONST;
+    conv2d_19_weights_array.format |= AI_FMT_FLAG_CONST;
  8005e84:	4a36      	ldr	r2, [pc, #216]	; (8005f60 <ai_network_init+0xe8>)
  8005e86:	68e3      	ldr	r3, [r4, #12]
  8005e88:	6811      	ldr	r1, [r2, #0]
-  conv2d_13_weights_array.data = weights + 0;
+  conv2d_19_weights_array.data = weights + 0;
  8005e8a:	6093      	str	r3, [r2, #8]
-    conv2d_13_weights_array.format |= AI_FMT_FLAG_CONST;
+    conv2d_19_weights_array.format |= AI_FMT_FLAG_CONST;
  8005e8c:	f041 4100 	orr.w	r1, r1, #2147483648	; 0x80000000
  8005e90:	6011      	str	r1, [r2, #0]
-  conv2d_13_weights_array.data_start = weights + 0;
+  conv2d_19_weights_array.data_start = weights + 0;
  8005e92:	60d3      	str	r3, [r2, #12]
-  conv2d_13_bias_array.format |= AI_FMT_FLAG_CONST;
+  conv2d_19_bias_array.format |= AI_FMT_FLAG_CONST;
  8005e94:	4a33      	ldr	r2, [pc, #204]	; (8005f64 <ai_network_init+0xec>)
  8005e96:	6811      	ldr	r1, [r2, #0]
  8005e98:	f041 4100 	orr.w	r1, r1, #2147483648	; 0x80000000
  8005e9c:	6011      	str	r1, [r2, #0]
-  conv2d_13_bias_array.data = weights + 144;
+  conv2d_19_bias_array.data = weights + 144;
  8005e9e:	f103 0190 	add.w	r1, r3, #144	; 0x90
  8005ea2:	6091      	str	r1, [r2, #8]
-  conv2d_13_bias_array.data_start = weights + 144;
+  conv2d_19_bias_array.data_start = weights + 144;
  8005ea4:	60d1      	str	r1, [r2, #12]
-  conv2d_14_weights_array.format |= AI_FMT_FLAG_CONST;
+  conv2d_20_weights_array.format |= AI_FMT_FLAG_CONST;
  8005ea6:	4a30      	ldr	r2, [pc, #192]	; (8005f68 <ai_network_init+0xf0>)
  8005ea8:	6811      	ldr	r1, [r2, #0]
  8005eaa:	f041 4100 	orr.w	r1, r1, #2147483648	; 0x80000000
  8005eae:	6011      	str	r1, [r2, #0]
-  conv2d_14_weights_array.data = weights + 160;
+  conv2d_20_weights_array.data = weights + 160;
  8005eb0:	f103 01a0 	add.w	r1, r3, #160	; 0xa0
  8005eb4:	6091      	str	r1, [r2, #8]
-  conv2d_14_weights_array.data_start = weights + 160;
+  conv2d_20_weights_array.data_start = weights + 160;
  8005eb6:	60d1      	str	r1, [r2, #12]
-  conv2d_14_bias_array.format |= AI_FMT_FLAG_CONST;
+  conv2d_20_bias_array.format |= AI_FMT_FLAG_CONST;
  8005eb8:	4a2c      	ldr	r2, [pc, #176]	; (8005f6c <ai_network_init+0xf4>)
  8005eba:	6811      	ldr	r1, [r2, #0]
  8005ebc:	f041 4100 	orr.w	r1, r1, #2147483648	; 0x80000000
  8005ec0:	6011      	str	r1, [r2, #0]
-  conv2d_14_bias_array.data = weights + 1312;
+  conv2d_20_bias_array.data = weights + 1312;
  8005ec2:	f503 61a4 	add.w	r1, r3, #1312	; 0x520
  8005ec6:	6091      	str	r1, [r2, #8]
-  conv2d_14_bias_array.data_start = weights + 1312;
+  conv2d_20_bias_array.data_start = weights + 1312;
  8005ec8:	60d1      	str	r1, [r2, #12]
-  conv2d_15_weights_array.format |= AI_FMT_FLAG_CONST;
+  conv2d_21_weights_array.format |= AI_FMT_FLAG_CONST;
  8005eca:	4a29      	ldr	r2, [pc, #164]	; (8005f70 <ai_network_init+0xf8>)
  8005ecc:	6811      	ldr	r1, [r2, #0]
  8005ece:	f041 4100 	orr.w	r1, r1, #2147483648	; 0x80000000
  8005ed2:	6011      	str	r1, [r2, #0]
-  conv2d_15_weights_array.data = weights + 1344;
+  conv2d_21_weights_array.data = weights + 1344;
  8005ed4:	f503 61a8 	add.w	r1, r3, #1344	; 0x540
  8005ed8:	6091      	str	r1, [r2, #8]
-  conv2d_15_weights_array.data_start = weights + 1344;
+  conv2d_21_weights_array.data_start = weights + 1344;
  8005eda:	60d1      	str	r1, [r2, #12]
-  conv2d_15_bias_array.format |= AI_FMT_FLAG_CONST;
+  conv2d_21_bias_array.format |= AI_FMT_FLAG_CONST;
  8005edc:	4a25      	ldr	r2, [pc, #148]	; (8005f74 <ai_network_init+0xfc>)
  8005ede:	6811      	ldr	r1, [r2, #0]
  8005ee0:	f041 4100 	orr.w	r1, r1, #2147483648	; 0x80000000
  8005ee4:	6011      	str	r1, [r2, #0]
-  conv2d_15_bias_array.data = weights + 5952;
+  conv2d_21_bias_array.data = weights + 5952;
  8005ee6:	f503 51ba 	add.w	r1, r3, #5952	; 0x1740
  8005eea:	6091      	str	r1, [r2, #8]
-  conv2d_15_bias_array.data_start = weights + 5952;
+  conv2d_21_bias_array.data_start = weights + 5952;
  8005eec:	60d1      	str	r1, [r2, #12]
-  dense_1_weights_array.format |= AI_FMT_FLAG_CONST;
+  dense_7_weights_array.format |= AI_FMT_FLAG_CONST;
  8005eee:	4a22      	ldr	r2, [pc, #136]	; (8005f78 <ai_network_init+0x100>)
  8005ef0:	6811      	ldr	r1, [r2, #0]
  8005ef2:	f041 4100 	orr.w	r1, r1, #2147483648	; 0x80000000
  8005ef6:	6011      	str	r1, [r2, #0]
-  dense_1_weights_array.data = weights + 6016;
+  dense_7_weights_array.data = weights + 6016;
  8005ef8:	f503 51bc 	add.w	r1, r3, #6016	; 0x1780
  8005efc:	6091      	str	r1, [r2, #8]
-  dense_1_weights_array.data_start = weights + 7744;
+  dense_7_weights_array.data_start = weights + 7744;
  8005efe:	f503 51f2 	add.w	r1, r3, #7744	; 0x1e40
  8005f02:	60d1      	str	r1, [r2, #12]
-  dense_1_bias_array.format |= AI_FMT_FLAG_CONST;
+  dense_7_bias_array.format |= AI_FMT_FLAG_CONST;
  8005f04:	4a1d      	ldr	r2, [pc, #116]	; (8005f7c <ai_network_init+0x104>)
  8005f06:	6811      	ldr	r1, [r2, #0]
-  dense_1_bias_array.data = weights + 8768;
+  dense_7_bias_array.data = weights + 8768;
  8005f08:	f503 5309 	add.w	r3, r3, #8768	; 0x2240
-  dense_1_bias_array.format |= AI_FMT_FLAG_CONST;
+  dense_7_bias_array.format |= AI_FMT_FLAG_CONST;
  8005f0c:	f041 4100 	orr.w	r1, r1, #2147483648	; 0x80000000
  8005f10:	6011      	str	r1, [r2, #0]
-  dense_1_bias_array.data = weights + 8768;
+  dense_7_bias_array.data = weights + 8768;
  8005f12:	6093      	str	r3, [r2, #8]
-  dense_1_bias_array.data_start = weights + 8768;
+  dense_7_bias_array.data_start = weights + 8768;
  8005f14:	60d3      	str	r3, [r2, #12]
   AI_FLAG_SET(net_ctx->flags, AI_NETWORK_FLAG_OUT_COPY);
  8005f16:	6882      	ldr	r2, [r0, #8]
@@ -12048,39 +12048,39 @@ ai_bool ai_network_init(
  8005f26:	60d1      	str	r1, [r2, #12]
   ai_ptr activations = AI_PTR(AI_PTR_ALIGN(activation_buffer->data, 4));
  8005f28:	3303      	adds	r3, #3
-  conv2d_13_output_array.data = activations + 0;
+  conv2d_19_output_array.data = activations + 0;
  8005f2a:	4a16      	ldr	r2, [pc, #88]	; (8005f84 <ai_network_init+0x10c>)
-  conv2d_14_output_array.data = activations + 9440;
+  conv2d_20_output_array.data = activations + 9440;
  8005f2c:	4916      	ldr	r1, [pc, #88]	; (8005f88 <ai_network_init+0x110>)
   ai_ptr activations = AI_PTR(AI_PTR_ALIGN(activation_buffer->data, 4));
  8005f2e:	f023 0303 	bic.w	r3, r3, #3
-  conv2d_13_output_array.data = activations + 0;
+  conv2d_19_output_array.data = activations + 0;
  8005f32:	6093      	str	r3, [r2, #8]
-  conv2d_13_output_array.data_start = activations + 0;
+  conv2d_19_output_array.data_start = activations + 0;
  8005f34:	60d3      	str	r3, [r2, #12]
-  conv2d_14_output_array.data = activations + 9440;
+  conv2d_20_output_array.data = activations + 9440;
  8005f36:	f503 5213 	add.w	r2, r3, #9408	; 0x24c0
  8005f3a:	3220      	adds	r2, #32
  8005f3c:	608a      	str	r2, [r1, #8]
-  conv2d_14_output_array.data_start = activations + 9440;
+  conv2d_20_output_array.data_start = activations + 9440;
  8005f3e:	60ca      	str	r2, [r1, #12]
-  conv2d_15_output_in_array.data = activations + 0;
+  conv2d_21_output_in_array.data = activations + 0;
  8005f40:	4a12      	ldr	r2, [pc, #72]	; (8005f8c <ai_network_init+0x114>)
  8005f42:	6093      	str	r3, [r2, #8]
-  conv2d_15_output_in_array.data_start = activations + 0;
+  conv2d_21_output_in_array.data_start = activations + 0;
  8005f44:	60d3      	str	r3, [r2, #12]
-  conv2d_15_output_out_array.data = activations + 0;
+  conv2d_21_output_out_array.data = activations + 0;
  8005f46:	4a12      	ldr	r2, [pc, #72]	; (8005f90 <ai_network_init+0x118>)
  8005f48:	6093      	str	r3, [r2, #8]
-  conv2d_15_output_out_array.data_start = activations + 0;
+  conv2d_21_output_out_array.data_start = activations + 0;
  8005f4a:	60d3      	str	r3, [r2, #12]
-  dense_1_output_array.data = activations + 2304;
+  dense_7_output_array.data = activations + 2304;
  8005f4c:	4a11      	ldr	r2, [pc, #68]	; (8005f94 <ai_network_init+0x11c>)
  8005f4e:	f503 6310 	add.w	r3, r3, #2304	; 0x900
  8005f52:	6093      	str	r3, [r2, #8]
-  dense_1_output_array.data_start = activations + 2304;
+  dense_7_output_array.data_start = activations + 2304;
  8005f54:	60d3      	str	r3, [r2, #12]
-  dense_1_nl_output_array.data = activations + 2304;
+  dense_7_nl_output_array.data = activations + 2304;
  8005f56:	4a10      	ldr	r2, [pc, #64]	; (8005f98 <ai_network_init+0x120>)
 
   ai_bool ok = true;
@@ -12089,9 +12089,9 @@ ai_bool ai_network_init(
   
   return ok;
  8005f58:	2001      	movs	r0, #1
-  dense_1_nl_output_array.data = activations + 2304;
+  dense_7_nl_output_array.data = activations + 2304;
  8005f5a:	6093      	str	r3, [r2, #8]
-  dense_1_nl_output_array.data_start = activations + 2304;
+  dense_7_nl_output_array.data_start = activations + 2304;
  8005f5c:	60d3      	str	r3, [r2, #12]
 }
  8005f5e:	bd10      	pop	{r4, pc}
@@ -12265,7 +12265,7 @@ int ai_init(void) {
   nn_name = ai_mnetwork_find(NULL, 0);
  8006084:	2100      	movs	r1, #0
  8006086:	4608      	mov	r0, r1
- 8006088:	f000 f964 	bl	8006354 <ai_mnetwork_find>
+ 8006088:	f000 f962 	bl	8006350 <ai_mnetwork_find>
   if (nn_name) {
  800608c:	4604      	mov	r4, r0
  800608e:	b168      	cbz	r0, 80060ac <ai_init+0x3c>
@@ -12284,7 +12284,7 @@ int ai_init(void) {
  800609a:	4620      	mov	r0, r4
  800609c:	2200      	movs	r2, #0
  800609e:	4629      	mov	r1, r5
- 80060a0:	f000 f96a 	bl	8006378 <ai_mnetwork_create>
+ 80060a0:	f000 f968 	bl	8006374 <ai_mnetwork_create>
   if (err.type) {
  80060a4:	b2c4      	uxtb	r4, r0
  80060a6:	b144      	cbz	r4, 80060ba <ai_init+0x4a>
@@ -12311,7 +12311,7 @@ int ai_init(void) {
   if (!ai_mnetwork_init(handle, &params)) {
  80060ba:	4669      	mov	r1, sp
  80060bc:	6828      	ldr	r0, [r5, #0]
- 80060be:	f000 f989 	bl	80063d4 <ai_mnetwork_init>
+ 80060be:	f000 f987 	bl	80063d0 <ai_mnetwork_init>
  80060c2:	b908      	cbnz	r0, 80060c8 <ai_init+0x58>
     printf("E: ai_mnetwork_init\n");
  80060c4:	4806      	ldr	r0, [pc, #24]	; (80060e0 <ai_init+0x70>)
@@ -12377,7 +12377,7 @@ void ai_infer(ai_float *input_data, ai_float *output_data) {
  8006120:	60ef      	str	r7, [r5, #12]
   ai_mnetwork_run(handle, &ai_input[0], &ai_output[0]);
  8006122:	4631      	mov	r1, r6
- 8006124:	f000 f987 	bl	8006436 <ai_mnetwork_run>
+ 8006124:	f000 f985 	bl	8006432 <ai_mnetwork_run>
 
   // Copy inference result
   for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
@@ -12481,17 +12481,17 @@ ai_bool ai_mnetwork_is_valid(const char* name,
  80061c4:	b086      	sub	sp, #24
   char lcd_line1[5][16] = { "It is           ", "It is .         ",
  80061c6:	2250      	movs	r2, #80	; 0x50
- 80061c8:	4958      	ldr	r1, [pc, #352]	; (800632c <MX_X_CUBE_AI_Process+0x174>)
+ 80061c8:	4957      	ldr	r1, [pc, #348]	; (8006328 <MX_X_CUBE_AI_Process+0x170>)
  80061ca:	a80c      	add	r0, sp, #48	; 0x30
  80061cc:	f003 fa75 	bl	80096ba <memcpy>
-  char class_labels[][20] = { "Piano", "Classical guitar", "Framenco guitar",
+  char class_labels[][20] = { "Train", "Station", "Mcdonald's",
  80061d0:	2278      	movs	r2, #120	; 0x78
- 80061d2:	4957      	ldr	r1, [pc, #348]	; (8006330 <MX_X_CUBE_AI_Process+0x178>)
+ 80061d2:	4956      	ldr	r1, [pc, #344]	; (800632c <MX_X_CUBE_AI_Process+0x174>)
  80061d4:	a838      	add	r0, sp, #224	; 0xe0
  80061d6:	f003 fa70 	bl	80096ba <memcpy>
-  char lcd_line2[][16] = { "PIANO           ", "CLASSICAL GUITAR",
+  char lcd_line2[][16] = { "TRAIN          ", "STATION         ",
  80061da:	2260      	movs	r2, #96	; 0x60
- 80061dc:	4955      	ldr	r1, [pc, #340]	; (8006334 <MX_X_CUBE_AI_Process+0x17c>)
+ 80061dc:	4954      	ldr	r1, [pc, #336]	; (8006330 <MX_X_CUBE_AI_Process+0x178>)
  80061de:	a820      	add	r0, sp, #128	; 0x80
  80061e0:	f003 fa6b 	bl	80096ba <memcpy>
   ai_float out_data[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
@@ -12504,30 +12504,30 @@ ai_bool ai_mnetwork_is_valid(const char* name,
  80061f0:	2100      	movs	r1, #0
  80061f2:	eb0d 0002 	add.w	r0, sp, r2
  80061f6:	f003 fa6b 	bl	80096d0 <memset>
-  if ((pos >= length) && (pos % length) == 0) {
- 80061fa:	4b4f      	ldr	r3, [pc, #316]	; (8006338 <MX_X_CUBE_AI_Process+0x180>)
+  if ((pos >= WINDOW_LENGTH) && (pos % WINDOW_LENGTH) == 0) {
+ 80061fa:	4b4e      	ldr	r3, [pc, #312]	; (8006334 <MX_X_CUBE_AI_Process+0x17c>)
  80061fc:	681b      	ldr	r3, [r3, #0]
  80061fe:	2b3f      	cmp	r3, #63	; 0x3f
- 8006200:	f340 808d 	ble.w	800631e <MX_X_CUBE_AI_Process+0x166>
- 8006204:	f013 043f 	ands.w	r4, r3, #63	; 0x3f
- 8006208:	f040 8089 	bne.w	800631e <MX_X_CUBE_AI_Process+0x166>
-    window_start_idx = (pos - length) * NUM_FILTERS;
+ 8006200:	f340 808b 	ble.w	800631a <MX_X_CUBE_AI_Process+0x162>
+ 8006204:	f013 053f 	ands.w	r5, r3, #63	; 0x3f
+ 8006208:	f040 8087 	bne.w	800631a <MX_X_CUBE_AI_Process+0x162>
+    window_start_idx = (pos - WINDOW_LENGTH) * NUM_FILTERS;
  800620c:	2128      	movs	r1, #40	; 0x28
  800620e:	3b40      	subs	r3, #64	; 0x40
- 8006210:	4f4a      	ldr	r7, [pc, #296]	; (800633c <MX_X_CUBE_AI_Process+0x184>)
+ 8006210:	4f49      	ldr	r7, [pc, #292]	; (8006338 <MX_X_CUBE_AI_Process+0x180>)
  8006212:	434b      	muls	r3, r1
-    for (int j = 0; j < length; j++) {
- 8006214:	4622      	mov	r2, r4
+    for (int j = 0; j < WINDOW_LENGTH; j++) {
+ 8006214:	462a      	mov	r2, r5
  8006216:	f04f 0ea0 	mov.w	lr, #160	; 0xa0
  800621a:	4608      	mov	r0, r1
  800621c:	a956      	add	r1, sp, #344	; 0x158
- 800621e:	fb00 3502 	mla	r5, r0, r2, r3
+ 800621e:	fb00 3402 	mla	r4, r0, r2, r3
  8006222:	fb0e 1602 	mla	r6, lr, r2, r1
- 8006226:	443d      	add	r5, r7
+ 8006226:	443c      	add	r4, r7
 {
  8006228:	2100      	movs	r1, #0
         in_data[j * NUM_FILTERS + i] = (ai_float) (mfsc_buffer[window_start_idx
- 800622a:	f915 c001 	ldrsb.w	ip, [r5, r1]
+ 800622a:	f914 c001 	ldrsb.w	ip, [r4, r1]
  800622e:	ee07 ca90 	vmov	s15, ip
       for (int i = 0; i < NUM_FILTERS; i++) {
  8006232:	3101      	adds	r1, #1
@@ -12539,7 +12539,7 @@ ai_bool ai_mnetwork_is_valid(const char* name,
  800623a:	ece6 7a01 	vstmia	r6!, {s15}
       for (int i = 0; i < NUM_FILTERS; i++) {
  800623e:	d1f4      	bne.n	800622a <MX_X_CUBE_AI_Process+0x72>
-    for (int j = 0; j < length; j++) {
+    for (int j = 0; j < WINDOW_LENGTH; j++) {
  8006240:	3201      	adds	r2, #1
  8006242:	2a40      	cmp	r2, #64	; 0x40
  8006244:	d1ea      	bne.n	800621c <MX_X_CUBE_AI_Process+0x64>
@@ -12548,654 +12548,656 @@ ai_bool ai_mnetwork_is_valid(const char* name,
  8006248:	a856      	add	r0, sp, #344	; 0x158
  800624a:	f7ff ff4b 	bl	80060e4 <ai_infer>
     printf("\n--- Inference ---\n");
- 800624e:	483c      	ldr	r0, [pc, #240]	; (8006340 <MX_X_CUBE_AI_Process+0x188>)
+ 800624e:	483b      	ldr	r0, [pc, #236]	; (800633c <MX_X_CUBE_AI_Process+0x184>)
       out_hist[current][i] = out_data[i];
- 8006250:	f8df 80fc 	ldr.w	r8, [pc, #252]	; 8006350 <MX_X_CUBE_AI_Process+0x198>
+ 8006250:	4f3b      	ldr	r7, [pc, #236]	; (8006340 <MX_X_CUBE_AI_Process+0x188>)
       printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
- 8006254:	ed9f 8a3b 	vldr	s16, [pc, #236]	; 8006344 <MX_X_CUBE_AI_Process+0x18c>
+ 8006252:	ed9f 8a3c 	vldr	s16, [pc, #240]	; 8006344 <MX_X_CUBE_AI_Process+0x18c>
     printf("\n--- Inference ---\n");
- 8006258:	f003 ffa2 	bl	800a1a0 <puts>
- 800625c:	466d      	mov	r5, sp
- 800625e:	f10d 0918 	add.w	r9, sp, #24
+ 8006256:	f003 ffa3 	bl	800a1a0 <puts>
+ 800625a:	466c      	mov	r4, sp
+ 800625c:	f10d 0918 	add.w	r9, sp, #24
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
- 8006262:	2700      	movs	r7, #0
- 8006264:	4646      	mov	r6, r8
- 8006266:	46aa      	mov	sl, r5
+ 8006260:	2600      	movs	r6, #0
+ 8006262:	46b8      	mov	r8, r7
+ 8006264:	46a2      	mov	sl, r4
       printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
- 8006268:	ecf5 7a01 	vldmia	r5!, {s15}
- 800626c:	4836      	ldr	r0, [pc, #216]	; (8006348 <MX_X_CUBE_AI_Process+0x190>)
- 800626e:	ee67 7a88 	vmul.f32	s15, s15, s16
- 8006272:	ab38      	add	r3, sp, #224	; 0xe0
- 8006274:	eefd 7ae7 	vcvt.s32.f32	s15, s15
- 8006278:	2114      	movs	r1, #20
- 800627a:	fb01 3107 	mla	r1, r1, r7, r3
- 800627e:	ee17 2a90 	vmov	r2, s15
- 8006282:	f003 ff05 	bl	800a090 <iprintf>
+ 8006266:	ecf4 7a01 	vldmia	r4!, {s15}
+ 800626a:	4837      	ldr	r0, [pc, #220]	; (8006348 <MX_X_CUBE_AI_Process+0x190>)
+ 800626c:	ee67 7a88 	vmul.f32	s15, s15, s16
+ 8006270:	ab38      	add	r3, sp, #224	; 0xe0
+ 8006272:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+ 8006276:	2114      	movs	r1, #20
+ 8006278:	fb01 3106 	mla	r1, r1, r6, r3
+ 800627c:	ee17 2a90 	vmov	r2, s15
+ 8006280:	f003 ff06 	bl	800a090 <iprintf>
       out_hist[current][i] = out_data[i];
- 8006286:	f8d8 2000 	ldr.w	r2, [r8]
- 800628a:	4830      	ldr	r0, [pc, #192]	; (800634c <MX_X_CUBE_AI_Process+0x194>)
- 800628c:	f8da 1000 	ldr.w	r1, [sl]
- 8006290:	2306      	movs	r3, #6
- 8006292:	fb03 7302 	mla	r3, r3, r2, r7
- 8006296:	eb00 0383 	add.w	r3, r0, r3, lsl #2
+ 8006284:	683b      	ldr	r3, [r7, #0]
+ 8006286:	4931      	ldr	r1, [pc, #196]	; (800634c <MX_X_CUBE_AI_Process+0x194>)
+ 8006288:	f8da 0000 	ldr.w	r0, [sl]
+ 800628c:	2206      	movs	r2, #6
+ 800628e:	fb02 6203 	mla	r2, r2, r3, r6
+ 8006292:	eb01 0282 	add.w	r2, r1, r2, lsl #2
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
- 800629a:	3701      	adds	r7, #1
+ 8006296:	3601      	adds	r6, #1
       out_hist[current][i] = out_data[i];
- 800629c:	6019      	str	r1, [r3, #0]
+ 8006298:	6010      	str	r0, [r2, #0]
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
- 800629e:	2f06      	cmp	r7, #6
+ 800629a:	2e06      	cmp	r6, #6
       out_sum[i] = 0.0;
- 80062a0:	f04f 0300 	mov.w	r3, #0
- 80062a4:	f849 3b04 	str.w	r3, [r9], #4
+ 800629c:	f04f 0200 	mov.w	r2, #0
+ 80062a0:	f849 2b04 	str.w	r2, [r9], #4
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
- 80062a8:	d1dd      	bne.n	8006266 <MX_X_CUBE_AI_Process+0xae>
+ 80062a4:	d1de      	bne.n	8006264 <MX_X_CUBE_AI_Process+0xac>
     if (++current >= 5)
- 80062aa:	3201      	adds	r2, #1
- 80062ac:	2300      	movs	r3, #0
+ 80062a6:	3301      	adds	r3, #1
+ 80062a8:	2b04      	cmp	r3, #4
+ 80062aa:	dd00      	ble.n	80062ae <MX_X_CUBE_AI_Process+0xf6>
       current = 0;
- 80062ae:	2a05      	cmp	r2, #5
- 80062b0:	bfa8      	it	ge
- 80062b2:	461a      	movge	r2, r3
- 80062b4:	f8c8 2000 	str.w	r2, [r8]
- 80062b8:	ad0c      	add	r5, sp, #48	; 0x30
- 80062ba:	18c1      	adds	r1, r0, r3
+ 80062ac:	2300      	movs	r3, #0
+    if (++current >= 5)
+ 80062ae:	603b      	str	r3, [r7, #0]
+ 80062b0:	a80c      	add	r0, sp, #48	; 0x30
+ 80062b2:	194a      	adds	r2, r1, r5
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
- 80062bc:	aa06      	add	r2, sp, #24
+ 80062b4:	ab06      	add	r3, sp, #24
         out_sum[i] += out_hist[j][i];
- 80062be:	edd2 7a00 	vldr	s15, [r2]
- 80062c2:	ecb1 7a01 	vldmia	r1!, {s14}
- 80062c6:	ee77 7a87 	vadd.f32	s15, s15, s14
- 80062ca:	ece2 7a01 	vstmia	r2!, {s15}
+ 80062b6:	edd3 7a00 	vldr	s15, [r3]
+ 80062ba:	ecb2 7a01 	vldmia	r2!, {s14}
+ 80062be:	ee77 7a87 	vadd.f32	s15, s15, s14
+ 80062c2:	ece3 7a01 	vstmia	r3!, {s15}
       for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
- 80062ce:	42aa      	cmp	r2, r5
- 80062d0:	d1f5      	bne.n	80062be <MX_X_CUBE_AI_Process+0x106>
- 80062d2:	3318      	adds	r3, #24
+ 80062c6:	4283      	cmp	r3, r0
+ 80062c8:	d1f5      	bne.n	80062b6 <MX_X_CUBE_AI_Process+0xfe>
+ 80062ca:	3518      	adds	r5, #24
     for (int j = 0; j < 5; j++) {
- 80062d4:	2b78      	cmp	r3, #120	; 0x78
- 80062d6:	d1f0      	bne.n	80062ba <MX_X_CUBE_AI_Process+0x102>
- 80062d8:	aa07      	add	r2, sp, #28
- 80062da:	2301      	movs	r3, #1
+ 80062cc:	2d78      	cmp	r5, #120	; 0x78
+ 80062ce:	d1f0      	bne.n	80062b2 <MX_X_CUBE_AI_Process+0xfa>
+ 80062d0:	aa07      	add	r2, sp, #28
+ 80062d2:	2301      	movs	r3, #1
+ 80062d4:	2400      	movs	r4, #0
       if (out_sum[class] < out_sum[i]) {
- 80062dc:	a906      	add	r1, sp, #24
- 80062de:	eb01 0184 	add.w	r1, r1, r4, lsl #2
- 80062e2:	ecf2 7a01 	vldmia	r2!, {s15}
- 80062e6:	ed91 7a00 	vldr	s14, [r1]
- 80062ea:	eeb4 7a67 	vcmp.f32	s14, s15
- 80062ee:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 80062f2:	bf48      	it	mi
- 80062f4:	461c      	movmi	r4, r3
+ 80062d6:	a906      	add	r1, sp, #24
+ 80062d8:	eb01 0184 	add.w	r1, r1, r4, lsl #2
+ 80062dc:	ecf2 7a01 	vldmia	r2!, {s15}
+ 80062e0:	ed91 7a00 	vldr	s14, [r1]
+ 80062e4:	eeb4 7a67 	vcmp.f32	s14, s15
+ 80062e8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 80062ec:	bf48      	it	mi
+ 80062ee:	461c      	movmi	r4, r3
     for (int i = 1; i < AI_NETWORK_OUT_1_SIZE; i++) {
- 80062f6:	3301      	adds	r3, #1
- 80062f8:	2b06      	cmp	r3, #6
- 80062fa:	d1ef      	bne.n	80062dc <MX_X_CUBE_AI_Process+0x124>
+ 80062f0:	3301      	adds	r3, #1
+ 80062f2:	2b06      	cmp	r3, #6
+ 80062f4:	d1ef      	bne.n	80062d6 <MX_X_CUBE_AI_Process+0x11e>
     lcd_clear();
- 80062fc:	f000 ff56 	bl	80071ac <lcd_clear>
+ 80062f6:	f000 ff59 	bl	80071ac <lcd_clear>
     lcd_string(lcd_line1[current], 16);
- 8006300:	6830      	ldr	r0, [r6, #0]
- 8006302:	ab0c      	add	r3, sp, #48	; 0x30
- 8006304:	eb03 1000 	add.w	r0, r3, r0, lsl #4
- 8006308:	2110      	movs	r1, #16
- 800630a:	f000 ff55 	bl	80071b8 <lcd_string>
+ 80062fa:	f8d8 0000 	ldr.w	r0, [r8]
+ 80062fe:	ab0c      	add	r3, sp, #48	; 0x30
+ 8006300:	eb03 1000 	add.w	r0, r3, r0, lsl #4
+ 8006304:	2110      	movs	r1, #16
+ 8006306:	f000 ff57 	bl	80071b8 <lcd_string>
     lcd_newline();
- 800630e:	f000 ff50 	bl	80071b2 <lcd_newline>
+ 800630a:	f000 ff52 	bl	80071b2 <lcd_newline>
     lcd_string(lcd_line2[class], 16);
- 8006312:	ab20      	add	r3, sp, #128	; 0x80
- 8006314:	2110      	movs	r1, #16
- 8006316:	eb03 1004 	add.w	r0, r3, r4, lsl #4
- 800631a:	f000 ff4d 	bl	80071b8 <lcd_string>
+ 800630e:	ab20      	add	r3, sp, #128	; 0x80
+ 8006310:	2110      	movs	r1, #16
+ 8006312:	eb03 1004 	add.w	r0, r3, r4, lsl #4
+ 8006316:	f000 ff4f 	bl	80071b8 <lcd_string>
 }
- 800631e:	f50d 5d25 	add.w	sp, sp, #10560	; 0x2940
- 8006322:	b006      	add	sp, #24
- 8006324:	ecbd 8b02 	vpop	{d8}
- 8006328:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
- 800632c:	0800e888 	.word	0x0800e888
- 8006330:	0800e8d8 	.word	0x0800e8d8
- 8006334:	0800e950 	.word	0x0800e950
- 8006338:	2000b390 	.word	0x2000b390
- 800633c:	2000912c 	.word	0x2000912c
- 8006340:	08010ce4 	.word	0x08010ce4
+ 800631a:	f50d 5d25 	add.w	sp, sp, #10560	; 0x2940
+ 800631e:	b006      	add	sp, #24
+ 8006320:	ecbd 8b02 	vpop	{d8}
+ 8006324:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
+ 8006328:	0800e888 	.word	0x0800e888
+ 800632c:	0800e8d8 	.word	0x0800e8d8
+ 8006330:	0800e950 	.word	0x0800e950
+ 8006334:	2000b390 	.word	0x2000b390
+ 8006338:	2000912c 	.word	0x2000912c
+ 800633c:	08010ce4 	.word	0x08010ce4
+ 8006340:	20003a9c 	.word	0x20003a9c
  8006344:	42c80000 	.word	0x42c80000
  8006348:	08010cf7 	.word	0x08010cf7
  800634c:	20003ac8 	.word	0x20003ac8
- 8006350:	20003a9c 	.word	0x20003a9c
 
-08006354 <ai_mnetwork_find>:
+08006350 <ai_mnetwork_find>:
     }
 }
 
 AI_API_ENTRY
 const char* ai_mnetwork_find(const char *name, ai_int idx)
 {
- 8006354:	b510      	push	{r4, lr}
- 8006356:	460c      	mov	r4, r1
+ 8006350:	b510      	push	{r4, lr}
+ 8006352:	460c      	mov	r4, r1
     const ai_network_entry_t *entry;
 
     for (int i=0; i<AI_MNETWORK_NUMBER; i++) {
         entry = &networks[i];
         if (ai_mnetwork_is_valid(name, entry))
- 8006358:	4905      	ldr	r1, [pc, #20]	; (8006370 <ai_mnetwork_find+0x1c>)
- 800635a:	f7ff ff09 	bl	8006170 <ai_mnetwork_is_valid.isra.0>
- 800635e:	b920      	cbnz	r0, 800636a <ai_mnetwork_find+0x16>
+ 8006354:	4905      	ldr	r1, [pc, #20]	; (800636c <ai_mnetwork_find+0x1c>)
+ 8006356:	f7ff ff0b 	bl	8006170 <ai_mnetwork_is_valid.isra.0>
+ 800635a:	b920      	cbnz	r0, 8006366 <ai_mnetwork_find+0x16>
             return entry->name;
         else {
             if (!idx--)
- 8006360:	2c00      	cmp	r4, #0
+ 800635c:	2c00      	cmp	r4, #0
                 return entry->name;
         }
     }
     return NULL;
- 8006362:	4804      	ldr	r0, [pc, #16]	; (8006374 <ai_mnetwork_find+0x20>)
- 8006364:	bf18      	it	ne
- 8006366:	2000      	movne	r0, #0
- 8006368:	bd10      	pop	{r4, pc}
+ 800635e:	4804      	ldr	r0, [pc, #16]	; (8006370 <ai_mnetwork_find+0x20>)
+ 8006360:	bf18      	it	ne
+ 8006362:	2000      	movne	r0, #0
+ 8006364:	bd10      	pop	{r4, pc}
                 return entry->name;
- 800636a:	4802      	ldr	r0, [pc, #8]	; (8006374 <ai_mnetwork_find+0x20>)
+ 8006366:	4802      	ldr	r0, [pc, #8]	; (8006370 <ai_mnetwork_find+0x20>)
 }
- 800636c:	bd10      	pop	{r4, pc}
- 800636e:	bf00      	nop
- 8006370:	08010d04 	.word	0x08010d04
- 8006374:	08010c1c 	.word	0x08010c1c
+ 8006368:	bd10      	pop	{r4, pc}
+ 800636a:	bf00      	nop
+ 800636c:	08010d04 	.word	0x08010d04
+ 8006370:	08010c1c 	.word	0x08010c1c
 
-08006378 <ai_mnetwork_create>:
+08006374 <ai_mnetwork_create>:
 
 AI_API_ENTRY
 ai_error ai_mnetwork_create(const char *name, ai_handle* network,
         const ai_buffer* network_config)
 {
- 8006378:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 800637a:	4607      	mov	r7, r0
+ 8006374:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8006376:	4607      	mov	r7, r0
     const ai_network_entry_t *entry;
     const ai_network_entry_t *found = NULL;
     ai_error err;
     struct network_instance *inst = ai_mnetwork_handle(NULL);
- 800637c:	2000      	movs	r0, #0
+ 8006378:	2000      	movs	r0, #0
 {
- 800637e:	460d      	mov	r5, r1
- 8006380:	4616      	mov	r6, r2
+ 800637a:	460d      	mov	r5, r1
+ 800637c:	4616      	mov	r6, r2
     struct network_instance *inst = ai_mnetwork_handle(NULL);
- 8006382:	f7ff fee7 	bl	8006154 <ai_mnetwork_handle>
+ 800637e:	f7ff fee9 	bl	8006154 <ai_mnetwork_handle>
 
     if (!inst) {
- 8006386:	4604      	mov	r4, r0
- 8006388:	b1c8      	cbz	r0, 80063be <ai_mnetwork_create+0x46>
+ 8006382:	4604      	mov	r4, r0
+ 8006384:	b1c8      	cbz	r0, 80063ba <ai_mnetwork_create+0x46>
         return err;
     }
 
     for (int i=0; i<AI_MNETWORK_NUMBER; i++) {
         entry = &networks[i];
         if (ai_mnetwork_is_valid(name, entry)) {
- 800638a:	4911      	ldr	r1, [pc, #68]	; (80063d0 <ai_mnetwork_create+0x58>)
- 800638c:	4638      	mov	r0, r7
- 800638e:	f7ff feef 	bl	8006170 <ai_mnetwork_is_valid.isra.0>
- 8006392:	b1d0      	cbz	r0, 80063ca <ai_mnetwork_create+0x52>
+ 8006386:	4911      	ldr	r1, [pc, #68]	; (80063cc <ai_mnetwork_create+0x58>)
+ 8006388:	4638      	mov	r0, r7
+ 800638a:	f7ff fef1 	bl	8006170 <ai_mnetwork_is_valid.isra.0>
+ 800638e:	b1d0      	cbz	r0, 80063c6 <ai_mnetwork_create+0x52>
     }
 
     if (network_config == NULL)
         err = found->ai_create(network, found->config);
     else
         err = found->ai_create(network, network_config);
- 8006394:	4631      	mov	r1, r6
- 8006396:	4628      	mov	r0, r5
- 8006398:	f7ff fd5e 	bl	8005e58 <ai_network_create>
- 800639c:	b2c2      	uxtb	r2, r0
- 800639e:	f3c0 2317 	ubfx	r3, r0, #8, #24
+ 8006390:	4631      	mov	r1, r6
+ 8006392:	4628      	mov	r0, r5
+ 8006394:	f7ff fd60 	bl	8005e58 <ai_network_create>
+ 8006398:	b2c2      	uxtb	r2, r0
+ 800639a:	f3c0 2317 	ubfx	r3, r0, #8, #24
     if ((err.code == AI_ERROR_CODE_NONE) && (err.type == AI_ERROR_NONE)) {
- 80063a2:	ea52 2103 	orrs.w	r1, r2, r3, lsl #8
- 80063a6:	d104      	bne.n	80063b2 <ai_mnetwork_create+0x3a>
+ 800639e:	ea52 2103 	orrs.w	r1, r2, r3, lsl #8
+ 80063a2:	d104      	bne.n	80063ae <ai_mnetwork_create+0x3a>
         inst->entry = found;
- 80063a8:	4909      	ldr	r1, [pc, #36]	; (80063d0 <ai_mnetwork_create+0x58>)
- 80063aa:	6021      	str	r1, [r4, #0]
+ 80063a4:	4909      	ldr	r1, [pc, #36]	; (80063cc <ai_mnetwork_create+0x58>)
+ 80063a6:	6021      	str	r1, [r4, #0]
         inst->handle = *network;
- 80063ac:	6829      	ldr	r1, [r5, #0]
- 80063ae:	6061      	str	r1, [r4, #4]
+ 80063a8:	6829      	ldr	r1, [r5, #0]
+ 80063aa:	6061      	str	r1, [r4, #4]
         *network = (ai_handle*)inst;
- 80063b0:	602c      	str	r4, [r5, #0]
+ 80063ac:	602c      	str	r4, [r5, #0]
     }
 
     return err;
- 80063b2:	2000      	movs	r0, #0
- 80063b4:	f362 0007 	bfi	r0, r2, #0, #8
+ 80063ae:	2000      	movs	r0, #0
+ 80063b0:	f362 0007 	bfi	r0, r2, #0, #8
         return err;
- 80063b8:	f363 201f 	bfi	r0, r3, #8, #24
- 80063bc:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+ 80063b4:	f363 201f 	bfi	r0, r3, #8, #24
+ 80063b8:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
         return err;
- 80063be:	2000      	movs	r0, #0
- 80063c0:	2331      	movs	r3, #49	; 0x31
+ 80063ba:	2000      	movs	r0, #0
+ 80063bc:	2331      	movs	r3, #49	; 0x31
         return err;
- 80063c2:	f363 0007 	bfi	r0, r3, #0, #8
- 80063c6:	2310      	movs	r3, #16
- 80063c8:	e7f6      	b.n	80063b8 <ai_mnetwork_create+0x40>
- 80063ca:	2000      	movs	r0, #0
- 80063cc:	2314      	movs	r3, #20
- 80063ce:	e7f8      	b.n	80063c2 <ai_mnetwork_create+0x4a>
- 80063d0:	08010d04 	.word	0x08010d04
+ 80063be:	f363 0007 	bfi	r0, r3, #0, #8
+ 80063c2:	2310      	movs	r3, #16
+ 80063c4:	e7f6      	b.n	80063b4 <ai_mnetwork_create+0x40>
+ 80063c6:	2000      	movs	r0, #0
+ 80063c8:	2314      	movs	r3, #20
+ 80063ca:	e7f8      	b.n	80063be <ai_mnetwork_create+0x4a>
+ 80063cc:	08010d04 	.word	0x08010d04
 
-080063d4 <ai_mnetwork_init>:
+080063d0 <ai_mnetwork_init>:
         return err;
 }
 
 AI_API_ENTRY
 ai_bool ai_mnetwork_init(ai_handle network, const ai_network_params* params)
 {
- 80063d4:	b5f0      	push	{r4, r5, r6, r7, lr}
- 80063d6:	b089      	sub	sp, #36	; 0x24
- 80063d8:	460f      	mov	r7, r1
+ 80063d0:	b5f0      	push	{r4, r5, r6, r7, lr}
+ 80063d2:	b089      	sub	sp, #36	; 0x24
+ 80063d4:	460f      	mov	r7, r1
     struct network_instance *inn;
     ai_network_params par;
 
     /* TODO: adding check ai_buffer activations/weights shape coherence */
 
     inn =  ai_mnetwork_handle((struct network_instance *)network);
- 80063da:	f7ff febb 	bl	8006154 <ai_mnetwork_handle>
+ 80063d6:	f7ff febd 	bl	8006154 <ai_mnetwork_handle>
     if (inn) {
- 80063de:	4606      	mov	r6, r0
- 80063e0:	b340      	cbz	r0, 8006434 <ai_mnetwork_init+0x60>
+ 80063da:	4606      	mov	r6, r0
+ 80063dc:	b340      	cbz	r0, 8006430 <ai_mnetwork_init+0x60>
         par = inn->entry->params;
- 80063e2:	f8d0 e000 	ldr.w	lr, [r0]
- 80063e6:	f10e 0504 	add.w	r5, lr, #4
- 80063ea:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
- 80063ec:	466c      	mov	r4, sp
- 80063ee:	c40f      	stmia	r4!, {r0, r1, r2, r3}
- 80063f0:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
- 80063f4:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
+ 80063de:	f8d0 e000 	ldr.w	lr, [r0]
+ 80063e2:	f10e 0504 	add.w	r5, lr, #4
+ 80063e6:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
+ 80063e8:	466c      	mov	r4, sp
+ 80063ea:	c40f      	stmia	r4!, {r0, r1, r2, r3}
+ 80063ec:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
+ 80063f0:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
         if (params->activations.n_batches)
- 80063f8:	8a7b      	ldrh	r3, [r7, #18]
- 80063fa:	466c      	mov	r4, sp
- 80063fc:	b193      	cbz	r3, 8006424 <ai_mnetwork_init+0x50>
+ 80063f4:	8a7b      	ldrh	r3, [r7, #18]
+ 80063f6:	466c      	mov	r4, sp
+ 80063f8:	b193      	cbz	r3, 8006420 <ai_mnetwork_init+0x50>
             par.activations = params->activations;
- 80063fe:	f107 0310 	add.w	r3, r7, #16
- 8006402:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
- 8006404:	ad08      	add	r5, sp, #32
- 8006406:	e905 000f 	stmdb	r5, {r0, r1, r2, r3}
+ 80063fa:	f107 0310 	add.w	r3, r7, #16
+ 80063fe:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
+ 8006400:	ad08      	add	r5, sp, #32
+ 8006402:	e905 000f 	stmdb	r5, {r0, r1, r2, r3}
         else
             par.activations.data = params->activations.data;
         if (params->params.n_batches)
- 800640a:	887b      	ldrh	r3, [r7, #2]
- 800640c:	b16b      	cbz	r3, 800642a <ai_mnetwork_init+0x56>
+ 8006406:	887b      	ldrh	r3, [r7, #2]
+ 8006408:	b16b      	cbz	r3, 8006426 <ai_mnetwork_init+0x56>
             par.params = params->params;
- 800640e:	e897 000f 	ldmia.w	r7, {r0, r1, r2, r3}
- 8006412:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
+ 800640a:	e897 000f 	ldmia.w	r7, {r0, r1, r2, r3}
+ 800640e:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
         else
             par.params.data = inn->entry->ai_data_weights_get_default();
         return inn->entry->ai_init(inn->handle, &par);
- 8006416:	6833      	ldr	r3, [r6, #0]
- 8006418:	6870      	ldr	r0, [r6, #4]
- 800641a:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
- 800641c:	4621      	mov	r1, r4
- 800641e:	4798      	blx	r3
+ 8006412:	6833      	ldr	r3, [r6, #0]
+ 8006414:	6870      	ldr	r0, [r6, #4]
+ 8006416:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
+ 8006418:	4621      	mov	r1, r4
+ 800641a:	4798      	blx	r3
     }
     else
         return false;
 }
- 8006420:	b009      	add	sp, #36	; 0x24
- 8006422:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 800641c:	b009      	add	sp, #36	; 0x24
+ 800641e:	bdf0      	pop	{r4, r5, r6, r7, pc}
             par.activations.data = params->activations.data;
- 8006424:	69fb      	ldr	r3, [r7, #28]
- 8006426:	9307      	str	r3, [sp, #28]
- 8006428:	e7ef      	b.n	800640a <ai_mnetwork_init+0x36>
+ 8006420:	69fb      	ldr	r3, [r7, #28]
+ 8006422:	9307      	str	r3, [sp, #28]
+ 8006424:	e7ef      	b.n	8006406 <ai_mnetwork_init+0x36>
             par.params.data = inn->entry->ai_data_weights_get_default();
- 800642a:	f8de 3028 	ldr.w	r3, [lr, #40]	; 0x28
- 800642e:	4798      	blx	r3
- 8006430:	9003      	str	r0, [sp, #12]
- 8006432:	e7f0      	b.n	8006416 <ai_mnetwork_init+0x42>
- 8006434:	e7f4      	b.n	8006420 <ai_mnetwork_init+0x4c>
+ 8006426:	f8de 3028 	ldr.w	r3, [lr, #40]	; 0x28
+ 800642a:	4798      	blx	r3
+ 800642c:	9003      	str	r0, [sp, #12]
+ 800642e:	e7f0      	b.n	8006412 <ai_mnetwork_init+0x42>
+ 8006430:	e7f4      	b.n	800641c <ai_mnetwork_init+0x4c>
 
-08006436 <ai_mnetwork_run>:
+08006432 <ai_mnetwork_run>:
 
 AI_API_ENTRY
 ai_i32 ai_mnetwork_run(ai_handle network, const ai_buffer* input,
         ai_buffer* output)
 {
- 8006436:	b570      	push	{r4, r5, r6, lr}
- 8006438:	4615      	mov	r5, r2
+ 8006432:	b570      	push	{r4, r5, r6, lr}
+ 8006434:	4615      	mov	r5, r2
     struct network_instance* inn;
     inn =  ai_mnetwork_handle((struct network_instance *)network);
- 800643a:	f7ff fe8b 	bl	8006154 <ai_mnetwork_handle>
+ 8006436:	f7ff fe8d 	bl	8006154 <ai_mnetwork_handle>
     if (inn)
- 800643e:	b138      	cbz	r0, 8006450 <ai_mnetwork_run+0x1a>
+ 800643a:	b138      	cbz	r0, 800644c <ai_mnetwork_run+0x1a>
         return inn->entry->ai_run(inn->handle, input, output);
- 8006440:	6802      	ldr	r2, [r0, #0]
- 8006442:	6840      	ldr	r0, [r0, #4]
- 8006444:	6c14      	ldr	r4, [r2, #64]	; 0x40
- 8006446:	462a      	mov	r2, r5
- 8006448:	4623      	mov	r3, r4
+ 800643c:	6802      	ldr	r2, [r0, #0]
+ 800643e:	6840      	ldr	r0, [r0, #4]
+ 8006440:	6c14      	ldr	r4, [r2, #64]	; 0x40
+ 8006442:	462a      	mov	r2, r5
+ 8006444:	4623      	mov	r3, r4
     else
         return 0;
 }
- 800644a:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
+ 8006446:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
         return inn->entry->ai_run(inn->handle, input, output);
- 800644e:	4718      	bx	r3
+ 800644a:	4718      	bx	r3
 }
- 8006450:	bd70      	pop	{r4, r5, r6, pc}
+ 800644c:	bd70      	pop	{r4, r5, r6, pc}
 	...
 
-08006454 <MX_CRC_Init>:
+08006450 <MX_CRC_Init>:
 
 /* CRC init function */
 void MX_CRC_Init(void)
 {
 
   hcrc.Instance = CRC;
- 8006454:	4809      	ldr	r0, [pc, #36]	; (800647c <MX_CRC_Init+0x28>)
+ 8006450:	4809      	ldr	r0, [pc, #36]	; (8006478 <MX_CRC_Init+0x28>)
 {
- 8006456:	b508      	push	{r3, lr}
+ 8006452:	b508      	push	{r3, lr}
   hcrc.Instance = CRC;
- 8006458:	4b09      	ldr	r3, [pc, #36]	; (8006480 <MX_CRC_Init+0x2c>)
- 800645a:	6003      	str	r3, [r0, #0]
+ 8006454:	4b09      	ldr	r3, [pc, #36]	; (800647c <MX_CRC_Init+0x2c>)
+ 8006456:	6003      	str	r3, [r0, #0]
   hcrc.Init.DefaultPolynomialUse = DEFAULT_POLYNOMIAL_ENABLE;
- 800645c:	2300      	movs	r3, #0
- 800645e:	7103      	strb	r3, [r0, #4]
+ 8006458:	2300      	movs	r3, #0
+ 800645a:	7103      	strb	r3, [r0, #4]
   hcrc.Init.DefaultInitValueUse = DEFAULT_INIT_VALUE_ENABLE;
- 8006460:	7143      	strb	r3, [r0, #5]
+ 800645c:	7143      	strb	r3, [r0, #5]
   hcrc.Init.InputDataInversionMode = CRC_INPUTDATA_INVERSION_NONE;
- 8006462:	6143      	str	r3, [r0, #20]
+ 800645e:	6143      	str	r3, [r0, #20]
   hcrc.Init.OutputDataInversionMode = CRC_OUTPUTDATA_INVERSION_DISABLE;
- 8006464:	6183      	str	r3, [r0, #24]
+ 8006460:	6183      	str	r3, [r0, #24]
   hcrc.InputDataFormat = CRC_INPUTDATA_FORMAT_BYTES;
- 8006466:	2301      	movs	r3, #1
- 8006468:	6203      	str	r3, [r0, #32]
+ 8006462:	2301      	movs	r3, #1
+ 8006464:	6203      	str	r3, [r0, #32]
   if (HAL_CRC_Init(&hcrc) != HAL_OK)
- 800646a:	f7fd f94d 	bl	8003708 <HAL_CRC_Init>
- 800646e:	b118      	cbz	r0, 8006478 <MX_CRC_Init+0x24>
+ 8006466:	f7fd f94f 	bl	8003708 <HAL_CRC_Init>
+ 800646a:	b118      	cbz	r0, 8006474 <MX_CRC_Init+0x24>
   {
     Error_Handler();
   }
 
 }
- 8006470:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+ 800646c:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
     Error_Handler();
- 8006474:	f001 ba4a 	b.w	800790c <Error_Handler>
- 8006478:	bd08      	pop	{r3, pc}
- 800647a:	bf00      	nop
- 800647c:	2000dc64 	.word	0x2000dc64
- 8006480:	40023000 	.word	0x40023000
+ 8006470:	f001 ba4c 	b.w	800790c <Error_Handler>
+ 8006474:	bd08      	pop	{r3, pc}
+ 8006476:	bf00      	nop
+ 8006478:	2000dc64 	.word	0x2000dc64
+ 800647c:	40023000 	.word	0x40023000
 
-08006484 <HAL_CRC_MspInit>:
+08006480 <HAL_CRC_MspInit>:
 
 void HAL_CRC_MspInit(CRC_HandleTypeDef* crcHandle)
 {
 
   if(crcHandle->Instance==CRC)
- 8006484:	6802      	ldr	r2, [r0, #0]
- 8006486:	4b08      	ldr	r3, [pc, #32]	; (80064a8 <HAL_CRC_MspInit+0x24>)
- 8006488:	429a      	cmp	r2, r3
+ 8006480:	6802      	ldr	r2, [r0, #0]
+ 8006482:	4b08      	ldr	r3, [pc, #32]	; (80064a4 <HAL_CRC_MspInit+0x24>)
+ 8006484:	429a      	cmp	r2, r3
 {
- 800648a:	b082      	sub	sp, #8
+ 8006486:	b082      	sub	sp, #8
   if(crcHandle->Instance==CRC)
- 800648c:	d10a      	bne.n	80064a4 <HAL_CRC_MspInit+0x20>
+ 8006488:	d10a      	bne.n	80064a0 <HAL_CRC_MspInit+0x20>
   {
   /* USER CODE BEGIN CRC_MspInit 0 */
 
   /* USER CODE END CRC_MspInit 0 */
     /* CRC clock enable */
     __HAL_RCC_CRC_CLK_ENABLE();
- 800648e:	f5a3 5300 	sub.w	r3, r3, #8192	; 0x2000
- 8006492:	6c9a      	ldr	r2, [r3, #72]	; 0x48
- 8006494:	f442 5280 	orr.w	r2, r2, #4096	; 0x1000
- 8006498:	649a      	str	r2, [r3, #72]	; 0x48
- 800649a:	6c9b      	ldr	r3, [r3, #72]	; 0x48
- 800649c:	f403 5380 	and.w	r3, r3, #4096	; 0x1000
- 80064a0:	9301      	str	r3, [sp, #4]
- 80064a2:	9b01      	ldr	r3, [sp, #4]
+ 800648a:	f5a3 5300 	sub.w	r3, r3, #8192	; 0x2000
+ 800648e:	6c9a      	ldr	r2, [r3, #72]	; 0x48
+ 8006490:	f442 5280 	orr.w	r2, r2, #4096	; 0x1000
+ 8006494:	649a      	str	r2, [r3, #72]	; 0x48
+ 8006496:	6c9b      	ldr	r3, [r3, #72]	; 0x48
+ 8006498:	f403 5380 	and.w	r3, r3, #4096	; 0x1000
+ 800649c:	9301      	str	r3, [sp, #4]
+ 800649e:	9b01      	ldr	r3, [sp, #4]
   /* USER CODE BEGIN CRC_MspInit 1 */
 
   /* USER CODE END CRC_MspInit 1 */
   }
 }
- 80064a4:	b002      	add	sp, #8
- 80064a6:	4770      	bx	lr
- 80064a8:	40023000 	.word	0x40023000
+ 80064a0:	b002      	add	sp, #8
+ 80064a2:	4770      	bx	lr
+ 80064a4:	40023000 	.word	0x40023000
 
-080064ac <MX_DAC1_Init>:
+080064a8 <MX_DAC1_Init>:
 DMA_HandleTypeDef hdma_dac_ch1;
 DMA_HandleTypeDef hdma_dac_ch2;
 
 /* DAC1 init function */
 void MX_DAC1_Init(void)
 {
- 80064ac:	b510      	push	{r4, lr}
- 80064ae:	b08a      	sub	sp, #40	; 0x28
+ 80064a8:	b510      	push	{r4, lr}
+ 80064aa:	b08a      	sub	sp, #40	; 0x28
   DAC_ChannelConfTypeDef sConfig = {0};
- 80064b0:	2224      	movs	r2, #36	; 0x24
- 80064b2:	2100      	movs	r1, #0
- 80064b4:	a801      	add	r0, sp, #4
- 80064b6:	f003 f90b 	bl	80096d0 <memset>
+ 80064ac:	2224      	movs	r2, #36	; 0x24
+ 80064ae:	2100      	movs	r1, #0
+ 80064b0:	a801      	add	r0, sp, #4
+ 80064b2:	f003 f90d 	bl	80096d0 <memset>
 
   /**DAC Initialization 
   */
   hdac1.Instance = DAC1;
- 80064ba:	4811      	ldr	r0, [pc, #68]	; (8006500 <MX_DAC1_Init+0x54>)
- 80064bc:	4b11      	ldr	r3, [pc, #68]	; (8006504 <MX_DAC1_Init+0x58>)
- 80064be:	6003      	str	r3, [r0, #0]
+ 80064b6:	4811      	ldr	r0, [pc, #68]	; (80064fc <MX_DAC1_Init+0x54>)
+ 80064b8:	4b11      	ldr	r3, [pc, #68]	; (8006500 <MX_DAC1_Init+0x58>)
+ 80064ba:	6003      	str	r3, [r0, #0]
   if (HAL_DAC_Init(&hdac1) != HAL_OK)
- 80064c0:	f7fd f97e 	bl	80037c0 <HAL_DAC_Init>
- 80064c4:	b108      	cbz	r0, 80064ca <MX_DAC1_Init+0x1e>
+ 80064bc:	f7fd f980 	bl	80037c0 <HAL_DAC_Init>
+ 80064c0:	b108      	cbz	r0, 80064c6 <MX_DAC1_Init+0x1e>
   {
     Error_Handler();
- 80064c6:	f001 fa21 	bl	800790c <Error_Handler>
+ 80064c2:	f001 fa23 	bl	800790c <Error_Handler>
   }
   /**DAC channel OUT1 config 
   */
   sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
- 80064ca:	2400      	movs	r4, #0
+ 80064c6:	2400      	movs	r4, #0
   sConfig.DAC_Trigger = DAC_TRIGGER_T6_TRGO;
- 80064cc:	2304      	movs	r3, #4
+ 80064c8:	2304      	movs	r3, #4
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
   sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
   sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
   if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_1) != HAL_OK)
- 80064ce:	4622      	mov	r2, r4
- 80064d0:	eb0d 0103 	add.w	r1, sp, r3
- 80064d4:	480a      	ldr	r0, [pc, #40]	; (8006500 <MX_DAC1_Init+0x54>)
+ 80064ca:	4622      	mov	r2, r4
+ 80064cc:	eb0d 0103 	add.w	r1, sp, r3
+ 80064d0:	480a      	ldr	r0, [pc, #40]	; (80064fc <MX_DAC1_Init+0x54>)
   sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
- 80064d6:	9401      	str	r4, [sp, #4]
+ 80064d2:	9401      	str	r4, [sp, #4]
   sConfig.DAC_Trigger = DAC_TRIGGER_T6_TRGO;
- 80064d8:	9302      	str	r3, [sp, #8]
+ 80064d4:	9302      	str	r3, [sp, #8]
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
- 80064da:	9403      	str	r4, [sp, #12]
+ 80064d6:	9403      	str	r4, [sp, #12]
   sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
- 80064dc:	9404      	str	r4, [sp, #16]
+ 80064d8:	9404      	str	r4, [sp, #16]
   sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
- 80064de:	9405      	str	r4, [sp, #20]
+ 80064da:	9405      	str	r4, [sp, #20]
   if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_1) != HAL_OK)
- 80064e0:	f7fd fa32 	bl	8003948 <HAL_DAC_ConfigChannel>
- 80064e4:	b108      	cbz	r0, 80064ea <MX_DAC1_Init+0x3e>
+ 80064dc:	f7fd fa34 	bl	8003948 <HAL_DAC_ConfigChannel>
+ 80064e0:	b108      	cbz	r0, 80064e6 <MX_DAC1_Init+0x3e>
   {
     Error_Handler();
- 80064e6:	f001 fa11 	bl	800790c <Error_Handler>
+ 80064e2:	f001 fa13 	bl	800790c <Error_Handler>
   }
   /**DAC channel OUT2 config 
   */
   sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
   if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_2) != HAL_OK)
- 80064ea:	2210      	movs	r2, #16
- 80064ec:	a901      	add	r1, sp, #4
- 80064ee:	4804      	ldr	r0, [pc, #16]	; (8006500 <MX_DAC1_Init+0x54>)
+ 80064e6:	2210      	movs	r2, #16
+ 80064e8:	a901      	add	r1, sp, #4
+ 80064ea:	4804      	ldr	r0, [pc, #16]	; (80064fc <MX_DAC1_Init+0x54>)
   sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
- 80064f0:	9404      	str	r4, [sp, #16]
+ 80064ec:	9404      	str	r4, [sp, #16]
   if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_2) != HAL_OK)
- 80064f2:	f7fd fa29 	bl	8003948 <HAL_DAC_ConfigChannel>
- 80064f6:	b108      	cbz	r0, 80064fc <MX_DAC1_Init+0x50>
+ 80064ee:	f7fd fa2b 	bl	8003948 <HAL_DAC_ConfigChannel>
+ 80064f2:	b108      	cbz	r0, 80064f8 <MX_DAC1_Init+0x50>
   {
     Error_Handler();
- 80064f8:	f001 fa08 	bl	800790c <Error_Handler>
+ 80064f4:	f001 fa0a 	bl	800790c <Error_Handler>
   }
 
 }
- 80064fc:	b00a      	add	sp, #40	; 0x28
- 80064fe:	bd10      	pop	{r4, pc}
- 8006500:	2000dc88 	.word	0x2000dc88
- 8006504:	40007400 	.word	0x40007400
+ 80064f8:	b00a      	add	sp, #40	; 0x28
+ 80064fa:	bd10      	pop	{r4, pc}
+ 80064fc:	2000dc88 	.word	0x2000dc88
+ 8006500:	40007400 	.word	0x40007400
 
-08006508 <HAL_DAC_MspInit>:
+08006504 <HAL_DAC_MspInit>:
 
 void HAL_DAC_MspInit(DAC_HandleTypeDef* dacHandle)
 {
- 8006508:	b530      	push	{r4, r5, lr}
- 800650a:	4605      	mov	r5, r0
- 800650c:	b089      	sub	sp, #36	; 0x24
+ 8006504:	b530      	push	{r4, r5, lr}
+ 8006506:	4605      	mov	r5, r0
+ 8006508:	b089      	sub	sp, #36	; 0x24
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
- 800650e:	2214      	movs	r2, #20
- 8006510:	2100      	movs	r1, #0
- 8006512:	a803      	add	r0, sp, #12
- 8006514:	f003 f8dc 	bl	80096d0 <memset>
+ 800650a:	2214      	movs	r2, #20
+ 800650c:	2100      	movs	r1, #0
+ 800650e:	a803      	add	r0, sp, #12
+ 8006510:	f003 f8de 	bl	80096d0 <memset>
   if(dacHandle->Instance==DAC1)
- 8006518:	682a      	ldr	r2, [r5, #0]
- 800651a:	4b2e      	ldr	r3, [pc, #184]	; (80065d4 <HAL_DAC_MspInit+0xcc>)
- 800651c:	429a      	cmp	r2, r3
- 800651e:	d156      	bne.n	80065ce <HAL_DAC_MspInit+0xc6>
+ 8006514:	682a      	ldr	r2, [r5, #0]
+ 8006516:	4b2e      	ldr	r3, [pc, #184]	; (80065d0 <HAL_DAC_MspInit+0xcc>)
+ 8006518:	429a      	cmp	r2, r3
+ 800651a:	d156      	bne.n	80065ca <HAL_DAC_MspInit+0xc6>
   {
   /* USER CODE BEGIN DAC1_MspInit 0 */
 
   /* USER CODE END DAC1_MspInit 0 */
     /* DAC1 clock enable */
     __HAL_RCC_DAC1_CLK_ENABLE();
- 8006520:	f503 33ce 	add.w	r3, r3, #105472	; 0x19c00
+ 800651c:	f503 33ce 	add.w	r3, r3, #105472	; 0x19c00
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /* DAC1 DMA Init */
     /* DAC_CH1 Init */
     hdma_dac_ch1.Instance = DMA1_Channel3;
- 8006524:	4c2c      	ldr	r4, [pc, #176]	; (80065d8 <HAL_DAC_MspInit+0xd0>)
+ 8006520:	4c2c      	ldr	r4, [pc, #176]	; (80065d4 <HAL_DAC_MspInit+0xd0>)
     __HAL_RCC_DAC1_CLK_ENABLE();
- 8006526:	6d9a      	ldr	r2, [r3, #88]	; 0x58
- 8006528:	f042 5200 	orr.w	r2, r2, #536870912	; 0x20000000
- 800652c:	659a      	str	r2, [r3, #88]	; 0x58
- 800652e:	6d9a      	ldr	r2, [r3, #88]	; 0x58
- 8006530:	f002 5200 	and.w	r2, r2, #536870912	; 0x20000000
- 8006534:	9201      	str	r2, [sp, #4]
- 8006536:	9a01      	ldr	r2, [sp, #4]
+ 8006522:	6d9a      	ldr	r2, [r3, #88]	; 0x58
+ 8006524:	f042 5200 	orr.w	r2, r2, #536870912	; 0x20000000
+ 8006528:	659a      	str	r2, [r3, #88]	; 0x58
+ 800652a:	6d9a      	ldr	r2, [r3, #88]	; 0x58
+ 800652c:	f002 5200 	and.w	r2, r2, #536870912	; 0x20000000
+ 8006530:	9201      	str	r2, [sp, #4]
+ 8006532:	9a01      	ldr	r2, [sp, #4]
     __HAL_RCC_GPIOA_CLK_ENABLE();
- 8006538:	6cda      	ldr	r2, [r3, #76]	; 0x4c
- 800653a:	f042 0201 	orr.w	r2, r2, #1
- 800653e:	64da      	str	r2, [r3, #76]	; 0x4c
- 8006540:	6cdb      	ldr	r3, [r3, #76]	; 0x4c
- 8006542:	f003 0301 	and.w	r3, r3, #1
- 8006546:	9302      	str	r3, [sp, #8]
- 8006548:	9b02      	ldr	r3, [sp, #8]
+ 8006534:	6cda      	ldr	r2, [r3, #76]	; 0x4c
+ 8006536:	f042 0201 	orr.w	r2, r2, #1
+ 800653a:	64da      	str	r2, [r3, #76]	; 0x4c
+ 800653c:	6cdb      	ldr	r3, [r3, #76]	; 0x4c
+ 800653e:	f003 0301 	and.w	r3, r3, #1
+ 8006542:	9302      	str	r3, [sp, #8]
+ 8006544:	9b02      	ldr	r3, [sp, #8]
     GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
- 800654a:	2330      	movs	r3, #48	; 0x30
- 800654c:	9303      	str	r3, [sp, #12]
+ 8006546:	2330      	movs	r3, #48	; 0x30
+ 8006548:	9303      	str	r3, [sp, #12]
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
- 800654e:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
+ 800654a:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 8006552:	2303      	movs	r3, #3
+ 800654e:	2303      	movs	r3, #3
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
- 8006554:	a903      	add	r1, sp, #12
+ 8006550:	a903      	add	r1, sp, #12
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 8006556:	9304      	str	r3, [sp, #16]
+ 8006552:	9304      	str	r3, [sp, #16]
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
- 8006558:	f7fd fd5a 	bl	8004010 <HAL_GPIO_Init>
+ 8006554:	f7fd fd5c 	bl	8004010 <HAL_GPIO_Init>
     hdma_dac_ch1.Init.Request = DMA_REQUEST_6;
     hdma_dac_ch1.Init.Direction = DMA_MEMORY_TO_PERIPH;
     hdma_dac_ch1.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_dac_ch1.Init.MemInc = DMA_MINC_ENABLE;
- 800655c:	2280      	movs	r2, #128	; 0x80
+ 8006558:	2280      	movs	r2, #128	; 0x80
     hdma_dac_ch1.Init.Direction = DMA_MEMORY_TO_PERIPH;
- 800655e:	4b1f      	ldr	r3, [pc, #124]	; (80065dc <HAL_DAC_MspInit+0xd4>)
+ 800655a:	4b1f      	ldr	r3, [pc, #124]	; (80065d8 <HAL_DAC_MspInit+0xd4>)
     hdma_dac_ch1.Init.MemInc = DMA_MINC_ENABLE;
- 8006560:	6122      	str	r2, [r4, #16]
+ 800655c:	6122      	str	r2, [r4, #16]
     hdma_dac_ch1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
- 8006562:	f44f 7280 	mov.w	r2, #256	; 0x100
+ 800655e:	f44f 7280 	mov.w	r2, #256	; 0x100
     hdma_dac_ch1.Init.Direction = DMA_MEMORY_TO_PERIPH;
- 8006566:	f04f 0c06 	mov.w	ip, #6
- 800656a:	f04f 0e10 	mov.w	lr, #16
+ 8006562:	f04f 0c06 	mov.w	ip, #6
+ 8006566:	f04f 0e10 	mov.w	lr, #16
     hdma_dac_ch1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
- 800656e:	6162      	str	r2, [r4, #20]
+ 800656a:	6162      	str	r2, [r4, #20]
     hdma_dac_ch1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
- 8006570:	f44f 6280 	mov.w	r2, #1024	; 0x400
+ 800656c:	f44f 6280 	mov.w	r2, #1024	; 0x400
     hdma_dac_ch1.Init.Direction = DMA_MEMORY_TO_PERIPH;
- 8006574:	e884 5008 	stmia.w	r4, {r3, ip, lr}
+ 8006570:	e884 5008 	stmia.w	r4, {r3, ip, lr}
     hdma_dac_ch1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
- 8006578:	61a2      	str	r2, [r4, #24]
+ 8006574:	61a2      	str	r2, [r4, #24]
     hdma_dac_ch1.Init.PeriphInc = DMA_PINC_DISABLE;
- 800657a:	2300      	movs	r3, #0
+ 8006576:	2300      	movs	r3, #0
     hdma_dac_ch1.Init.Mode = DMA_CIRCULAR;
- 800657c:	2220      	movs	r2, #32
+ 8006578:	2220      	movs	r2, #32
     hdma_dac_ch1.Init.Priority = DMA_PRIORITY_LOW;
     if (HAL_DMA_Init(&hdma_dac_ch1) != HAL_OK)
- 800657e:	4620      	mov	r0, r4
+ 800657a:	4620      	mov	r0, r4
     hdma_dac_ch1.Init.PeriphInc = DMA_PINC_DISABLE;
- 8006580:	60e3      	str	r3, [r4, #12]
+ 800657c:	60e3      	str	r3, [r4, #12]
     hdma_dac_ch1.Init.Mode = DMA_CIRCULAR;
- 8006582:	61e2      	str	r2, [r4, #28]
+ 800657e:	61e2      	str	r2, [r4, #28]
     hdma_dac_ch1.Init.Priority = DMA_PRIORITY_LOW;
- 8006584:	6223      	str	r3, [r4, #32]
+ 8006580:	6223      	str	r3, [r4, #32]
     if (HAL_DMA_Init(&hdma_dac_ch1) != HAL_OK)
- 8006586:	f7fd fc31 	bl	8003dec <HAL_DMA_Init>
- 800658a:	b108      	cbz	r0, 8006590 <HAL_DAC_MspInit+0x88>
+ 8006582:	f7fd fc33 	bl	8003dec <HAL_DMA_Init>
+ 8006586:	b108      	cbz	r0, 800658c <HAL_DAC_MspInit+0x88>
     {
       Error_Handler();
- 800658c:	f001 f9be 	bl	800790c <Error_Handler>
+ 8006588:	f001 f9c0 	bl	800790c <Error_Handler>
     }
 
     __HAL_LINKDMA(dacHandle,DMA_Handle1,hdma_dac_ch1);
- 8006590:	60ac      	str	r4, [r5, #8]
- 8006592:	62a5      	str	r5, [r4, #40]	; 0x28
+ 800658c:	60ac      	str	r4, [r5, #8]
+ 800658e:	62a5      	str	r5, [r4, #40]	; 0x28
 
     /* DAC_CH2 Init */
     hdma_dac_ch2.Instance = DMA2_Channel5;
- 8006594:	4c12      	ldr	r4, [pc, #72]	; (80065e0 <HAL_DAC_MspInit+0xd8>)
+ 8006590:	4c12      	ldr	r4, [pc, #72]	; (80065dc <HAL_DAC_MspInit+0xd8>)
     hdma_dac_ch2.Init.Request = DMA_REQUEST_3;
     hdma_dac_ch2.Init.Direction = DMA_MEMORY_TO_PERIPH;
- 8006596:	4b13      	ldr	r3, [pc, #76]	; (80065e4 <HAL_DAC_MspInit+0xdc>)
+ 8006592:	4b13      	ldr	r3, [pc, #76]	; (80065e0 <HAL_DAC_MspInit+0xdc>)
     hdma_dac_ch2.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_dac_ch2.Init.MemInc = DMA_MINC_ENABLE;
- 8006598:	2280      	movs	r2, #128	; 0x80
- 800659a:	6122      	str	r2, [r4, #16]
+ 8006594:	2280      	movs	r2, #128	; 0x80
+ 8006596:	6122      	str	r2, [r4, #16]
     hdma_dac_ch2.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
- 800659c:	f44f 7280 	mov.w	r2, #256	; 0x100
+ 8006598:	f44f 7280 	mov.w	r2, #256	; 0x100
     hdma_dac_ch2.Init.Direction = DMA_MEMORY_TO_PERIPH;
- 80065a0:	f04f 0c03 	mov.w	ip, #3
- 80065a4:	f04f 0e10 	mov.w	lr, #16
+ 800659c:	f04f 0c03 	mov.w	ip, #3
+ 80065a0:	f04f 0e10 	mov.w	lr, #16
     hdma_dac_ch2.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
- 80065a8:	6162      	str	r2, [r4, #20]
+ 80065a4:	6162      	str	r2, [r4, #20]
     hdma_dac_ch2.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
- 80065aa:	f44f 6280 	mov.w	r2, #1024	; 0x400
+ 80065a6:	f44f 6280 	mov.w	r2, #1024	; 0x400
     hdma_dac_ch2.Init.Direction = DMA_MEMORY_TO_PERIPH;
- 80065ae:	e884 5008 	stmia.w	r4, {r3, ip, lr}
+ 80065aa:	e884 5008 	stmia.w	r4, {r3, ip, lr}
     hdma_dac_ch2.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
- 80065b2:	61a2      	str	r2, [r4, #24]
+ 80065ae:	61a2      	str	r2, [r4, #24]
     hdma_dac_ch2.Init.PeriphInc = DMA_PINC_DISABLE;
- 80065b4:	2300      	movs	r3, #0
+ 80065b0:	2300      	movs	r3, #0
     hdma_dac_ch2.Init.Mode = DMA_CIRCULAR;
- 80065b6:	2220      	movs	r2, #32
+ 80065b2:	2220      	movs	r2, #32
     hdma_dac_ch2.Init.Priority = DMA_PRIORITY_LOW;
     if (HAL_DMA_Init(&hdma_dac_ch2) != HAL_OK)
- 80065b8:	4620      	mov	r0, r4
+ 80065b4:	4620      	mov	r0, r4
     hdma_dac_ch2.Init.PeriphInc = DMA_PINC_DISABLE;
- 80065ba:	60e3      	str	r3, [r4, #12]
+ 80065b6:	60e3      	str	r3, [r4, #12]
     hdma_dac_ch2.Init.Mode = DMA_CIRCULAR;
- 80065bc:	61e2      	str	r2, [r4, #28]
+ 80065b8:	61e2      	str	r2, [r4, #28]
     hdma_dac_ch2.Init.Priority = DMA_PRIORITY_LOW;
- 80065be:	6223      	str	r3, [r4, #32]
+ 80065ba:	6223      	str	r3, [r4, #32]
     if (HAL_DMA_Init(&hdma_dac_ch2) != HAL_OK)
- 80065c0:	f7fd fc14 	bl	8003dec <HAL_DMA_Init>
- 80065c4:	b108      	cbz	r0, 80065ca <HAL_DAC_MspInit+0xc2>
+ 80065bc:	f7fd fc16 	bl	8003dec <HAL_DMA_Init>
+ 80065c0:	b108      	cbz	r0, 80065c6 <HAL_DAC_MspInit+0xc2>
     {
       Error_Handler();
- 80065c6:	f001 f9a1 	bl	800790c <Error_Handler>
+ 80065c2:	f001 f9a3 	bl	800790c <Error_Handler>
     }
 
     __HAL_LINKDMA(dacHandle,DMA_Handle2,hdma_dac_ch2);
- 80065ca:	60ec      	str	r4, [r5, #12]
- 80065cc:	62a5      	str	r5, [r4, #40]	; 0x28
+ 80065c6:	60ec      	str	r4, [r5, #12]
+ 80065c8:	62a5      	str	r5, [r4, #40]	; 0x28
 
   /* USER CODE BEGIN DAC1_MspInit 1 */
 
   /* USER CODE END DAC1_MspInit 1 */
   }
 }
- 80065ce:	b009      	add	sp, #36	; 0x24
- 80065d0:	bd30      	pop	{r4, r5, pc}
- 80065d2:	bf00      	nop
- 80065d4:	40007400 	.word	0x40007400
- 80065d8:	2000dc9c 	.word	0x2000dc9c
- 80065dc:	40020030 	.word	0x40020030
- 80065e0:	2000dce4 	.word	0x2000dce4
- 80065e4:	40020458 	.word	0x40020458
+ 80065ca:	b009      	add	sp, #36	; 0x24
+ 80065cc:	bd30      	pop	{r4, r5, pc}
+ 80065ce:	bf00      	nop
+ 80065d0:	40007400 	.word	0x40007400
+ 80065d4:	2000dc9c 	.word	0x2000dc9c
+ 80065d8:	40020030 	.word	0x40020030
+ 80065dc:	2000dce4 	.word	0x2000dce4
+ 80065e0:	40020458 	.word	0x40020458
+ 80065e4:	00000000 	.word	0x00000000
 
 080065e8 <dct2_init_f32>:
  * @brief  Initialization function for the DCT2.
@@ -15696,13 +15698,13 @@ void SystemClock_Config(void)
   MX_DMA_Init();
  8007596:	f7ff fa4d 	bl	8006a34 <MX_DMA_Init>
   MX_DAC1_Init();
- 800759a:	f7fe ff87 	bl	80064ac <MX_DAC1_Init>
+ 800759a:	f7fe ff85 	bl	80064a8 <MX_DAC1_Init>
   MX_TIM6_Init();
  800759e:	f000 fa1f 	bl	80079e0 <MX_TIM6_Init>
   MX_DFSDM1_Init();
  80075a2:	f7ff f905 	bl	80067b0 <MX_DFSDM1_Init>
   MX_CRC_Init();
- 80075a6:	f7fe ff55 	bl	8006454 <MX_CRC_Init>
+ 80075a6:	f7fe ff53 	bl	8006450 <MX_CRC_Init>
   MX_I2C1_Init();
  80075aa:	f7ff fd41 	bl	8007030 <MX_I2C1_Init>
   MX_X_CUBE_AI_Init();

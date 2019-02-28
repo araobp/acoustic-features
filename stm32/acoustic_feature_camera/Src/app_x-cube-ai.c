@@ -67,6 +67,13 @@ void MX_X_CUBE_AI_Init(void)
 {
     MX_UARTx_Init();
     /* USER CODE BEGIN 0 */
+    /*
+      #include <stdio.h>
+      #include "main.h"
+      #include "ai.h"
+      #include "lcd.h"
+      #include "i2c.h"
+     */
 #ifdef INFERENCE
   ai_init();
   lcd_init(&hi2c1);
@@ -89,8 +96,15 @@ void MX_X_CUBE_AI_Process(void)
   char lcd_line2[][16] = { "PIANO           ", "CLASSICAL GUITAR",
       "FRAMENCO GUITAR ", "BLUES HARP      ", "TIN WHISTLE     ",
       "SILENCE         " };
-  int length = 64;
-#elif KEY_WORD_DETECITION
+#endif
+#ifdef ENVIRONMENTAL_SOUND_CLASSIFICATION
+  char class_labels[][20] = { "Train", "Station", "Mcdonald's",
+      "Mall", "Port", "Street" };
+  char lcd_line2[][16] = { "TRAIN          ", "STATION         ",
+      "MCDONALD'S      ",  "MALL           ", "PORT            ",
+      "STREET          " };
+#endif
+#ifdef KEY_WORD_DETECITION
   char class_labels[][20] = {
     "umai",
     "mazui",
@@ -103,7 +117,6 @@ void MX_X_CUBE_AI_Process(void)
     "OTHERS          ",
     "OISHII          "
   };
-  int length = 96;
   int activity_detection_period = 10;
   int32_t threshold = 0;
 #endif
@@ -120,14 +133,14 @@ void MX_X_CUBE_AI_Process(void)
 
   int window_start_idx;
 
-#ifdef MUSICAL_INSTRUMENT_RECOGNITION
-  if ((pos >= length) && (pos % length) == 0) {
-#elif KEY_WORD_DETECTION
+#ifdef KEY_WORD_DETECTION
   if (voice_active(activity_detection_period, threshold)) {
+#else
+  if ((pos >= WINDOW_LENGTH) && (pos % WINDOW_LENGTH) == 0) {
 #endif
-    window_start_idx = (pos - length) * NUM_FILTERS;
+    window_start_idx = (pos - WINDOW_LENGTH) * NUM_FILTERS;
 
-    for (int j = 0; j < length; j++) {
+    for (int j = 0; j < WINDOW_LENGTH; j++) {
 #ifdef FEATURE_MFSC
       for (int i = 0; i < NUM_FILTERS; i++) {
         in_data[j * NUM_FILTERS + i] = (ai_float) (mfsc_buffer[window_start_idx

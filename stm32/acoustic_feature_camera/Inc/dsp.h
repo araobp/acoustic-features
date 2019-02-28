@@ -22,6 +22,7 @@
 #define FEATURE_MFSC
 //#define FEATURE_MFCC
 //#define CUTOFF 13U
+#define WINDOW_LENGTH 64
 
 // Note: FEATURES includes both MFSCs and MFCCs
 typedef enum {
