@@ -28,7 +28,8 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 
 ### Result of experiments 
 
-I experimeted several times by capturing sound data with the **real** MEMS mics, and observed that **MFSCs+CNN outperformed other models**. The reason is that a CNN model becomes **more generic**.
+- I experimeted several times by capturing sound data with the **real** MEMS mics, and observed that **MFSCs+CNN outperformed other models**. The reason is that a CNN model becomes **more generic**.
+- It is not a good idea to use YouTube as a souce of training data. I always use the same MEMS mics for both training phase and inference phase, because the frequency response is same between both phases.
 
 ## Architecture
 
