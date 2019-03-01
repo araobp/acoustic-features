@@ -23,31 +23,31 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   9 .ARM.attributes 00000034  00000000  00000000  00040740  2**0
                   CONTENTS, READONLY
- 10 .debug_info   0002d47d  00000000  00000000  00040774  2**0
+ 10 .debug_info   0002d0a5  00000000  00000000  00040774  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_abbrev 000064e1  00000000  00000000  0006dbf1  2**0
+ 11 .debug_abbrev 000063db  00000000  00000000  0006d819  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00014f49  00000000  00000000  000740d2  2**0
+ 12 .debug_loc    00014f49  00000000  00000000  00073bf4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_aranges 000016f8  00000000  00000000  00089020  2**3
+ 13 .debug_aranges 000016f8  00000000  00000000  00088b40  2**3
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_ranges 00001a90  00000000  00000000  0008a718  2**3
+ 14 .debug_ranges 00001a90  00000000  00000000  0008a238  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_line   0000efa6  00000000  00000000  0008c1a8  2**0
+ 15 .debug_line   0000ef80  00000000  00000000  0008bcc8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_str    000094ed  00000000  00000000  0009b14e  2**0
+ 16 .debug_str    000094ed  00000000  00000000  0009ac48  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .comment      00002f02  00000000  00000000  000a463b  2**0
+ 17 .comment      00002f02  00000000  00000000  000a4135  2**0
                   CONTENTS, READONLY
- 18 .iar.rtmodel  00000218  00000000  00000000  000a753d  2**0
+ 18 .iar.rtmodel  00000218  00000000  00000000  000a7037  2**0
                   CONTENTS, READONLY
- 19 .iar_vfe_header 0000001c  00000000  00000000  000a7758  2**2
+ 19 .iar_vfe_header 0000001c  00000000  00000000  000a7250  2**2
                   CONTENTS, READONLY
- 20 .debug_frame  00007720  00000000  00000000  000a7774  2**2
+ 20 .debug_frame  00007720  00000000  00000000  000a726c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 21 .stab         00000084  00000000  00000000  000aee94  2**2
+ 21 .stab         00000084  00000000  00000000  000ae98c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 22 .stabstr      00000117  00000000  00000000  000aef18  2**0
+ 22 .stabstr      00000117  00000000  00000000  000aea10  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -12046,29 +12046,29 @@ void ai_infer(ai_float *input_data, ai_float *output_data) {
  8005fb8:	2000b040 	.word	0x2000b040
 
 08005fbc <ai_mnetwork_handle>:
-    return false;
+    return true;
+  return false;
 }
 
 AI_DECLARE_STATIC
-struct network_instance *ai_mnetwork_handle(struct network_instance *inst)
-{
+struct network_instance *ai_mnetwork_handle(struct network_instance *inst) {
  8005fbc:	4b05      	ldr	r3, [pc, #20]	; (8005fd4 <ai_mnetwork_handle+0x18>)
-    for (int i=0; i<AI_MNETWORK_NUMBER; i++) {
-        if ((inst) && (&gnetworks[i] == inst))
+  for (int i = 0; i < AI_MNETWORK_NUMBER; i++) {
+    if ((inst) && (&gnetworks[i] == inst))
  8005fbe:	b120      	cbz	r0, 8005fca <ai_mnetwork_handle+0xe>
-            return inst;
-        else if ((!inst) && (gnetworks[i].entry == NULL))
-            return &gnetworks[i];
-    }
-    return NULL;
+      return inst;
+    else if ((!inst) && (gnetworks[i].entry == NULL))
+      return &gnetworks[i];
+  }
+  return NULL;
  8005fc0:	4298      	cmp	r0, r3
  8005fc2:	bf0c      	ite	eq
  8005fc4:	4618      	moveq	r0, r3
  8005fc6:	2000      	movne	r0, #0
  8005fc8:	4770      	bx	lr
-        else if ((!inst) && (gnetworks[i].entry == NULL))
+    else if ((!inst) && (gnetworks[i].entry == NULL))
  8005fca:	681a      	ldr	r2, [r3, #0]
-            return &gnetworks[i];
+      return &gnetworks[i];
  8005fcc:	2a00      	cmp	r2, #0
  8005fce:	bf08      	it	eq
  8005fd0:	4618      	moveq	r0, r3
@@ -12077,9 +12077,9 @@ struct network_instance *ai_mnetwork_handle(struct network_instance *inst)
  8005fd4:	200055a4 	.word	0x200055a4
 
 08005fd8 <ai_mnetwork_is_valid.isra.0>:
-ai_bool ai_mnetwork_is_valid(const char* name,
+ai_bool ai_mnetwork_is_valid(const char* name, const ai_network_entry_t *entry) {
  8005fd8:	b570      	push	{r4, r5, r6, lr}
-    if (name && (strlen(entry->name) == strlen(name)) &&
+  if (name && (strlen(entry->name) == strlen(name))
  8005fda:	4604      	mov	r4, r0
  8005fdc:	b190      	cbz	r0, 8006004 <ai_mnetwork_is_valid.isra.0+0x2c>
  8005fde:	680d      	ldr	r5, [r1, #0]
@@ -12090,24 +12090,23 @@ ai_bool ai_mnetwork_is_valid(const char* name,
  8005fea:	f7fc fbe1 	bl	80027b0 <strlen>
  8005fee:	4286      	cmp	r6, r0
  8005ff0:	d108      	bne.n	8006004 <ai_mnetwork_is_valid.isra.0+0x2c>
-            (strncmp(entry->name, name, strlen(entry->name)) == 0))
+      && (strncmp(entry->name, name, strlen(entry->name)) == 0))
  8005ff2:	4632      	mov	r2, r6
  8005ff4:	4621      	mov	r1, r4
  8005ff6:	4628      	mov	r0, r5
  8005ff8:	f003 fd66 	bl	8009ac8 <strncmp>
-    if (name && (strlen(entry->name) == strlen(name)) &&
  8005ffc:	fab0 f080 	clz	r0, r0
  8006000:	0940      	lsrs	r0, r0, #5
  8006002:	bd70      	pop	{r4, r5, r6, pc}
-    return false;
+  return false;
  8006004:	2000      	movs	r0, #0
 }
  8006006:	bd70      	pop	{r4, r5, r6, pc}
 
 08006008 <MX_X_CUBE_AI_Init>:
-{
+void MX_X_CUBE_AI_Init(void) {
  8006008:	b508      	push	{r3, lr}
-    MX_UARTx_Init();
+  MX_UARTx_Init();
  800600a:	f001 fa25 	bl	8007458 <MX_USART2_UART_Init>
   ai_init();
  800600e:	f7ff ff63 	bl	8005ed8 <ai_init>
@@ -12120,7 +12119,7 @@ ai_bool ai_mnetwork_is_valid(const char* name,
  800601c:	2000eee0 	.word	0x2000eee0
 
 08006020 <MX_X_CUBE_AI_Process>:
-{
+void MX_X_CUBE_AI_Process(void) {
  8006020:	e92d 43f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, lr}
  8006024:	ed2d 8b02 	vpush	{d8}
  8006028:	f5ad 5d76 	sub.w	sp, sp, #15744	; 0x3d80
@@ -12130,12 +12129,12 @@ ai_bool ai_mnetwork_is_valid(const char* name,
  8006030:	495b      	ldr	r1, [pc, #364]	; (80061a0 <MX_X_CUBE_AI_Process+0x180>)
  8006032:	a80f      	add	r0, sp, #60	; 0x3c
  8006034:	f002 ff93 	bl	8008f5e <memcpy>
-  char class_labels[][20] = { "Train", "Station", "Cafe", "Mall",
+  char class_labels[][20] = { "Train", "Station", "Cafe", "Mall", "Port",
  8006038:	228c      	movs	r2, #140	; 0x8c
  800603a:	495a      	ldr	r1, [pc, #360]	; (80061a4 <MX_X_CUBE_AI_Process+0x184>)
  800603c:	a83f      	add	r0, sp, #252	; 0xfc
  800603e:	f002 ff8e 	bl	8008f5e <memcpy>
-  char lcd_line2[][16] = { "TRAIN           ",
+  char lcd_line2[][16] = { "TRAIN           ", "STATION         ",
  8006042:	2270      	movs	r2, #112	; 0x70
  8006044:	4958      	ldr	r1, [pc, #352]	; (80061a8 <MX_X_CUBE_AI_Process+0x188>)
  8006046:	a823      	add	r0, sp, #140	; 0x8c
@@ -12171,7 +12170,7 @@ ai_bool ai_mnetwork_is_valid(const char* name,
  800608a:	fb00 2403 	mla	r4, r0, r3, r2
  800608e:	fb07 1503 	mla	r5, r7, r3, r1
  8006092:	4434      	add	r4, r6
-{
+void MX_X_CUBE_AI_Process(void) {
  8006094:	2100      	movs	r1, #0
         in_data[j * NUM_FILTERS + i] = (ai_float) (mfsc_buffer[window_start_idx
  8006096:	f914 e001 	ldrsb.w	lr, [r4, r1]
@@ -12316,34 +12315,34 @@ ai_bool ai_mnetwork_is_valid(const char* name,
 
 080061cc <ai_mnetwork_find>:
     }
+  }
 }
 
 AI_API_ENTRY
-const char* ai_mnetwork_find(const char *name, ai_int idx)
-{
+const char* ai_mnetwork_find(const char *name, ai_int idx) {
  80061cc:	b510      	push	{r4, lr}
  80061ce:	460c      	mov	r4, r1
-    const ai_network_entry_t *entry;
+  const ai_network_entry_t *entry;
 
-    for (int i=0; i<AI_MNETWORK_NUMBER; i++) {
-        entry = &networks[i];
-        if (ai_mnetwork_is_valid(name, entry))
+  for (int i = 0; i < AI_MNETWORK_NUMBER; i++) {
+    entry = &networks[i];
+    if (ai_mnetwork_is_valid(name, entry))
  80061d0:	4905      	ldr	r1, [pc, #20]	; (80061e8 <ai_mnetwork_find+0x1c>)
  80061d2:	f7ff ff01 	bl	8005fd8 <ai_mnetwork_is_valid.isra.0>
  80061d6:	b920      	cbnz	r0, 80061e2 <ai_mnetwork_find+0x16>
-            return entry->name;
-        else {
-            if (!idx--)
+      return entry->name;
+    else {
+      if (!idx--)
  80061d8:	2c00      	cmp	r4, #0
-                return entry->name;
-        }
+        return entry->name;
     }
-    return NULL;
+  }
+  return NULL;
  80061da:	4804      	ldr	r0, [pc, #16]	; (80061ec <ai_mnetwork_find+0x20>)
  80061dc:	bf18      	it	ne
  80061de:	2000      	movne	r0, #0
  80061e0:	bd10      	pop	{r4, pc}
-                return entry->name;
+        return entry->name;
  80061e2:	4802      	ldr	r0, [pc, #8]	; (80061ec <ai_mnetwork_find+0x20>)
 }
  80061e4:	bd10      	pop	{r4, pc}
@@ -12355,68 +12354,67 @@ const char* ai_mnetwork_find(const char *name, ai_int idx)
 
 AI_API_ENTRY
 ai_error ai_mnetwork_create(const char *name, ai_handle* network,
-        const ai_buffer* network_config)
-{
+    const ai_buffer* network_config) {
  80061f0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
  80061f2:	4607      	mov	r7, r0
-    const ai_network_entry_t *entry;
-    const ai_network_entry_t *found = NULL;
-    ai_error err;
-    struct network_instance *inst = ai_mnetwork_handle(NULL);
+  const ai_network_entry_t *entry;
+  const ai_network_entry_t *found = NULL;
+  ai_error err;
+  struct network_instance *inst = ai_mnetwork_handle(NULL);
  80061f4:	2000      	movs	r0, #0
-{
+    const ai_buffer* network_config) {
  80061f6:	460d      	mov	r5, r1
  80061f8:	4616      	mov	r6, r2
-    struct network_instance *inst = ai_mnetwork_handle(NULL);
+  struct network_instance *inst = ai_mnetwork_handle(NULL);
  80061fa:	f7ff fedf 	bl	8005fbc <ai_mnetwork_handle>
 
-    if (!inst) {
+  if (!inst) {
  80061fe:	4604      	mov	r4, r0
  8006200:	b1c8      	cbz	r0, 8006236 <ai_mnetwork_create+0x46>
-        return err;
-    }
+    return err;
+  }
 
-    for (int i=0; i<AI_MNETWORK_NUMBER; i++) {
-        entry = &networks[i];
-        if (ai_mnetwork_is_valid(name, entry)) {
+  for (int i = 0; i < AI_MNETWORK_NUMBER; i++) {
+    entry = &networks[i];
+    if (ai_mnetwork_is_valid(name, entry)) {
  8006202:	4911      	ldr	r1, [pc, #68]	; (8006248 <ai_mnetwork_create+0x58>)
  8006204:	4638      	mov	r0, r7
  8006206:	f7ff fee7 	bl	8005fd8 <ai_mnetwork_is_valid.isra.0>
  800620a:	b1d0      	cbz	r0, 8006242 <ai_mnetwork_create+0x52>
-    }
+  }
 
-    if (network_config == NULL)
-        err = found->ai_create(network, found->config);
-    else
-        err = found->ai_create(network, network_config);
+  if (network_config == NULL)
+    err = found->ai_create(network, found->config);
+  else
+    err = found->ai_create(network, network_config);
  800620c:	4631      	mov	r1, r6
  800620e:	4628      	mov	r0, r5
  8006210:	f7ff fd54 	bl	8005cbc <ai_network_create>
  8006214:	b2c2      	uxtb	r2, r0
  8006216:	f3c0 2317 	ubfx	r3, r0, #8, #24
-    if ((err.code == AI_ERROR_CODE_NONE) && (err.type == AI_ERROR_NONE)) {
+  if ((err.code == AI_ERROR_CODE_NONE) && (err.type == AI_ERROR_NONE)) {
  800621a:	ea52 2103 	orrs.w	r1, r2, r3, lsl #8
  800621e:	d104      	bne.n	800622a <ai_mnetwork_create+0x3a>
-        inst->entry = found;
+    inst->entry = found;
  8006220:	4909      	ldr	r1, [pc, #36]	; (8006248 <ai_mnetwork_create+0x58>)
  8006222:	6021      	str	r1, [r4, #0]
-        inst->handle = *network;
+    inst->handle = *network;
  8006224:	6829      	ldr	r1, [r5, #0]
  8006226:	6061      	str	r1, [r4, #4]
-        *network = (ai_handle*)inst;
+    *network = (ai_handle*) inst;
  8006228:	602c      	str	r4, [r5, #0]
-    }
+  }
 
-    return err;
+  return err;
  800622a:	2000      	movs	r0, #0
  800622c:	f362 0007 	bfi	r0, r2, #0, #8
-        return err;
+    return err;
  8006230:	f363 201f 	bfi	r0, r3, #8, #24
  8006234:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-        return err;
+    return err;
  8006236:	2000      	movs	r0, #0
  8006238:	2331      	movs	r3, #49	; 0x31
-        return err;
+    return err;
  800623a:	f363 0007 	bfi	r0, r3, #0, #8
  800623e:	2310      	movs	r3, #16
  8006240:	e7f6      	b.n	8006230 <ai_mnetwork_create+0x40>
@@ -12426,26 +12424,26 @@ ai_error ai_mnetwork_create(const char *name, ai_handle* network,
  8006248:	08010c38 	.word	0x08010c38
 
 0800624c <ai_mnetwork_init>:
-        return err;
+  else
+    return err;
 }
 
 AI_API_ENTRY
-ai_bool ai_mnetwork_init(ai_handle network, const ai_network_params* params)
-{
+ai_bool ai_mnetwork_init(ai_handle network, const ai_network_params* params) {
  800624c:	b5f0      	push	{r4, r5, r6, r7, lr}
  800624e:	b089      	sub	sp, #36	; 0x24
  8006250:	460f      	mov	r7, r1
-    struct network_instance *inn;
-    ai_network_params par;
+  struct network_instance *inn;
+  ai_network_params par;
 
-    /* TODO: adding check ai_buffer activations/weights shape coherence */
+  /* TODO: adding check ai_buffer activations/weights shape coherence */
 
-    inn =  ai_mnetwork_handle((struct network_instance *)network);
+  inn = ai_mnetwork_handle((struct network_instance *) network);
  8006252:	f7ff feb3 	bl	8005fbc <ai_mnetwork_handle>
-    if (inn) {
+  if (inn) {
  8006256:	4606      	mov	r6, r0
  8006258:	b340      	cbz	r0, 80062ac <ai_mnetwork_init+0x60>
-        par = inn->entry->params;
+    par = inn->entry->params;
  800625a:	f8d0 e000 	ldr.w	lr, [r0]
  800625e:	f10e 0504 	add.w	r5, lr, #4
  8006262:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
@@ -12453,42 +12451,41 @@ ai_bool ai_mnetwork_init(ai_handle network, const ai_network_params* params)
  8006266:	c40f      	stmia	r4!, {r0, r1, r2, r3}
  8006268:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
  800626c:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
-        if (params->activations.n_batches)
+    if (params->activations.n_batches)
  8006270:	8a7b      	ldrh	r3, [r7, #18]
  8006272:	466c      	mov	r4, sp
  8006274:	b193      	cbz	r3, 800629c <ai_mnetwork_init+0x50>
-            par.activations = params->activations;
+      par.activations = params->activations;
  8006276:	f107 0310 	add.w	r3, r7, #16
  800627a:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
  800627c:	ad08      	add	r5, sp, #32
  800627e:	e905 000f 	stmdb	r5, {r0, r1, r2, r3}
-        else
-            par.activations.data = params->activations.data;
-        if (params->params.n_batches)
+    else
+      par.activations.data = params->activations.data;
+    if (params->params.n_batches)
  8006282:	887b      	ldrh	r3, [r7, #2]
  8006284:	b16b      	cbz	r3, 80062a2 <ai_mnetwork_init+0x56>
-            par.params = params->params;
+      par.params = params->params;
  8006286:	e897 000f 	ldmia.w	r7, {r0, r1, r2, r3}
  800628a:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
-        else
-            par.params.data = inn->entry->ai_data_weights_get_default();
-        return inn->entry->ai_init(inn->handle, &par);
+    else
+      par.params.data = inn->entry->ai_data_weights_get_default();
+    return inn->entry->ai_init(inn->handle, &par);
  800628e:	6833      	ldr	r3, [r6, #0]
  8006290:	6870      	ldr	r0, [r6, #4]
  8006292:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
  8006294:	4621      	mov	r1, r4
  8006296:	4798      	blx	r3
-    }
-    else
-        return false;
+  } else
+    return false;
 }
  8006298:	b009      	add	sp, #36	; 0x24
  800629a:	bdf0      	pop	{r4, r5, r6, r7, pc}
-            par.activations.data = params->activations.data;
+      par.activations.data = params->activations.data;
  800629c:	69fb      	ldr	r3, [r7, #28]
  800629e:	9307      	str	r3, [sp, #28]
  80062a0:	e7ef      	b.n	8006282 <ai_mnetwork_init+0x36>
-            par.params.data = inn->entry->ai_data_weights_get_default();
+      par.params.data = inn->entry->ai_data_weights_get_default();
  80062a2:	f8de 3028 	ldr.w	r3, [lr, #40]	; 0x28
  80062a6:	4798      	blx	r3
  80062a8:	9003      	str	r0, [sp, #12]
@@ -12499,26 +12496,25 @@ ai_bool ai_mnetwork_init(ai_handle network, const ai_network_params* params)
 
 AI_API_ENTRY
 ai_i32 ai_mnetwork_run(ai_handle network, const ai_buffer* input,
-        ai_buffer* output)
-{
+    ai_buffer* output) {
  80062ae:	b570      	push	{r4, r5, r6, lr}
  80062b0:	4615      	mov	r5, r2
-    struct network_instance* inn;
-    inn =  ai_mnetwork_handle((struct network_instance *)network);
+  struct network_instance* inn;
+  inn = ai_mnetwork_handle((struct network_instance *) network);
  80062b2:	f7ff fe83 	bl	8005fbc <ai_mnetwork_handle>
-    if (inn)
+  if (inn)
  80062b6:	b138      	cbz	r0, 80062c8 <ai_mnetwork_run+0x1a>
-        return inn->entry->ai_run(inn->handle, input, output);
+    return inn->entry->ai_run(inn->handle, input, output);
  80062b8:	6802      	ldr	r2, [r0, #0]
  80062ba:	6840      	ldr	r0, [r0, #4]
  80062bc:	6c14      	ldr	r4, [r2, #64]	; 0x40
  80062be:	462a      	mov	r2, r5
  80062c0:	4623      	mov	r3, r4
-    else
-        return 0;
+  else
+    return 0;
 }
  80062c2:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
-        return inn->entry->ai_run(inn->handle, input, output);
+    return inn->entry->ai_run(inn->handle, input, output);
  80062c6:	4718      	bx	r3
 }
  80062c8:	bd70      	pop	{r4, r5, r6, pc}

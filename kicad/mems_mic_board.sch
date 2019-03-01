@@ -298,7 +298,6 @@ Text Notes 4950 4100 0    60   ~ 0
 Mic L
 NoConn ~ 8050 5750
 NoConn ~ 8050 5850
-NoConn ~ 2600 2200
 $Comp
 L Conn_01x08_Male J1
 U 1 1 5C5A0EE3
@@ -323,8 +322,60 @@ F 3 "" H 8250 2200 50  0001 C CNN
 	1    8250 2200
 	-1   0    0    -1  
 $EndComp
-NoConn ~ 8050 1900
-NoConn ~ 8050 1800
 NoConn ~ 3350 950 
 NoConn ~ 4050 950 
+$Comp
+L Conn_01x04_Female J6
+U 1 1 5C792525
+P 6950 6050
+F 0 "J6" H 6950 6250 50  0000 C CNN
+F 1 "Conn_01x04_Female" H 6950 5750 50  0000 C CNN
+F 2 "mcu:pin-socket-4p" H 6950 6050 50  0001 C CNN
+F 3 "" H 6950 6050 50  0001 C CNN
+	1    6950 6050
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	8050 1800 6950 1800
+Wire Wire Line
+	6950 1800 6950 5850
+Wire Wire Line
+	8050 1900 7050 1900
+Wire Wire Line
+	7050 1900 7050 5850
+Wire Wire Line
+	2600 2200 3350 2200
+Wire Wire Line
+	3350 2200 3350 4750
+Wire Wire Line
+	3350 4750 6850 4750
+Wire Wire Line
+	6850 4750 6850 5850
+$Comp
+L GND #PWR06
+U 1 1 5C79271E
+P 7600 6100
+F 0 "#PWR06" H 7600 5850 50  0001 C CNN
+F 1 "GND" H 7600 5950 50  0000 C CNN
+F 2 "" H 7600 6100 50  0001 C CNN
+F 3 "" H 7600 6100 50  0001 C CNN
+	1    7600 6100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7150 5850 7150 4750
+Wire Wire Line
+	7150 4750 7600 4750
+Wire Wire Line
+	7600 4750 7600 6100
+Text Label 7400 1800 0    60   ~ 0
+SCL
+Text Label 7400 1900 0    60   ~ 0
+SDA
+Text Label 6700 4750 0    60   ~ 0
+5V
+Text Label 7200 4750 0    60   ~ 0
+GND
+Text Notes 6900 6200 0    60   ~ 0
+LCD
 $EndSCHEMATC

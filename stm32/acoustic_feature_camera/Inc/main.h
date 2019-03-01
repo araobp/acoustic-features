@@ -73,13 +73,6 @@ typedef enum {
   DISABLED, FILTERBANK, ELAPSED_TIME
 } debug;
 
-extern int8_t mfsc_buffer[NUM_FILTERS * 200];
-#ifndef FEATURE_MFSC
-extern int8_t mfcc_buffer[NUM_FILTERS * 200];
-#endif
-extern int32_t mfsc_power[200];
-extern int pos;
-
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

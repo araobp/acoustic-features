@@ -1,12 +1,13 @@
 #ifndef __AI_H__
 #define __AI_H__
 
-#include <stdint.h>
-#include "ai_platform.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
+#include "ai_platform.h"
+#include "dsp.h"
 
 /**
  * Note on AI inference processing.
@@ -15,12 +16,18 @@ extern "C" {
  * I decided to implement common AI routines in "ai.h" and "ai.c".
  *
  * "ai.c" and "app_x-cube-ai.c" refer to the following global variables
- * define in "main.h" and "main.c":
+ * define in "main.c":
  * - int8_t mfsc_buffer[NUM_FILTERS * 200];
  * - int8_t mfcc_buffer[NUM_FILTERS * 200];
  * - int32_t mfsc_power[200];
  * - int pos;
  */
+extern int8_t mfsc_buffer[NUM_FILTERS * 200];
+#ifndef FEATURE_MFSC
+extern int8_t mfcc_buffer[NUM_FILTERS * 200];
+#endif
+extern int32_t mfsc_power[200];
+extern int pos;
 
 /**
  * Enable/disable AI
@@ -28,14 +35,14 @@ extern "C" {
 #define INFERENCE
 
 /**
- * Use case
+ * Use case definition
  */
 //#define MUSICAL_INSTRUMENT_RECOGNITION
 //#define KEY_WORD_DETECTION
 #define ENVIRONMENTAL_SOUND_CLASSIFICATION
 
 /**
- * Feature
+ * Feature definition
  */
 #define FEATURE_MFSC
 //#define FEATURE_MFCC

@@ -1,9 +1,8 @@
-#include "ai.h"
 #include <bsp_ai.h>
-#include "ai_platform.h"
-#include "math.h"
+#include <math.h>
 #include <stdio.h>
-#include "main.h"
+#include "ai_platform.h"
+#include "ai.h"
 
 #ifdef INFERENCE
 #define AI_BUFFER_NULL(ptr_)  \
