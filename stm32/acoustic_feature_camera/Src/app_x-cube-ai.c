@@ -67,13 +67,13 @@ void MX_X_CUBE_AI_Init(void)
 {
     MX_UARTx_Init();
     /* USER CODE BEGIN 0 */
-    /*
-      #include <stdio.h>
-      #include "main.h"
-      #include "ai.h"
-      #include "lcd.h"
-      #include "i2c.h"
-     */
+  /*
+   #include <stdio.h>
+   #include "main.h"
+   #include "ai.h"
+   #include "lcd.h"
+   #include "i2c.h"
+   */
 #ifdef INFERENCE
   ai_init();
   lcd_init(&hi2c1);
@@ -91,18 +91,18 @@ void MX_X_CUBE_AI_Process(void)
   // Aliases of class labels.
   // Note: class labels are just number like 0, 1, 2... on CNN.
 #ifdef MUSICAL_INSTRUMENT_RECOGNITION
-  char class_labels[][20] = { "Piano", "Classical guitar", "Framenco guitar",
-      "Blues harp", "Tin whistle", "Silence" };
-  char lcd_line2[][16] = { "PIANO           ", "CLASSICAL GUITAR",
-      "FRAMENCO GUITAR ", "BLUES HARP      ", "TIN WHISTLE     ",
-      "SILENCE         " };
+  char class_labels[][20] = {"Piano", "Classical guitar", "Framenco guitar",
+    "Blues harp", "Tin whistle", "Silence"};
+  char lcd_line2[][16] = {"PIANO           ", "CLASSICAL GUITAR",
+    "FRAMENCO GUITAR ", "BLUES HARP      ", "TIN WHISTLE     ",
+    "SILENCE         "};
 #endif
 #ifdef ENVIRONMENTAL_SOUND_CLASSIFICATION
-  char class_labels[][20] = { "Silence", "Train", "Station", "Cafe",
-      "Mall", "Port", "Street" };
-  char lcd_line2[][16] = { "SILENCE        ", "TRAIN           ", "STATION         ",
-      "CAFE            ",  "MALL           ", "PORT            ",
-      "STREET          " };
+  char class_labels[][20] = { "Train", "Station", "Cafe", "Mall",
+      "Port", "Street", "Office" };
+  char lcd_line2[][16] = { "TRAIN           ",
+      "STATION         ", "CAFE            ", "MALL           ",
+      "PORT            ", "STREET          " ,"OFFICE         "};
 #endif
 #ifdef KEY_WORD_DETECITION
   char class_labels[][20] = {
@@ -126,10 +126,13 @@ void MX_X_CUBE_AI_Process(void)
   ai_float out_data[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
 
   // Moving average
-  static ai_float out_hist[5][AI_NETWORK_OUT_1_SIZE] = { { 0.0 } };
+  static ai_float out_hist[HISTORY_LENGTH][AI_NETWORK_OUT_1_SIZE] = { { 0.0 } };
   static int current = 0;
   ai_float out_sum[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
   int class;
+
+  // Counter
+  static int cnt = 0;
 
   int window_start_idx;
 
@@ -146,25 +149,26 @@ void MX_X_CUBE_AI_Process(void)
         in_data[j * NUM_FILTERS + i] = (ai_float) (mfsc_buffer[window_start_idx
             + j * NUM_FILTERS + i]);
       }
-    }
 #elif defined FEATURE_MFCC
-    for (int i = 1; i < CUTOFF; i++) {  // DC(i=0) is removed
-      in_data[j * (CUTOFF - 1) + (i - 1)] = (ai_float) (mfcc_buffer[window_start_idx
-          + j * NUM_FILTERS + i]);
-    }
-  }
+      for (int i = 1; i < CUTOFF; i++) {  // DC(i=0) is removed
+        in_data[j * (CUTOFF - 1) + (i - 1)] = (ai_float) (mfcc_buffer[window_start_idx
+            + j * NUM_FILTERS + i]);
+      }
 #endif
+    }
+
     ai_infer(in_data, out_data);  // Inference
 
     // Output the inference result to console
-    printf("\n--- Inference ---\n");
+    printf("\n-- Inference %d --\n", cnt++);
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
       printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
       out_hist[current][i] = out_data[i];
       out_sum[i] = 0.0;
     }
-    if (++current >= 5)
+    if (++current >= HISTORY_LENGTH) {
       current = 0;
+    }
 
     // Output the result to LCD
     for (int j = 0; j < 5; j++) {

@@ -74,7 +74,9 @@ typedef enum {
 } debug;
 
 extern int8_t mfsc_buffer[NUM_FILTERS * 200];
+#ifndef FEATURE_MFSC
 extern int8_t mfcc_buffer[NUM_FILTERS * 200];
+#endif
 extern int32_t mfsc_power[200];
 extern int pos;
 
@@ -113,9 +115,6 @@ void Error_Handler(void);
 #define SWO_GPIO_Port GPIOB
 void   MX_USART2_UART_Init(void);
 /* USER CODE BEGIN Private defines */
-
-// Comment out the following define to enable inference by X-CUBE-AI.
-#define INFERENCE
 
 /* USER CODE END Private defines */
 

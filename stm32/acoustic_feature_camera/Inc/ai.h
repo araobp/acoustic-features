@@ -23,14 +23,37 @@ extern "C" {
  */
 
 /**
- * Acoustic event detection use cases
+ * Enable/disable AI
+ */
+#define INFERENCE
+
+/**
+ * Use case
  */
 //#define MUSICAL_INSTRUMENT_RECOGNITION
 //#define KEY_WORD_DETECTION
 #define ENVIRONMENTAL_SOUND_CLASSIFICATION
 
-bool voice_active(int length, int32_t threshold);
+/**
+ * Feature
+ */
+#define FEATURE_MFSC
+//#define FEATURE_MFCC
+//#define CUTOFF 13U
+#define WINDOW_LENGTH 96U
 
+/*
+ * Moving average of inference results
+ */
+#define HISTORY_LENGTH 5U
+
+/**
+ * Beam forming
+ */
+#define DISABLE_BEAMFORMING
+
+/*--- Function prototypes ---*/
+bool voice_active(int length, int32_t threshold);
 int ai_init(void);
 void ai_infer(ai_float *input_data, ai_float* output_data);
 

@@ -58,6 +58,7 @@
 #include "stdio.h"
 #include "dsp.h"
 #include "string.h"
+#include "ai.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -106,7 +107,11 @@ volatile bool pre_emphasis_enabled = true;
 
 // Beam forming setting
 volatile angle_setting angle = CENTER;  // center
+#ifndef DISABLE_BEAM_FORMING
+volatile beam_forming_setting beam_forming_mode = LEFT_MIC_ONLY;
+#else
 volatile beam_forming_setting beam_forming_mode = ENDFIRE;
+#endif
 
 // Debug
 volatile debug debug_output = ELAPSED_TIME;
@@ -115,7 +120,9 @@ uint32_t elapsed_time = 0;
 // Buffers
 // Note: these variables are declared as "extern(al)".
 int8_t mfsc_buffer[NUM_FILTERS * 200] = { 0.0f };
+#ifndef FEATURE_MFSC
 int8_t mfcc_buffer[NUM_FILTERS * 200] = { 0.0f };
+#endif
 int32_t mfsc_power[200] = { 0 };
 int pos = 0;
 
@@ -245,10 +252,12 @@ void dsp(float32_t *s1, mode mode) {
         mfsc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
         mfsc_power[pos] += (int32_t)s1;
       }
+#ifndef FEATURE_MFSC
       apply_dct2(s1);
       for (int i = 0; i < NUM_FILTERS; i++) {
         mfcc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
       }
+#endif
     }
   }
   if (++pos >= 200)
@@ -384,18 +393,26 @@ int main(void)
   float32_t f_s;
 
   // DMA peripheral-to-memory double buffer
+#ifndef DISABLE_BEAMFORMING
   int32_t input_buf_r[NN * 2 + 5] = { 0 };
   int32_t input_buf_l[NN * 2 + 5] = { 0 };
+#else
+  int32_t input_buf_l[NN * 2] = { 0 };
+#endif
 
+#ifndef INFERENCE
   // DMA memory-to-peripheral double buffer
   volatile uint16_t dac_out_buf_a[NN * 2] = { 0 };
   volatile uint16_t dac_out_buf_b[NN * 2] = { 0 };
+#endif
 
   // PCM data store for further processing (FFT etc)
   float32_t signal_buf[NN + NN / 2] = { 0.0f };  // NN/2 overlap
 
+#ifndef INFERENCE
   // n + NN
   int n_nn = 0;
+#endif
 
   /* USER CODE END 1 */
 
@@ -434,33 +451,38 @@ int main(void)
 
   // Start timer 6 and DAC for DMA
   HAL_TIM_Base_Start(&htim6);
+#ifndef INFERENCE
   HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
   HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_1, (uint32_t*) dac_out_buf_a, NN * 2,
   DAC_ALIGN_12B_R);
   HAL_DAC_Start(&hdac1, DAC_CHANNEL_2);
   HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_2, (uint32_t*) dac_out_buf_b, NN * 2,
   DAC_ALIGN_12B_R);
+#endif
 
   HAL_Delay(1);
 
   // Enable DMA from DFSDM to buf (peripheral to memory)
   // Note: filter1 for left channel is started after filter 0 for right channel
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_r + 5,
+#ifndef DISABLE_BEAMFORMING
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_r + 5,
   NN * 2) != HAL_OK) {
     Error_Handler();
   }
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_l + 5,
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_l + 5,
   NN * 2) != HAL_OK) {
     Error_Handler();
   }
+#else
+  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_l, NN * 2) != HAL_OK) {
+    Error_Handler();
+  }
+#endif
 
   // Enable UART receive interrupt to receive a command
   // from an application processor
   HAL_UART_Receive_IT(&huart2, rxbuf, 1);
 
-#ifdef DISABLE_BEAMFORMING
-  beam_forming_mode = RIGHT_MIC_ONLY;
-#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -473,8 +495,14 @@ int main(void)
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
 
       // Beam forming
+#ifndef DISABLE_BEAMFORMING
       beam_forming(signal_buf + NN_HALF, input_buf_l, input_buf_r,
           beam_forming_mode, angle);
+#else
+      for (uint32_t n = 0; n < NN; n++) {
+        signal_buf[n+NN_HALF] = (float32_t) (input_buf_l[n] >> 9);
+      }
+#endif
 
       // Pre-emphasis
       pre_emphasis(signal_buf + NN_HALF, angle);
@@ -485,10 +513,12 @@ int main(void)
       // Output PCM data to DAC
       // Note: the signal after dsp for ML should be something like artificial.
       // Move the following code before dsp, if you want to monitor natural sound.
+#ifndef INFERENCE
       for (uint32_t n = 0; n < NN; n++) {
         dac_out_buf_a[n] = (uint16_t) (((int32_t) signal_buf[n] >> 4) + 2048); // 12bit quantization
         dac_out_buf_b[n] = dac_out_buf_a[n];
       }
+#endif
 
       new_pcm_data_l_a = false;
 
@@ -496,18 +526,26 @@ int main(void)
 
     if (new_pcm_data_l_b) {  // 2nd half of the buffer
 
+#ifndef DISABLE_BEAMFORMING
       // Buffering PCM data for beam forming: n=2 is center
       for (int n = 0; n < 5; n++) {
         input_buf_l[n] = input_buf_l[NN_DOUBLE + n];
         input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
       }
+#endif
 
       // Overlap
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
 
       // Beam forming
+#ifndef DISABLE_BEAMFORMING
       beam_forming(signal_buf + NN_HALF, input_buf_l + NN, input_buf_r + NN,
           beam_forming_mode, angle);
+#else
+      for (uint32_t n = 0; n < NN; n++) {
+        signal_buf[n+NN_HALF] = (float32_t) (input_buf_l[NN+n] >> 9);
+      }
+#endif
 
       // Pre-emphasis
       pre_emphasis(signal_buf + NN_HALF, angle);
@@ -516,13 +554,14 @@ int main(void)
       overlap_dsp(signal_buf, output_mode);
 
       // Output PCM data to DAC
+#ifndef INFERENCE
       for (uint32_t n = 0; n < NN; n++) {
         n_nn = n + NN;
         dac_out_buf_a[n_nn] =
             (uint16_t) (((int32_t) signal_buf[n] >> 4) + 2048); // 12bit quantization
         dac_out_buf_b[n_nn] = dac_out_buf_a[n_nn];
       }
-
+#endif
       new_pcm_data_l_b = false;
     }
 

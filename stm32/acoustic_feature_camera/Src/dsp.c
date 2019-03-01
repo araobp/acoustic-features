@@ -14,6 +14,7 @@
 #include "arm_const_structs.h"
 #include "main.h"
 #include "dct.h"
+#include "ai.h"
 
 const float32_t RECIPROCAL_NN = 1.0 / (float32_t) NN;
 
@@ -24,7 +25,9 @@ float32_t nyq_fs = 0.0f;  // Nyquist frequency
 arm_rfft_fast_instance_f32 S;
 arm_fir_instance_f32 S_PRE;
 arm_fir_instance_f32 S_WPRE;
+#ifndef FEATURE_MFSC
 dct2_instance_f32 S_DCT;
+#endif
 
 // Pre-emphasis
 float32_t fir_coefficients[2] = { -ALPHA, 1.0f };
@@ -121,7 +124,9 @@ void init_dsp(float32_t f_s) {
   arm_fir_init_f32(&S_PRE, 2, fir_coefficients, state_buf, NN);
   arm_fir_init_f32(&S_WPRE, 2, fir_w_coefficients, state_w_buf, NN);
   generate_filters();
+#ifndef FEATURE_MFSC
   dct2_init_f32(&S_DCT, NUM_FILTERS);
+#endif
 }
 
 //--- DSP pipeline functions -----------------------------//
@@ -191,6 +196,7 @@ void apply_filterbank_logscale(float32_t *signal) {
   }
 }
 
+#ifndef FEATURE_MFSC
 // DCT Type-II
 void apply_dct2(float32_t *signal) {
   arm_copy_f32(signal, signal_buf, NUM_FILTERS);
@@ -198,3 +204,4 @@ void apply_dct2(float32_t *signal) {
   dct2_f32(&S_DCT, signal_buf, signal, 0);
   signal[0] = 0.0;  // Remove DC
 }
+#endif
