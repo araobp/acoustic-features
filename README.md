@@ -104,8 +104,6 @@ Conclusion:
 - One core CPU @ 80MHz with 100kbytes RAM is sufficent for musical instrument recognition.
 - The duration of 50 msec might be too long for key word detection. Use MFCCs rather than MFSCs to save time and memory.
 
-Note: X-CUBE-AI still seems to generate a network_runtime.a having a liker problem for "Application Template", so I choose "System Performance" on CubeMX instead to generate code of a neural network, then remove the part of system performance test code.
-
 #### Integration with my original Keras model
 
 I used X-CUBE-AI to generate code on my original Keras model "musical instrument recognition" that uses MFSCs. The integrated code did not fit into the RAM, so I added "#ifdef MFCC ... #endif" on the code to remove MFCC-related parts that are not used for the model.
