@@ -121,6 +121,9 @@ void MX_Core_Process(void)
   int32_t threshold = 0;
 #endif
 
+// TODO: this definition will be moved to an appropriate header file.
+#define MFSC_BUF_LENGTH (200 * NUM_FILTERS)
+
   // Input data and output data of CNN
   ai_float in_data[AI_NETWORK_IN_1_SIZE];
   ai_float out_data[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
@@ -135,26 +138,25 @@ void MX_Core_Process(void)
   static int cnt = 0;
 
   int window_start_idx;
+  int idx_in, idx_buf;
+  const int buf_length = MFSC_BUF_LENGTH;
 
-#ifdef KEY_WORD_DETECTION
-  if (voice_active(activity_detection_period, threshold)) {
-#else
+//#ifdef KEY_WORD_DETECTION
+//  if (voice_active(activity_detection_period, threshold)) {
+//#else
   if ((pos >= WINDOW_LENGTH) && (pos % WINDOW_LENGTH) == 0) {
-#endif
+//#endif
     window_start_idx = (pos - WINDOW_LENGTH) * NUM_FILTERS;
 
     for (int j = 0; j < WINDOW_LENGTH; j++) {
-#ifdef FEATURE_MFSC
+      idx_in = j * NUM_FILTERS;
+      idx_buf = window_start_idx + j * NUM_FILTERS;
+      if (idx_buf >= buf_length) {
+        idx_buf = 0;
+      }
       for (int i = 0; i < NUM_FILTERS; i++) {
-        in_data[j * NUM_FILTERS + i] = (ai_float) (mfsc_buffer[window_start_idx
-            + j * NUM_FILTERS + i]);
+        in_data[idx_in + i] = (ai_float) (mfsc_buffer[idx_buf + i]);
       }
-#elif defined FEATURE_MFCC
-      for (int i = 1; i < CUTOFF; i++) {  // DC(i=0) is removed
-        in_data[j * (CUTOFF - 1) + (i - 1)] = (ai_float) (mfcc_buffer[window_start_idx
-            + j * NUM_FILTERS + i]);
-      }
-#endif
     }
 
     ai_infer(in_data, out_data);  // Inference

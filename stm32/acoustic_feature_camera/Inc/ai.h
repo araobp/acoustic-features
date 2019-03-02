@@ -43,10 +43,12 @@ extern int pos;
 
 /**
  * Feature definition
+ *
+ * Note: MFCCs are not useful for most of use cases, so MFCCs are not
+ * use as input to neural network. "FEATURE_MFSC" is just to remove
+ * DCT-related code to save memory.
  */
 #define FEATURE_MFSC
-//#define FEATURE_MFCC
-//#define CUTOFF 13U
 #define WINDOW_LENGTH 64U
 
 /*
