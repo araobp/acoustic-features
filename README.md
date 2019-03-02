@@ -110,6 +110,8 @@ And memory usage of the Keras model on X-CUBE-AI:
 
 <img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
 
+The size of network is so small that it is only for classify a few of key words.
+
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
