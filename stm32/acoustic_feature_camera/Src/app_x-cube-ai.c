@@ -117,12 +117,7 @@ void MX_Core_Process(void)
     "SILENCE         ",
     "OTHERS          "
   };
-  int activity_detection_period = 10;
-  int32_t threshold = 0;
 #endif
-
-// TODO: this definition will be moved to an appropriate header file.
-#define MFSC_BUF_LENGTH (200 * NUM_FILTERS)
 
   // Input data and output data of CNN
   ai_float in_data[AI_NETWORK_IN_1_SIZE];
@@ -139,13 +134,10 @@ void MX_Core_Process(void)
 
   int window_start_idx;
   int idx_in, idx_buf;
-  const int buf_length = MFSC_BUF_LENGTH;
+  const int buf_length = 200 * NUM_FILTERS;
 
-//#ifdef KEY_WORD_DETECTION
-//  if (voice_active(activity_detection_period, threshold)) {
-//#else
-  if ((pos >= WINDOW_LENGTH) && (pos % WINDOW_LENGTH) == 0) {
-//#endif
+//  if ((pos >= WINDOW_LENGTH) && (pos % WINDOW_LENGTH) == 0) {
+  if (start_inference) {
     window_start_idx = (pos - WINDOW_LENGTH) * NUM_FILTERS;
 
     for (int j = 0; j < WINDOW_LENGTH; j++) {
@@ -189,6 +181,7 @@ void MX_Core_Process(void)
     lcd_newline();
     lcd_string(lcd_line2[class], 16);
 
+    start_inference = false;
   }
 #endif
     /* USER CODE END 1 */

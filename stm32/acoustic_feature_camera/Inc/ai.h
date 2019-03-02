@@ -19,15 +19,15 @@ extern "C" {
  * define in "main.c":
  * - int8_t mfsc_buffer[NUM_FILTERS * 200];
  * - int8_t mfcc_buffer[NUM_FILTERS * 200];
- * - int32_t mfsc_power[200];
  * - int pos;
+ * - bool start_inference
  */
 extern int8_t mfsc_buffer[NUM_FILTERS * 200];
 #ifndef FEATURE_MFSC
 extern int8_t mfcc_buffer[NUM_FILTERS * 200];
 #endif
-extern int32_t mfsc_power[200];
 extern int pos;
+extern bool start_inference;
 
 /**
  * Enable/disable AI
@@ -40,6 +40,13 @@ extern int pos;
 //#define MUSICAL_INSTRUMENT_RECOGNITION
 #define KEY_WORD_DETECTION
 //#define ENVIRONMENTAL_SOUND_CLASSIFICATION
+
+// Activity detection in dB
+#ifdef KEY_WORD_DETECTION
+  #define ACTIVITY_THRESHOLD 5.0
+#else
+  #define ACTIVITY_THRESHOLD -30.0
+#endif
 
 /**
  * Feature definition
@@ -62,7 +69,7 @@ extern int pos;
 #define DISABLE_BEAMFORMING
 
 /*--- Function prototypes ---*/
-bool voice_active(int length, int32_t threshold);
+
 int ai_init(void);
 void ai_infer(ai_float *input_data, ai_float* output_data);
 

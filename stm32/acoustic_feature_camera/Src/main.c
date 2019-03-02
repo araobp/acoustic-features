@@ -123,8 +123,8 @@ int8_t mfsc_buffer[NUM_FILTERS * 200] = { 0.0f };
 #ifndef FEATURE_MFSC
 int8_t mfcc_buffer[NUM_FILTERS * 200] = { 0.0f };
 #endif
-int32_t mfsc_power[200] = { 0 };
 int pos = 0;
+bool start_inference = false;
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -234,6 +234,12 @@ void dsp(float32_t *s1, mode mode) {
   uint32_t start = 0;
   uint32_t end = 0;
 
+  static bool active = false;
+  static int activity_cnt = 0;
+  float32_t max_value;
+  uint32_t max_index;
+  const int range = NUM_FILTERS/2;
+
   start = HAL_GetTick();
 
   apply_ac_coupling(s1);  // remove DC
@@ -247,10 +253,21 @@ void dsp(float32_t *s1, mode mode) {
     } else {
       apply_filterbank(s1);
       apply_filterbank_logscale(s1);
-      mfsc_power[pos] = 0;
       for (int i = 0; i < NUM_FILTERS; i++) {
         mfsc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
-        mfsc_power[pos] += (int32_t)s1;
+      }
+      // Voice activity detection
+      if (!active) {
+        arm_max_f32(s1, range, &max_value, &max_index);  // Examine lower frequencies
+        if (max_value > ACTIVITY_THRESHOLD) {
+          active = true;
+          activity_cnt = 0;
+        }
+      } else {
+        if (++activity_cnt >= WINDOW_LENGTH) {
+          active = false;
+          start_inference = true;
+        }
       }
 #ifndef FEATURE_MFSC
       apply_dct2(s1);
