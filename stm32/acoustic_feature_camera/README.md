@@ -251,6 +251,34 @@ The PC issues "FEATURES" command to the device to fetch features that are the la
 
 The GUI flatten features and convert it into CSV to save it as a csv file in a dataset folder.
 
+## Device installation plan (not tested yet)
+
+The device will be fixed on the wall in the horizontal direction:
+```
+            y ^    /
+              |   /
+              |  /
+              | / ) Theta
+             (z)---------->
+                          x
+         -----------
+         Wall or tree
+```
+
+In case of a living room:
+```
+
+   +-------------------------------------+
+   |TV set            y ^        Cubboard|
+   |       Table        |   Table Fridge |
+   |                   (z)---->   Kitchen|
+   |       Telephone [Device] x  Ventilation fan
+   +-+-----+---------------------+-----+-+
+      Door                        Door
+                              Washing machine
+
+```
+
 ## References
 
 ### Beam forming
