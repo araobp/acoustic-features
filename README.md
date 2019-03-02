@@ -14,6 +14,8 @@
 - musical instrument classification
 - environmental sound classification
 
+I have tested all of the use cases above, and confirmed that my device can classify acoustic scenes.
+
 ## Architecture
 
 ```
@@ -142,6 +144,8 @@ I played a classical guitar music "Recuerdos de la Alhambra", and the result was
 |no define         | 57.76% of 96KB | Inference processing is masked by the define   |
 
 Note: "dct.c" includes "calloc" calls that allocate additional memory spaces on RAM at run time, so the RAM usages above should be smaller than about 70% (DCT-pre-processing reduces the size of CNN instead). 
+
+I tested on the other use cases, and all of them fid into RAM and Flash memory on the MCU.
 
 ## Device installing plan (not tested yet)
 
