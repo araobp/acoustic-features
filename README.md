@@ -16,21 +16,6 @@
 - always-on key word detection (e.g., "OK Google" or "Alexa!")
 - automatic questionnaire collection in a restaurant
 
-## Modeling a neural network
-
-To run a neural network on MCU (STM32 in this project), it is necessary to make the network small to fit it into the RAM:
-- Adopt a CNN model that is relatively smaller than other network models (e.g., DNN).
-- Perform pre-processing based on signal processing to extract features for CNN.
-
-Usually, raw sound data (PCM) is transformed into the following "coefficients" as features for AED (Acoustic Event Detection) on CNN:
-- MFSCs (Mel Frequency Spectral Coefficients): the technique is to mimic the human auditory system.
-- MFCCs (Mel Frequency Cepstral Coefficients): the technique is similar to JPEG/MPEG's data compression.
-
-### Result of experiments 
-
-- I experimeted several times by capturing sound data with the **real** MEMS mics, and observed that **MFSCs+CNN outperformed other models**. The reason is that a CNN model becomes **more generic**.
-- It is not a good idea to use YouTube as a souce of training data. I always use the same MEMS mics for both training phase and inference phase, because the frequency response is same between both phases.
-
 ## Architecture
 
 ```
@@ -68,6 +53,22 @@ I have developed the following components:
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32/acoustic_feature_camera)
 - [Arduino shield of two Knowles MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
+
+## Modeling a neural network
+
+To run a neural network on MCU (STM32 in this project), it is necessary to make the network small to fit it into the RAM:
+- Adopt a CNN model that is relatively smaller than other network models (e.g., DNN).
+- Perform pre-processing based on signal processing to extract features for CNN.
+
+Usually, raw sound data (PCM) is transformed into the following "coefficients" as features for AED (Acoustic Event Detection) on CNN:
+- MFSCs (Mel Frequency Spectral Coefficients): the technique is to mimic the human auditory system.
+- MFCCs (Mel Frequency Cepstral Coefficients): the technique is similar to JPEG/MPEG's data compression.
+
+### Obervation
+
+- I experimeted several times by capturing sound data with the **real** MEMS mics, and observed that **MFSCs+CNN outperformed other models**. The reason is that a CNN model becomes **more generic**.
+- MFCCs+DNN and MFCCs+CNN do not work in a real world in my use cases, although they tend to show better results than MFSCs+CNN on Jupyter Notebook. I have decided to use MFSCs as acoustic feature in this project.
+- It is not a good idea to use YouTube as a souce of training data. I always use the same MEMS mics for both training phase and inference phase, because the frequency response is same between both phases.
 
 ## CNN (Convolutional Neural Network)
 
