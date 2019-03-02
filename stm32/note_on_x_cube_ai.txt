@@ -1,5 +1,0 @@
-#include <stdio.h>
-#include "main.h"
-#include "ai.h"
-#include "lcd.h"
-#include "i2c.h"
