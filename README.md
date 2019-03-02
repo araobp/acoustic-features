@@ -48,13 +48,20 @@ Platform:
 
 ## System components
 
-I have developed the following components:
+I developed the following components:
 
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32/acoustic_feature_camera)
 - [Arduino shield of two Knowles MEMS microphones with beam forming support (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 
-## Modeling a neural network
+## Deep learning on Keras/TensorFlow
+
+I acquired data on my own by using the components above, and it have taken a lot of time.
+
+- [Dataset of each use case](./dataset)
+- [My use cases on Jupyter Notebook](./tensorflow)
+
+### Modeling a neural network
 
 To run a neural network on MCU (STM32 in this project), it is necessary to make the network small enough to fit it into the RAM and the flash memory:
 - Adopt a CNN model that is relatively smaller than other network models.
@@ -65,34 +72,6 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 - MFCCs (Mel Frequency Cepstral Coefficients): the technique is similar to JPEG/MPEG's data compression.
 
 **My experiments so far showed that MFSCs+CNN ourperformed MFCCs+DNN or MFCCs+CNN.**
-
-## Device installing plan (not tested yet)
-
-The device will be fixed on the wall in the horizontal direction:
-```
-            y ^    /
-              |   /
-              |  /
-              | / ) Theta
-             (z)---------->
-                          x
-         -----------
-         Wall or tree
-```
-
-In case of a living room:
-```
-
-   +-------------------------------------+
-   |TV set            y ^        Cubboard|
-   |       Table        |   Table Fridge |
-   |                   (z)---->   Kitchen|
-   |       Telephone [Device] x  Ventilation fan
-   +-+-----+---------------------+-----+-+
-      Door                        Door
-                              Washing machine
-
-```
 
 ## References
 
