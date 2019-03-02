@@ -149,9 +149,6 @@ if __name__ == '__main__':
             with open(filename+'.csv', "w") as f:
                 f.write(','.join(data.astype(str)))
 
-            if current_class_label != class_label:
-                current_class_label = class_label
-                cnt = 0
             cnt += 1
             counter.configure(text='({})'.format(str(cnt)))
 
@@ -291,6 +288,14 @@ if __name__ == '__main__':
         root.destroy()
 
     def confirm():
+        class_label = entry_class_label.get()
+        labels = dataset.count_class_labels()
+        if class_label in labels.keys():
+            cnt = labels[class_label]
+        else:
+            cnt = 0
+        print(labels)
+        counter.configure(text='({})'.format(str(cnt)))
         canvas._tkcanvas.focus_set()
 
     def shadow(pos):

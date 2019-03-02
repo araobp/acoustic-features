@@ -100,7 +100,10 @@ class DataSet:
                 params = file.split('-')
                 pos = params[3]
                 if pos != 'a':
-                    pos = int(pos)
+                    try:
+                        pos = int(pos)
+                    except:
+                        pos = 0
                 with open(file) as f:
                     data = np.array(f.read().split(',')).astype(float)
                     if self.feature == 'mel_spectrogram':
@@ -191,3 +194,17 @@ class DataSet:
         self.test_labels = test_labels
         
         return (train_data, train_labels, test_data, test_labels)
+
+    def count_class_labels(self):
+
+        data_files = glob.glob(self.dataset_folder + '/data/*features*.csv')
+        class_labels = {}
+
+        for file in data_files:
+            label = file.replace('\\', '/').split('/')[-1].split('-')[2]
+            if label not in class_labels:
+                class_labels[label] = 1
+            else:
+                class_labels[label] = class_labels[label] + 1
+
+        return class_labels

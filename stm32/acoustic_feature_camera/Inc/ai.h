@@ -38,8 +38,8 @@ extern int pos;
  * Use case definition
  */
 //#define MUSICAL_INSTRUMENT_RECOGNITION
-//#define KEY_WORD_DETECTION
-#define ENVIRONMENTAL_SOUND_CLASSIFICATION
+#define KEY_WORD_DETECTION
+//#define ENVIRONMENTAL_SOUND_CLASSIFICATION
 
 /**
  * Feature definition
@@ -47,7 +47,7 @@ extern int pos;
 #define FEATURE_MFSC
 //#define FEATURE_MFCC
 //#define CUTOFF 13U
-#define WINDOW_LENGTH 96U
+#define WINDOW_LENGTH 64U
 
 /*
  * Moving average of inference results
