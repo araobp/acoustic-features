@@ -73,6 +73,39 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 
 **My experiments so far showed that MFSCs+CNN ourperformed MFCCs+DNN or MFCCs+CNN.** So I use MFSCs for deep learning in this project.
 
+### Size of actual network
+
+The following is a network model for key word detection.
+
+```
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_1 (Conv2D)            (None, 62, 38, 4)         40        
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 31, 19, 4)         0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 29, 17, 8)         296       
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 14, 8, 8)          0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 12, 6, 16)         1168      
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 6, 3, 16)          0         
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 288)               0         
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 288)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 5)                 1445      
+=================================================================
+Total params: 2,949
+Trainable params: 2,949
+Non-trainable params: 0
+```
+
+<img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=300>
+
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
