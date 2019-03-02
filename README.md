@@ -16,6 +16,8 @@
 
 I have tested all of the use cases above, and confirmed that my device can classify acoustic scenes.
 
+**Note: the size of neural network is so small that it is not a general purpose tool -- it is good at very limited number of classes.**
+
 ## Architecture
 
 ```
