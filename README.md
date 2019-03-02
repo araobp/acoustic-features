@@ -104,7 +104,9 @@ Trainable params: 2,949
 Non-trainable params: 0
 ```
 
-<img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=300>
+And memory usage of the Keras model on X-CUBE-AI:
+
+<img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
 
 ## References
 
