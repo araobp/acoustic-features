@@ -67,11 +67,11 @@ To run a neural network on MCU (STM32 in this project), it is necessary to make 
 - Adopt a CNN model that is relatively smaller than other network models.
 - Perform pre-processing based on signal processing to extract features for CNN.
 
-Usually, raw sound data (PCM) is transformed into the following "coefficients" as features for AED (Acoustic Event Detection) on CNN:
+Usually, raw sound data (PCM) is transformed into the following "coefficients" as features:
 - MFSCs (Mel Frequency Spectral Coefficients): the technique is to mimic the human auditory system.
 - MFCCs (Mel Frequency Cepstral Coefficients): the technique is similar to JPEG/MPEG's data compression.
 
-**My experiments so far showed that MFSCs+CNN ourperformed MFCCs+DNN or MFCCs+CNN.**
+**My experiments so far showed that MFSCs+CNN ourperformed MFCCs+DNN or MFCCs+CNN.** So I use MFSCs for deep learning in this project.
 
 ## References
 
