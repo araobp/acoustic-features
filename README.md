@@ -8,13 +8,11 @@
 
 **=> [Edge AI demo](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
 
-## Potential use cases
+## Use cases in this project
 
-- musical instrument recognition and music performance analysis
-- human activity recognition
-- birds chirping recognition
 - always-on key word detection (e.g., "OK Google" or "Alexa!")
-- automatic questionnaire collection in a restaurant
+- musical instrument classification
+- environmental sound classification
 
 ## Architecture
 
@@ -64,7 +62,7 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 - MFSCs (Mel Frequency Spectral Coefficients): the technique is to mimic the human auditory system.
 - MFCCs (Mel Frequency Cepstral Coefficients): the technique is similar to JPEG/MPEG's data compression.
 
-### Obervation
+### Obervation on **embedded** neural network
 
 - I experimeted several times by capturing sound data with the **real** MEMS mics, and observed that **MFSCs+CNN outperformed other models**. The reason is that a CNN model becomes **more generic**.
 - MFCCs+DNN and MFCCs+CNN do not work in a real world in my use cases, although they tend to show better results than MFSCs+CNN on Jupyter Notebook. I have decided to use MFSCs as acoustic feature in this project.
