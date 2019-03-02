@@ -56,7 +56,7 @@ I developed the following components:
 
 ## Deep learning on Keras/TensorFlow
 
-I acquired data on my own by using the components above, and it have taken a lot of time.
+I acquired data on my own by using the components above, and it took a lot of time and effort.
 
 - [Dataset of each use case](./dataset)
 - [My use cases on Jupyter Notebook](./tensorflow)
