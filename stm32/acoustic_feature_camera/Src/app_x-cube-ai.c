@@ -55,10 +55,7 @@
 #include "bsp_ai.h"
 #include "ai_datatypes_defines.h"
 
-#include <stdio.h>
 #include "ai.h"
-#include "lcd.h"
-#include "i2c.h"
 /*************************************************************************
   *
   */
@@ -67,10 +64,7 @@ void MX_Core_Init(void)
     MX_UARTx_Init();
     /* USER CODE BEGIN 0 */
   /* Include
-   #include <stdio.h>
    #include "ai.h"
-   #include "lcd.h"
-   #include "i2c.h"
    */
 #ifdef INFERENCE
   ai_init();
@@ -83,9 +77,14 @@ void MX_Core_Process(void)
 {
     /* USER CODE BEGIN 1 */
 #ifdef INFERENCE
+#ifdef KEY_WORD_DETECTION
+  char lcd_line1[5][16] = { ">< Restaurant ><", "<> Restaurant <>",
+        "++ Restaurant ++", "** Restaurant **", "$$ Restaurant $$"};
+
+#else
   char lcd_line1[5][16] = { "It is           ", "It is .         ",
       "It is ..        ", "It is ...       ", "It is ....      " };
-
+  #endif
   // Aliases of class labels.
   // Note: class labels are just number like 0, 1, 2... on CNN.
 #ifdef MUSICAL_INSTRUMENT_RECOGNITION
@@ -108,14 +107,20 @@ void MX_Core_Process(void)
     "mazui",
     "oishii",
     "silence",
-    "others"
+    "others",
+    "a",
+    "i",
+    "o"
   };
   char lcd_line2[][16] = {
-    "UMAI            ",
-    "MAZUI           ",
-    "OISHII          ",
-    "SILENCE         ",
-    "OTHERS          "
+    "     UMAI!      ",
+    "     MAZUI!     ",
+    "    OISHII!     ",
+    "    SILENCE     ",
+    "    OTHERS      ",
+    "       A        ",
+    "       I        ",
+    "       O        "
   };
 #endif
 
@@ -124,31 +129,41 @@ void MX_Core_Process(void)
   ai_float out_data[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
 
   // Moving average
+#ifndef KEY_WORD_DETECTION
   static ai_float out_hist[HISTORY_LENGTH][AI_NETWORK_OUT_1_SIZE] = { { 0.0 } };
-  static int current = 0;
   ai_float out_sum[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
-  int class;
+#else
+  float32_t max_value;
+#endif
+  static int current = 0;
+  uint32_t class;
 
   // Counter
   static int cnt = 0;
 
-  int window_start_idx;
+  int pos_start, window_start_idx, l;
   int idx_in, idx_buf;
   const int buf_length = 200 * NUM_FILTERS;
 
-//  if ((pos >= WINDOW_LENGTH) && (pos % WINDOW_LENGTH) == 0) {
   if (start_inference) {
-    window_start_idx = (pos - WINDOW_LENGTH) * NUM_FILTERS;
-
+    l = WINDOW_LENGTH + ACTIVITY_OFFSET;
+    if (pos > l) {
+      pos_start = pos - l;
+    } else {
+      pos_start = 200 - l + pos;
+    }
+    window_start_idx = pos_start * NUM_FILTERS;
+    idx_in = 0;
+    idx_buf = window_start_idx;
     for (int j = 0; j < WINDOW_LENGTH; j++) {
-      idx_in = j * NUM_FILTERS;
-      idx_buf = window_start_idx + j * NUM_FILTERS;
       if (idx_buf >= buf_length) {
         idx_buf = 0;
       }
       for (int i = 0; i < NUM_FILTERS; i++) {
         in_data[idx_in + i] = (ai_float) (mfsc_buffer[idx_buf + i]);
       }
+      idx_in += NUM_FILTERS;
+      idx_buf += NUM_FILTERS;
     }
 
     ai_infer(in_data, out_data);  // Inference
@@ -157,9 +172,16 @@ void MX_Core_Process(void)
     printf("\n-- Inference %d --\n", cnt++);
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
       printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
+#ifndef KEY_WORD_DETECTION
       out_hist[current][i] = out_data[i];
       out_sum[i] = 0.0;
+#endif
     }
+
+#ifdef KEY_WORD_DETECTION
+    arm_max_f32(out_data, AI_NETWORK_OUT_1_SIZE, &max_value, &class);
+#else
+
     if (++current >= HISTORY_LENGTH) {
       current = 0;
     }
@@ -176,6 +198,7 @@ void MX_Core_Process(void)
         class = i;
       }
     }
+#endif
     lcd_clear();
     lcd_string(lcd_line1[current], 16);
     lcd_newline();

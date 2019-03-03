@@ -70,7 +70,7 @@ class DataSet:
         '''
         Generate training data set and test data set for Keras/TensorFlow
         '''
-
+        
         feature_length = 200 * self.filters
         
         data_files = glob.glob(self.dataset_folder+'/data/*-features-*.csv')
@@ -123,7 +123,10 @@ class DataSet:
                 params = file.split('-')
                 pos = params[3]
                 if pos != 'a':
-                    pos = int(pos)
+                    try:
+                        pos = int(pos)
+                    except:
+                        pos = 0
                 with open(file) as f:
                     data = np.array(f.read().split(',')).astype(float)
                     if self.feature == 'mel_spectrogram':

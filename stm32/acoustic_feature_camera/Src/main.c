@@ -257,16 +257,18 @@ void dsp(float32_t *s1, mode mode) {
         mfsc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
       }
       // Voice activity detection
-      if (!active) {
-        arm_max_f32(s1, range, &max_value, &max_index);  // Examine lower frequencies
-        if (max_value > ACTIVITY_THRESHOLD) {
-          active = true;
-          activity_cnt = 0;
-        }
-      } else {
-        if (++activity_cnt >= WINDOW_LENGTH) {
-          active = false;
-          start_inference = true;
+      if (!start_inference) {
+        if (!active) {
+          arm_max_f32(s1, range, &max_value, &max_index);  // Examine lower frequencies
+          if (max_value > ACTIVITY_THRESHOLD) {
+            active = true;
+            activity_cnt = 0;
+          }
+        } else {
+          if (++activity_cnt >= WINDOW_LENGTH+ACTIVITY_OFFSET) {
+            active = false;
+            start_inference = true;
+          }
         }
       }
 #ifndef FEATURE_MFSC

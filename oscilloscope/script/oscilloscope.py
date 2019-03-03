@@ -288,6 +288,7 @@ if __name__ == '__main__':
         root.destroy()
 
     def confirm():
+        global cnt
         class_label = entry_class_label.get()
         labels = dataset.count_class_labels()
         if class_label in labels.keys():

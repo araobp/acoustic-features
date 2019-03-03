@@ -5,9 +5,12 @@
 extern "C" {
 #endif
 
+#include <stdio.h>
 #include <stdint.h>
 #include "ai_platform.h"
 #include "dsp.h"
+#include "lcd.h"
+#include "i2c.h"
 
 /**
  * Note on AI inference processing.
@@ -37,8 +40,8 @@ extern bool start_inference;
 /**
  * Use case definition
  */
-//#define MUSICAL_INSTRUMENT_RECOGNITION
-#define KEY_WORD_DETECTION
+#define MUSICAL_INSTRUMENT_RECOGNITION
+//#define KEY_WORD_DETECTION
 //#define ENVIRONMENTAL_SOUND_CLASSIFICATION
 
 // Activity detection in dB
@@ -47,6 +50,7 @@ extern bool start_inference;
 #else
   #define ACTIVITY_THRESHOLD -30.0
 #endif
+#define ACTIVITY_OFFSET 5U
 
 /**
  * Feature definition
