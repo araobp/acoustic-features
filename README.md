@@ -110,7 +110,7 @@ And memory usage of the Keras model on X-CUBE-AI:
 
 <img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
 
-The size of network is so small that it is only for classify a few of key words.
+The size of network is so small that it is only for classify a few of key words. I am trying out a larger network right now...
 
 ## References
 
