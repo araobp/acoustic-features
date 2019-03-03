@@ -110,8 +110,39 @@ And memory usage of the Keras model on X-CUBE-AI:
 
 <img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
 
-The size of network is so small that it is only for classify a few of key words. I am trying out a larger network right now...
+The size of network is so small that it is only for classify a few of key words. To my surprise, my experiment showed that it recognizes vowels, not words. To make it more practical, I added more keywords and enlarged the network a littel more. Now, it works much better and recognizes words.
 
+```
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_4 (Conv2D)            (None, 62, 38, 8)         80        
+_________________________________________________________________
+max_pooling2d_4 (MaxPooling2 (None, 31, 19, 8)         0         
+_________________________________________________________________
+conv2d_5 (Conv2D)            (None, 29, 17, 16)        1168      
+_________________________________________________________________
+max_pooling2d_5 (MaxPooling2 (None, 14, 8, 16)         0         
+_________________________________________________________________
+conv2d_6 (Conv2D)            (None, 12, 6, 32)         4640      
+_________________________________________________________________
+max_pooling2d_6 (MaxPooling2 (None, 6, 3, 32)          0         
+_________________________________________________________________
+flatten_2 (Flatten)          (None, 576)               0         
+_________________________________________________________________
+dense_4 (Dense)              (None, 64)                36928     
+_________________________________________________________________
+dense_5 (Dense)              (None, 64)                4160      
+_________________________________________________________________
+dropout_2 (Dropout)          (None, 64)                0         
+_________________________________________________________________
+dense_6 (Dense)              (None, 8)                 520       
+=================================================================
+Total params: 47,496
+Trainable params: 47,496
+Non-trainable params: 0
+_________________________________________________________________
+```
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
