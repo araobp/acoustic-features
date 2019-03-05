@@ -110,7 +110,7 @@ And memory usage of the Keras model on X-CUBE-AI:
 
 <img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
 
-To my surprise, my experiment showed that it only recognizes vowels, not words. To make it more practical, I added "vowel" classes ("a", "i" and "o") and enlarged the network a littel more (RAM consumption: 25KBytes). The network seemed to learn the difference between words and vowels. Now, it works much better and can recognize key words.
+To my surprise, my experiment showed that it only recognizes vowels, not words. To make it more practical, I added "vowel" classes ("a", "i" and "o") and increased the network size (RAM consumption: 25KBytes). The network seemed to learn the difference between words and vowels. Now, it works much better and can recognize key words.
 
 ```
 _________________________________________________________________
