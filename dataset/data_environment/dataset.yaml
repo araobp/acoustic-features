@@ -1,8 +1,8 @@
 feature: mfsc
-files: 100
-training_files: 70
+files: 200
+training_files: 140
 samples: 200
-length: 96
+length: 64
 filters: 40
 cutoff: null
 stride: 12

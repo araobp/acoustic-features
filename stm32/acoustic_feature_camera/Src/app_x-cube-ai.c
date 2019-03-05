@@ -82,8 +82,10 @@ void MX_Core_Process(void)
         "++ Restaurant ++", "** Restaurant **", "$$ Restaurant $$"};
 
 #else
-  char lcd_line1[5][16] = { "It is           ", "It is .         ",
-      "It is ..        ", "It is ...       ", "It is ....      " };
+//  char lcd_line1[5][16] = { "It is           ", "It is .         ",
+//      "It is ..        ", "It is ...       ", "It is ....      " };
+    char lcd_line1[5][16] = { "Scene           ", "Scene .         ",
+        "Scene ..        ", "Scene ...       ", "Scene ....      " };
   #endif
   // Aliases of class labels.
   // Note: class labels are just number like 0, 1, 2... on CNN.
@@ -95,11 +97,11 @@ void MX_Core_Process(void)
     "SILENCE         "};
 #endif
 #ifdef ENVIRONMENTAL_SOUND_CLASSIFICATION
-  char class_labels[][20] = { "Train", "Station", "Cafe", "Mall", "Port",
-      "Street", "Office" };
+  char class_labels[][20] = { "Train", "Station", "Fast food", "Escalator", "Mall",
+      "Street", "Harbor" };
   char lcd_line2[][16] = { "TRAIN           ", "STATION         ",
-      "CAFE            ", "MALL           ", "PORT            ",
-      "STREET          ", "OFFICE         " };
+       "FAST FOOD       ", "ESCALATOR       ", "MALL            ",
+       "STREET          ", "HARBOR          " };
 #endif
 #ifdef KEY_WORD_DETECTION
   char class_labels[][20] = {

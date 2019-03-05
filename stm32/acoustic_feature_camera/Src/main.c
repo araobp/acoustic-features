@@ -120,7 +120,7 @@ uint32_t elapsed_time = 0;
 // Buffers
 // Note: these variables are declared as "extern(al)".
 int8_t mfsc_buffer[NUM_FILTERS * 200] = { 0.0f };
-#ifndef FEATURE_MFSC
+#ifndef INFERENCE
 int8_t mfcc_buffer[NUM_FILTERS * 200] = { 0.0f };
 #endif
 int pos = 0;
@@ -271,7 +271,7 @@ void dsp(float32_t *s1, mode mode) {
           }
         }
       }
-#ifndef FEATURE_MFSC
+#ifndef INFERENCE
       apply_dct2(s1);
       for (int i = 0; i < NUM_FILTERS; i++) {
         mfcc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];

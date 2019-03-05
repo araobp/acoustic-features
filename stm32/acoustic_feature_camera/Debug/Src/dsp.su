@@ -13,3 +13,4 @@ dsp.c:166:6:apply_psd	16	static
 dsp.c:172:6:apply_psd_logscale	24	static
 dsp.c:179:6:apply_filterbank	40	static
 dsp.c:193:6:apply_filterbank_logscale	24	static
+dsp.c:201:6:apply_dct2	16	static

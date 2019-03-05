@@ -28,12 +28,11 @@ def spectrum_subtraction(data, ssub=None):
 # GUI class
 class GUI:
     
-    def __init__(self, interface, dataset, fullscreen=None):
+    def __init__(self, interface, dataset):
         # Serial interface
         self.interface = interface
         self.filters = dataset.filters
         self.samples = dataset.samples
-        self.fullscreen = True if fullscreen else False
         # Time axis and frequency axis
         self.time = {}
         self.freq = {}
@@ -47,13 +46,9 @@ class GUI:
         self.freq[dsp.MFCC] = np.linspace(0, self.filters-1, self.filters)
 
     def set_labels(self, ax, title, xlabel, ylabel, ylim=None):
-        if self.fullscreen:
-            ax.set_xticks([])
-            ax.set_yticks([])
-        else:
-            ax.set_title(title)
-            ax.set_xlabel(xlabel)
-            ax.set_ylabel(ylabel)
+        ax.set_title(title)
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel(ylabel)
         if ylim:
             ax.set_ylim(ylim)
 

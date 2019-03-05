@@ -59,7 +59,7 @@
 /*************************************************************************
   *
   */
-void MX_X_CUBE_AI_Init(void)
+void MX_Core_Init(void)
 {
     MX_UARTx_Init();
     aiSystemPerformanceInit();
@@ -67,7 +67,7 @@ void MX_X_CUBE_AI_Init(void)
     /* USER CODE END 0 */
 }
 
-void MX_X_CUBE_AI_Process(void)
+void MX_Core_Process(void)
 {
     aiSystemPerformanceProcess();
     HAL_Delay(1000); /* delay 1s */

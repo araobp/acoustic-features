@@ -96,7 +96,7 @@ if __name__ == '__main__':
 
     EMPTY = np.array([])
 
-    gui = gui.GUI(interface=itfc, dataset=dataset, fullscreen=args.fullscreen_mode)
+    gui = gui.GUI(interface=itfc, dataset=dataset)
 
     if dataset.model and not args.browser:
         import inference
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     if args.fullscreen_mode:
         root.wm_title("")
     else:
-        root.wm_title("Oscilloscope and spectrum analyzer for deep learning")
+        root.wm_title("Oscilloscope and spectrum analyzer")
 
     if args.browser:
         fig, ax = plt.subplots(1, 1, figsize=(10, 4))

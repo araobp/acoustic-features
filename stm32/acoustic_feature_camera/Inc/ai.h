@@ -35,7 +35,7 @@ extern bool start_inference;
 /**
  * Enable/disable AI
  */
-#define INFERENCE
+//#define INFERENCE
 
 /**
  * Use case definition
@@ -54,12 +54,7 @@ extern bool start_inference;
 
 /**
  * Feature definition
- *
- * Note: MFCCs are not useful for most of use cases, so MFCCs are not
- * use as input to neural network. "FEATURE_MFSC" is just to remove
- * DCT-related code to save memory.
  */
-#define FEATURE_MFSC
 #define WINDOW_LENGTH 64U
 
 /*

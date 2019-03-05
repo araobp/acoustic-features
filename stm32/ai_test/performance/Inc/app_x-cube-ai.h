@@ -53,8 +53,8 @@
   */
 /* Includes ------------------------------------------------------------------*/
 
-void MX_X_CUBE_AI_Init(void);
-void MX_X_CUBE_AI_Process(void);
+void MX_Core_Init(void);
+void MX_Core_Process(void);
 
 /* Multiple network support --------------------------------------------------*/
 
