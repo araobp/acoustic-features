@@ -160,6 +160,9 @@ Results for "network", 16 inferences @80MHz/80MHz (complexity: 1218272 MACC)
  used stack   : 352 bytes
  used heap    : 0:0 0:0 (req:allocated,req:released) cfg=0
  ```
+ 
+ It takes 173ms for inference, and I think it seems to be the largest network size that STM32L476RG can run.
+ 
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
