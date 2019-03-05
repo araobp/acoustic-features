@@ -143,6 +143,21 @@ Trainable params: 47,496
 Non-trainable params: 0
 _________________________________________________________________
 ```
+
+I made a performance test on the network. The result is as follows:
+
+```
+Running PerfTest on "network" with random inputs (16 iterations)...
+................
+
+Results for "network", 16 inferences @80MHz/80MHz (complexity: 1218272 MACC)
+ duration     : 172.688 ms (average)
+ CPU cycles   : 13815048 -340/+454 (average,-/+)
+ CPU Workload : 17%
+ cycles/MACC  : 11 (average for all layers)
+ used stack   : 352 bytes
+ used heap    : 0:0 0:0 (req:allocated,req:released) cfg=0
+ ```
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
