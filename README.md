@@ -144,7 +144,7 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-<img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
+<img src="./stm32/acoustic_feature_camera/ai_memory_usage2.jpg" width=400>
 
 I made a performance test on the network. The result is as follows:
 
