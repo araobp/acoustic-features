@@ -70,7 +70,7 @@ typedef enum {
 
 // Debug info
 typedef enum {
-  DISABLED, FILTERBANK, ELAPSED_TIME
+  DISABLED, FILTERBANK, ELAPSED_TIME, VOICE_ACTIVITY
 } debug;
 
 /* USER CODE END ET */

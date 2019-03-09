@@ -238,7 +238,6 @@ void dsp(float32_t *s1, mode mode) {
   static int activity_cnt = 0;
   float32_t max_value;
   uint32_t max_index;
-  const int range = NUM_FILTERS/2;
 
   start = HAL_GetTick();
 
@@ -256,22 +255,23 @@ void dsp(float32_t *s1, mode mode) {
       for (int i = 0; i < NUM_FILTERS; i++) {
         mfsc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];
       }
-      // Voice activity detection
+#ifdef INFERENCE
+      // Voice activity detection for inference by X-CUBE-AI
       if (!start_inference) {
         if (!active) {
-          arm_max_f32(s1, range, &max_value, &max_index);  // Examine lower frequencies
+          arm_max_f32(s1, NUM_FILTERS, &max_value, &max_index);  // Examine lower frequencies
           if (max_value > ACTIVITY_THRESHOLD) {
             active = true;
             activity_cnt = 0;
           }
         } else {
-          if (++activity_cnt >= WINDOW_LENGTH+ACTIVITY_OFFSET) {
+          if (++activity_cnt >= WINDOW_LENGTH) {
             active = false;
             start_inference = true;
           }
         }
       }
-#ifndef INFERENCE
+#else
       apply_dct2(s1);
       for (int i = 0; i < NUM_FILTERS; i++) {
         mfcc_buffer[pos * NUM_FILTERS + i] = (int8_t) s1[i];

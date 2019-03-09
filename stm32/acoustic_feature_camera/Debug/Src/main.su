@@ -1,5 +1,5 @@
 main.c:147:6:uart_tx	24	static
-main.c:232:6:dsp	40	static
+main.c:232:6:dsp	24	static
 main.c:302:6:overlap_dsp	2064	static
 main.c:326:6:dump	40	static
 main.c:352:6:beam_forming	12	static

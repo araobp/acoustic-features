@@ -40,8 +40,8 @@ extern bool start_inference;
 /**
  * Use case definition
  */
-#define MUSICAL_INSTRUMENT_RECOGNITION
-//#define KEY_WORD_DETECTION
+//#define MUSICAL_INSTRUMENT_RECOGNITION
+#define KEY_WORD_DETECTION
 //#define ENVIRONMENTAL_SOUND_CLASSIFICATION
 
 // Activity detection in dB

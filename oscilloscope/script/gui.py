@@ -67,11 +67,11 @@ class GUI:
         
         if cmd == dsp.RAW_WAVE:
             ax.plot(self.time[dsp.RAW_WAVE], data)
-            self.set_labels(ax, 'Time domain', 'Time [msec]', 'Amplitude', [-range_, range_])
+            self.set_labels(ax, 'Waveform', 'Time [msec]', 'Amplitude', [-range_, range_])
 
         elif cmd == dsp.FFT:
             ax.plot(self.freq[dsp.FFT], data)
-            self.set_labels(ax, 'Frequency domain', 'Frequency [Hz]', 'Power [dB]', [-70, 90])
+            self.set_labels(ax, 'Spectrum', 'Frequency [Hz]', 'Power [dB]', [-70, 90])
 
         elif cmd == dsp.SPECTROGRAM:
             data_ = spectrum_subtraction(data, ssub)
@@ -94,7 +94,7 @@ class GUI:
                           self.freq[dsp.MFSC][:range_+1],
                           data_.T[:range_+1],
                           cmap=cmap)
-            self.set_labels(ax, 'MFSCs', 'Time [sec]', 'MFSC')
+            self.set_labels(ax, 'Mel-frequency spectrogram', 'Time [sec]', 'MFSC')
 
         elif cmd == dsp.MFCC:
             

@@ -53,8 +53,12 @@ parser.add_argument("-o", "--oscilloscope_mode",
                     help="Oscilloscope mode", action="store_true")
 parser.add_argument("-f", "--fullscreen_mode",
                     help="Fullscreen mode", default=None)
+parser.add_argument("-S", "--simple_mode",
+                    help="Simple mode", action="store_true")
 parser.add_argument("-c", "--color_map",
                     help="Color map", default=','.join(CMAP_LIST))
+parser.add_argument("-W", "--disable_window",
+                    help="Disable window", action="store_true")
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -88,7 +92,6 @@ if __name__ == '__main__':
     cnt = 0
     repeat_action = False
     
-    current_class_label = ''
     filename = None
     data = None
     cnn_model = None
@@ -106,7 +109,7 @@ if __name__ == '__main__':
     if args.fullscreen_mode:
         root.wm_title("")
     else:
-        root.wm_title("Oscilloscope and spectrum analyzer")
+        root.wm_title("Oscilloscope")
 
     if args.browser:
         fig, ax = plt.subplots(1, 1, figsize=(10, 4))
@@ -128,7 +131,7 @@ if __name__ == '__main__':
 
     # Save training data for deep learning
     def save():
-        global current_class_label, cnt, filename
+        global cnt, filename
         class_label = entry_class_label.get()
         func, data, window, pos = last_operation
         angle = range_beam_forming.get()
@@ -213,7 +216,10 @@ if __name__ == '__main__':
             data = gui.plot(ax, dsp.MFSC, range_, cmap_, ssub,
                                window=window)
         else:
-            window = dataset.windows[pos] if pos else None
+            if pos and not args.disable_window:
+                window = dataset.windows[pos]
+            else:
+                window = None
             gui.plot(ax, dsp.MFSC, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
@@ -234,8 +240,10 @@ if __name__ == '__main__':
             data = gui.plot(ax, dsp.MFCC, range_, cmap_, ssub,
                                window=window)
         else:
-            window = dataset.windows[pos] if pos else None
-            window = dataset.windows[pos]
+            if pos and not args.disable_window:
+                window = dataset.windows[pos]
+            else:
+                window = None
             gui.plot(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
@@ -487,6 +495,27 @@ if __name__ == '__main__':
         func = globals()[args.fullscreen_mode]
         if func in (raw_wave, fft, spectrogram, mfsc, mfcc):
             func(repeatable=True)
+
+    elif args.simple_mode:
+
+        frame_row1.pack(pady=PADY_GRID)
+        range_amplitude.grid(row=0, column=3, padx=PADX_GRID)
+        button_waveform.grid(row=0, column=4, padx=PADX_GRID)
+        button_psd.grid(row=0, column=5, padx=PADX_GRID)
+        range_spectrogram.grid(row=0, column=6, padx=PADX_GRID)
+        button_spectrogram.grid(row=0, column=7, padx=PADX_GRID)
+        button_mfsc.grid(row=0, column=10, padx=PADX_GRID)
+        button_mfcc.grid(row=0, column=12, padx=PADX_GRID)
+        label_image.grid(row=0, column=13, padx=PADX_GRID)
+        spectrum_subtraction.grid(row=0, column=15, padx=PADX_GRID)
+        cmap.grid(row=0, column=16, padx=PADX_GRID)
+    
+        frame_row2.pack(pady=PADY_GRID)
+        button_repeat.grid(row=0, column=0, padx=PADX_GRID)
+        button_pre_emphasis.grid(row=0, column=1, padx=PADX_GRID)
+        button_savefig.grid(row=0, column=2, padx=PADX_GRID)
+        button_quit.grid(row=0, column=3, padx=PADX_GRID)
+
     else:
 
         ### Row 1: operation ####
@@ -527,9 +556,8 @@ if __name__ == '__main__':
 
         # CMAP
         label_image.grid(row=0, column=13, padx=PADX_GRID)
-        label_image.grid(row=0, column=14, padx=PADX_GRID)
-        spectrum_subtraction.grid(row=0, column=15, padx=PADX_GRID)
-        cmap.grid(row=0, column=16, padx=PADX_GRID)
+        spectrum_subtraction.grid(row=0, column=14, padx=PADX_GRID)
+        cmap.grid(row=0, column=15, padx=PADX_GRID)
 
         ### Row 2 ####
 

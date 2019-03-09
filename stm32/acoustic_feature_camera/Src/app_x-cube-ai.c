@@ -82,10 +82,8 @@ void MX_Core_Process(void)
         "++ Restaurant ++", "** Restaurant **", "$$ Restaurant $$"};
 
 #else
-//  char lcd_line1[5][16] = { "It is           ", "It is .         ",
-//      "It is ..        ", "It is ...       ", "It is ....      " };
-    char lcd_line1[5][16] = { "Scene           ", "Scene .         ",
-        "Scene ..        ", "Scene ...       ", "Scene ....      " };
+  char lcd_line1[5][16] = { "It is           ", "It is .         ",
+        "It is ..        ", "It is ...       ", "It is ....      " };
   #endif
   // Aliases of class labels.
   // Note: class labels are just number like 0, 1, 2... on CNN.
@@ -112,7 +110,17 @@ void MX_Core_Process(void)
     "others",
     "a",
     "i",
-    "o"
+    "o",
+    "sushi",
+    "sashimi",
+    "gyouza",
+    "hashi",
+    "spoon",
+    "fork",
+    "syouyu",
+    "sakana",
+    "niku",
+    "gohan"
   };
   char lcd_line2[][16] = {
     "     UMAI!      ",
@@ -122,7 +130,17 @@ void MX_Core_Process(void)
     "    OTHERS      ",
     "       A        ",
     "       I        ",
-    "       O        "
+    "       O        ",
+    "     SUSHI      ",
+    "    SASHIMI     ",
+    "     GYOZA      ",
+    "     HASHI      ",
+    "     SPOON      ",
+    "      FORK      ",
+    "     SYOUYU     ",
+    "     SAKANA     ",
+    "      NIKU      ",
+    "     GOHAN      "
   };
 #endif
 
@@ -152,7 +170,7 @@ void MX_Core_Process(void)
     if (pos > l) {
       pos_start = pos - l;
     } else {
-      pos_start = 200 - l + pos;
+      pos_start = 200 - (l - pos);
     }
     window_start_idx = pos_start * NUM_FILTERS;
     idx_in = 0;
@@ -207,6 +225,17 @@ void MX_Core_Process(void)
     lcd_string(lcd_line2[class], 16);
 
     start_inference = false;
+
+/*
+#ifdef KEY_WORD_DETECTION
+    printf("---\n");
+    for (int n=0; n<WINDOW_LENGTH*NUM_FILTERS-1; n++) {
+      printf("%2.1d,", (int)in_data[n]);
+    }
+    printf("%2.1d\n", (int)in_data[WINDOW_LENGTH*NUM_FILTERS-1]);
+    printf("---\n");
+#endif
+*/
   }
 #endif
     /* USER CODE END 1 */
