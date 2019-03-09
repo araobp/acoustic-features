@@ -116,7 +116,9 @@ Trainable params: 82,066
 Non-trainable params: 0
 ```
 
-The model consumes only 25KBytes of SRAM and 105Kbytes (compressed) of Flash memory, and the duration of inference is around 170msec.
+### Cube.AI(X-CUBE-AI)
+
+I loaded the Keras model into Cube.AI and generated code for inference. The model consumed only 25KBytes of SRAM and 105Kbytes (compressed) of Flash memory, and the duration of inference was around 170msec on STM32L476RG.
 
 ## References
 
