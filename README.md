@@ -75,9 +75,9 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 
 **My experiments so far showed that MFSCs+CNN ourperformed MFCCs+DNN or MFCCs+CNN.** So I use MFSCs for deep learning in this project.
 
-### Size of actual network
+### CNN size
 
-The following CNN model performed very well on most of the use cases I have ever tried:
+The following CNN model performs very well on most of the use cases I have ever tried:
 
 ```
 Input tensor: MFSCs (64, 40, 1)
@@ -116,7 +116,7 @@ Trainable params: 82,066
 Non-trainable params: 0
 ```
 
-### Cube.AI(X-CUBE-AI)
+### Memory consumption and inference performance
 
 I loaded a trained CNN model (Keras model) into Cube.AI and generated code for inference. The model consumed only 25KBytes of SRAM and 105Kbytes (compressed) of Flash memory, and the duration of inference was around 170msec on STM32L476RG.
 
