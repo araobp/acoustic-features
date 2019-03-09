@@ -12,7 +12,7 @@
 
 - always-on key word detection (e.g., "OK Google" or "Alexa!")
 - musical instrument classification
-- environmental sound classification
+- acoustic scene classification
 
 I have tested all of the use cases above, and confirmed that my device can classify acoustic scenes.
 
@@ -77,92 +77,45 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 
 ### Size of actual network
 
-The following is a network model for key word detection I tested for the first time:
+The following CNN model performed very well on most of the use cases I have ever tried:
 
 ```
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-conv2d_1 (Conv2D)            (None, 62, 38, 4)         40        
+conv2d_81 (Conv2D)           (None, 62, 38, 8)         80        
 _________________________________________________________________
-max_pooling2d_1 (MaxPooling2 (None, 31, 19, 4)         0         
+max_pooling2d_79 (MaxPooling (None, 31, 19, 8)         0         
 _________________________________________________________________
-conv2d_2 (Conv2D)            (None, 29, 17, 8)         296       
+dropout_57 (Dropout)         (None, 31, 19, 8)         0         
 _________________________________________________________________
-max_pooling2d_2 (MaxPooling2 (None, 14, 8, 8)          0         
+conv2d_82 (Conv2D)           (None, 29, 17, 16)        1168      
 _________________________________________________________________
-conv2d_3 (Conv2D)            (None, 12, 6, 16)         1168      
+max_pooling2d_80 (MaxPooling (None, 14, 8, 16)         0         
 _________________________________________________________________
-max_pooling2d_3 (MaxPooling2 (None, 6, 3, 16)          0         
+dropout_58 (Dropout)         (None, 14, 8, 16)         0         
 _________________________________________________________________
-flatten_1 (Flatten)          (None, 288)               0         
+conv2d_83 (Conv2D)           (None, 12, 6, 32)         4640      
 _________________________________________________________________
-dropout_1 (Dropout)          (None, 288)               0         
+max_pooling2d_81 (MaxPooling (None, 6, 3, 32)          0         
 _________________________________________________________________
-dense_1 (Dense)              (None, 5)                 1445      
+dropout_59 (Dropout)         (None, 6, 3, 32)          0         
+_________________________________________________________________
+flatten_27 (Flatten)         (None, 576)               0         
+_________________________________________________________________
+dense_62 (Dense)             (None, 128)               73856     
+_________________________________________________________________
+dropout_60 (Dropout)         (None, 128)               0         
+_________________________________________________________________
+dense_63 (Dense)             (None, 18)                2322      
 =================================================================
-Total params: 2,949
-Trainable params: 2,949
+Total params: 82,066
+Trainable params: 82,066
 Non-trainable params: 0
 ```
 
-And memory usage of the Keras model on X-CUBE-AI:
+Input tensor: MFSCs (64, 40, 1)
 
-<img src="./stm32/acoustic_feature_camera/ai_memory_usage.jpg" width=400>
-
-To my surprise, my experiment showed that it only recognizes vowels, not words. To make it more practical, I added "vowel" classes ("a", "i" and "o") and increased the network size (RAM consumption: 25KBytes). The network seemed to learn the difference between words and vowels. Now, it works much better and can recognize key words.
-
-```
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #   
-=================================================================
-conv2d_4 (Conv2D)            (None, 62, 38, 8)         80        
-_________________________________________________________________
-max_pooling2d_4 (MaxPooling2 (None, 31, 19, 8)         0         
-_________________________________________________________________
-conv2d_5 (Conv2D)            (None, 29, 17, 16)        1168      
-_________________________________________________________________
-max_pooling2d_5 (MaxPooling2 (None, 14, 8, 16)         0         
-_________________________________________________________________
-conv2d_6 (Conv2D)            (None, 12, 6, 32)         4640      
-_________________________________________________________________
-max_pooling2d_6 (MaxPooling2 (None, 6, 3, 32)          0         
-_________________________________________________________________
-flatten_2 (Flatten)          (None, 576)               0         
-_________________________________________________________________
-dense_4 (Dense)              (None, 64)                36928     
-_________________________________________________________________
-dense_5 (Dense)              (None, 64)                4160      
-_________________________________________________________________
-dropout_2 (Dropout)          (None, 64)                0         
-_________________________________________________________________
-dense_6 (Dense)              (None, 8)                 520       
-=================================================================
-Total params: 47,496
-Trainable params: 47,496
-Non-trainable params: 0
-_________________________________________________________________
-```
-
-<img src="./stm32/acoustic_feature_camera/ai_memory_usage2.jpg" width=400>
-
-I made a performance test on the network. The result is as follows:
-
-```
-Running PerfTest on "network" with random inputs (16 iterations)...
-................
-
-Results for "network", 16 inferences @80MHz/80MHz (complexity: 1218272 MACC)
- duration     : 172.688 ms (average)
- CPU cycles   : 13815048 -340/+454 (average,-/+)
- CPU Workload : 17%
- cycles/MACC  : 11 (average for all layers)
- used stack   : 352 bytes
- used heap    : 0:0 0:0 (req:allocated,req:released) cfg=0
- ```
- 
- It takes 173ms for inference, and I think it seems to be the largest network size that STM32L476RG can run.
- 
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
