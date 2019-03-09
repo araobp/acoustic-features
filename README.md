@@ -80,6 +80,8 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 The following CNN model performed very well on most of the use cases I have ever tried:
 
 ```
+Input tensor: MFSCs (64, 40, 1)
+
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
@@ -114,7 +116,7 @@ Trainable params: 82,066
 Non-trainable params: 0
 ```
 
-Input tensor: MFSCs (64, 40, 1)
+The model consumes only 25KBytes of SRAM and 105Kbytes (compressed) of Flash memory.
 
 ## References
 
