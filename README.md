@@ -116,7 +116,7 @@ Trainable params: 82,066
 Non-trainable params: 0
 ```
 
-The model consumes only 25KBytes of SRAM and 105Kbytes (compressed) of Flash memory.
+The model consumes only 25KBytes of SRAM and 105Kbytes (compressed) of Flash memory, and the duration of inference is around 170msec.
 
 ## References
 
