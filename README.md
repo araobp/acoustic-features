@@ -86,10 +86,10 @@ SFFT/Spectrogram size
 - Stride: 13.2msec * 64
 - Ovelap: 50%
 
-MFSCs resolution: filterbank of 40 triagnle filters
-Input tensor: MFSCs int8_t (64, 40, 1)
+MFSCs resolution: filterbank of 40 triagle filters
+Quantized input tensor: MFSCs int8_t (64, 40, 1)
 
-However, X-CUBE-AI supports float32_t only, so int8_t is just for transmitting the data over UART.
+However, X-CUBE-AI currently supports float32_t only, so int8_t is just for transmitting the data to PC over UART.
 
 CNN model on Keras
 _________________________________________________________________
