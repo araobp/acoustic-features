@@ -77,11 +77,21 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 
 ### CNN size
 
-The following CNN model performs very well on most of the use cases I have ever tried:
+The following CNN model performs very well and avoids over-fittting in most of the use cases I have ever tried:
 
 ```
-Input tensor: MFSCs (64, 40, 1)
+Orignal data size: PCM 16bit 512*32 (26.3msec*32)
 
+SFFT/Spectrogram size
+- Stride: 13.2msec * 64
+- Ovelap: 50%
+
+MFSCs resolution: filterbank of 40 triagnle filters
+Input tensor: MFSCs int8_t (64, 40, 1)
+
+However, X-CUBE-AI supports float32_t only, so int8_t is just for transmitting the data over UART.
+
+CNN model on Keras
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
