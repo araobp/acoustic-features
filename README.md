@@ -130,6 +130,10 @@ Non-trainable params: 0
 
 I loaded a trained CNN model (Keras model) into Cube.AI and generated code for inference. The model consumed only 25KBytes of SRAM and 105Kbytes (compressed) of Flash memory, and the duration of inference was around 170msec on STM32L476RG.
 
+The duration of 170msec is acceptible (not too slow) in my use cases.
+
+And I know that Arm is working on [Helium](https://www.arm.com/why-arm/technologies/helium), so it will become a lot smaller than the stride time (13.2 msec) in future, and it will be able to process acoustic features for inference in real time.
+
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
