@@ -132,7 +132,7 @@ I loaded a trained CNN model (Keras model) into Cube.AI and generated code for i
 
 The duration of 170msec is acceptible (not too slow) in my use cases.
 
-And I know that Arm is working on [Helium](https://www.arm.com/why-arm/technologies/helium), so it will become a lot smaller than the stride time (13.2 msec) in future, and it will be able to process acoustic features for inference in real time.
+And I know that Arm is working on [Helium](https://www.arm.com/why-arm/technologies/helium), so it will be able to process acoustic features for inference in real time.
 
 ## References
 
