@@ -74,6 +74,8 @@ if __name__ == '__main__':
     mode = dsp.ENDFIRE
 
     ### Default settings to DSP ###
+    # Note : pre-emphasis (HPF) destorts lower frequencies, thus
+    #        not suitable for watching wave form on the oscilloscope.
     if itfc.is_active():
         itfc.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
         itfc.enable_pre_emphasis(True)  # Pre emphasis enabled
