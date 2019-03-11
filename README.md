@@ -75,11 +75,23 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 
 **My experiments so far showed that MFSCs+CNN ourperformed MFCCs+DNN or MFCCs+CNN.** So I use MFSCs for deep learning in this project.
 
-### Size of actual network
+### CNN size
 
-The following CNN model performed very well on most of the use cases I have ever tried:
+The following CNN model performs very well and avoids over-fittting in most of the use cases I have ever tried:
 
 ```
+Orignal data size: PCM 16bit 512*32 (26.3msec*32)
+
+SFFT/Spectrogram size
+- Stride: 13.2msec * 64
+- Ovelap: 50%
+
+MFSCs resolution: filterbank of 40 triagle filters
+Quantized input tensor: MFSCs int8_t (64, 40, 1)
+
+However, X-CUBE-AI currently supports float32_t only, so int8_t is just for transmitting the data to PC over UART.
+
+CNN model on Keras
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
@@ -114,7 +126,13 @@ Trainable params: 82,066
 Non-trainable params: 0
 ```
 
-Input tensor: MFSCs (64, 40, 1)
+### Memory consumption and inference performance
+
+I loaded a trained CNN model (Keras model) into Cube.AI and generated code for inference. The model consumed only 25KBytes of SRAM and 105Kbytes (compressed) of Flash memory, and the duration of inference was around 170msec on STM32L476RG.
+
+The duration of 170msec is acceptible (not too slow) in my use cases.
+
+And I know that Arm is working on [Helium](https://www.arm.com/why-arm/technologies/helium), so it will be able to process acoustic features for inference in real time.
 
 ## References
 
