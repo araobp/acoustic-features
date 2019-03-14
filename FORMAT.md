@@ -39,7 +39,6 @@ Cutoff | |                 |                                   |
          +-----------------------------------------------------+
          <---- length ----->
          - stride->
-         --
 ```
 
 ### One record in a dataset
@@ -73,15 +72,28 @@ Example:
 
 "dataset.yaml" is a config file with all the parameters for each use cases.
 
-Example:
+Example for MFCCs:
 ```
 feature: mfcc
-files: 30
-training_files: 20
+files: 100
+training_files: 70
 samples: 200
-length: 96
+length: 64
 filters: 40
 cutoff: 13
-stride: 96
-model: cnn_for_aed_restaurant_20181220081540.h5
+stride: 12
+model: null
+```
+
+Example for MFSCs:
+```
+feature: mfsc
+files: 100
+training_files: 70
+samples: 200
+length: 64
+filters: 40
+cutoff: null
+stride: 12
+model: null
 ```
