@@ -72,6 +72,19 @@ Example:
 
 "dataset.yaml" is a config file with all the parameters for each use cases.
 
+Example for MFSCs:
+```
+feature: mfsc
+files: 100
+training_files: 70
+samples: 200
+length: 64
+filters: 40
+cutoff: null
+stride: 12
+model: null
+```
+
 Example for MFCCs:
 ```
 feature: mfcc
@@ -85,15 +98,4 @@ stride: 12
 model: null
 ```
 
-Example for MFSCs:
-```
-feature: mfsc
-files: 100
-training_files: 70
-samples: 200
-length: 64
-filters: 40
-cutoff: null
-stride: 12
-model: null
-```
+"cutoff" is an upper bound of MFCC coefficients. For example, "13" means coefficients from 1st to 12th.
