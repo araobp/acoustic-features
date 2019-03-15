@@ -127,6 +127,10 @@ Trainable params: 82,066
 Non-trainable params: 0
 ```
 
+### Visualization of convolution layers
+
+**=> [Japanese word "sashimi" via convolution layer]**
+
 ### Memory consumption and inference performance
 
 I loaded a trained CNN model (Keras model) into Cube.AI and generated code for inference. The model consumed only 25KBytes of SRAM and 105Kbytes (compressed) of Flash memory, and the duration of inference was around 170msec on STM32L476RG.
