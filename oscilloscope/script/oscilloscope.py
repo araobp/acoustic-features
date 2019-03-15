@@ -452,7 +452,7 @@ if __name__ == '__main__':
     range_beam_forming = Tk.Scale(master=frame_row2, orient=Tk.HORIZONTAL, length=70,
                                   from_=-1, to=1, showvalue=0, command=beam_forming)
     button_confirm = Tk.Button(master=frame_row2, text='Confirm', command=confirm,
-                            bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
+                            bg='khaki1', activebackground='grey', padx=PADX, width=WIDTH)
 
     ### Row 3 ####
     button_filterbank = Tk.Button(master=frame_row3, text='Filterbank', command=filterbank,
