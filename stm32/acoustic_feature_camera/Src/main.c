@@ -97,7 +97,6 @@ volatile bool printing = false;
 
 // UART output mode
 volatile mode output_mode = FEATURES;
-mode filter_type = FEATURES;  // Current filter bank
 
 // UART one-byte input buffer
 uint8_t rxbuf[1];
@@ -234,10 +233,12 @@ void dsp(float32_t *s1, mode mode) {
   uint32_t start = 0;
   uint32_t end = 0;
 
+#ifdef INFERENCE
   static bool active = false;
   static int activity_cnt = 0;
   float32_t max_value;
   uint32_t max_index;
+#endif
 
   start = HAL_GetTick();
 

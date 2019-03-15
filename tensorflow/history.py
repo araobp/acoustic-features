@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 # Plot training & validation accuracy values
 def plot_accuracy(history):
     plt.plot(history.history['acc'])

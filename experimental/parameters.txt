@@ -1,0 +1,37 @@
+[1] System clock: 80MHz
+
+[2] DFSDM and PCM audio
+Clock divider: 32
+Sinc order: sinc3
+FOSR: 128
+IOSR: 1
+PCM audio resolution: 2*128^3=2^22(22bit)
+Right bit shift: 6bit to obtain 16bit PCM
+Sampling rate: 80MHz/32/128 = 20kHz (Nyquist freq: 10kHz)
+Quantization: 16bit PCM
+
+[3] DSP 
+
+AC coupling: on (optional)
+Pre emphasis: on (optional), Alpha: 0.95
+SFFT bin: 512 samples (26.3msec)
+SFFT windowing: Hann
+SFFT overlap: 50%, stride: 26.3/2 = 13.2msec
+Filterbank: Number of filters: 40
+Feature output: MFCCs or MFSCs
+Feature size: 40 filters * 64 samples = 2560
+Feature quantization: 8bit (int8_t)
+Normalization: Standard normalization
+
+[4] Neural network
+Class definition
+Neural network modeling
+
+
+
+
+
+
+
+
+
