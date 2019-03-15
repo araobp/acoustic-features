@@ -62,6 +62,7 @@ I acquired data on my own by using the components above, and it took a lot of ti
 
 - [Dataset of each use case](./dataset)
 - [My use cases on Jupyter Notebook](./tensorflow)
+- [Data format](./FORMAT.md)
 
 ### Modeling a neural network
 
@@ -73,7 +74,7 @@ Usually, raw sound data (PCM) is transformed into the following "coefficients" a
 - MFSCs (Mel Frequency Spectral Coefficients): the technique is to mimic the human auditory system.
 - MFCCs (Mel Frequency Cepstral Coefficients): the technique is similar to JPEG/MPEG's data compression.
 
-**My experiments so far showed that MFSCs+CNN ourperformed MFCCs+DNN or MFCCs+CNN.** So I use MFSCs for deep learning in this project.
+**My experiments so far showed that MFSCs+CNN ourperformed MFCCs+DNN or MFCCs+CNN.** And DNN tends to use more memory space than CNN does (more flash memory space, in case of X-CUBE-AI). So I use MFSCs for deep learning in this project.
 
 ### CNN size
 
