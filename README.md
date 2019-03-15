@@ -129,6 +129,8 @@ Non-trainable params: 0
 
 ### Visualization of convolution layers
 
+<img src="./tensorflow/layer0.png" width="700">
+
 **=> [Japanese word "sashimi" via convolution layer](./tensorflow/Visualization_sashimi.ipynb)**
 
 ### Memory consumption and inference performance
