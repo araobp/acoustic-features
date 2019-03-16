@@ -57,6 +57,8 @@ parser.add_argument("-c", "--color_map",
                     help="Color map", default=','.join(CMAP_LIST))
 parser.add_argument("-W", "--disable_window",
                     help="Disable window", action="store_true")
+parser.add_argument("-B", "--beam_forming",
+                    help="Beam forming", action="store_true", default=False)
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -75,7 +77,8 @@ if __name__ == '__main__':
     # Note : pre-emphasis (HPF) destorts lower frequencies, thus
     #        not suitable for watching wave form on the oscilloscope.
     if itfc.is_active():
-        itfc.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
+        if args.beam_forming:
+            itfc.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
         itfc.enable_pre_emphasis(True)  # Pre emphasis enabled
     ###############################
 
@@ -544,10 +547,11 @@ if __name__ == '__main__':
         frame_row2.pack(pady=PADY_GRID)
 
         # Beam forming
-        label_beam_forming.grid(row=0, column=0, padx=PADX_GRID)
-        label_left.grid(row=0, column=1, padx=PADX_GRID)
-        range_beam_forming.grid(row=0, column=2, padx=PADX_GRID)
-        label_right.grid(row=0, column=3, padx=PADX_GRID)
+        if args.beam_forming:
+            label_beam_forming.grid(row=0, column=0, padx=PADX_GRID)
+            label_left.grid(row=0, column=1, padx=PADX_GRID)
+            range_beam_forming.grid(row=0, column=2, padx=PADX_GRID)
+            label_right.grid(row=0, column=3, padx=PADX_GRID)
 
         # Repeat, pre_emphasis, save fig and delete
         button_repeat.grid(row=0, column=4, padx=PADX_GRID)
