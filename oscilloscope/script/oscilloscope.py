@@ -53,8 +53,6 @@ parser.add_argument("-o", "--oscilloscope_mode",
                     help="Oscilloscope mode", action="store_true")
 parser.add_argument("-f", "--fullscreen_mode",
                     help="Fullscreen mode", default=None)
-parser.add_argument("-S", "--simple_mode",
-                    help="Simple mode", action="store_true")
 parser.add_argument("-c", "--color_map",
                     help="Color map", default=','.join(CMAP_LIST))
 parser.add_argument("-W", "--disable_window",
@@ -497,26 +495,6 @@ if __name__ == '__main__':
         func = globals()[args.fullscreen_mode]
         if func in (raw_wave, fft, spectrogram, mfsc, mfcc):
             func(repeatable=True)
-
-    elif args.simple_mode:
-
-        frame_row1.pack(pady=PADY_GRID)
-        range_amplitude.grid(row=0, column=3, padx=PADX_GRID)
-        button_waveform.grid(row=0, column=4, padx=PADX_GRID)
-        button_psd.grid(row=0, column=5, padx=PADX_GRID)
-        range_spectrogram.grid(row=0, column=6, padx=PADX_GRID)
-        button_spectrogram.grid(row=0, column=7, padx=PADX_GRID)
-        button_mfsc.grid(row=0, column=10, padx=PADX_GRID)
-        button_mfcc.grid(row=0, column=12, padx=PADX_GRID)
-        label_image.grid(row=0, column=13, padx=PADX_GRID)
-        spectrum_subtraction.grid(row=0, column=15, padx=PADX_GRID)
-        cmap.grid(row=0, column=16, padx=PADX_GRID)
-    
-        frame_row2.pack(pady=PADY_GRID)
-        button_repeat.grid(row=0, column=0, padx=PADX_GRID)
-        button_pre_emphasis.grid(row=0, column=1, padx=PADX_GRID)
-        button_savefig.grid(row=0, column=2, padx=PADX_GRID)
-        button_quit.grid(row=0, column=3, padx=PADX_GRID)
 
     else:
 
