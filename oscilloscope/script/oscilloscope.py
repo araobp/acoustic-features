@@ -390,7 +390,7 @@ if __name__ == '__main__':
         
     ### Row 0b ####
     if args.browser:
-        list_files = Tk.Listbox(master=frame_row0b, width=30, height=20)
+        list_files = Tk.Listbox(master=frame_row0b, width=30, height=24)
         files = [f for f in os.listdir(args.dataset_folder+'/data')]
         for f in files:
             list_files.insert(Tk.END, f)
