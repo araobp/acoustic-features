@@ -353,7 +353,7 @@ if __name__ == '__main__':
                 range_window.set(pos)            
         elif c == 'up':
             if last_operation is None:
-                print('Up key becomes effective after executing an operations.')
+                print('Up key becomes effective after executing an operation.')
             else:
                 func = last_operation[0]
                 if func in (mfsc, mfcc):
