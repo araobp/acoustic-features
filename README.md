@@ -4,6 +4,12 @@
 
 **=> [Acoustic feature gallery (2D images)](./GALLERY.md)**
 
+## Motivation
+
+I am very impressed by Google's Coral SOM. But it seems to consume a lot of power. 2W! In the voice AI world, the rule is a bit different. It requires neither Linux nor edge TPU for inferece, but it should be something like wearable or attachable.
+
+Voice AI intreagues me a lot.
+
 ## Demo video on YouTube
 
 **=> [Edge AI demo](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
