@@ -4,9 +4,9 @@
 
 **=> [Acoustic feature gallery (2D images)](./GALLERY.md)**
 
-## Motivation
+## Background
 
-I am very impressed by Google's Coral SOM. But it seems to consume a lot of power. 2W! In the world of acoustic scene classification, the rule is a bit different. It requires neither Linux nor edge TPU for inferece, but it should be something like wearable or attachable.
+I am very impressed by Google's Coral SOM. But it seems to consume a lot of power. 2W! In the world of acoustic scene classification, the rule is a bit different. It requires neither Linux on four-core MPU nor edge TPU for inferece, but it should be something like wearable or attachable.
 
 ## Demo video on YouTube
 
