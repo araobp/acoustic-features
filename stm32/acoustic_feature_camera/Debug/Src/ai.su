@@ -1,0 +1,3 @@
+ai.c:25:6:normalize	48	static
+ai.c:50:5:ai_init	48	static
+ai.c:84:6:ai_infer	24	static

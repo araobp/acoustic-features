@@ -95,11 +95,11 @@ void MX_Core_Process(void)
     "SILENCE         "};
 #endif
 #ifdef ENVIRONMENTAL_SOUND_CLASSIFICATION
-  char class_labels[][20] = { "Train", "Station", "Fast food", "Escalator", "Mall",
-      "Street", "Harbor" };
-  char lcd_line2[][16] = { "TRAIN           ", "STATION         ",
+  char class_labels[][20] = { "Silence", "Train", "Station", "Fast food", "Escalator", "Mall",
+      "Harbor" };
+  char lcd_line2[][16] = { "SILENCE         ", "TRAIN           ", "STATION         ",
        "FAST FOOD       ", "ESCALATOR       ", "MALL            ",
-       "STREET          ", "HARBOR          " };
+       "HARBOR          " };
 #endif
 #ifdef KEY_WORD_DETECTION
   char class_labels[][20] = {
