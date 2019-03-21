@@ -82,8 +82,8 @@ void MX_Core_Process(void)
         "++ Restaurant ++", "** Restaurant **", "$$ Restaurant $$"};
 
 #else
-  char lcd_line1[5][16] = { "It is           ", "It is .         ",
-        "It is ..        ", "It is ...       ", "It is ....      " };
+  char lcd_line1[5][16] = { "Scene           ", "Scene .         ",
+        "Scene ..        ", "Scene ...       ", "Scene ....      " };
   #endif
   // Aliases of class labels.
   // Note: class labels are just number like 0, 1, 2... on CNN.
@@ -94,12 +94,13 @@ void MX_Core_Process(void)
     "FRAMENCO GUITAR ", "BLUES HARP      ", "TIN WHISTLE     ",
     "SILENCE         "};
 #endif
-#ifdef ENVIRONMENTAL_SOUND_CLASSIFICATION
-  char class_labels[][20] = { "Silence", "Train", "Station", "Fast food", "Escalator", "Mall",
-      "Harbor" };
-  char lcd_line2[][16] = { "SILENCE         ", "TRAIN           ", "STATION         ",
-       "FAST FOOD       ", "ESCALATOR       ", "MALL            ",
-       "HARBOR          " };
+#ifdef MY_HOME_CLASSIFICATION
+  char class_labels[][20] = { "chatting", "reading a book", "watching tv", "cocking",
+      "hamster", "silence", "vacuum cleaner", "taking a shower",
+      "washing machine", "doing the dishes"};
+  char lcd_line2[][16] = { "CHATTING        ", "READING A BOOK  ", "WATCHING TV     ",
+       "COCKING         ", "HAMSTER         ", "SILENCE         ",
+       "VACUUM CLEANER  ", "TAKING A SHOWER ", "WASHING MACHINE ", "DOING THE DISHES" };
 #endif
 #ifdef KEY_WORD_DETECTION
   char class_labels[][20] = {
