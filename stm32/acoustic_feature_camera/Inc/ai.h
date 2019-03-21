@@ -35,7 +35,7 @@ extern bool start_inference;
 /**
  * Enable/disable AI
  */
-#define INFERENCE
+//#define INFERENCE
 
 /**
  * Use case definition
