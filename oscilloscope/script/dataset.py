@@ -1,19 +1,71 @@
-# Dataset utilties for Keras
+'''
+Dataset utilties for Keras.
 
-import yaml
+Keras script on Jupyter Notebook or the oscilloscope GUI uses 
+these utilities to manipulate dataset.
+
+Author: https://github.com/araobp
+
+'''
+
 import numpy as np
 import sklearn.preprocessing as pp
-import random
+import matplotlib.pyplot as plt
+from keras.utils import to_categorical
+from keras import models
+
 import os
 import time
 import glob
+import random
 import pickle
-from keras.utils import to_categorical
-from keras import models
-import matplotlib.pyplot as plt
+import yaml
 
-# Convert data into Keras input format
+def plot_accuracy(history):
+    '''
+    Plot training & validation accuracy values for Keras output
+    '''
+    plt.plot(history.history['acc'])
+    plt.plot(history.history['val_acc'])
+
+    plt.title('Model accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Test'], loc='upper left')
+    plt.show()
+
+def plot_loss(history):
+    '''
+    Plot training & validation loss values for Keras output
+    '''
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('Model loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Test'], loc='upper left')
+    plt.show()
+
+def plot_layer(activations, sample, layer, num_columns):
+    '''
+    Visualize convolution layers and pool layers
+    '''
+    a = activations[layer].shape
+    rows = int(a[3]/num_columns)
+    fig, axarr = plt.subplots(rows, num_columns, figsize=[4*num_columns,5])
+    for i in range(a[3]):
+        row = int(i/num_columns)
+        x, y = row, i-num_columns*row
+        axarr[x, y].imshow(np.rot90(activations[layer][sample, :, :, i]), cmap='gray')
+        axarr[x, y].set_xticks([])
+        axarr[x, y].set_yticks([])
+    fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0, wspace=0)
+    fig.tight_layout()
+
 def to_keras_input(data, labels, shape, cutout=None, flatten=False):
+    '''
+    Convert data into Keras input format
+    '''
     keras_labels = []
     keras_data = []
     random.shuffle(data)
@@ -29,40 +81,6 @@ def to_keras_input(data, labels, shape, cutout=None, flatten=False):
         keras_data = keras_data.reshape((s[0], s[1]*s[2]))
     keras_labels = to_categorical(keras_labels)
     return (keras_data, keras_labels)
-
-# Plot training & validation accuracy values for Keras output
-def plot_accuracy(history):
-    plt.plot(history.history['acc'])
-    plt.plot(history.history['val_acc'])
-
-    plt.title('Model accuracy')
-    plt.ylabel('Accuracy')
-    plt.xlabel('Epoch')
-    plt.legend(['Train', 'Test'], loc='upper left')
-    plt.show()
-
-# Plot training & validation loss values for Keras output
-def plot_loss(history):
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('Model loss')
-    plt.ylabel('Loss')
-    plt.xlabel('Epoch')
-    plt.legend(['Train', 'Test'], loc='upper left')
-    plt.show()
-
-def plot_layer(activations, sample, layer, num_columns):
-    a = activations[layer].shape
-    rows = int(a[3]/num_columns)
-    fig, axarr = plt.subplots(rows, num_columns, figsize=[4*num_columns,5])
-    for i in range(a[3]):
-        row = int(i/num_columns)
-        x, y = row, i-num_columns*row
-        axarr[x, y].imshow(np.rot90(activations[layer][sample, :, :, i]), cmap='gray')
-        axarr[x, y].set_xticks([])
-        axarr[x, y].set_yticks([])
-    fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0, wspace=0)
-    fig.tight_layout()
 
 class DataSet:
     '''
@@ -122,7 +140,8 @@ class DataSet:
     
     def serialize(self):
         '''
-        Merge all the csv files into "merged.P" file with Python pickle module.
+        Merge all the csv files (raw data) into "merged.P" file
+        with Python pickle module.
         '''
         merged = {}
         labels = []
@@ -161,7 +180,7 @@ class DataSet:
             data_set = pickle.load(f)
         return data_set
    
-    def generate(self, flatten=False):
+    def generate(self, update=True, flatten=False):
         '''
         Note:
         This method assumes that pickled object "merged.P" exists in the dataset directory.
@@ -173,6 +192,11 @@ class DataSet:
         test_data_mfsc = []
         test_data_mfcc = []
         
+        # Merge all the csv files into "merge.P"
+        if update:
+            self.serialize()
+
+        # Load "merge.P"
         data_set = self._load()
         labels = list(data_set.keys())
 
@@ -200,6 +224,9 @@ class DataSet:
         return features
 
     def count_class_labels(self):
+        '''
+        Count the number of csv files for each class
+        '''
 
         data_files = glob.glob(self.dataset_folder + '/data/*features*.csv')
         class_labels = {}
