@@ -150,6 +150,11 @@ class DataSet:
         for file in data_files:
             params = file.split('-') 
             label = params[2]
+
+            if label not in labels:
+                labels.append(label)
+                merged[label] = []
+
             pos = params[3]
             try:
                 pos = int(pos)
@@ -161,19 +166,17 @@ class DataSet:
 
             with open(file) as f:
                 data = np.array(f.read().split(',')).astype(float)
-                mfsc = data[:self.samples*self.filters][start:end]
-                mfcc = data[self.samples*self.filters:][start:end]
-            if label not in labels:
-                labels.append(label)
-                merged[label] = []
-            merged[label].append([mfsc, mfcc])
+                mfsc = pp.scale(data[:self.samples*self.filters][start:end])
+                mfcc = pp.scale(data[self.samples*self.filters:][start:end])
+                merged[label].append([mfsc, mfcc])
 
         for label in labels:
             merged[label] = merged[label][:self.files]
         with open(self.dataset_folder+'/merged.P', 'wb') as f:
             pickle.dump(merged, f)
         with open(self.dataset_folder+'/class_labels.yaml', 'w') as f:
-            yaml.dump(labels, f)
+            self.class_labels = list(merged.keys())
+            yaml.dump(self.class_labels, f)
         
     def _load(self):
         with open(self.dataset_folder+'/merged.P', 'rb') as f:
@@ -198,10 +201,9 @@ class DataSet:
 
         # Load "merge.P"
         data_set = self._load()
-        labels = list(data_set.keys())
 
         # Shuffle for train data set and test data set
-        for label in labels:
+        for label in self.class_labels:
             random.shuffle(data_set[label])
             train = data_set[label][:self.num_train_files]
             test = data_set[label][self.num_train_files:]
@@ -212,14 +214,14 @@ class DataSet:
                 test_data_mfsc.append([label, d[0]])
                 test_data_mfcc.append([label, d[1]])
         features = {}
-        shape_train = (self.num_train_files*len(labels), self.length, self.filters, 1)
-        shape_test = (self.num_test_files*len(labels), self.length, self.filters, 1)
-        features['mfsc'] = [*(to_keras_input(train_data_mfsc, labels, shape_train)),
-                            *(to_keras_input(test_data_mfsc, labels, shape_test))]
-        shape_train = (self.num_train_files*len(labels), self.length, self.filters, 1)
-        shape_test = (self.num_test_files*len(labels), self.length, self.filters, 1)
-        features['mfcc'] = [*(to_keras_input(train_data_mfcc, labels, shape_train, cutout=(1, self.cutoff), flatten=flatten)),
-                            *(to_keras_input(test_data_mfcc, labels, shape_test, cutout=(1, self.cutoff), flatten=flatten))]
+        shape_train = (self.num_train_files*len(self.class_labels), self.length, self.filters, 1)
+        shape_test = (self.num_test_files*len(self.class_labels), self.length, self.filters, 1)
+        features['mfsc'] = [*(to_keras_input(train_data_mfsc, self.class_labels, shape_train)),
+                            *(to_keras_input(test_data_mfsc, self.class_labels, shape_test))]
+        shape_train = (self.num_train_files*len(self.class_labels), self.length, self.filters, 1)
+        shape_test = (self.num_test_files*len(self.class_labels), self.length, self.filters, 1)
+        features['mfcc'] = [*(to_keras_input(train_data_mfcc, self.class_labels, shape_train, cutout=(1, self.cutoff), flatten=flatten)),
+                            *(to_keras_input(test_data_mfcc, self.class_labels, shape_test, cutout=(1, self.cutoff), flatten=flatten))]
 
         return features
 

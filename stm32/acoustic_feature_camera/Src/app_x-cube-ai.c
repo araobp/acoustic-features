@@ -97,10 +97,11 @@ void MX_Core_Process(void)
 #ifdef MY_HOME_CLASSIFICATION
   char class_labels[][20] = { "chatting", "reading a book", "watching tv", "cocking",
       "hamster", "silence", "vacuum cleaner", "taking a shower",
-      "washing machine", "doing the dishes"};
+      "washing machine", "doing the dishes", "walking", "piano", "stairs", "snack"};
   char lcd_line2[][16] = { "CHATTING        ", "READING A BOOK  ", "WATCHING TV     ",
        "COCKING         ", "HAMSTER         ", "SILENCE         ",
-       "VACUUM CLEANER  ", "TAKING A SHOWER ", "WASHING MACHINE ", "DOING THE DISHES" };
+       "VACUUM CLEANER  ", "TAKING A SHOWER ", "WASHING MACHINE ", "DOING THE DISHES",
+       "WALKING         ", "PIANO           ", "STAIRS          ", "SNACK           "};
 #endif
 #ifdef KEY_WORD_DETECTION
   char class_labels[][20] = {
