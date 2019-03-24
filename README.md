@@ -135,7 +135,7 @@ Non-trainable params: 0
 
 <img src="./tensorflow/layer0.png" width="700">
 
-**=> [Japanese word "sashimi" via convolution layer](./tensorflow/Visualization_sashimi.ipynb)**
+**=> [Japanese word "sushi" via convolution layer](./tensorflow/Visualization_sushi.ipynb)**
 
 ### Memory consumption and inference performance
 
