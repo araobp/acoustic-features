@@ -145,6 +145,17 @@ And I know that Arm is working on [Helium](https://www.arm.com/why-arm/technolog
 
 I have been observing that **room impulse response** (it turns into **line distortion**) has an lot of effect on inference.
 
+```
+         Room impulse response
+                   :
+                   V
+Sound --->(Line distortion)----(+)--->[Feature engineering]--Feature-->[Normalization]--->[Neural Network]
+              convolved         ^
+                                | Added
+                                |
+                         (Ambient noise)
+```
+
 My strategy for tackling the problem is:
 - use **the same device** for both acquiring features and inference on the device.
 - use the device **at the same location** for both acquiring features and inference.
