@@ -141,6 +141,18 @@ The duration of 170msec is acceptible (not too slow) in my use cases.
 
 And I know that Arm is working on [Helium](https://www.arm.com/why-arm/technologies/helium), so it will be able to process acoustic features for inference in real time.
 
+## Room/hall impulse response
+
+I have been observing that room impulse response has an lot of effect on inference.
+
+My strategy for tackling the problem is:
+- use **the same device** for both acquiring features and inference on the device.
+- use the device **at the same location** for both acquiring features and inference.
+
+If the above conditions are satisfied, this small neural network works very well.
+
+They say, "AI should be a general purpose system", but I never belive it.
+
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
