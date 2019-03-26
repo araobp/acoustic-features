@@ -148,10 +148,11 @@ I have been observing that **room impulse response** (it turns into **line disto
 My strategy for tackling the problem is:
 - use **the same device** for both acquiring features and inference on the device.
 - use the device **at the same location** for both acquiring features and inference.
+- never change the values of parameters for feature engineering (e.g., parameters for filters).
 
 If the above conditions are satisfied, this small neural network works very well.
 
-They say, "AI should be a general purpose system", but I never belive it.
+They say, "AI should be a general purpose system", but I never belive it, when it comes to a real world.
 
 ## References
 
