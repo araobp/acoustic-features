@@ -6,7 +6,9 @@
 
 ## Demo video on YouTube
 
-**=> [Edge AI demo](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
+**=> [Edge AI demo (X-CUBE-AI/STM32L476RG)](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
+
+**=> [A similar program to the above, but inference performed by Keras/TensorFlow](https://studio.youtube.com/video/RV7oED41P2w/edit)**
 
 ## Motivation
 
