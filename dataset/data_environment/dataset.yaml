@@ -6,4 +6,4 @@ length: 64
 filters: 40
 cutoff: null
 stride: 12
-model: null
+model: my_life_environment_cnn_20190324225444.h5

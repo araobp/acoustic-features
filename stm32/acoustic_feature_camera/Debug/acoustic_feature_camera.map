@@ -38,22 +38,6 @@ Archive member included to satisfy reference by file (symbol)
                               ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o) (arm_bitreversal_32)
 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
                               ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_f32.o) (arm_radix8_butterfly_f32)
-C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
-                              Middlewares\ST\AI\AI\src\network.o (ai_platform_api_get_version)
-C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
-                              C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o) (core_get_error)
-C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
-                              C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o) (ai_check_custom_types)
-C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
-                              Middlewares\ST\AI\AI\src\network.o (forward_conv2d_nl_pool)
-C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
-                              Middlewares\ST\AI\AI\src\network.o (forward_relu)
-C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
-                              Middlewares\ST\AI\AI\src\network.o (pool_func_mp_array_f32)
-C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
-                              C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o) (ai_math_dot_array)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-aeabi_memcpy.o)
-                              C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o) (__aeabi_memcpy)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-calloc.o)
                               Src\dct.o (calloc)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-errno.o)
@@ -62,8 +46,6 @@ c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gc
                               c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-calloc.o) (_impure_ptr)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-init.o)
                               startup\startup_stm32l476xx.o (__libc_init_array)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcmp.o)
-                              C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o) (memcmp)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcpy-stub.o)
                               Middlewares\ST\AI\AI\src\network.o (memcpy)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memset.o)
@@ -156,18 +138,12 @@ c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gc
                               c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-nano-reallocr.o) (_malloc_usable_size_r)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_floor.o)
                               Src\dsp.o (floor)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_tanh.o)
-                              C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o) (tanhf)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_log10.o)
                               Src\dsp.o (log10)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_pow.o)
                               Src\dsp.o (pow)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_sqrt.o)
                               Src\dct.o (sqrt)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o)
-                              C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o) (expf)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_pow.o)
-                              C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o) (powf)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_sqrt.o)
                               ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cmplx_mag_f32.o) (sqrtf)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_log10.o)
@@ -176,10 +152,6 @@ c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gc
                               c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_pow.o) (__ieee754_pow)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_sqrt.o)
                               c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_sqrt.o) (__ieee754_sqrt)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
-                              c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o) (__ieee754_expf)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
-                              c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_pow.o) (__ieee754_powf)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_sqrt.o)
                               c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_sqrt.o) (__ieee754_sqrtf)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_fabs.o)
@@ -196,22 +168,10 @@ c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gc
                               c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_pow.o) (rint)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_scalbn.o)
                               c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_pow.o) (scalbn)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_expm1.o)
-                              c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_tanh.o) (expm1f)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_fabs.o)
-                              c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_tanh.o) (fabsf)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_finite.o)
-                              c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o) (finitef)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_nan.o)
-                              c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o) (nanf)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_scalbn.o)
-                              c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o) (scalbnf)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_log.o)
                               c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_log10.o) (__ieee754_log)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_copysign.o)
                               c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_scalbn.o) (copysign)
-c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_copysign.o)
-                              c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_scalbn.o) (copysignf)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu\libgcc.a(_arm_addsubdf3.o)
                               Src\dsp.o (__aeabi_dsub)
 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu\libgcc.a(_arm_muldivdf3.o)
@@ -1452,7 +1412,7 @@ Discarded input sections
  .text.ai_network_data_weights_get
                 0x00000000        0x8 Middlewares\ST\AI\AI\data\network_data.o
  .rodata.s_network_weights.5391
-                0x00000000    0x19e38 Middlewares\ST\AI\AI\data\network_data.o
+                0x00000000    0x1901c Middlewares\ST\AI\AI\data\network_data.o
  .debug_info    0x00000000      0x105 Middlewares\ST\AI\AI\data\network_data.o
  .debug_abbrev  0x00000000       0x82 Middlewares\ST\AI\AI\data\network_data.o
  .debug_aranges
@@ -1597,6 +1557,26 @@ Discarded input sections
                 0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
  .data.conv2d_6_weights_array
                 0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_bias
+                0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_bias_array
+                0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_layer
+                0x00000000       0x18 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_nl_layer
+                0x00000000       0x18 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_nl_output
+                0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_nl_output_array
+                0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_output
+                0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_output_array
+                0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_weights
+                0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
+ .data.dense_2_weights_array
+                0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
  .data.dense_3_bias
                 0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
  .data.dense_3_bias_array
@@ -1617,26 +1597,6 @@ Discarded input sections
                 0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
  .data.dense_3_weights_array
                 0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_bias
-                0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_bias_array
-                0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_layer
-                0x00000000       0x18 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_nl_layer
-                0x00000000       0x18 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_nl_output
-                0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_nl_output_array
-                0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_output
-                0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_output_array
-                0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_weights
-                0x00000000       0x24 Middlewares\ST\AI\AI\src\network.o
- .data.dense_4_weights_array
-                0x00000000       0x10 Middlewares\ST\AI\AI\src\network.o
  .data.g_network
                 0x00000000       0x48 Middlewares\ST\AI\AI\src\network.o
  .data.input_0_output
@@ -1651,13 +1611,13 @@ Discarded input sections
                 0x00000000        0x4 Middlewares\ST\AI\AI\src\network.o
  .rodata.conv2d_6_chain
                 0x00000000        0x4 Middlewares\ST\AI\AI\src\network.o
+ .rodata.dense_2_chain
+                0x00000000        0x4 Middlewares\ST\AI\AI\src\network.o
+ .rodata.dense_2_nl_chain
+                0x00000000        0x4 Middlewares\ST\AI\AI\src\network.o
  .rodata.dense_3_chain
                 0x00000000        0x4 Middlewares\ST\AI\AI\src\network.o
  .rodata.dense_3_nl_chain
-                0x00000000        0x4 Middlewares\ST\AI\AI\src\network.o
- .rodata.dense_4_chain
-                0x00000000        0x4 Middlewares\ST\AI\AI\src\network.o
- .rodata.dense_4_nl_chain
                 0x00000000        0x4 Middlewares\ST\AI\AI\src\network.o
  .debug_info    0x00000000     0x1b52 Middlewares\ST\AI\AI\src\network.o
  .debug_abbrev  0x00000000      0x2f0 Middlewares\ST\AI\AI\src\network.o
@@ -1991,155 +1951,6 @@ Discarded input sections
  .text          0x00000000        0x0 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
  .data          0x00000000        0x0 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
  .bss           0x00000000        0x0 ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
- .comment       0x00000000      0x696 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .iar.rtmodel   0x00000000       0x5c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .text          0x00000000      0x4c4 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .iar_vfe_header
-                0x00000000        0x4 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .rodata        0x00000000        0x1 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .iar.stackusage
-                0x00000000       0x72 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x73 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x77 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x89 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .debug_frame   0x00000000       0x8f C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .ARM.attributes
-                0x00000000       0x56 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .iar.fraginfo  0x00000000       0x26 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_platform_interface.o)
- .comment       0x00000000      0x68d C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .iar.rtmodel   0x00000000       0x26 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .text          0x00000000       0x24 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .iar_vfe_header
-                0x00000000        0x4 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .iar.stackusage
-                0x00000000       0x12 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .ARM.attributes
-                0x00000000       0x58 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .iar.fraginfo  0x00000000        0x5 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(core_common.o)
- .comment       0x00000000      0x68a C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .iar.rtmodel   0x00000000       0x5c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .text          0x00000000      0x1b8 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .iar_vfe_header
-                0x00000000        0x4 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .rodata        0x00000000       0x19 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .iar.stackusage
-                0x00000000       0x21 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .debug_frame   0x00000000       0x73 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .debug_frame   0x00000000       0x7d C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .debug_frame   0x00000000       0x7b C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .ARM.attributes
-                0x00000000       0x56 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .iar.fraginfo  0x00000000       0x21 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers.o)
- .comment       0x00000000      0x69f C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .iar.rtmodel   0x00000000       0x5c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .text          0x00000000     0x1000 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .iar_vfe_header
-                0x00000000        0x4 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .iar.stackusage
-                0x00000000       0x6b C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x88 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x88 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x88 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x93 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0xae C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x7f C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x88 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x89 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x88 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x92 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .debug_frame   0x00000000       0x7f C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .ARM.attributes
-                0x00000000       0x56 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .iar.fraginfo  0x00000000       0x13 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_conv2d_generic_float.o)
- .comment       0x00000000      0x69b C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .iar.rtmodel   0x00000000       0x5c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .text          0x00000000      0x716 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .iar_vfe_header
-                0x00000000        0x4 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .iar.stackusage
-                0x00000000       0x7b C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x89 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x83 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x77 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x77 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x93 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x94 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x78 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x78 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x77 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x77 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .debug_frame   0x00000000       0x7b C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .ARM.attributes
-                0x00000000       0x58 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .iar.fraginfo  0x00000000       0x19 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_nl_generic_float.o)
- .comment       0x00000000      0x69d C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .iar.rtmodel   0x00000000       0x5c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .text          0x00000000      0x66c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .iar_vfe_header
-                0x00000000        0x4 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .iar.stackusage
-                0x00000000       0x18 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .debug_frame   0x00000000       0x7c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .debug_frame   0x00000000       0x7c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .debug_frame   0x00000000       0x88 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .debug_frame   0x00000000       0x89 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .ARM.attributes
-                0x00000000       0x58 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .iar.fraginfo  0x00000000        0x6 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(layers_pool_generic_float.o)
- .comment       0x00000000      0x694 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .iar.rtmodel   0x00000000       0x26 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .text          0x00000000       0xf0 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .iar_vfe_header
-                0x00000000        0x4 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .iar.stackusage
-                0x00000000       0x41 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x7b C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x77 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .debug_frame   0x00000000       0x6c C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .ARM.attributes
-                0x00000000       0x58 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .iar.fraginfo  0x00000000       0x11 C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a(ai_math_helpers.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-aeabi_memcpy.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-aeabi_memcpy.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-aeabi_memcpy.o)
- .text.__aeabi_memcpy
-                0x00000000        0x4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-aeabi_memcpy.o)
- .debug_frame   0x00000000       0x20 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-aeabi_memcpy.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-aeabi_memcpy.o)
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-calloc.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-calloc.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-calloc.o)
@@ -2152,13 +1963,6 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-init.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-init.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-init.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcmp.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcmp.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcmp.o)
- .text.memcmp   0x00000000       0x1e c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcmp.o)
- .debug_frame   0x00000000       0x28 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcmp.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcmp.o)
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcpy-stub.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcpy-stub.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a(lib_a-memcpy-stub.o)
@@ -2390,13 +2194,6 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_floor.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_floor.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_floor.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_tanh.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_tanh.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_tanh.o)
- .text.tanhf    0x00000000       0xa4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_tanh.o)
- .debug_frame   0x00000000       0x3c c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_tanh.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_tanh.o)
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_log10.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_log10.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_log10.o)
@@ -2406,24 +2203,6 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_sqrt.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_sqrt.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-w_sqrt.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o)
- .text.expf     0x00000000       0xf4 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o)
- .rodata.expf.str1.1
-                0x00000000        0x5 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o)
- .debug_frame   0x00000000       0x44 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_exp.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_pow.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_pow.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_pow.o)
- .text.powf     0x00000000      0x2f8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_pow.o)
- .rodata.powf.str1.1
-                0x00000000        0x5 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_pow.o)
- .debug_frame   0x00000000       0x50 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_pow.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_pow.o)
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_sqrt.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_sqrt.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-wf_sqrt.o)
@@ -2436,30 +2215,6 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_sqrt.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_sqrt.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_sqrt.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
- .text.__ieee754_expf
-                0x00000000      0x1a8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
- .rodata.halF   0x00000000        0x8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
- .rodata.ln2HI  0x00000000        0x8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
- .rodata.ln2LO  0x00000000        0x8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
- .debug_frame   0x00000000       0x20 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_exp.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
- .text.__ieee754_powf
-                0x00000000      0x584 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
- .rodata.__ieee754_powf.str1.1
-                0x00000000        0x1 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
- .rodata.bp     0x00000000        0x8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
- .rodata.dp_h   0x00000000        0x8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
- .rodata.dp_l   0x00000000        0x8 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
- .debug_frame   0x00000000       0x68 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_pow.o)
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_sqrt.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_sqrt.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-ef_sqrt.o)
@@ -2484,55 +2239,12 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_scalbn.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_scalbn.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_scalbn.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_expm1.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_expm1.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_expm1.o)
- .text.expm1f   0x00000000      0x258 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_expm1.o)
- .debug_frame   0x00000000       0x20 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_expm1.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_expm1.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_fabs.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_fabs.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_fabs.o)
- .text.fabsf    0x00000000        0xe c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_fabs.o)
- .debug_frame   0x00000000       0x20 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_fabs.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_fabs.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_finite.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_finite.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_finite.o)
- .text.finitef  0x00000000       0x14 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_finite.o)
- .debug_frame   0x00000000       0x20 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_finite.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_finite.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_nan.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_nan.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_nan.o)
- .text.nanf     0x00000000        0xc c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_nan.o)
- .debug_frame   0x00000000       0x20 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_nan.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_nan.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_scalbn.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_scalbn.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_scalbn.o)
- .text.scalbnf  0x00000000       0xc0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_scalbn.o)
- .debug_frame   0x00000000       0x3c c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_scalbn.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_scalbn.o)
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_log.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_log.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-e_log.o)
  .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_copysign.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_copysign.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-s_copysign.o)
- .text          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_copysign.o)
- .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_copysign.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_copysign.o)
- .text.copysignf
-                0x00000000       0x18 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_copysign.o)
- .debug_frame   0x00000000       0x20 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_copysign.o)
- .ARM.attributes
-                0x00000000       0x34 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libm.a(lib_a-sf_copysign.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu\libgcc.a(_arm_addsubdf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu\libgcc.a(_arm_addsubdf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu\libgcc.a(_arm_muldivdf3.o)
@@ -2621,7 +2333,6 @@ LOAD Src\tim.o
 LOAD Src\usart.o
 LOAD startup\startup_stm32l476xx.o
 LOAD ../Drivers/CMSIS/Lib\libarm_cortexM4lf_math.a
-LOAD C:\Users\shiny\Documents\GitHub\acoustic-features\stm32\acoustic_feature_camera\Middlewares\ST\AI\AI\lib\network_runtime.a
                 0x00000080                malloc_getpagesize_P = 0x80
 START GROUP
 LOAD c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7e-m/fpu\libc_nano.a
@@ -3892,7 +3603,7 @@ LOAD c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../l
  libgcc.a(*)
 
 .ARM.attributes
-                0x00000000       0x34
+                0x00000000       0x30
  *(.ARM.attributes)
  .ARM.attributes
                 0x00000000       0x22 c:/program files (x86)/atollic/truestudio for stm32 9.2.0/armtools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7e-m/fpu/crti.o

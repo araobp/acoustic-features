@@ -147,7 +147,7 @@ if __name__ == '__main__':
         if class_label == '':
             filename = dataset_folder+'/data/{}-{}'.format(dt, func.__name__)
         else:
-            if func == mfsc or func == mfcc:  # Save both data at a time
+            if func == mfsc or func == mfcc:  # f both data at a time
                 filename = dataset_folder+'/data/{}-features-{}-{}-{}'.format(dt, class_label, pos, ANGLE[angle+2])
             else:
                 filename = dataset_folder+'/data/{}-{}-{}'.format(dt, class_label, func.__name__)
@@ -163,11 +163,8 @@ if __name__ == '__main__':
         if repeat_action:
             root.after(50, func)
 
-    def infer(data, pos=None):
-        if pos is None:
-            pos = 0
-        probabilities = cnn_model.infer(data)
-        class_label, p = probabilities[pos][0]
+    def infer(data):
+        class_label, p = cnn_model.infer(data)
         label_inference.configure(text='This is {} ({} %)'.format(class_label, int(p)))
         
     def raw_wave(repeatable=True):
@@ -226,7 +223,8 @@ if __name__ == '__main__':
             gui.plot(ax, dsp.MFSC, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
-            infer(data, pos)
+            a, b, c = window[0], window[1], window[2]
+            infer(data[a:b,:c])
         last_operation = (mfsc, data, window, pos)
         fig.tight_layout()
         canvas.draw()
@@ -249,8 +247,9 @@ if __name__ == '__main__':
                 window = None
             gui.plot(ax, dsp.MFCC, range_, cmap_, ssub, data=data,
                          window=window)
-        if cnn_model:
-            infer(data, pos)
+        # TODO: inference for MFCCs
+        #if cnn_model:
+        #    infer(data, pos)
         last_operation = (mfcc, data, window, pos)
         fig.tight_layout()
         canvas.draw()

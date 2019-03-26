@@ -15,23 +15,14 @@ class Model:
 
     # ML Inference
     def infer(self, data):
-        probabilities = []
         data = data.astype(float)
         shape = data.shape
-        data = pp.scale(data.flatten()).reshape(*shape, 1)
+        data = pp.scale(data.flatten()).reshape(1, *shape, 1)
         if self.activation_model:
-            windowed_data = []
-            for w in self.dataset.windows:
-                d = data[w[0]:w[1], :w[2], :]                    
-                windowed_data.append(d)
-            activations = self.activation_model.predict(np.array(windowed_data))
-            result = (activations[-1]*100)  # The last layer
-            for r in result:
-                indexes = np.argsort(r)
-                p = []
-                for idx in reversed(indexes):
-                    p.append([self.dataset.class_labels[idx], r[idx]])
-                probabilities.append(p)
-            return probabilities
+            activations = self.activation_model.predict(data)
+            result = (activations[-1][0]*100)  # The last layer
+            max_idx = np.argmax(result)
+            print(result)
+            return (self.dataset.class_labels[max_idx], result[max_idx])
         else:
             return None

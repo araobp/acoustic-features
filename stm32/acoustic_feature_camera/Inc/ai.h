@@ -47,8 +47,8 @@ extern bool start_inference;
  */
 //#define MUSICAL_INSTRUMENT_RECOGNITION
 //#define KEY_WORD_DETECTION
-//#define ENVIRONMENTAL_SOUND_CLASSIFICATION
-#define MY_HOME_CLASSIFICATION
+#define ENVIRONMENTAL_SOUND_CLASSIFICATION
+//#define MY_HOME_CLASSIFICATION
 
 // Voice activity detection (VAD) threshold in dB
 #ifdef KEY_WORD_DETECTION
