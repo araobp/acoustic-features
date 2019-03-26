@@ -53,8 +53,8 @@
   */
 /* Includes ------------------------------------------------------------------*/
 
-void MX_Core_Init(void);
-void MX_Core_Process(void);
+void MX_X_CUBE_AI_Init(void);
+void MX_X_CUBE_AI_Process(void);
 
 /* Multiple network support --------------------------------------------------*/
 
@@ -196,4 +196,4 @@ AI_API_DECLARE_END
 }
 #endif
 
-#endif /*__STMicroelectronics_X-CUBE-AI_3_3_0_H */
+#endif /*__STMicroelectronics_X-CUBE-AI_3_4_0_H */

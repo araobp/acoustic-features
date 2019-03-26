@@ -59,7 +59,7 @@
 /*************************************************************************
   *
   */
-void MX_Core_Init(void)
+void MX_X_CUBE_AI_Init(void)
 {
     MX_UARTx_Init();
     /* USER CODE BEGIN 0 */
@@ -73,10 +73,11 @@ void MX_Core_Init(void)
     /* USER CODE END 0 */
 }
 
-void MX_Core_Process(void)
+void MX_X_CUBE_AI_Process(void)
 {
     /* USER CODE BEGIN 1 */
 #ifdef INFERENCE
+
 #ifdef KEY_WORD_DETECTION
   char lcd_line1[5][16] = { ">< Restaurant ><", "<> Restaurant <>",
         "++ Restaurant ++", "** Restaurant **", "$$ Restaurant $$"};
@@ -154,11 +155,10 @@ void MX_Core_Process(void)
 #ifndef KEY_WORD_DETECTION
   static ai_float out_hist[HISTORY_LENGTH][AI_NETWORK_OUT_1_SIZE] = { { 0.0 } };
   ai_float out_sum[AI_NETWORK_OUT_1_SIZE] = { 0.0 };
-#else
-  float32_t max_value;
 #endif
+  float32_t max_value;
   static int current = 0;
-  uint32_t class;
+  uint32_t class, max_idx;
 
   // Counter
   static int cnt = 0;
@@ -190,19 +190,15 @@ void MX_Core_Process(void)
 
     ai_infer(in_data, out_data);  // Inference
 
-    // Output the inference result to console
-    printf("\n-- Inference %d --\n", cnt++);
-    for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
-      printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));
-#ifndef KEY_WORD_DETECTION
-      out_hist[current][i] = out_data[i];
-      out_sum[i] = 0.0;
-#endif
-    }
+    arm_max_f32(out_data, AI_NETWORK_OUT_1_SIZE, &max_value, &max_idx);
 
 #ifdef KEY_WORD_DETECTION
-    arm_max_f32(out_data, AI_NETWORK_OUT_1_SIZE, &max_value, &class);
+    class = max_idx
 #else
+    for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
+      out_hist[current][i] = out_data[i];
+      out_sum[i] = 0.0;
+    }
 
     if (++current >= HISTORY_LENGTH) {
       current = 0;
@@ -221,6 +217,7 @@ void MX_Core_Process(void)
       }
     }
 #endif
+
     lcd_clear();
     lcd_string(lcd_line1[current], 16);
     lcd_newline();
@@ -228,16 +225,19 @@ void MX_Core_Process(void)
 
     start_inference = false;
 
-/*
-#ifdef KEY_WORD_DETECTION
-    printf("---\n");
-    for (int n=0; n<WINDOW_LENGTH*NUM_FILTERS-1; n++) {
-      printf("%2.1d,", (int)in_data[n]);
+#ifdef INFERENCE_LOGGING
+    printf("%lu,%lu,", max_idx, class);
+    for (int i = 0; i < AI_NETWORK_OUT_1_SIZE-1; i++) {
+      printf("%d,", (int)(out_data[i]*1000));  // 1000%
     }
-    printf("%2.1d\n", (int)in_data[WINDOW_LENGTH*NUM_FILTERS-1]);
-    printf("---\n");
+    printf("%d\n", (int)(out_data[AI_NETWORK_OUT_1_SIZE-1])*1000);  // 1000%
+#else
+    printf("\n-- Inference %d --\n", cnt++);
+    for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
+      printf(" %-12s%3d%%\n", class_labels[i], (int) (out_data[i] * 100));  // 100%
+    }
 #endif
-*/
+
   }
 #endif
     /* USER CODE END 1 */

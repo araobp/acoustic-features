@@ -1,0 +1,9 @@
+lcd.c:17:6:write_command	24	static
+lcd.c:28:6:write_data	24	static
+lcd.c:35:6:lcd_init	8	static
+lcd.c:51:6:lcd_clear	0	static
+lcd.c:55:6:lcd_newline	0	static
+lcd.c:59:6:lcd_move_left	0	static
+lcd.c:63:6:lcd_move_right	0	static
+lcd.c:67:6:lcd_string	16	static
+lcd.c:74:6:lcd_test	8	static

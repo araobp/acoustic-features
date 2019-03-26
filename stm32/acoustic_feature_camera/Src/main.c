@@ -113,7 +113,7 @@ volatile beam_forming_setting beam_forming_mode = ENDFIRE;
 #endif
 
 // Debug
-volatile debug debug_output = ELAPSED_TIME;
+volatile debug debug_output = DISABLED;
 uint32_t elapsed_time = 0;
 
 // Buffers
@@ -260,7 +260,7 @@ void dsp(float32_t *s1, mode mode) {
       // Voice activity detection for inference by X-CUBE-AI
       if (!start_inference) {
         if (!active) {
-          arm_max_f32(s1, NUM_FILTERS, &max_value, &max_index);  // Examine lower frequencies
+          arm_max_f32(s1, NUM_FILTERS, &max_value, &max_index);
           if (max_value > ACTIVITY_THRESHOLD) {
             active = true;
             activity_cnt = 0;
@@ -459,7 +459,7 @@ int main(void)
   MX_DFSDM1_Init();
   MX_CRC_Init();
   MX_I2C1_Init();
-  MX_Core_Init();
+  MX_X_CUBE_AI_Init();
   /* USER CODE BEGIN 2 */
 
   f_s = SystemCoreClock / hdfsdm1_channel2.Init.OutputClock.Divider
@@ -590,7 +590,7 @@ int main(void)
 
     /* USER CODE END WHILE */
 
-  MX_Core_Process();
+  MX_X_CUBE_AI_Process();
     /* USER CODE BEGIN 3 */
 
   }

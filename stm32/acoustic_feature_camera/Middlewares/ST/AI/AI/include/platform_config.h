@@ -1,6 +1,6 @@
 #ifndef __AI_PLATFORM_CONFIG_H__ 
 #define __AI_PLATFORM_CONFIG_H__
 
-#define AI_PLATFORM_RUNTIME_REVISION_ID   "(rev-90755fc6d4a6b7c5f3d0b8c432322478fefbc3c2)"
+#define AI_PLATFORM_RUNTIME_REVISION_ID   "(rev-0460b0fafaa76f402b64e43edb97aa0604fd2d3d)"
  
 #endif  /*__AI_PLATFORM_CONFIG_H__*/ 

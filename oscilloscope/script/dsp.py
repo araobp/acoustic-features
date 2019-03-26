@@ -81,63 +81,65 @@ class Interface:
     def serial_port(self):
         return serial.Serial(self.port, BAUD_RATE, timeout=3)
 
-    # As an application processor, send a command
-    # then receive and process the output.
     def read(self, cmd):
-        
+        '''
+        As an application processor, send a command
+        then receive and process the output.
+        '''        
         data = []
-        with self.lock:
-            try:
-                ser = self.serial_port()
-                ser.write(cmd)
+        try:
+            ser = self.serial_port()
+            ser.write(cmd)
 
-                if cmd == RAW_WAVE:  # 16bit quantization
-                    rx = ser.read(self.num_samples[cmd]*2)
-                    rx = zip(rx[0::2], rx[1::2])
-                    for msb, lsb in rx:
-                        d = b16_to_int(msb, lsb, True)
-                        data.append(d)
-                    data = np.array(data, dtype=np.int16)
-                elif cmd == FILTERBANK:
-                    filterbank = []
-                    k_range = []
-                    while True:
-                        rx = ser.readline().decode('ascii').rstrip('\n,')
-                        if rx == 'e':
-                            break
-                        temp = rx.split(',')
-                        k_range.append(np.array(temp[0].split(':'), dtype=int))
-                        filterbank.append(np.array(temp[1:], dtype=float))
-                    data = (k_range, filterbank)
-                elif cmd == ELAPSED_TIME:
-                    data = ser.readline().decode('ascii').rstrip('\n,')
-                    print(data)
-                elif cmd == FEATURES:
-                    rx = ser.read(self.num_samples[cmd])
-                    n = 0
-                    half = int(self.num_samples[cmd]/2)
-                    for d in rx:
-                        d = b8_to_int(d, True)
-                        data.append(d)
-                    data = np.array(data, dtype=np.int)
-                    data = data.reshape(self.shape[cmd])                    
-                else:  # 8bit quantization
-                    rx = ser.read(self.num_samples[cmd])
-                    for d in rx:
-                        d  = b8_to_int(d, True)
-                        data.append(d)
-                    data = np.array(data, dtype=np.int)
-                    if self.shape[cmd]:
-                        data = data.reshape(self.shape[cmd])
-                ser.close()
-            except:
-                print('*** serial timeout!')
-                #traceback.print_exc()
+            if cmd == RAW_WAVE:  # 16bit quantization
+                rx = ser.read(self.num_samples[cmd]*2)
+                rx = zip(rx[0::2], rx[1::2])
+                for msb, lsb in rx:
+                    d = b16_to_int(msb, lsb, True)
+                    data.append(d)
+                data = np.array(data, dtype=np.int16)
+            elif cmd == FILTERBANK:
+                filterbank = []
+                k_range = []
+                while True:
+                    rx = ser.readline().decode('ascii').rstrip('\n,')
+                    if rx == 'e':
+                        break
+                    temp = rx.split(',')
+                    k_range.append(np.array(temp[0].split(':'), dtype=int))
+                    filterbank.append(np.array(temp[1:], dtype=float))
+                data = (k_range, filterbank)
+            elif cmd == ELAPSED_TIME:
+                data = ser.readline().decode('ascii').rstrip('\n,')
+                print(data)
+            elif cmd == FEATURES:
+                rx = ser.read(self.num_samples[cmd])
+                n = 0
+                half = int(self.num_samples[cmd]/2)
+                for d in rx:
+                    d = b8_to_int(d, True)
+                    data.append(d)
+                data = np.array(data, dtype=np.int)
+                data = data.reshape(self.shape[cmd])                    
+            else:  # 8bit quantization
+                rx = ser.read(self.num_samples[cmd])
+                for d in rx:
+                    d  = b8_to_int(d, True)
+                    data.append(d)
+                data = np.array(data, dtype=np.int)
+                if self.shape[cmd]:
+                    data = data.reshape(self.shape[cmd])
+            ser.close()
+        except:
+            print('*** serial timeout!')
+            #traceback.print_exc()
 
         return data
 
-    # Enable/disable pre-emphasis
     def enable_pre_emphasis(self, enable):
+        '''
+        Enable/disable pre-emphasis.
+        '''
         ser = self.serial_port()
         if enable:
             ser.write(ENABLE_PRE_EMPHASIS)
@@ -145,21 +147,27 @@ class Interface:
             ser.write(DISABLE_PRE_EMPHASIS)
         ser.close()
 
-    # Enable/disable beam forming
     def set_beam_forming(self, mode, angle):
+        '''
+        Enable/disable beam forming
+        '''
         ser = self.serial_port()
         ser.write(mode)
         ser.write(angle.encode('ascii'))
         ser.close()
 
-    # Left mic only
     def left_mic_only(self):
+        '''
+        Left mic only
+        '''
         ser = self.serial_port()
         ser.write(LEFT_MIC_ONLY)
         ser.close()
 
-    # Right mic only
     def right_mic_only(self):
+        '''
+        Right mic only
+        '''
         ser = self.serial_port()
         ser.write(RIGHT_MIC_ONLY)
         ser.close()

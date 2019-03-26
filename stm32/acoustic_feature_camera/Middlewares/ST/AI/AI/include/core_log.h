@@ -38,7 +38,7 @@
  */
 
 #if defined HAS_LOG && (HAS_LOG>=0)
-#include "log.h"
+#include "ai_log.h"
   #define AI_LOG_SECTION(...)            { __VA_ARGS__ }
 
   #define AI_LOG_SET_LEVEL(level_)      AI_WRAP_FUNC(log_set_level(level_);)

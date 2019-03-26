@@ -6,4 +6,4 @@ length: 64
 filters: 40
 cutoff: null
 stride: 12
-model: null
+model: my_home_cnn_colab_20190324213722.h5

@@ -1,0 +1,87 @@
+Configuration	acoustic_feature_camera
+STM32CubeMX 	5.0.0
+Date	12/26/2018
+MCU	STM32L476RGTx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+DAC1	Connected to external pin only	DAC1_OUT1	PA4
+DAC1	Connected to external pin only	DAC1_OUT2	PA5
+DFSDM1:Channel 2	PDM/SPI Input from ch3 and Internal Clock	DFSDM1_DATIN3	PC7
+DFSDM1:Channel 2	PDM/SPI Input from ch3 and Internal Clock	DFSDM1_CKOUT	PC2
+DFSDM1:Channel 3	PDM/SPI input from ch3 and internal clock	DFSDM1_DATIN3	PC7
+DFSDM1:Channel 3	PDM/SPI input from ch3 and internal clock	DFSDM1_CKOUT	PC2
+SYS	Serial Wire	SYS_JTCK-SWCLK	PA14 (JTCK-SWCLK)
+SYS	Serial Wire	SYS_JTMS-SWDIO	PA13 (JTMS-SWDIO)
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+USART2	Asynchronous	USART2_RX	PA3
+USART2	Asynchronous	USART2_TX	PA2
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+2	PC13	GPIO_EXTI13	B1 [Blue PushButton]
+10	PC2	DFSDM1_CKOUT	
+16	PA2	USART2_TX	USART_TX
+17	PA3	USART2_RX	USART_RX
+20	PA4	DAC1_OUT1	
+21	PA5	DAC1_OUT2	
+38	PC7	DFSDM1_DATIN3	
+46	PA13 (JTMS-SWDIO)	SYS_JTMS-SWDIO	TMS
+49	PA14 (JTCK-SWCLK)	SYS_JTCK-SWCLK	TCK
+55	PB3 (JTDO-TRACESWO)*	SYS_JTDO-SWO	SWO
+PERIPHERALS	MODES	FUNCTIONS	PINS
+DAC1	Connected to external pin only	DAC1_OUT1	PA4
+DAC1	Connected to external pin only	DAC1_OUT2	PA5
+DFSDM1:Channel 2	PDM/SPI Input from ch3 and Internal Clock	DFSDM1_DATIN3	PC7
+DFSDM1:Channel 2	PDM/SPI Input from ch3 and Internal Clock	DFSDM1_CKOUT	PC2
+DFSDM1:Channel 3	PDM/SPI input from ch3 and internal clock	DFSDM1_DATIN3	PC7
+DFSDM1:Channel 3	PDM/SPI input from ch3 and internal clock	DFSDM1_CKOUT	PC2
+SYS	Serial Wire	SYS_JTCK-SWCLK	PA14 (JTCK-SWCLK)
+SYS	Serial Wire	SYS_JTMS-SWDIO	PA13 (JTMS-SWDIO)
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+USART2	Asynchronous	USART2_RX	PA3
+USART2	Asynchronous	USART2_TX	PA2
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+2	PC13	GPIO_EXTI13	B1 [Blue PushButton]
+10	PC2	DFSDM1_CKOUT	
+16	PA2	USART2_TX	USART_TX
+17	PA3	USART2_RX	USART_RX
+20	PA4	DAC1_OUT1	
+21	PA5	DAC1_OUT2	
+38	PC7	DFSDM1_DATIN3	
+46	PA13 (JTMS-SWDIO)	SYS_JTMS-SWDIO	TMS
+49	PA14 (JTCK-SWCLK)	SYS_JTCK-SWCLK	TCK
+55	PB3 (JTDO-TRACESWO)*	SYS_JTDO-SWO	SWO
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : acoustic_feature_camera
+Project Folder : C:\Users\shiny\Documents\GitHub\acoustic-features\stm32
+Toolchain / IDE : TrueSTUDIO
+Firmware Package Name and Version : STM32Cube FW_L4 V1.13.0
+
+
+Code Generation Settings : 
+STM32Cube Firmware Library Package : Copy only the necessary library files
+Generate peripheral initialization as a pair of '.c/.h' files per peripheral : Yes
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : No
+
+
+Toolchains Settings : 
+Compiler Optimizations : Balanced Size/Speed
+
+
+
+
+
+

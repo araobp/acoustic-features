@@ -166,9 +166,6 @@ void ai_conv2d_kernel_depthwise_f32(ai_node* node,
   const ai_float* in_ptr = ((const ai_float*)in_data) + 
                            y_start*width_in*n_channel_in;
   ai_size out  = 0;
-#if defined(HAS_X86) || defined(__CC_ARM)      /* X86 OR ARM Keil Compiler */
-  register ai_vec4_float ch_in_f, weights_in_f;
-#endif
   //for(ai_size group = 0, out = 0; group < n_channel_in  ; group++) {
   for (const ai_float* in_curr=in_ptr; in_curr<in_ptr+n_channel_in; in_curr++)
   {
@@ -181,13 +178,11 @@ void ai_conv2d_kernel_depthwise_f32(ai_node* node,
 #if defined(HAS_X86) || defined(__CC_ARM)      /* X86 OR ARM Keil Compiler */
         for ( ; x_filt<(x_size&(~0x3)); x_filt+=4 )
         {
-          ch_in_f = AI_VEC4_FLOAT(ch_in);
-          weights_in_f = AI_VEC4_FLOAT(ch_weights);
-          conv_out += weights_in_f.a1 * ch_in_f.a1;
-          conv_out += weights_in_f.a2 * ch_in_f.a2;
-          conv_out += weights_in_f.a3 * ch_in_f.a3;
-          conv_out += weights_in_f.a4 * ch_in_f.a4;
-          ch_in    += 4*n_channel_in;
+          register ai_vec4_float weights_in_f = AI_VEC4_FLOAT(ch_weights);
+          conv_out += weights_in_f.a1 * (*ch_in); ch_in += n_channel_in;
+          conv_out += weights_in_f.a2 * (*ch_in); ch_in += n_channel_in;
+          conv_out += weights_in_f.a3 * (*ch_in); ch_in += n_channel_in;
+          conv_out += weights_in_f.a4 * (*ch_in); ch_in += n_channel_in;
           ch_weights += 4;
         }
 #endif

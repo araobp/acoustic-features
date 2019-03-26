@@ -33,25 +33,30 @@ extern int pos;
 extern bool start_inference;
 
 /**
- * Enable/disable AI
+ * Enable/disable inference by X-CUBE-AI
  */
-#define INFERENCE
+//#define INFERENCE
 
 /**
- * Use case definition
+ * Logger output format
+ */
+//#define INFERENCE_LOGGING
+
+/**
+ * Use cases
  */
 //#define MUSICAL_INSTRUMENT_RECOGNITION
 //#define KEY_WORD_DETECTION
 //#define ENVIRONMENTAL_SOUND_CLASSIFICATION
 #define MY_HOME_CLASSIFICATION
 
-// Activity detection in dB
+// Voice activity detection (VAD) threshold in dB
 #ifdef KEY_WORD_DETECTION
   #define ACTIVITY_THRESHOLD 5.0
 #else
-  #define ACTIVITY_THRESHOLD -30.0
+  #define ACTIVITY_THRESHOLD -30.0  // disabling VAD
 #endif
-#define ACTIVITY_OFFSET 5U
+#define ACTIVITY_OFFSET 5U  // Window offset
 
 /**
  * Feature definition
@@ -64,7 +69,7 @@ extern bool start_inference;
 #define HISTORY_LENGTH 5U
 
 /**
- * Beam forming
+ * Disable beam forming
  */
 #define DISABLE_BEAMFORMING
 
