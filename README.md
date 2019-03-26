@@ -167,6 +167,8 @@ My strategy for tackling the problem is:
 
 If the above conditions are satisfied, this small neural network works very well.
 
+Just install the device in every room or every floor, and Bluetooth mesh networking comes into play for wirling the devices.
+
 They say, "AI should be a general purpose system", but I never belive it, when it comes to a real world.
 
 ## References
