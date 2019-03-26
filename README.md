@@ -149,11 +149,11 @@ I have been observing that **room impulse response** (it turns into **line disto
          Room impulse response
                    :
                    V
-Sound --->(Line distortion)----(+)--->[Feature engineering]--Feature-->[Normalization]--->[Neural Network]
-              convolved         ^
-                                | Added
-                                |
-                         (Ambient noise)
+Sound -->(Line distortion)--(+)->[Feature engineering]--Feature->[Normalization]->[Neural Network]->Inference result
+              convolved      ^
+                             | Added
+                             |
+                      (Ambient noise)
 ```
 
 My strategy for tackling the problem is:
