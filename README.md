@@ -141,9 +141,9 @@ The duration of 170msec is acceptible (not too slow) in my use cases.
 
 And I know that Arm is working on [Helium](https://www.arm.com/why-arm/technologies/helium), so it will be able to process acoustic features for inference in real time.
 
-## Room/hall impulse response
+## Room impulse response
 
-I have been observing that room impulse response has an lot of effect on inference.
+I have been observing that **room impulse response** (it turns into **line distortion**) has an lot of effect on inference.
 
 My strategy for tackling the problem is:
 - use **the same device** for both acquiring features and inference on the device.
