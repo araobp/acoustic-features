@@ -8,6 +8,10 @@
 
 **=> [Edge AI demo](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
 
+## Motivation
+
+I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied.
+
 ## Use cases in this project
 
 - always-on key word detection (e.g., "OK Google" or "Alexa!")
