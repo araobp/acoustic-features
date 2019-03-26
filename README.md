@@ -6,7 +6,13 @@
 
 ## Demo video on YouTube
 
-**=> [Edge AI demo](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
+**=> [Edge AI demo (X-CUBE-AI/STM32L476RG)](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
+
+**=> [A similar program to the above, but inference performed by Keras/TensorFlow](https://youtu.be/RV7oED41P2w)**
+
+## Motivation
+
+I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied.
 
 ## Use cases in this project
 
@@ -140,6 +146,32 @@ I loaded a trained CNN model (Keras model) into Cube.AI and generated code for i
 The duration of 170msec is acceptible (not too slow) in my use cases.
 
 And I know that Arm is working on [Helium](https://www.arm.com/why-arm/technologies/helium), so it will be able to process acoustic features for inference in real time.
+
+## Effect of room impulse response on inference
+
+I have been observing that **room impulse response** (it turns into **line distortion**) has an lot of effect on inference.
+
+```
+         Room impulse response
+                   :
+                   V
+Sound -->(Line distortion)--(+)->[Feature engineering]--Feature->[Normalization]->[Neural Network]->Inference
+              convolved      ^
+                             | Added
+                             |
+                      (Ambient noise)
+```
+
+My strategy for tackling the problem is:
+- use **the same device** for both acquiring features and inference on the device.
+- use the device **at the same location** for both acquiring features and inference.
+- never change the values of parameters for feature engineering (e.g., parameters for filters).
+
+If the above conditions are satisfied, this small neural network works very well.
+
+Just install the device in every room or every floor, and Bluetooth mesh networking comes into play for wirling the devices.
+
+They say, "AI should be a general purpose system", but I never belive it, when it comes to a real world.
 
 ## References
 
