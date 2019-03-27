@@ -6,9 +6,12 @@
 
 ## Demo video on YouTube
 
-**=> [Edge AI demo (X-CUBE-AI/STM32L476RG)](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
+Inference using X-CUBE-AI on STM32L476RG:
+- [video](https://www.youtube.com/watch?v=wbkjt2Bl5TY)
 
-**=> [A similar program to the above, but inference performed by Keras/TensorFlow](https://youtu.be/RV7oED41P2w)**
+Inference using Keras/TensorFlow on PC instead of X-CUBE-AI on STM32L476RG:
+- [video 1](https://youtu.be/RV7oED41P2w)
+- [video 2](https://youtu.be/4BaBL-gmQBk)
 
 ## Motivation
 
