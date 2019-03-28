@@ -6,9 +6,12 @@
 
 ## Demo video on YouTube
 
-**=> [Edge AI demo (X-CUBE-AI/STM32L476RG)](https://www.youtube.com/watch?v=wbkjt2Bl5TY)**
+Inference using X-CUBE-AI on STM32L476RG:
+- [video](https://www.youtube.com/watch?v=wbkjt2Bl5TY)
 
-**=> [A similar program to the above, but inference performed by Keras/TensorFlow](https://youtu.be/RV7oED41P2w)**
+Inference using Keras/TensorFlow on PC instead of X-CUBE-AI on STM32L476RG:
+- [video 1](https://youtu.be/RV7oED41P2w)
+- [video 2](https://youtu.be/4BaBL-gmQBk)
 
 ## Motivation
 
@@ -147,9 +150,7 @@ The duration of 170msec is acceptible (not too slow) in my use cases.
 
 And I know that Arm is working on [Helium](https://www.arm.com/why-arm/technologies/helium), so it will be able to process acoustic features for inference in real time.
 
-## Effect of room impulse response on inference
-
-I have been observing that **room impulse response** (it turns into **line distortion**) has an lot of effect on inference.
+## Noise problems
 
 ```
          Room impulse response
@@ -162,6 +163,10 @@ Sound -->(Line distortion)--(+)->[Feature engineering]--Feature->[Normalization]
                       (Ambient noise)
 ```
 
+### Effect of room impulse response on inference
+
+I have been observing that **room impulse response** (it turns into **line distortion**) has an lot of effect on inference.
+
 My strategy for tackling the problem is:
 - use **the same device** for both acquiring features and inference on the device.
 - use the device **at the same location** for both acquiring features and inference.
@@ -169,9 +174,9 @@ My strategy for tackling the problem is:
 
 If the above conditions are satisfied, this small neural network works very well.
 
-Just install the device in every room or every floor, and Bluetooth mesh networking comes into play for wirling the devices.
+### Effect of ambient noise on inference
 
-They say, "AI should be a general purpose system", but I never belive it, when it comes to a real world.
+I have been observing that sound of air conditioner affects accuracy of inference significantly.
 
 ## References
 
