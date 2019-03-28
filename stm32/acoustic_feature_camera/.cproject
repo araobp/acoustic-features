@@ -46,7 +46,9 @@
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include" />
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/acoustic_feature_camera/Middlewares/ST/AI/AI/include}&quot;" />
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/acoustic_feature_camera/Middlewares/ST/AI/AI/data}&quot;" />
-								<listOptionValue builtIn="false" value="../Middlewares/ST/AI/AI/include" /><listOptionValue builtIn="false" value="../Middlewares/ST/AI/AI/data" /></option>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/AI/AI/include" />
+									<listOptionValue builtIn="false" value="../Middlewares/ST/AI/AI/data" />
+								</option>
 								<option id="com.atollic.truestudio.gcc.symbols.defined.1670122205" name="Defined symbols" superClass="com.atollic.truestudio.gcc.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__weak=__attribute__((weak))" />
 									<listOptionValue builtIn="false" value="__packed=__attribute__((__packed__))" />
@@ -75,7 +77,7 @@
 								<option id="com.atollic.truestudio.ld.optimization.do_garbage.1816004776" name="Dead code removal " superClass="com.atollic.truestudio.ld.optimization.do_garbage" value="true" valueType="boolean" />
 								<option id="com.atollic.truestudio.ld.libraries.list.848669414" name="Libraries" superClass="com.atollic.truestudio.ld.libraries.list" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="arm_cortexM4lf_math" />
-									
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value=":network_runtime.a" />
 								</option>
 								<option id="com.atollic.truestudio.ld.libraries.searchpath.1273009461" name="Library search path" superClass="com.atollic.truestudio.ld.libraries.searchpath" useByScannerDiscovery="false" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Lib" />

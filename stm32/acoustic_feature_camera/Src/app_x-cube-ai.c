@@ -104,6 +104,13 @@ void MX_X_CUBE_AI_Process(void)
        "VACUUM CLEANER  ", "TAKING A SHOWER ", "WASHING MACHINE ", "DOING THE DISHES",
        "WALKING         ", "PIANO           ", "STAIRS          ", "SNACK           "};
 #endif
+#ifdef ENVIRONMENTAL_SOUND_CLASSIFICATION
+  char class_labels[][20] = { "silence", "train", "station", "fastfood",
+      "escalator", "mall", "ship", "mall2"};
+    char lcd_line2[][16] = { "SILENCE         ", "TRAIN           ", "STATION         ",
+                             "FASTFOOD        ", "ESCALATOR       ", "MALL            ",
+                             "SHIP            ", "MALL2           "};
+#endif
 #ifdef KEY_WORD_DETECTION
   char class_labels[][20] = {
     "umai",

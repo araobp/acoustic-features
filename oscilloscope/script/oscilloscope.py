@@ -24,8 +24,8 @@ import gui
 import yaml
 import dataset
 
-CMAP_LIST = ('hot',
-             'viridis',
+CMAP_LIST = ('viridis',
+             'hot',
              'gray',
              'magma',
              'cubehelix',
@@ -216,13 +216,14 @@ if __name__ == '__main__':
             data = gui.plot(ax, dsp.MFSC, range_, cmap_, ssub,
                                window=window)
         else:
-            if pos and not args.disable_window:
+            if pos is not None and not args.disable_window:
                 window = dataset.windows[pos]
             else:
                 window = None
             gui.plot(ax, dsp.MFSC, range_, cmap_, ssub, data=data,
                          window=window)
         if cnn_model:
+            print(window)
             a, b, c = window[0], window[1], window[2]
             infer(data[a:b,:c])
         last_operation = (mfsc, data, window, pos)
@@ -241,7 +242,7 @@ if __name__ == '__main__':
             data = gui.plot(ax, dsp.MFCC, range_, cmap_, ssub,
                                window=window)
         else:
-            if pos and not args.disable_window:
+            if pos is not None and not args.disable_window:
                 window = dataset.windows[pos]
             else:
                 window = None
@@ -346,10 +347,12 @@ if __name__ == '__main__':
             if pos < len(dataset.windows) - 1:
                 pos += 1
                 range_window.set(pos)
+                shadow(pos)
         elif c == 'left':
             if pos > 0:
                 pos -= 1
-                range_window.set(pos)            
+                range_window.set(pos)
+                shadow(pos)            
         elif c == 'up':
             if last_operation is None:
                 print('Up key becomes effective after executing an operation.')
@@ -470,10 +473,10 @@ if __name__ == '__main__':
 
     ### Row 4 ####
     label_window = Tk.Label(master=frame_row4, text='Window:')
-    range_window = Tk.Scale(master=frame_row4, orient=Tk.HORIZONTAL, length=120,
-                            from_=0, to=len(dataset.windows)-1, command=shadow, tickinterval=1)
+    range_window = Tk.Scale(master=frame_row4, orient=Tk.HORIZONTAL, length=180,
+                            from_=0, to=len(dataset.windows)-1, tickinterval=1)
     if cnn_model:
-        label_inference = Tk.Label(master=frame_row4, width=40, fg='DeepSkyBlue4', padx=PADX)
+        label_inference = Tk.Label(master=frame_row3, width=40, fg='DeepSkyBlue4', padx=PADX)
         label_inference.config(font=("Arial", 20))
     
     ##### Place the parts on Tk #####
@@ -577,14 +580,16 @@ if __name__ == '__main__':
             button_left_mic_only.grid(row=0, column=4, padx=PADX_GRID)    
             button_right_mic_only.grid(row=0, column=5, padx=PADX_GRID)    
 
+        elif not args.oscilloscope_mode and cnn_model:
+            frame_row3.pack(pady=PADY_GRID)
+            label_inference.grid(row=0, column=0, padx=PADX_GRID)
+            label_inference.configure(text='...')
+
         ### Row 4 ####
         if not args.oscilloscope_mode:
             frame_row4.pack(pady=PADY_GRID)
             label_window.grid(row=0, column=0, padx=PADX_GRID)
             range_window.grid(row=0, column=1, padx=PADX_GRID)
-            if cnn_model:
-                label_inference.grid(row=0, column=2, padx=PADX_GRID)
-                label_inference.configure(text='...')
 
     ##### loop forever #####
     Tk.mainloop()

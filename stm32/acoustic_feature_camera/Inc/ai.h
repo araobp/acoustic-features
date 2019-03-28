@@ -35,20 +35,20 @@ extern bool start_inference;
 /**
  * Enable/disable inference by X-CUBE-AI
  */
-//#define INFERENCE
+#define INFERENCE
 
 /**
  * Logger output format
  */
-//#define INFERENCE_LOGGING
+#define INFERENCE_LOGGING
 
 /**
  * Use cases
  */
 //#define MUSICAL_INSTRUMENT_RECOGNITION
 //#define KEY_WORD_DETECTION
-#define ENVIRONMENTAL_SOUND_CLASSIFICATION
-//#define MY_HOME_CLASSIFICATION
+//#define ENVIRONMENTAL_SOUND_CLASSIFICATION
+#define MY_HOME_CLASSIFICATION
 
 // Voice activity detection (VAD) threshold in dB
 #ifdef KEY_WORD_DETECTION
