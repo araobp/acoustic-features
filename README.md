@@ -178,6 +178,12 @@ If the above conditions are satisfied, this small neural network works very well
 
 I have been observing that sound of air conditioner affects accuracy of inference significantly.
 
+## Applications
+
+I have been working on a life log application.
+
+<img src="./ipynb/activities.jpg" width=500>
+
 ## References
 
 - ["New Architectures Bringing AI to the Edge"](https://www.eetimes.com/document.asp?doc_id=1333920).
