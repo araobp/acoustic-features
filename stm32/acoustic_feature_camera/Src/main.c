@@ -214,7 +214,6 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
     printing = false;
   } else if (dma_start) {
-    HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
     idx = 0;
     printing = true;
   } else {
@@ -479,8 +478,6 @@ int main(void)
   HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_2, (uint32_t*) dac_out_buf_b, NN * 2,
   DAC_ALIGN_12B_R);
 #endif
-
-  HAL_Delay(1);
 
   // Enable DMA from DFSDM to buf (peripheral to memory)
   // Note: filter1 for left channel is started after filter 0 for right channel

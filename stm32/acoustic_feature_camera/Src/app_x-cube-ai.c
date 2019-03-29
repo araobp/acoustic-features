@@ -233,11 +233,14 @@ void MX_X_CUBE_AI_Process(void)
     start_inference = false;
 
 #ifdef INFERENCE_LOGGING
+    /*
     printf("%lu,%lu,", max_idx, class);
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE-1; i++) {
       printf("%d,", (int)(out_data[i]*1000));  // 1000%
     }
     printf("%d\n", (int)(out_data[AI_NETWORK_OUT_1_SIZE-1])*1000);  // 1000%
+    */
+    printf("%lu\n", max_idx);
 #else
     printf("\n-- Inference %d --\n", cnt++);
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
