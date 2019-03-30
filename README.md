@@ -178,7 +178,7 @@ If the above conditions are satisfied, this small neural network works very well
 
 I have been observing that sound of air conditioner affects accuracy of inference significantly.
 
-## Applications
+## Application of acoustic scene classification
 
 I have been working on a life log application.
 
