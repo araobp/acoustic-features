@@ -30,6 +30,7 @@ class ASC:
         ax.set_title('Activities in my home')
 
     def _plot_life_log(self, ax, tick):
+        print(len(tick), len(self.life_log))
         ax.step(tick, self.life_log, where='pre', marker='s')
         ax.set_yticks(self.index)
         ax.set_yticklabels(self.ds.class_labels, fontsize=12)
@@ -67,8 +68,9 @@ class ASC:
         if (len_activities % num_section) == 0:
             num_records = int(len_activities / num_section)
             activities_reshaped = np.array(self.activities[:num_records * num_section], dtype=int).reshape(num_records, num_section)
-            time_recorded = measurement_time * (num_records * num_section / len(self.activities))
-            tick = np.linspace(0, time_recorded, len(activities_reshaped)+1)[1:]
+            #time_recorded = measurement_time * (num_records * num_section / len(self.activities))
+            #tick = np.linspace(0, time_recorded, len(activities_reshaped)+1)[1:]
+            tick = np.linspace(0, time.time() - self.start_time, num_records+1)[1:]
 
             # Record a life log
             self.life_log = []
