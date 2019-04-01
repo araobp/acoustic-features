@@ -29,6 +29,8 @@ parser.add_argument("-p", "--port", help="serial port identifier")
 parser.add_argument("-d", "--dataset_folder",
                     help="Data folder for saving feature data from the device")
 parser.add_argument("-t", "--time", help="measurement time")
+parser.add_argument("-S", "--plot_style",
+                    help="Plot style", default='dark_background')
 parser.add_argument("-s", "--section", help="section")
 
 args = parser.parse_args()
@@ -42,6 +44,8 @@ if __name__ == '__main__':
     NUM_SECTION = int(args.section)
 
     asc = asc.ASC(args.port, ds)
+
+    plt.style.use(args.plot_style)
 
     PADX = 6
     PADX_GRID = 2
@@ -62,6 +66,8 @@ if __name__ == '__main__':
     
     canvas = FigureCanvasTkAgg(fig, master=frame_row0)
     canvas.draw()
+
+    repeat_action = False
 
     def asc_stats():
         global fig, canvas, repeat_action

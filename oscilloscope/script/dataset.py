@@ -137,7 +137,9 @@ class DataSet:
         if os.path.isfile(class_labels_file):
             with open(class_labels_file, 'r') as f:
                 self.class_labels = yaml.load(f)
-    
+
+        self.application = attr['application']
+
     def serialize(self):
         '''
         Merge all the csv files (raw data) into "merged.P" file

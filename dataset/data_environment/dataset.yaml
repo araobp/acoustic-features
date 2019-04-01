@@ -7,3 +7,4 @@ filters: 40
 cutoff: null
 stride: 12
 model: my_life_environment_cnn_20190327133143.h5
+application: null

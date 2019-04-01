@@ -3,9 +3,6 @@ import serial
 import time
 
 BAUD_RATE = 460800
-
-# TODO: weight as a parameter
-WEIGHT = [1, 17, 1, 4, 1, 1, 1, 1, 1, 1, 6, 4, 4, 8]
 INACTIVE, STARTED, FINISHED = 0, 1 ,2
 
 # GUI class
@@ -21,6 +18,13 @@ class ASC:
         self.activities = []
         self.life_log = []
         self.status = INACTIVE
+        weighted = dataset.application['weight']
+        self.weight = []
+        for label in self.ds.class_labels:
+            if label in weighted.keys():
+                self.weight.append(weighted[label])
+            else:
+                self.weight.append(1)
 
     def _plot_stats(self, ax):
         ax.set_xticks(self.index)
@@ -68,8 +72,6 @@ class ASC:
         if (len_activities % num_section) == 0:
             num_records = int(len_activities / num_section)
             activities_reshaped = np.array(self.activities[:num_records * num_section], dtype=int).reshape(num_records, num_section)
-            #time_recorded = measurement_time * (num_records * num_section / len(self.activities))
-            #tick = np.linspace(0, time_recorded, len(activities_reshaped)+1)[1:]
             tick = np.linspace(0, time.time() - self.start_time, num_records+1)[1:]
 
             # Record a life log
@@ -77,7 +79,7 @@ class ASC:
             for a_reshaped in activities_reshaped:
                 stats_section = np.zeros(self.num_classes)
                 for a in a_reshaped:
-                    stats_section[a] += 1 * WEIGHT[a]
+                    stats_section[a] += 1 * self.weight[a]
                 self.life_log.append(np.argmax(stats_section))
             print(self.life_log)
             

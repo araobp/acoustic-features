@@ -7,3 +7,4 @@ filters: 40
 cutoff: null
 stride: 12
 model: null
+application: null

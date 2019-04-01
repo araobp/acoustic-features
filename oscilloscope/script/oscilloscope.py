@@ -47,7 +47,7 @@ parser.add_argument("-d", "--dataset_folder",
                     default='.')
 parser.add_argument("-b", "--browser",
                     help="Data browser", action="store_true")
-parser.add_argument("-s", "--plot_style",
+parser.add_argument("-S", "--plot_style",
                     help="Plot style", default='dark_background')
 parser.add_argument("-o", "--oscilloscope_mode",
                     help="Oscilloscope mode", action="store_true")
