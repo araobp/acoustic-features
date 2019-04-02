@@ -182,6 +182,8 @@ I have been observing that sound of air conditioner affects accuracy of inferenc
 
 I have been working on a life log application.
 
+And I am very satisfied with the result below:
+
 <img src="./oscilloscope/screenshots/log.png" width=700>
 
 ## References
