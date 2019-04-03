@@ -138,7 +138,8 @@ class DataSet:
             with open(class_labels_file, 'r') as f:
                 self.class_labels = yaml.load(f)
 
-        self.application = attr['application']
+        if 'application' in attr:
+            self.application = attr['application']
 
     def serialize(self):
         '''
