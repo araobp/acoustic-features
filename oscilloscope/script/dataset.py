@@ -62,13 +62,14 @@ def plot_layer(activations, sample, layer, num_columns):
     fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0, wspace=0)
     fig.tight_layout()
 
-def to_keras_input(data, labels, shape, cutout=None, flatten=False):
+def to_keras_input(data, labels, shape, cutout=None, flatten=False, shuffle=True):
     '''
     Convert data into Keras input format
     '''
     keras_labels = []
     keras_data = []
-    random.shuffle(data)
+    if shuffle:
+        random.shuffle(data)
     for l, d in data:
         keras_labels.append(labels.index(l))
         keras_data.append(d)
@@ -186,7 +187,7 @@ class DataSet:
             data_set = pickle.load(f)
         return data_set
    
-    def generate(self, update=True, flatten=False):
+    def generate(self, update=True, flatten=False, shuffle=True):
         '''
         Note:
         This method assumes that pickled object "merged.P" exists in the dataset directory.
@@ -217,16 +218,32 @@ class DataSet:
                 test_data_mfsc.append([label, d[0]])
                 test_data_mfcc.append([label, d[1]])
         features = {}
-        shape_train = (self.num_train_files*len(self.class_labels), self.length, self.filters, 1)
-        shape_test = (self.num_test_files*len(self.class_labels), self.length, self.filters, 1)
-        features['mfsc'] = [*(to_keras_input(train_data_mfsc, self.class_labels, shape_train)),
-                            *(to_keras_input(test_data_mfsc, self.class_labels, shape_test))]
-        shape_train = (self.num_train_files*len(self.class_labels), self.length, self.filters, 1)
-        shape_test = (self.num_test_files*len(self.class_labels), self.length, self.filters, 1)
-        features['mfcc'] = [*(to_keras_input(train_data_mfcc, self.class_labels, shape_train, cutout=(1, self.cutoff), flatten=flatten)),
-                            *(to_keras_input(test_data_mfcc, self.class_labels, shape_test, cutout=(1, self.cutoff), flatten=flatten))]
+        len_class_labels = len(self.class_labels)
+        shape_train = (self.num_train_files*len_class_labels, self.length, self.filters, 1)
+        shape_test = (self.num_test_files*len_class_labels, self.length, self.filters, 1)
+        features['mfsc'] = [*(to_keras_input(train_data_mfsc, self.class_labels, shape_train, shuffle=shuffle)),
+                            *(to_keras_input(test_data_mfsc, self.class_labels, shape_test, shuffle=shuffle))]
+        shape_train = (self.num_train_files*len_class_labels, self.length, self.filters, 1)
+        shape_test = (self.num_test_files*len_class_labels, self.length, self.filters, 1)
+        features['mfcc'] = [*(to_keras_input(train_data_mfcc, self.class_labels, shape_train, cutout=(1, self.cutoff),
+                            flatten=flatten, shuffle=shuffle)),
+                            *(to_keras_input(test_data_mfcc, self.class_labels, shape_test, cutout=(1, self.cutoff),
+                            flatten=flatten, shuffle=shuffle))]
 
         return features
+
+    def reshape_per_class(self, data, labels):
+        '''
+        Reshape training/test data and training/test labels for per_class evaluation.
+
+        Input: output data of generate() method.
+        '''
+        shape = data.shape[1:]
+        num_classes = len(self.class_labels)
+        num_files_per_class = int(len(data) / num_classes)
+        data = data.reshape(num_classes, num_files_per_class, *shape)
+        labels = labels.reshape(num_classes, num_files_per_class, num_classes)
+        return (data, labels)
 
     def count_class_labels(self):
         '''
