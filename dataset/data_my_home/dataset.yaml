@@ -10,8 +10,5 @@ model: my_home_cnn_colab_20190324213722.h5
 application:
     name: asc
     weight:
-        reading: 3
-        cocking: 4
-        walking: 3
-        piano: 2
-        snack: 3
+        reading: 2
+        cocking: 2
