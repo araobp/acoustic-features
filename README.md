@@ -6,7 +6,7 @@
 
 ## Background
 
-I have been in IoT/AI business over a couple of years. They say it is not easy to monetaize IoT/AI, and I completely agree with that in my experiences. But the reality is that **IoT/AI can solve my personal problems very well, such as the ones developed in this project**. That is the reason why I develop IoT/AI as my hobby.
+I have been in IoT/AI business over a couple of years. They say it is not easy to monetaize IoT/AI, and I completely agree with that in my experiences. But the reality is that **low-end edge AI (in other words, smart sensors) can solve my personal problems very well, such as the ones developed in this project**. That is the reason why I develop IoT/AI as my hobby.
 
 I want to come up with a new business model to monetaize IoT/AI some day...
 
