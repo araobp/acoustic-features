@@ -4,6 +4,14 @@
 
 **=> [Acoustic feature gallery (2D images)](./GALLERY.md)**
 
+## Background
+
+I have been in IoT/AI business over a couple of years. They say it is not easy to monetaize IoT/AI, and I completely agree with that in my experiences. But the reality is that **IoT/AI can solve my personal problems very well**. That is the reason why I develop IoT/AI as my hobby.
+
+I want to come up with a new business model to monetaize IoT/AI some day...
+
+[Garnter hype cycle 2018](https://www.gartner.com/smarterwithgartner/5-trends-emerge-in-gartner-hype-cycle-for-emerging-technologies-2018/)
+
 ## Demo video on YouTube
 
 Inference using X-CUBE-AI on STM32L476RG:
