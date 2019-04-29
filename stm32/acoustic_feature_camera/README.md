@@ -176,3 +176,7 @@ The PC issues "FEATURES" command to the device to fetch features that are the la
 ```
 
 The GUI flatten features and convert it into CSV to save it as a csv file in a dataset folder.
+
+## Beam forming 
+
+Although I developed beam forming, it takes too much cost for tuning. So I removed it, and the code remains in [this "old" folder](../acoustinc_feature_camera_old).
