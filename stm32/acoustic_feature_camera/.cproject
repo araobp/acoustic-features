@@ -77,13 +77,13 @@
 								<option id="com.atollic.truestudio.ld.optimization.do_garbage.1816004776" name="Dead code removal " superClass="com.atollic.truestudio.ld.optimization.do_garbage" value="true" valueType="boolean" />
 								<option id="com.atollic.truestudio.ld.libraries.list.848669414" name="Libraries" superClass="com.atollic.truestudio.ld.libraries.list" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="arm_cortexM4lf_math" />
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value=":network_runtime.a" />
-								</option>
+									
+								<listOptionValue builtIn="false" value=":network_runtime.a" /></option>
 								<option id="com.atollic.truestudio.ld.libraries.searchpath.1273009461" name="Library search path" superClass="com.atollic.truestudio.ld.libraries.searchpath" useByScannerDiscovery="false" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Lib" />
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/acoustic_feature_camera/Middlewares/ST/AI/AI/lib}&quot;" />
 									<listOptionValue builtIn="false" value="../Middlewares/ST/AI/AI/lib" />
-								</option>
+								<listOptionValue builtIn="false" value="Middlewares/ST/AI/AI/lib" /></option>
 								<option id="com.atollic.truestudio.ld.misc.linkerflags.1948405714" name="Other options" superClass="com.atollic.truestudio.ld.misc.linkerflags" useByScannerDiscovery="false" value="-u _printf_float" valueType="string" />
 								<option id="com.atollic.truestudio.common_options.target.fpu.829683864" name="Floating point" superClass="com.atollic.truestudio.common_options.target.fpu" value="com.atollic.truestudio.common_options.target.fpu.hard" valueType="enumerated" />
 								<option id="com.atollic.truestudio.common_options.target.fpucore.1297069055" name="FPU" superClass="com.atollic.truestudio.common_options.target.fpucore" value="com.atollic.truestudio.common_options.target.fpucore.fpv4-sp-d16" valueType="enumerated" />

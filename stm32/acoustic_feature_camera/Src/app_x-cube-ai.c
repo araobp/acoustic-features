@@ -248,6 +248,11 @@ void MX_X_CUBE_AI_Process(void)
     }
 #endif
 
+#ifdef BLE
+    uint8_t max_idx_uint8_t;
+    max_idx_uint8_t = (uint8_t)max_idx;
+    sendData(&max_idx_uint8_t, 1);
+#endif
   }
 #endif
     /* USER CODE END 1 */

@@ -11,6 +11,7 @@ extern "C" {
 #include "dsp.h"
 #include "lcd.h"
 #include "i2c.h"
+#include "rn4020.h"
 
 /**
  * Note on AI inference processing.
@@ -33,9 +34,14 @@ extern int pos;
 extern bool start_inference;
 
 /**
- * Enable/disable inference by X-CUBE-AI
+ * Enable inference by X-CUBE-AI
  */
 #define INFERENCE
+
+/**
+ * Transport inference results over BLE
+ */
+#define BLE
 
 /**
  * Logger output format
