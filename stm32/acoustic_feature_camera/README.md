@@ -179,4 +179,4 @@ The GUI flatten features and convert it into CSV to save it as a csv file in a d
 
 ## Beam forming 
 
-Although I developed beam forming, it takes too much cost for tuning. So I removed it, and the code remains in [this "old" folder](../acoustinc_feature_camera_old).
+Although I developed beam forming, it takes too much cost for tuning. So I removed it, and the code remains in [this "old" folder](../acoustic_feature_camera_old).
