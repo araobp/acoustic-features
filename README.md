@@ -17,6 +17,8 @@ Inference using Keras/TensorFlow on PC instead of X-CUBE-AI on STM32L476RG:
 
 I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied.
 
+[Garnter hype cycle 2018](https://www.gartner.com/smarterwithgartner/5-trends-emerge-in-gartner-hype-cycle-for-emerging-technologies-2018/)
+
 ## Use cases in this project
 
 - always-on key word detection (e.g., "OK Google" or "Alexa!")
