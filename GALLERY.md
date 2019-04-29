@@ -20,7 +20,7 @@
 
 ## Mel filter bank
 
-![](./oscilloscope/screenshots/filterbank.png)
+![](./oscilloscope/screenshots/filterbank.jpg)
 
 ## Oscilloscope
 
