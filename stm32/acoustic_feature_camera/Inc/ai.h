@@ -74,11 +74,6 @@ extern bool start_inference;
  */
 #define HISTORY_LENGTH 5U
 
-/**
- * Disable beam forming
- */
-#define DISABLE_BEAMFORMING
-
 /*--- Function prototypes ---*/
 
 int ai_init(void);

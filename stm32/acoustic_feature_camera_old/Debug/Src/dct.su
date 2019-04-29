@@ -1,0 +1,5 @@
+dct.c:14:11:c_k	0	static
+dct.c:24:6:dct2_init_f32	64	static
+dct.c:64:6:dct2_2d_init_f32	16	static
+dct.c:77:6:dct2_f32	16	static
+dct.c:101:6:dct2_2d_f32	40	static

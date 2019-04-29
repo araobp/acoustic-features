@@ -58,16 +58,6 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
-// Beam forming: Broadside mode and Endfire mode
-typedef enum {
-  BROADSIDE, ENDFIRE, LEFT_MIC_ONLY, RIGHT_MIC_ONLY
-} beam_forming_setting;
-
-// Angle
-typedef enum {
-  LEFT2, LEFT, CENTER, RIGHT, RIGHT2
-} angle_setting;
-
 // Debug info
 typedef enum {
   DISABLED, FILTERBANK, ELAPSED_TIME, VOICE_ACTIVITY

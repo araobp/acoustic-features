@@ -1,0 +1,13 @@
+main.c:230:6:dsp	32	static
+main.c:302:6:overlap_dsp	2064	static
+main.c:326:6:dump	40	static
+main.c:352:6:beam_forming	12	static
+main.c:391:6:pre_emphasis	0	static
+main.c:602:6:SystemClock_Config	232	static
+main.c:407:5:main	7192	static
+main.c:661:6:HAL_DFSDM_FilterRegConvHalfCpltCallback	0	static
+main.c:678:6:HAL_DFSDM_FilterRegConvCpltCallback	0	static
+main.c:693:5:_write	8	static
+main.c:699:6:HAL_GPIO_EXTI_Callback	0	static
+main.c:708:6:HAL_UART_RxCpltCallback	0	static
+main.c:773:6:Error_Handler	0	static

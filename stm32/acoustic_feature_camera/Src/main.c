@@ -87,10 +87,8 @@ const int NN_HALF = NN / 2;
 const int NN_DOUBLE = NN * 2;
 
 // flag: "new PCM data has just been copied to buf"
-volatile bool new_pcm_data_l_a = false;
-volatile bool new_pcm_data_l_b = false;
-volatile bool new_pcm_data_r_a = false;
-volatile bool new_pcm_data_r_b = false;
+volatile bool new_pcm_data_a = false;
+volatile bool new_pcm_data_b = false;
 
 // output trigger
 volatile bool printing = false;
@@ -103,14 +101,6 @@ uint8_t rxbuf[1];
 
 // Pre-emphasis toggle
 volatile bool pre_emphasis_enabled = true;
-
-// Beam forming setting
-volatile angle_setting angle = CENTER;  // center
-#ifndef DISABLE_BEAM_FORMING
-volatile beam_forming_setting beam_forming_mode = LEFT_MIC_ONLY;
-#else
-volatile beam_forming_setting beam_forming_mode = ENDFIRE;
-#endif
 
 // Debug
 volatile debug debug_output = DISABLED;
@@ -346,58 +336,6 @@ void dump(void) {
   }
 }
 
-/*
- * Apply beam forming
- */
-void beam_forming(float32_t *signal, int32_t *l, int32_t *r,
-    beam_forming_setting mode, int direction) {
-
-  switch (mode) {
-  case BROADSIDE:
-    for (uint32_t n = 0; n < NN; n++) {
-      signal[n] = (float32_t) (l[n + direction] >> 9)
-          + (float32_t) (r[n + 2] >> 9);
-    }
-    break;
-  case ENDFIRE:
-    if (direction != 2) {
-      for (uint32_t n = 0; n < NN; n++) {
-        signal[n] = (float32_t) (l[n + 2] >> 9)
-            - (float32_t) (r[n + direction] >> 9);
-      }
-    } else {  // Synchronous addition of data from two microphones
-      for (uint32_t n = 0; n < NN; n++) {
-        signal[n] = (float32_t) (l[n + 2] >> 9) + (float32_t) (r[n + 2] >> 9);
-      }
-    }
-    break;
-  case LEFT_MIC_ONLY:
-    for (uint32_t n = 0; n < NN; n++) {
-      signal[n] = (float32_t) (l[n + 2] >> 9);
-    }
-    break;
-  case RIGHT_MIC_ONLY:
-    for (uint32_t n = 0; n < NN; n++) {
-      signal[n] = (float32_t) (r[n + 2] >> 9);
-    }
-    break;
-  }
-
-}
-
-/*
- * Apply pre emphasis
- */
-void pre_emphasis(float32_t *signal, int direction) {
-  if (pre_emphasis_enabled) {
-    if (beam_forming_mode == ENDFIRE && direction != 2) {
-      apply_weak_pre_emphasis(signal);
-    } else {
-      apply_pre_emphasis(signal);
-    }
-  }
-}
-
 /* USER CODE END 0 */
 
 /**
@@ -412,12 +350,7 @@ int main(void)
   float32_t f_s;
 
   // DMA peripheral-to-memory double buffer
-#ifndef DISABLE_BEAMFORMING
-  int32_t input_buf_r[NN * 2 + 5] = { 0 };
-  int32_t input_buf_l[NN * 2 + 5] = { 0 };
-#else
   int32_t input_buf_l[NN * 2] = { 0 };
-#endif
 
 #ifndef INFERENCE
   // DMA memory-to-peripheral double buffer
@@ -480,22 +413,9 @@ int main(void)
   DAC_ALIGN_12B_R);
 #endif
 
-  // Enable DMA from DFSDM to buf (peripheral to memory)
-  // Note: filter1 for left channel is started after filter 0 for right channel
-#ifndef DISABLE_BEAMFORMING
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter1, input_buf_r + 5,
-  NN * 2) != HAL_OK) {
-    Error_Handler();
-  }
-  if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_l + 5,
-  NN * 2) != HAL_OK) {
-    Error_Handler();
-  }
-#else
   if (HAL_DFSDM_FilterRegularStart_DMA(&hdfsdm1_filter0, input_buf_l, NN * 2) != HAL_OK) {
     Error_Handler();
   }
-#endif
 
   // Enable UART receive interrupt to receive a command
   // from an application processor
@@ -507,23 +427,20 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
     // Wait for next PCM samples from M1
-    if (new_pcm_data_l_a) {  // 1st half of the buffer
+    if (new_pcm_data_a) {  // 1st half of the buffer
 
       // Overlap
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
 
-      // Beam forming
-#ifndef DISABLE_BEAMFORMING
-      beam_forming(signal_buf + NN_HALF, input_buf_l, input_buf_r,
-          beam_forming_mode, angle);
-#else
+      // Bit shift to obtain 16-bit PCM
       for (uint32_t n = 0; n < NN; n++) {
         signal_buf[n+NN_HALF] = (float32_t) (input_buf_l[n] >> 9);
       }
-#endif
 
       // Pre-emphasis
-      pre_emphasis(signal_buf + NN_HALF, angle);
+      if (pre_emphasis_enabled) {
+        apply_pre_emphasis(signal_buf + NN_HALF);
+      }
 
       // Overlap dsp
       overlap_dsp(signal_buf, output_mode);
@@ -538,35 +455,24 @@ int main(void)
       }
 #endif
 
-      new_pcm_data_l_a = false;
+      new_pcm_data_a = false;
 
     }
 
-    if (new_pcm_data_l_b) {  // 2nd half of the buffer
-
-#ifndef DISABLE_BEAMFORMING
-      // Buffering PCM data for beam forming: n=2 is center
-      for (int n = 0; n < 5; n++) {
-        input_buf_l[n] = input_buf_l[NN_DOUBLE + n];
-        input_buf_r[n] = input_buf_r[NN_DOUBLE + n];
-      }
-#endif
+    if (new_pcm_data_b) {  // 2nd half of the buffer
 
       // Overlap
       arm_copy_f32(signal_buf + NN, signal_buf, NN_HALF);
 
-      // Beam forming
-#ifndef DISABLE_BEAMFORMING
-      beam_forming(signal_buf + NN_HALF, input_buf_l + NN, input_buf_r + NN,
-          beam_forming_mode, angle);
-#else
+      // Bit shift to obtain 16-bit PCM
       for (uint32_t n = 0; n < NN; n++) {
         signal_buf[n+NN_HALF] = (float32_t) (input_buf_l[NN+n] >> 9);
       }
-#endif
 
       // Pre-emphasis
-      pre_emphasis(signal_buf + NN_HALF, angle);
+      if (pre_emphasis_enabled) {
+        apply_pre_emphasis(signal_buf + NN_HALF);
+      }
 
       // Overlap dsp
       overlap_dsp(signal_buf, output_mode);
@@ -580,7 +486,7 @@ int main(void)
         dac_out_buf_b[n_nn] = dac_out_buf_a[n_nn];
       }
 #endif
-      new_pcm_data_l_b = false;
+      new_pcm_data_b = false;
     }
 
     // Dump debug info
@@ -660,11 +566,8 @@ void SystemClock_Config(void)
  */
 void HAL_DFSDM_FilterRegConvHalfCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
-  if (!new_pcm_data_l_a && (hdfsdm_filter == &hdfsdm1_filter0)) {
-    new_pcm_data_l_a = true;  // ready for 1st half of the buffer
-  }
-  if (!new_pcm_data_r_a && (hdfsdm_filter == &hdfsdm1_filter1)) {
-    //new_pcm_data_r_a = true;
+  if (!new_pcm_data_a && (hdfsdm_filter == &hdfsdm1_filter0)) {
+    new_pcm_data_a = true;  // ready for 1st half of the buffer
   }
 }
 
@@ -677,11 +580,8 @@ void HAL_DFSDM_FilterRegConvHalfCpltCallback(
  */
 void HAL_DFSDM_FilterRegConvCpltCallback(
     DFSDM_Filter_HandleTypeDef *hdfsdm_filter) {
-  if (!new_pcm_data_l_b && (hdfsdm_filter == &hdfsdm1_filter0)) {
-    new_pcm_data_l_b = true;  // ready for 2nd half of the buffer
-  }
-  if (!new_pcm_data_r_b && (hdfsdm_filter == &hdfsdm1_filter1)) {
-    //new_pcm_data_r_b = true;
+  if (!new_pcm_data_b && (hdfsdm_filter == &hdfsdm1_filter0)) {
+    new_pcm_data_b = true;  // ready for 2nd half of the buffer
   }
 }
 
@@ -718,35 +618,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     break;
   case 'p':
     pre_emphasis_enabled = false;
-    break;
-
-    // Beam forming
-  case 'L':
-    angle = LEFT2;
-    break;
-  case 'l':
-    angle = LEFT;
-    break;
-  case 'c':
-    angle = CENTER;
-    break;
-  case 'r':
-    angle = RIGHT;
-    break;
-  case 'R':
-    angle = RIGHT2;
-    break;
-  case 'b':
-    beam_forming_mode = BROADSIDE;
-    break;
-  case 'e':
-    beam_forming_mode = ENDFIRE;
-    break;
-  case '[':
-    beam_forming_mode = LEFT_MIC_ONLY;
-    break;
-  case ']':
-    beam_forming_mode = RIGHT_MIC_ONLY;
     break;
   case 'f':
     debug_output = FILTERBANK;

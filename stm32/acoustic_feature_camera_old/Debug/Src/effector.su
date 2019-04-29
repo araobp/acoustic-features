@@ -1,0 +1,11 @@
+effector.c:24:6:hann	24	static
+effector.c:33:11:sinc	16	static
+effector.c:46:6:init_effector	0	static
+effector.c:54:6:distortion_hard	0	static
+effector.c:73:6:compressor	0	static
+effector.c:89:6:auto_pan	48	static
+effector.c:110:6:overlap_add	16	static
+effector.c:130:6:init_fir	80	static
+effector.c:195:6:real2cmplx	12	static
+effector.c:205:6:cmplx2real	8	static
+effector.c:214:6:fir	16408	static
