@@ -180,3 +180,35 @@ The GUI flatten features and convert it into CSV to save it as a csv file in a d
 ## Beam forming 
 
 Although I developed beam forming, it takes too much cost for tuning. So I removed it, and the code remains in [this "old" folder](../acoustic_feature_camera_old).
+
+## Note on enabling AI inference
+
+[Step 1] Uncomment #define INFERENE
+
+**"ai.h"**
+
+```
+      :
+/**
+ * Enable inference by X-CUBE-AI
+ */
+#define INFERENCE   <== Uncomment this line.
+      :
+```
+
+[Step 2] Manual modification
+
+**"app_x-cube-ai.c"**
+
+```
+       :
+/* Includes ------------------------------------------------------------------*/
+#include <string.h>
+#include "app_x-cube-ai.h"
+#include "bsp_ai.h"
+#include "ai_datatypes_defines.h"
+
+#include "ai.h"   <== Add this line manually at every code generation by CubeMX/X-CUBE-AI. 
+        :
+/*************************************************************************
+```
