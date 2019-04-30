@@ -61,13 +61,13 @@ Platform:
 
 ## System components
 
+<img src="./kicad/mems_mic_board_with_rn4020.jpg" width=200>
+
 I developed the following components:
 
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32/acoustic_feature_camera)
 - [Arduino shield of one MEMS microphone with BLE module (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
-
-<img src="./kicad/mems_mic_board_with_rn4020.jpg" width=300>
 
 ## Deep learning on Keras/TensorFlow
 
