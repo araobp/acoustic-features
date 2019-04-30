@@ -61,7 +61,7 @@ Platform:
 
 ## System components
 
-<img src="./kicad/mems_mic_board_with_rn4020.jpg" width=200>
+<img src="./kicad/mems_mic_board_with_rn4020.jpg" width=300>
 
 I developed the following components:
 
