@@ -15,7 +15,7 @@ Inference using Keras/TensorFlow on PC instead of X-CUBE-AI on STM32L476RG:
 
 ## Motivation
 
-I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied.
+I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied. If simple classification is a requirment, think of low-cost AI based on MCU before MPU/FPGA/GPU!
 
 [Garnter hype cycle 2018](https://www.gartner.com/smarterwithgartner/5-trends-emerge-in-gartner-hype-cycle-for-emerging-technologies-2018/)
 
@@ -25,7 +25,7 @@ I have discoverd that **low-end edge AI works very well** as long as the conditi
 - musical instrument classification
 - acoustic scene classification
 
-I have tested all of the use cases above, and confirmed that my device can classify acoustic scenes.
+I have tested all of the use cases above, and confirmed that my device works well.
 
 **Note: the size of neural network is so small that it is not a general purpose tool -- it is good at very limited number of classes.**
 
@@ -61,6 +61,8 @@ Platform:
 
 ## System components
 
+<img src="./kicad/mems_mic_board_with_rn4020.jpg" width=300>
+
 I developed the following components:
 
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32/acoustic_feature_camera)
@@ -72,7 +74,7 @@ I developed the following components:
 I acquired data on my own by using the components above, and it took a lot of time and effort.
 
 - [Dataset of each use case](./dataset)
-- [My use cases on Jupyter Notebook](./tensorflow)
+- [Executing deep learning on Jupyter Notebook](./tensorflow)
 - [Data format](./FORMAT.md)
 
 ### Modeling a neural network
