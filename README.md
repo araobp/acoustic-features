@@ -15,7 +15,7 @@ Inference using Keras/TensorFlow on PC instead of X-CUBE-AI on STM32L476RG:
 
 ## Motivation
 
-I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied.
+I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied. If simple classification is a requirment, think of low-cost AI based on MCU before MPU/FPGA/GPU!
 
 [Garnter hype cycle 2018](https://www.gartner.com/smarterwithgartner/5-trends-emerge-in-gartner-hype-cycle-for-emerging-technologies-2018/)
 
