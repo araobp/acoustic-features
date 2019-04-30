@@ -75,7 +75,7 @@ I acquired data on my own by using the components above, and it took a lot of ti
 
 - [Dataset of each use case](./dataset)
 - [Executing deep learning on Jupyter Notebook](./keras)
-- [Data format](./FORMAT.md)
+- [Dataset format](./FORMAT.md)
 
 ### Modeling a neural network
 
