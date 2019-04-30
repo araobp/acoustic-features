@@ -15,7 +15,9 @@
 
 ## Chart for JS
 
-I evaluated C3.js, but it does not seem to support what I need for stepped line charts. I am now evaluating Chart.js.
+I want to draw a line chart like the one supported by matplotlib.pyplot.step: https://matplotlib.org/api/_as_gen/matplotlib.pyplot.step.html
+
+At first, I evaluated C3.js, but it does not seem to support what I need. Chart.js supports a matplot.pyplot.step-like feature.
 
 ## References
 
