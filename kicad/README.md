@@ -1,12 +1,13 @@
-# Arduino shield with two Knowles MEMS microphones (PDM)
+# Arduino shield of one MEMS microphone with RN4020
 
-This is a ultra-cheap MEMS mic shield for edge AI. The total cost of all the parts is around $10.
+## Arduino shield: MEMS mic shield with RN4020
+
+==> **[Schematic](../kicad/mems_mic_board.pdf)**
+
+<img src="./mems_mic_board_with_rn4020.jpg" width=400>
 
 ## Parts
 
 - [Knowles SPM0405HD4H MEMS microphones](http://akizukidenshi.com/catalog/g/gM-05577/)
 - [Universal board](http://akizukidenshi.com/catalog/g/gP-07555/)
-
-## Schematic
-
-- [schematic](./mems_mic_board.pdf)
+- http://akizukidenshi.com/catalog/g/gK-11102/)
