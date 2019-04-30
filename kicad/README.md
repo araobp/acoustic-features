@@ -10,4 +10,4 @@
 
 - [Knowles SPM0405HD4H MEMS microphones](http://akizukidenshi.com/catalog/g/gM-05577/)
 - [Universal board](http://akizukidenshi.com/catalog/g/gP-07555/)
-- http://akizukidenshi.com/catalog/g/gK-11102/)
+- [Microchip RN4020 BLE module](http://akizukidenshi.com/catalog/g/gK-11102/)
