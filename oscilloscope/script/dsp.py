@@ -27,10 +27,6 @@ FILTERBANK = b'f'
 ELAPSED_TIME = b't'
 ENABLE_PRE_EMPHASIS = b'P'
 DISABLE_PRE_EMPHASIS = b'p'
-LEFT_MIC_ONLY = b'['
-RIGHT_MIC_ONLY = b']'
-BROADSIDE = b'b'
-ENDFIRE = b'e'
 
 # Features
 MFSC = b'98'
@@ -145,29 +141,4 @@ class Interface:
             ser.write(ENABLE_PRE_EMPHASIS)
         else:
             ser.write(DISABLE_PRE_EMPHASIS)
-        ser.close()
-
-    def set_beam_forming(self, mode, angle):
-        '''
-        Enable/disable beam forming
-        '''
-        ser = self.serial_port()
-        ser.write(mode)
-        ser.write(angle.encode('ascii'))
-        ser.close()
-
-    def left_mic_only(self):
-        '''
-        Left mic only
-        '''
-        ser = self.serial_port()
-        ser.write(LEFT_MIC_ONLY)
-        ser.close()
-
-    def right_mic_only(self):
-        '''
-        Right mic only
-        '''
-        ser = self.serial_port()
-        ser.write(RIGHT_MIC_ONLY)
         ser.close()

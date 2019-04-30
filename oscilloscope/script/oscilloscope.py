@@ -57,8 +57,6 @@ parser.add_argument("-c", "--color_map",
                     help="Color map", default=','.join(CMAP_LIST))
 parser.add_argument("-W", "--disable_window",
                     help="Disable window", action="store_true")
-parser.add_argument("-B", "--beam_forming",
-                    help="Beam forming", action="store_true", default=False)
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -70,15 +68,10 @@ if __name__ == '__main__':
 
     itfc = dsp.Interface(port=args.port, dataset=dataset)
         
-    # Beam forming mode
-    mode = dsp.ENDFIRE
-
     ### Default settings to DSP ###
     # Note : pre-emphasis (HPF) destorts lower frequencies, thus
     #        not suitable for watching wave form on the oscilloscope.
     if itfc.is_active():
-        if args.beam_forming:
-            itfc.set_beam_forming(mode, 'c')  # ENDFIRE mode, center
         itfc.enable_pre_emphasis(True)  # Pre emphasis enabled
     ###############################
 
@@ -87,8 +80,6 @@ if __name__ == '__main__':
     PADY_GRID = 2
     WIDTH = 7
     BG = 'darkturquoise'
-    
-    ANGLE = ('L', 'l', 'c', 'r', 'R')
     
     cmap_list = args.color_map.split(',')
 
@@ -137,7 +128,6 @@ if __name__ == '__main__':
         global cnt, filename
         class_label = entry_class_label.get()
         func, data, window, pos = last_operation
-        angle = range_beam_forming.get()
         dt = datetime.today().strftime('%Y%m%d%H%M%S')
         if args.dataset_folder:
             dataset_folder = args.dataset_folder
@@ -148,7 +138,7 @@ if __name__ == '__main__':
             filename = dataset_folder+'/data/{}-{}'.format(dt, func.__name__)
         else:
             if func == mfsc or func == mfcc:  # f both data at a time
-                filename = dataset_folder+'/data/{}-features-{}-{}-{}'.format(dt, class_label, pos, ANGLE[angle+2])
+                filename = dataset_folder+'/data/{}-features-{}-{}'.format(dt, class_label, pos)
             else:
                 filename = dataset_folder+'/data/{}-{}-{}'.format(dt, class_label, func.__name__)
             data = data.flatten()
@@ -262,11 +252,6 @@ if __name__ == '__main__':
         fig.tight_layout()
         canvas.draw()
 
-    def beam_forming(angle):
-        global mode
-        angle = int(angle) + 2
-        itfc.set_beam_forming(mode, ANGLE[angle])
-
     def repeat_toggle():
         global repeat_action
         if repeat_action == True:
@@ -319,24 +304,6 @@ if __name__ == '__main__':
 
     def elapsed_time():
         gui.plot(ax, dsp.ELAPSED_TIME)
-
-    def broadside():
-        global mode
-        mode = dsp.BROADSIDE
-        angle = range_beam_forming.get() + 2
-        itfc.set_beam_forming(mode, ANGLE[angle])
-
-    def endfire():
-        global mode
-        mode = dsp.ENDFIRE
-        angle = int(range_beam_forming.get()) + 2
-        itfc.set_beam_forming(mode, ANGLE[angle])
-
-    def left_mic_only():
-        itfc.left_mic_only()
-
-    def right_mic_only():
-        itfc.right_mic_only()
 
     ### Key press event ###
 
@@ -449,11 +416,6 @@ if __name__ == '__main__':
                               bg=BG, activebackground='grey', padx=PADX, width=WIDTH)
     button_quit = Tk.Button(master=frame_row2, text='Quit', command=quit,
                             bg='yellow', activebackground='grey', padx=PADX, width=WIDTH)
-    label_beam_forming = Tk.Label(master=frame_row2, text='Beam forming:')
-    label_left = Tk.Label(master=frame_row2, text='L')
-    label_right = Tk.Label(master=frame_row2, text='R')
-    range_beam_forming = Tk.Scale(master=frame_row2, orient=Tk.HORIZONTAL, length=70,
-                                  from_=-1, to=1, showvalue=0, command=beam_forming)
     button_confirm = Tk.Button(master=frame_row2, text='Confirm', command=confirm,
                             bg='khaki1', activebackground='grey', padx=PADX, width=WIDTH)
 
@@ -462,14 +424,6 @@ if __name__ == '__main__':
                                   bg=BG, activebackground='grey', padx=PADX)
     button_elapsed_time = Tk.Button(master=frame_row3, text='Elapsed time', command=elapsed_time,
                                     bg=BG, activebackground='grey', padx=PADX)
-    button_broadside = Tk.Button(master=frame_row3, text='Broadside', command=broadside,
-                                 bg=BG, activebackground='grey', padx=PADX)
-    button_endfire = Tk.Button(master=frame_row3, text='Endfire', command=endfire,
-                               bg=BG, activebackground='grey', padx=PADX)
-    button_left_mic_only = Tk.Button(master=frame_row3, text='Left mic only', command=left_mic_only,
-                                     bg=BG, activebackground='grey', padx=PADX)
-    button_right_mic_only = Tk.Button(master=frame_row3, text='Right mic only', command=right_mic_only,
-                                      bg=BG, activebackground='grey', padx=PADX)
 
     ### Row 4 ####
     label_window = Tk.Label(master=frame_row4, text='Window:')
@@ -548,13 +502,6 @@ if __name__ == '__main__':
 
         frame_row2.pack(pady=PADY_GRID)
 
-        # Beam forming
-        if args.beam_forming:
-            label_beam_forming.grid(row=0, column=0, padx=PADX_GRID)
-            label_left.grid(row=0, column=1, padx=PADX_GRID)
-            range_beam_forming.grid(row=0, column=2, padx=PADX_GRID)
-            label_right.grid(row=0, column=3, padx=PADX_GRID)
-
         # Repeat, pre_emphasis, save fig and delete
         button_repeat.grid(row=0, column=4, padx=PADX_GRID)
         button_pre_emphasis.grid(row=0, column=5, padx=PADX_GRID)
@@ -575,10 +522,6 @@ if __name__ == '__main__':
             frame_row3.pack(pady=PADY_GRID)
             button_filterbank.grid(row=0, column=0, padx=PADX_GRID)
             button_elapsed_time.grid(row=0, column=1, padx=PADX_GRID)
-            button_broadside.grid(row=0, column=2, padx=PADX_GRID)    
-            button_endfire.grid(row=0, column=3, padx=PADX_GRID)            
-            button_left_mic_only.grid(row=0, column=4, padx=PADX_GRID)    
-            button_right_mic_only.grid(row=0, column=5, padx=PADX_GRID)    
 
         elif not args.oscilloscope_mode and cnn_model:
             frame_row3.pack(pady=PADY_GRID)
