@@ -25,7 +25,7 @@ I have discoverd that **low-end edge AI works very well** as long as the conditi
 - musical instrument classification
 - acoustic scene classification
 
-I have tested all of the use cases above, and confirmed that my device can classify acoustic scenes.
+I have tested all of the use cases above, and confirmed that my device works well.
 
 **Note: the size of neural network is so small that it is not a general purpose tool -- it is good at very limited number of classes.**
 
