@@ -2,7 +2,7 @@
 
 ## IoT platform
 
-==> **[iot-wireless](https://github.com/araobp/iot-wireless)
+==> **[iot-wireless](https://github.com/araobp/iot-wireless)**
 
 ## Chart GUI
 
