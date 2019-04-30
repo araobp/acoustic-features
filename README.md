@@ -67,6 +67,8 @@ I developed the following components:
 - [Arduino shield of one MEMS microphone with BLE module (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
 
+<img src="./kicad/mems_mic_board_with_rn4020.jpg" width=300>
+
 ## Deep learning on Keras/TensorFlow
 
 I acquired data on my own by using the components above, and it took a lot of time and effort.
