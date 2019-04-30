@@ -19,12 +19,12 @@ I split buffers for DMA into two segments: segment A and segment B.
 ```
                                                   Interrupt
                           Clock                 ..............
-                     +-+-------------+          : .......... :
-                     | |             |          : :        V V
-                     V |             |          : :   +-------------+
+                      +--------------+          : .......... :
+                      |              |          : :        V V
+                      V              |          : :   +-------------+
 Sound/voice ))) [MEMS mic]-+-PDM->[DFSDM]-DMA->[A|B]->|             |->[A|B]->DMA->[DAC] --> Analog filter->head phone ))) Sound/Voice
-                       V   |                          |ARM Cortex-M4|->[Feature]->DMA->[UART] --> Oscilloscope on PC or RasPi3
-Sound/voice ))) [MEMS mic]-+                          |             |
+                                                      |ARM Cortex-M4|->[Feature]->DMA->[UART] --> Oscilloscope on PC or RasPi3
+                                                      |             |
                                                       +-------------+
 ```
 
