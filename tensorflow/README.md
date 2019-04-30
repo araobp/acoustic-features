@@ -6,10 +6,11 @@ The results: about 90% accuracy has been achieved, so it is satisfying.
 
 I have made CNN experiments as follows:
 
-- [CNN experiments on musical instruments recognition (Jupyter Notebook)](./CNN_for_AED_music.ipynb)
-- [CNN experiments on human activity in a living room (Jupyter Notebook)](./CNN_for_AED_living_room.ipynb)
-- [CNN experiments on speech recognition for restaurants (Jupyter Notebook)](./CNN_for_AED_restaurant.ipynb)
-- [CNN experiments on birds chirping (Jupyter Notebook)](./CNN_for_AED_birds.ipynb)
+- [CNN experiments on musical instruments recognition](./musical_instruments_cnn_success_1.ipynb)
+- [CNN experiments on human activity in my home](./my_home_cnn_success_1.ipynb)
+- [CNN experiments on key word detection](./key_word_detection_cnn_success_1.ipynb)
+- [DNN experiments on key word detection](./key_word_detection_dnn_success_1.ipynb)
+- [CNN experiments on my life environment](my_life_environment_cnn_success_1.ipynb)
 
 The trained CNN model will work OK if the following condition is satisfied:
 - use the same MEMS mic with the same filter setting (incl. the same frequency response) on the edge device (STM32L4)
