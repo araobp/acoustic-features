@@ -74,7 +74,7 @@ I developed the following components:
 I acquired data on my own by using the components above, and it took a lot of time and effort.
 
 - [Dataset of each use case](./dataset)
-- [My use cases on Jupyter Notebook](./tensorflow)
+- [Executing deep learning on Jupyter Notebook](./tensorflow)
 - [Data format](./FORMAT.md)
 
 ### Modeling a neural network
