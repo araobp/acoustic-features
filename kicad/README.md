@@ -2,7 +2,7 @@
 
 ## Arduino shield: MEMS mic shield with RN4020
 
-==> **[Schematic](../kicad/mems_mic_board.pdf)**
+==> **[Schematic](./kicad/mems_mic_board.pdf)**
 
 <img src="./mems_mic_board_with_rn4020.jpg" width=400>
 
