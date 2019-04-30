@@ -2,3 +2,5 @@
 .vscode
 merged.P
 .settings
+.cproject
+.project
