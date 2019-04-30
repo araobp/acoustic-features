@@ -74,7 +74,7 @@ I developed the following components:
 I acquired data on my own by using the components above, and it took a lot of time and effort.
 
 - [Dataset of each use case](./dataset)
-- [Executing deep learning on Jupyter Notebook](./tensorflow)
+- [Executing deep learning on Jupyter Notebook](./keras)
 - [Data format](./FORMAT.md)
 
 ### Modeling a neural network
@@ -142,9 +142,9 @@ Non-trainable params: 0
 
 ### Visualization of convolution layers
 
-<img src="./tensorflow/layer0.png" width="700">
+<img src="./keras/layer0.png" width="700">
 
-**=> [Japanese word "sushi" via convolution layer](./tensorflow/Visualization_sushi.ipynb)**
+**=> [Japanese word "sushi" via convolution layer](./keras/Visualization_sushi.ipynb)**
 
 ### Memory consumption and inference performance
 
