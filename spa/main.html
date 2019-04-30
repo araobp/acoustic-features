@@ -3,10 +3,20 @@
 <head>
   <meta charset="utf-8">
   <title>Inference visualization</title>
+
+  <!-- Vue.js and paho-mqtt -->
   <script src="https://jp.vuejs.org/js/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+
+  <!-- C3.js -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.js"></script>
+
+  <!-- Local libraries -->
   <script src="./uuid.js"></script>
   <script src="./class_labels.js"></script>
+
 </head>
 
 <body>
@@ -23,6 +33,12 @@
     Class label: [#{{cnt}}] {{message}}
   </div>
 
+  <hr>
+
+  <h2>Log</h2>
+
+  <div id="chart"></div>
+
   <script>
     // Vue app object
     var app = new Vue({
@@ -36,6 +52,7 @@
     });
   </script>
 
+
   <script>
     const host = window.location.hostname
     console.log(host)
@@ -43,12 +60,25 @@
     const topic = 'sensor'
     let cnt = 0;
 
+		let chart_data = {
+			bindto: '#chart',
+			data: {
+				columns: [
+					["inference_result",],
+				],
+				types: {
+					inference_result: "step",
+				}
+			}
+		};
+
     function onConnect() {
     	console.log('connected');
       mqtt.subscribe(topic);
     }
 
     function onMessageArrived(msg) {
+
       data = msg.payloadString;
       console.log(data);
       data = data.split(',')
@@ -57,10 +87,16 @@
       date_time = new Date(epoch_time);
       app.timestamp = date_time;
       class_label = data[2];
-      name = to_name(parseInt(class_label));
+      class_label_int = parseInt(class_label);
+      name = to_name(class_label_int);
       app.message = name + "(" + class_label + ")";
       cnt = cnt + 1;
       app.cnt = cnt;
+
+      // Update chart
+      chart_data.data.columns[0].push(class_label_int);
+      console.log(chart_data);
+      let chart = c3.generate(chart_data);
     }
 
     function connect() {
