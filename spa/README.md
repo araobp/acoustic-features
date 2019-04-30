@@ -2,5 +2,5 @@
 
 ## References
 
-- [c3.js](https://c3js.org/)
+- [C3.js](https://c3js.org/)
 
