@@ -1,10 +1,18 @@
 # Arduino shield of one MEMS microphone with RN4020
 
-## Arduino shield: MEMS mic shield with RN4020
+## Arduino shield
 
 ==> **[Schematic](./mems_mic_board.pdf)**
 
 <img src="./mems_mic_board_with_rn4020.jpg" width=400>
+
+## Wireless transport
+
+I follow the output from my [iot-wireless](https://github.com/araobp/iot-wireless) project.
+
+The following is a screen shot of BLE Scanner on Android:
+
+<img src="./BLE_Scanner.jpg" width=200>
 
 ## Parts
 
