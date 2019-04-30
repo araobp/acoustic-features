@@ -11,7 +11,6 @@
 #include <dsp.h>
 #include "arm_math.h"
 #include "math.h"
-#include "arm_const_structs.h"
 #include "main.h"
 #include "dct.h"
 #include "ai.h"

@@ -27,9 +27,7 @@ extern "C" {
  * - bool start_inference
  */
 extern int8_t mfsc_buffer[NUM_FILTERS * 200];
-#ifndef FEATURE_MFSC
 extern int8_t mfcc_buffer[NUM_FILTERS * 200];
-#endif
 extern int pos;
 extern bool start_inference;
 
@@ -39,14 +37,9 @@ extern bool start_inference;
 #define INFERENCE
 
 /**
- * Transport inference results over BLE
- */
-#define BLE
-
-/**
  * Logger output format
  */
-#define INFERENCE_LOGGING
+#define LOGGING
 
 /**
  * Use cases

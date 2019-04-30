@@ -110,8 +110,6 @@ class Interface:
                 print(data)
             elif cmd == FEATURES:
                 rx = ser.read(self.num_samples[cmd])
-                n = 0
-                half = int(self.num_samples[cmd]/2)
                 for d in rx:
                     d = b8_to_int(d, True)
                     data.append(d)

@@ -10,8 +10,6 @@ DAC1	Connected to external pin only	DAC1_OUT1	PA4
 DAC1	Connected to external pin only	DAC1_OUT2	PA5
 DFSDM1:Channel 2	PDM/SPI Input from ch3 and Internal Clock	DFSDM1_DATIN3	PC7
 DFSDM1:Channel 2	PDM/SPI Input from ch3 and Internal Clock	DFSDM1_CKOUT	PC2
-DFSDM1:Channel 3	PDM/SPI input from ch3 and internal clock	DFSDM1_DATIN3	PC7
-DFSDM1:Channel 3	PDM/SPI input from ch3 and internal clock	DFSDM1_CKOUT	PC2
 I2C1	I2C	I2C1_SCL	PB8
 I2C1	I2C	I2C1_SDA	PB9
 SYS	Serial Wire	SYS_JTCK-SWCLK	PA14 (JTCK-SWCLK)
@@ -44,8 +42,6 @@ DAC1	Connected to external pin only	DAC1_OUT1	PA4
 DAC1	Connected to external pin only	DAC1_OUT2	PA5
 DFSDM1:Channel 2	PDM/SPI Input from ch3 and Internal Clock	DFSDM1_DATIN3	PC7
 DFSDM1:Channel 2	PDM/SPI Input from ch3 and Internal Clock	DFSDM1_CKOUT	PC2
-DFSDM1:Channel 3	PDM/SPI input from ch3 and internal clock	DFSDM1_DATIN3	PC7
-DFSDM1:Channel 3	PDM/SPI input from ch3 and internal clock	DFSDM1_CKOUT	PC2
 I2C1	I2C	I2C1_SCL	PB8
 I2C1	I2C	I2C1_SDA	PB9
 SYS	Serial Wire	SYS_JTCK-SWCLK	PA14 (JTCK-SWCLK)

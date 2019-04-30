@@ -58,7 +58,7 @@ int ai_init(void) {
   // Find a network
   nn_name = ai_mnetwork_find(NULL, 0);
   if (nn_name) {
-#ifndef INFERENCE_LOGGING
+#ifndef LOGGING
     printf("\nFound network: \"%s\"\n", nn_name);
 #endif
   } else {

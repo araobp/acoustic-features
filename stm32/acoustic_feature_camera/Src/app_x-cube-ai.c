@@ -232,7 +232,7 @@ void MX_X_CUBE_AI_Process(void)
 
     start_inference = false;
 
-#ifdef INFERENCE_LOGGING
+#ifdef LOGGING
     /*
     printf("%lu,%lu,", max_idx, class);
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE-1; i++) {
@@ -240,7 +240,15 @@ void MX_X_CUBE_AI_Process(void)
     }
     printf("%d\n", (int)(out_data[AI_NETWORK_OUT_1_SIZE-1])*1000);  // 1000%
     */
+
+    // Output to USART2(Console)
     printf("%lu\n", max_idx);
+
+    // Output to USART1(BLE)
+    uint8_t max_idx_uint8_t;
+    max_idx_uint8_t = (uint8_t)max_idx;
+    sendData(&max_idx_uint8_t, 1);
+
 #else
     printf("\n-- Inference %d --\n", cnt++);
     for (int i = 0; i < AI_NETWORK_OUT_1_SIZE; i++) {
@@ -248,11 +256,6 @@ void MX_X_CUBE_AI_Process(void)
     }
 #endif
 
-#ifdef BLE
-    uint8_t max_idx_uint8_t;
-    max_idx_uint8_t = (uint8_t)max_idx;
-    sendData(&max_idx_uint8_t, 1);
-#endif
   }
 #endif
     /* USER CODE END 1 */

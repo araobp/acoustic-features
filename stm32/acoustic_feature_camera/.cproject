@@ -48,7 +48,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/acoustic_feature_camera/Middlewares/ST/AI/AI/data}&quot;" />
 									<listOptionValue builtIn="false" value="../Middlewares/ST/AI/AI/include" />
 									<listOptionValue builtIn="false" value="../Middlewares/ST/AI/AI/data" />
-								</option>
+								<listOptionValue builtIn="false" value="../Drivers/CMSIS/DSP/Include" /></option>
 								<option id="com.atollic.truestudio.gcc.symbols.defined.1670122205" name="Defined symbols" superClass="com.atollic.truestudio.gcc.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__weak=__attribute__((weak))" />
 									<listOptionValue builtIn="false" value="__packed=__attribute__((__packed__))" />
@@ -185,7 +185,7 @@
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include" />
 									<listOptionValue builtIn="false" value="../Middlewares/ST/AI/AI/include" />
 									<listOptionValue builtIn="false" value="../Middlewares/ST/AI/AI/data" />
-								</option>
+								<listOptionValue builtIn="false" value="../Drivers/CMSIS/DSP/Include" /></option>
 								<option id="com.atollic.truestudio.gcc.symbols.defined.1670122205" name="Defined symbols" superClass="com.atollic.truestudio.gcc.symbols.defined" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__weak=__attribute__((weak))" />
 									<listOptionValue builtIn="false" value="__packed=__attribute__((__packed__))" />
