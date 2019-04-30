@@ -13,9 +13,13 @@
            +---------REST------------[API server]--[SQLite]
 ```
 
+## Chart for JS
+
+I evaluated C3.js, but it does not seem to support what I need for stepped line charts. I am now evaluating Chart.js.
+
 ## References
 
-- [C3.js](https://c3js.org/)
+- [Chart.js](https://www.chartjs.org/)
 - [Vue.js](https://vuejs.org/)
 - [MQTT over WebSocket](http://www.steves-internet-guide.com/using-javascript-mqtt-client-websockets/)
 
