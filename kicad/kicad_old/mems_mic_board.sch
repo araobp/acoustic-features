@@ -48,6 +48,17 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
+L mems_mic U2
+U 1 1 5BEA0916
+P 5400 2850
+F 0 "U2" H 5400 2550 60  0000 C CNN
+F 1 "mems_mic" H 5350 3150 60  0000 C CNN
+F 2 "mcu:MEMS_mic" H 5400 2850 60  0001 C CNN
+F 3 "" H 5400 2850 60  0001 C CNN
+	1    5400 2850
+	1    0    0    -1  
+$EndComp
+$Comp
 L mems_mic U3
 U 1 1 5BEA0942
 P 5400 3750
@@ -69,9 +80,12 @@ F 3 "" H 6300 950 50  0001 C CNN
 	1    6300 950 
 	1    0    0    -1  
 $EndComp
+NoConn ~ 5900 2800
+NoConn ~ 5900 2900
 NoConn ~ 5900 3700
 NoConn ~ 5900 3800
 NoConn ~ 4900 3800
+NoConn ~ 4900 2900
 $Comp
 L GND #PWR02
 U 1 1 5BEA0B85
@@ -83,6 +97,13 @@ F 3 "" H 4500 6200 50  0001 C CNN
 	1    4500 6200
 	1    0    0    -1  
 $EndComp
+NoConn ~ 8050 2000
+NoConn ~ 8050 2100
+NoConn ~ 8050 2200
+NoConn ~ 8050 2300
+NoConn ~ 8050 2400
+NoConn ~ 8050 2500
+NoConn ~ 8050 2700
 Text Notes 8300 2650 0    60   ~ 0
 PC7 (DFSDM_DATAIN2)
 $Comp
@@ -96,11 +117,16 @@ F 3 "" H 8250 5450 50  0001 C CNN
 	1    8250 5450
 	-1   0    0    -1  
 $EndComp
+Text Notes 8300 5800 0    60   ~ 0
+USART_TX
+Text Notes 8300 5900 0    60   ~ 0
+USART_RX
 NoConn ~ 8050 5150
 NoConn ~ 8050 5250
 NoConn ~ 8050 5350
 NoConn ~ 8050 5450
 NoConn ~ 8050 5550
+NoConn ~ 8050 5650
 $Comp
 L Conn_01x06_Male J2
 U 1 1 5BEA152F
@@ -118,6 +144,8 @@ NoConn ~ 2600 5550
 NoConn ~ 2600 5650
 NoConn ~ 2600 5750
 NoConn ~ 2600 5850
+Text Notes 2500 2650 0    60   ~ 0
+Vin
 Text Notes 2150 2550 0    60   ~ 0
 Vin
 Text Notes 2150 2450 0    60   ~ 0
@@ -140,20 +168,42 @@ F 3 "" V 3700 1100 60  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
+	5900 3000 6600 3000
+Wire Wire Line
 	6600 2600 6600 3900
 Wire Wire Line
 	6600 3900 5900 3900
 Wire Wire Line
 	3900 3900 4900 3900
 Wire Wire Line
+	4900 3000 4300 3000
+Wire Wire Line
+	4300 3000 4300 3900
+Connection ~ 4300 3900
+Wire Wire Line
+	6300 2700 5900 2700
+Wire Wire Line
 	6300 950  6300 3600
 Wire Wire Line
 	6300 3600 5900 3600
+Connection ~ 6300 2700
 Wire Wire Line
 	4900 3600 4500 3600
 Wire Wire Line
+	4500 2700 4500 6200
+Wire Wire Line
+	4900 2700 4500 2700
+Connection ~ 4500 3600
+Wire Wire Line
 	4900 3700 4500 3700
 Connection ~ 4500 3700
+Wire Wire Line
+	4900 2800 4750 2800
+Wire Wire Line
+	4750 2800 4750 2400
+Wire Wire Line
+	4750 2400 6300 2400
+Connection ~ 6300 2400
 Wire Wire Line
 	2600 2000 3000 2000
 Wire Wire Line
@@ -187,6 +237,7 @@ Wire Wire Line
 Connection ~ 6300 2100
 Wire Wire Line
 	8050 2600 6600 2600
+Connection ~ 6600 3000
 $Comp
 L PWR_FLAG #FLG04
 U 1 1 5BEA4D7E
@@ -223,6 +274,7 @@ Wire Wire Line
 	4300 1150 4300 1700
 Text Notes 3950 7450 1    60   ~ 0
 PC2 (DFSDM_CKOUT)
+Connection ~ 4500 5400
 Text Notes 2200 2250 0    60   ~ 0
 5V\n
 NoConn ~ 2600 2400
@@ -240,7 +292,9 @@ F 3 "" H 3900 6450 50  0001 C CNN
 $EndComp
 NoConn ~ -1000 1500
 NoConn ~ -950 1450
-Text Notes 5300 3350 0    60   ~ 0
+Text Notes 4950 3200 0    60   ~ 0
+Mic R
+Text Notes 4950 4100 0    60   ~ 0
 Mic L
 NoConn ~ 8050 5750
 NoConn ~ 8050 5850
@@ -270,112 +324,58 @@ F 3 "" H 8250 2200 50  0001 C CNN
 $EndComp
 NoConn ~ 3350 950 
 NoConn ~ 4050 950 
-Wire Wire Line
-	4500 3600 4500 6200
 $Comp
-L Conn_01x06_Female J6
-U 1 1 5CC79A66
-P 6100 5600
-F 0 "J6" H 6100 5900 50  0000 C CNN
-F 1 "Conn_01x06_Female" H 6100 5200 50  0000 C CNN
-F 2 "mcu:Pin_Socket_6P" H 6100 5600 50  0001 C CNN
-F 3 "" H 6100 5600 50  0001 C CNN
-	1    6100 5600
+L Conn_01x04_Female J6
+U 1 1 5C792525
+P 6950 6050
+F 0 "J6" H 6950 6250 50  0000 C CNN
+F 1 "Conn_01x04_Female" H 6950 5750 50  0000 C CNN
+F 2 "mcu:pin-socket-4p" H 6950 6050 50  0001 C CNN
+F 3 "" H 6950 6050 50  0001 C CNN
+	1    6950 6050
 	0    -1   1    0   
 $EndComp
+Wire Wire Line
+	8050 1800 6950 1800
+Wire Wire Line
+	6950 1800 6950 5850
+Wire Wire Line
+	8050 1900 7050 1900
+Wire Wire Line
+	7050 1900 7050 5850
+Wire Wire Line
+	2600 2200 3350 2200
+Wire Wire Line
+	3350 2200 3350 4750
+Wire Wire Line
+	3350 4750 6850 4750
+Wire Wire Line
+	6850 4750 6850 5850
 $Comp
 L GND #PWR06
-U 1 1 5CC79D56
-P 6700 6050
-F 0 "#PWR06" H 6700 5800 50  0001 C CNN
-F 1 "GND" H 6700 5900 50  0000 C CNN
-F 2 "" H 6700 6050 50  0001 C CNN
-F 3 "" H 6700 6050 50  0001 C CNN
-	1    6700 6050
+U 1 1 5C79271E
+P 7600 6100
+F 0 "#PWR06" H 7600 5850 50  0001 C CNN
+F 1 "GND" H 7600 5950 50  0000 C CNN
+F 2 "" H 7600 6100 50  0001 C CNN
+F 3 "" H 7600 6100 50  0001 C CNN
+	1    7600 6100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6400 5400 6400 5000
+	7150 5850 7150 4750
 Wire Wire Line
-	6400 5000 6700 5000
+	7150 4750 7600 4750
 Wire Wire Line
-	6700 5000 6700 6050
-Wire Wire Line
-	6200 4850 6200 5400
-Wire Wire Line
-	8050 2700 6750 2700
-Wire Wire Line
-	6750 2700 6750 4550
-Wire Wire Line
-	6750 4550 6100 4550
-Wire Wire Line
-	6100 4550 6100 5400
-Wire Wire Line
-	6000 5400 6000 4450
-Wire Wire Line
-	6000 4450 7750 4450
-Wire Wire Line
-	7750 4450 7750 5650
-Wire Wire Line
-	7750 5650 8050 5650
-Text Notes 6050 5750 1    60   ~ 0
-TX
-Text Notes 6150 5750 1    60   ~ 0
-RX
-Text Notes 6250 5750 1    60   ~ 0
-5V\n
-Text Notes 6450 5800 1    60   ~ 0
+	7600 4750 7600 6100
+Text Label 7400 1800 0    60   ~ 0
+SCL
+Text Label 7400 1900 0    60   ~ 0
+SDA
+Text Label 6700 4750 0    60   ~ 0
+5V
+Text Label 7200 4750 0    60   ~ 0
 GND
-NoConn ~ 6300 5400
-NoConn ~ 5900 5400
-NoConn ~ 8050 1800
-NoConn ~ 8050 1900
-NoConn ~ 8050 2000
-NoConn ~ 8050 2100
-NoConn ~ 8050 2200
-NoConn ~ 8050 2300
-NoConn ~ 8050 2400
-NoConn ~ 8050 2500
-Wire Wire Line
-	2600 2200 3750 2200
-Text GLabel 3750 2200 2    60   Input ~ 0
-U5V
-Text GLabel 6200 4850 1    60   Input ~ 0
-U5V
-Text Notes 8300 2750 0    60   ~ 0
-PA9 (USART1 TX)
-Text Notes 8300 5700 0    60   ~ 0
-PA10 (USART1 RX)
-Text Notes 5800 6150 0    60   ~ 0
-RN4020 module
-$Comp
-L +5V #PWR07
-U 1 1 5CC7A8B6
-P 3300 1750
-F 0 "#PWR07" H 3300 1600 50  0001 C CNN
-F 1 "+5V" H 3300 1890 50  0000 C CNN
-F 2 "" H 3300 1750 50  0001 C CNN
-F 3 "" H 3300 1750 50  0001 C CNN
-	1    3300 1750
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3300 1750 3300 2200
-Connection ~ 3300 2200
-$Comp
-L PWR_FLAG #FLG08
-U 1 1 5CC7A961
-P 3650 1800
-F 0 "#FLG08" H 3650 1875 50  0001 C CNN
-F 1 "PWR_FLAG" H 3650 1950 50  0000 C CNN
-F 2 "" H 3650 1800 50  0001 C CNN
-F 3 "" H 3650 1800 50  0001 C CNN
-	1    3650 1800
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3650 1800 3650 2000
-Wire Wire Line
-	3650 2000 3300 2000
-Connection ~ 3300 2000
+Text Notes 6900 6200 0    60   ~ 0
+LCD
 $EndSCHEMATC
