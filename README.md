@@ -1,4 +1,4 @@
-# Acoustic features for edge AI
+# Acoustic features for low-end edge AI
 
 <img src="./oscilloscope/screenshots/spectrogram_framenco.png" width="700">
 
