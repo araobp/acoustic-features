@@ -1,13 +1,16 @@
-# SPA
+# Chart GUI SPA (Single Page Application)
 
 ## IoT platform
 
 ==> **[iot-wireless](https://github.com/araobp/iot-wireless)**
 
-## Chart GUI
+## Architecture
 
 ```
-  [Chart GUI]<--MQTT/WebSocket---[mosquitto]<--MQTT---[gateway.py]<--BLE---[STM32 + MEMS mic shield]
+  [ChartGUI/HTML5]<--MQTT/WebSocket---[mosquitto]<--MQTT---[gateway.py]<--BLE---[MEMS-mic/STM32]
+           ^                               |
+           |                               V
+           +---------REST------------[API server]--[SQLite]
 ```
 
 ## References
