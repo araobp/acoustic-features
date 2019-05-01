@@ -68,6 +68,7 @@ I developed the following components:
 - ["Acoustic feature camera" for deep learning (CubeMX/TrueSTUDIO)](./stm32/acoustic_feature_camera)
 - [Arduino shield of one MEMS microphone with BLE module (KiCAD)](./kicad)
 - [Oscilloscope GUI implementation on matplotlib/Tkinter (Python)](./oscilloscope)
+- [Logger GUI (HTML5)](./html5)
 
 ## Deep learning on Keras/TensorFlow
 
@@ -182,21 +183,6 @@ If the above conditions are satisfied, this small neural network works very well
 
 I have been observing that sound of air conditioner affects accuracy of inference significantly.
 
-## Application of acoustic scene classification
-
-I have been working on a life log application.
-
-### matplotlib-based GUI
-
-<img src="./oscilloscope/screenshots/log.png" width=700>
-
-==> **[Logger GUI based on matplotlib (Virtual COM port)](https://github.com/araobp/acoustic-features/blob/master/oscilloscope/script/logger.py)**
-
-### Chart.js-based GUI
-
-<img src="./spa/screencapture.jpg" width=700>
-
-==> **[Logger GUI (Signle Page Application, MQTT over WebSocket)](./spa)**
 
 ## References
 
