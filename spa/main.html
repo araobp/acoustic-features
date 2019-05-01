@@ -25,47 +25,54 @@
 	<div id="app">
  		Device Name: {{device_name}}<br>
     Time stamp: {{timestamp}}<br>
-    Class label: [#{{cnt}}] {{message}}
+    Class label: [#{{sno}}] {{message}}
   </div>
 
   <canvas id="Log"></canvas>
 
   <script>
+    // Chirt 
     const NUM_RECORDS = 20;
+    const INTERVAL = 10; 
 
+    // MQTT
+    const host = window.location.hostname
+    console.log(host)
+    const port = 11883  // MQTT over WebSocket
+    const topic = 'sensor'
   </script>
 
   <script>
     // Vue app object
-    var app = new Vue({
+    let app = new Vue({
     	el: '#app',
       data: {
       	device_name: '',
         timestamp: '',
         message: '',
-        cnt: 0
+        sno: 0
       }
     });
   </script>
 
 
   <script>
-    const host = window.location.hostname
-    console.log(host)
-    const port = 11883  // MQTT over WebSocket
-    const topic = 'sensor'
-    let cnt = 0;
+    // MQTT message serial number
+    let sno = 0;
 
-    // FIFO buffer
+    // FIFO buffer for logging 
     let reached = false;
 
-    // The number of class labels
+    // Buffer for taking an frequency of appearance 
+    let buf = {};
+
+    // Class labels
     const numClasses = Object.keys(class_labels).length
     const class_labels_name = Object.values(class_labels).reverse();
 
-    // Chart.js
-		var ctx = document.getElementById('Log').getContext('2d');
-    var chart = new Chart(ctx, {
+    // Create Chart object
+		let ctx = document.getElementById('Log').getContext('2d');
+    let chart = new Chart(ctx, {
       type: 'line',
 
       data: {
@@ -96,48 +103,71 @@
               },
               min: 0,
               max: numClasses - 1,
-              stepSize: 1,
-              fontSize: 16
+              stepSize: 1
             }
           }]
         }
       }
     });
 
+    // Connected to MQTT server
     function onConnect() {
     	console.log('connected');
       mqtt.subscribe(topic);
     }
 
+    // MQTT message
     function onMessageArrived(msg) {
 
-      data = msg.payloadString;
+      let win = -1;
+
+      let data = msg.payloadString;
       console.log(data);
       data = data.split(',')
       app.device_name = data[0];
-      epoch_time = parseFloat(data[1]) * 1000;  // milliseconds
-      date_time = new Date(epoch_time);
+      let epoch_time = parseFloat(data[1]) * 1000;  // milliseconds
+      let date_time = new Date(epoch_time);
       app.timestamp = date_time;
-      class_label = data[2];
-      class_label_int = parseInt(class_label);
-      name = to_name(class_label_int);
+      let class_label = data[2];
+      let class_label_int = parseInt(class_label);
+      let name = to_name(class_label_int);
       app.message = name + "(" + class_label + ")";
-      cnt = cnt + 1;
-      app.cnt = cnt;
+      sno = sno + 1;
+      app.sno = sno;
 
-      // Update chart
-      chart.data.datasets[0].data.push(class_label_int);
-      chart.data.labels.push(date_time.toLocaleTimeString());
-      if (!reached && chart.data.datasets[0].data.length > NUM_RECORDS) {
-        reached = true;
+      // Buffering
+      if (class_label_int in buf) {
+        buf[class_label_int]++;
+      } else {
+        buf[class_label_int] = 1;
       }
-      else if (reached) {
-        chart.data.datasets[0].data.shift();
-        chart.data.labels.shift();
+
+      if ((sno % INTERVAL) == 0) {
+        win = -1;
+        // Frequency of appearance
+        Object.keys(buf).forEach(key => {
+          if (win == -1) {
+            win = key;
+          } else if (buf[key] > buf[win]) {
+            win = key;
+          }
+        }); 
+
+        // Put in FIFO buffer and update Chart 
+        chart.data.datasets[0].data.push(win);
+        chart.data.labels.push(date_time.toLocaleTimeString());
+        if (!reached && chart.data.datasets[0].data.length > NUM_RECORDS) {
+          reached = true;
+        }
+        else if (reached) {
+          chart.data.datasets[0].data.shift();
+          chart.data.labels.shift();
+        }
+        chart.update();
       }
-      chart.update();
     }
 
+    // Connection to MQTT server
     function connect() {
     	mqtt = new Paho.MQTT.Client(host, port, uuidv4());
       let options = {
@@ -149,7 +179,7 @@
       console.log('connecting...');
     }
 
-    // Connect to mosquitto over WebSocket
+    // Connect to MQTT server over WebSocket
     connect();
   </script>
 
