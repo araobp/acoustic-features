@@ -25,19 +25,23 @@
     <h2>{{title}}</h2>
 
     Device name: 
-    <select v-model="device_name">
+    <select id="devices" v-model="device_name">
       <option disabled value="">Please select one</option>
-      <option>BLE1</option>
-      <option>BLE2</option>
     </select>
     <br>
 
-    <p>Current inference result</p>
     Time stamp: {{timestamp}}<br>
-    Class label: [#{{sno}}] {{message}}
+    Inference: [#{{sno}}] {{message}}
   </div>
 
   <canvas id="Log"></canvas>
+
+  <script>
+    let select = document.getElementById("devices");
+    devices.forEach(it => {
+      select.options[select.options.length] = new Option(it);
+    });
+  </script>
 
   <script>
     // Chirt 
