@@ -8,15 +8,12 @@
   <script src="https://jp.vuejs.org/js/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
 
-  <!-- C3.js -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js" charset="utf-8"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
   <!-- Local libraries -->
   <script src="./uuid.js"></script>
   <script src="./class_labels.js"></script>
-
 </head>
 
 <body>
@@ -37,7 +34,12 @@
 
   <h2>Log</h2>
 
-  <div id="chart"></div>
+  <canvas id="Log"></canvas>
+
+  <script>
+    const NUM_RECORDS = 20;
+
+  </script>
 
   <script>
     // Vue app object
@@ -60,17 +62,53 @@
     const topic = 'sensor'
     let cnt = 0;
 
-		let chart_data = {
-			bindto: '#chart',
-			data: {
-				columns: [
-					["inference_result",],
-				],
-				types: {
-					inference_result: "step",
-				}
-			}
-		};
+    // FIFO buffer
+    let reached = false;
+
+    // The number of class labels
+    const numClasses = Object.keys(class_labels).length
+    const class_labels_name = Object.values(class_labels).reverse();
+
+    // Chart.js
+		var ctx = document.getElementById('Log').getContext('2d');
+    var chart = new Chart(ctx, {
+      type: 'line',
+
+      data: {
+        labels: [],
+        datasets: [{
+          borderColor: 'rgb(255, 99, 132)',
+          data: [],
+          fill: false,
+          pointStyle: 'rect',
+          steppedLine: 'before'
+        }]
+      },
+
+      options: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: 'Acoustic Scene Classification',
+          fontSize: 20
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              callback: function(value, index, values) {
+                return class_labels_name[index] + '(' + value + ')';
+              },
+              min: 0,
+              max: numClasses - 1,
+              stepSize: 1,
+              fontSize: 16
+            }
+          }]
+        }
+      }
+    });
 
     function onConnect() {
     	console.log('connected');
@@ -94,9 +132,16 @@
       app.cnt = cnt;
 
       // Update chart
-      chart_data.data.columns[0].push(class_label_int);
-      console.log(chart_data);
-      let chart = c3.generate(chart_data);
+      chart.data.datasets[0].data.push(class_label_int);
+      chart.data.labels.push(date_time.toLocaleTimeString());
+      if (!reached && chart.data.datasets[0].data.length > NUM_RECORDS) {
+        reached = true;
+      }
+      else if (reached) {
+        chart.data.datasets[0].data.shift();
+        chart.data.labels.shift();
+      }
+      chart.update();
     }
 
     function connect() {
