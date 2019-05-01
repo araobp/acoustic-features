@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Inference visualization</title>
+
+  <!-- Vue.js and paho-mqtt -->
+  <script src="https://jp.vuejs.org/js/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+
+  <!-- C3.js -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.js"></script>
+
+  <!-- Local libraries -->
+  <script src="./uuid.js"></script>
+  <script src="./class_labels.js"></script>
+
+</head>
+
+<body>
+
+  <h1>Acoustic Scene Classification</h1>
+
+  <hr>
+
+  <h2>Current inference result</h2>
+
+	<div id="app">
+ 		Device Name: {{device_name}}<br>
+    Time stamp: {{timestamp}}<br>
+    Class label: [#{{cnt}}] {{message}}
+  </div>
+
+  <hr>
+
+  <h2>Log</h2>
+
+  <div id="chart"></div>
+
+  <script>
+    // Vue app object
+    var app = new Vue({
+    	el: '#app',
+      data: {
+      	device_name: '',
+        timestamp: '',
+        message: '',
+        cnt: 0
+      }
+    });
+  </script>
+
+
+  <script>
+    const host = window.location.hostname
+    console.log(host)
+    const port = 11883  // MQTT over WebSocket
+    const topic = 'sensor'
+    let cnt = 0;
+
+		let chart_data = {
+			bindto: '#chart',
+			data: {
+				columns: [
+					["inference_result",],
+				],
+				types: {
+					inference_result: "step",
+				}
+			}
+		};
+
+    function onConnect() {
+    	console.log('connected');
+      mqtt.subscribe(topic);
+    }
+
+    function onMessageArrived(msg) {
+
+      data = msg.payloadString;
+      console.log(data);
+      data = data.split(',')
+      app.device_name = data[0];
+      epoch_time = parseFloat(data[1]) * 1000;  // milliseconds
+      date_time = new Date(epoch_time);
+      app.timestamp = date_time;
+      class_label = data[2];
+      class_label_int = parseInt(class_label);
+      name = to_name(class_label_int);
+      app.message = name + "(" + class_label + ")";
+      cnt = cnt + 1;
+      app.cnt = cnt;
+
+      // Update chart
+      chart_data.data.columns[0].push(class_label_int);
+      console.log(chart_data);
+      let chart = c3.generate(chart_data);
+    }
+
+    function connect() {
+    	mqtt = new Paho.MQTT.Client(host, port, uuidv4());
+      let options = {
+      	timeout: 3,
+        onSuccess: onConnect,
+      };
+      mqtt.onMessageArrived = onMessageArrived
+      mqtt.connect(options);
+      console.log('connecting...');
+    }
+
+    // Connect to mosquitto over WebSocket
+    connect();
+  </script>
+
+</body>
+
+</html>

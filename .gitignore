@@ -1,3 +1,6 @@
 .ipynb_checkpoints
 .vscode
 merged.P
+.settings
+.cproject
+.project

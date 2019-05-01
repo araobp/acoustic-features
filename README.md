@@ -1,4 +1,4 @@
-# Acoustic features for edge AI
+# Acoustic features for low-end edge AI
 
 <img src="./oscilloscope/screenshots/spectrogram_framenco.png" width="700">
 
@@ -74,8 +74,8 @@ I developed the following components:
 I acquired data on my own by using the components above, and it took a lot of time and effort.
 
 - [Dataset of each use case](./dataset)
-- [Executing deep learning on Jupyter Notebook](./tensorflow)
-- [Data format](./FORMAT.md)
+- [Executing deep learning on Jupyter Notebook](./keras)
+- [Dataset format](./FORMAT.md)
 
 ### Modeling a neural network
 
@@ -142,9 +142,9 @@ Non-trainable params: 0
 
 ### Visualization of convolution layers
 
-<img src="./tensorflow/layer0.png" width="700">
+<img src="./keras/layer0.png" width="700">
 
-**=> [Japanese word "sushi" via convolution layer](./tensorflow/Visualization_sushi.ipynb)**
+**=> [Japanese word "sushi" via convolution layer](./keras/Visualization_sushi.ipynb)**
 
 ### Memory consumption and inference performance
 
@@ -186,9 +186,10 @@ I have been observing that sound of air conditioner affects accuracy of inferenc
 
 I have been working on a life log application.
 
-And I am very satisfied with the result below:
-
 <img src="./oscilloscope/screenshots/log.png" width=700>
+
+- [Logger GUI based on matplotlib](https://github.com/araobp/acoustic-features/blob/master/oscilloscope/script/logger.py)
+- [Logger GUI (Signle Page Application)](./spa)
 
 ## References
 
