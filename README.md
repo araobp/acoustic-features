@@ -188,8 +188,8 @@ I have been working on a life log application.
 
 <img src="./oscilloscope/screenshots/log.png" width=700>
 
-- [Logger GUI based on matplotlib](https://github.com/araobp/acoustic-features/blob/master/oscilloscope/script/logger.py)
-- [Logger GUI (Signle Page Application)](./spa)
+- [Logger GUI based on matplotlib (Virtual COM port)](https://github.com/araobp/acoustic-features/blob/master/oscilloscope/script/logger.py)
+- [Logger GUI (Signle Page Application, MQTT over WebSocket)](./spa)
 
 ## References
 
