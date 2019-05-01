@@ -1,5 +1,7 @@
 # Chart GUI SPA (Single Page Application)
 
+<img src="./screencapture.jpg" width=600>
+          
 ## IoT platform
 
 ==> **[iot-wireless](https://github.com/araobp/iot-wireless)**
