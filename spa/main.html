@@ -14,7 +14,6 @@
   <!-- Local libraries -->
   <script src="./uuid.js"></script>
   <script src="./class_labels.js"></script>
-
 </head>
 
 <body>
@@ -38,6 +37,11 @@
   <canvas id="Log"></canvas>
 
   <script>
+    const NUM_RECORDS = 20;
+
+  </script>
+
+  <script>
     // Vue app object
     var app = new Vue({
     	el: '#app',
@@ -57,6 +61,9 @@
     const port = 11883  // MQTT over WebSocket
     const topic = 'sensor'
     let cnt = 0;
+
+    // FIFO buffer
+    let reached = false;
 
     // The number of class labels
     const numClasses = Object.keys(class_labels).length
@@ -127,6 +134,13 @@
       // Update chart
       chart.data.datasets[0].data.push(class_label_int);
       chart.data.labels.push(date_time.toLocaleTimeString());
+      if (!reached && chart.data.datasets[0].data.length > NUM_RECORDS) {
+        reached = true;
+      }
+      else if (reached) {
+        chart.data.datasets[0].data.shift();
+        chart.data.labels.shift();
+      }
       chart.update();
     }
 
