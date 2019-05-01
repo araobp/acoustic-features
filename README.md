@@ -186,10 +186,17 @@ I have been observing that sound of air conditioner affects accuracy of inferenc
 
 I have been working on a life log application.
 
+### matplotlib-based GUI
+
 <img src="./oscilloscope/screenshots/log.png" width=700>
 
-- [Logger GUI based on matplotlib (Virtual COM port)](https://github.com/araobp/acoustic-features/blob/master/oscilloscope/script/logger.py)
-- [Logger GUI (Signle Page Application, MQTT over WebSocket)](./spa)
+==> **[Logger GUI based on matplotlib (Virtual COM port)](https://github.com/araobp/acoustic-features/blob/master/oscilloscope/script/logger.py)**
+
+### Chart.js-based GUI
+
+<img src="./spa/screencapture.jpg" width=700>
+
+==> **[Logger GUI (Signle Page Application, MQTT over WebSocket)](./spa)**
 
 ## References
 
