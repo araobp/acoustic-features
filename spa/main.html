@@ -12,18 +12,27 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
   <!-- Local libraries -->
-  <script src="./uuid.js"></script>
-  <script src="./class_labels.js"></script>
+  <script src="./lib/uuid.js"></script>
+
+  <!-- Edge AI class definition -->
+  <script src="./use_cases/class_labels_my_home.js"></script>
 </head>
 
 <body>
 
-  <h2>Acoustic Scene Classification</h2>
-
-  <p>Current inference result</p>
-
 	<div id="app">
- 		Device Name: {{device_name}}<br>
+
+    <h2>{{title}}</h2>
+
+    Device name: 
+    <select v-model="device_name">
+      <option disabled value="">Please select one</option>
+      <option>BLE1</option>
+      <option>BLE2</option>
+    </select>
+    <br>
+
+    <p>Current inference result</p>
     Time stamp: {{timestamp}}<br>
     Class label: [#{{sno}}] {{message}}
   </div>
@@ -47,6 +56,7 @@
     let app = new Vue({
     	el: '#app',
       data: {
+        title: useCase,
       	device_name: '',
         timestamp: '',
         message: '',
@@ -54,7 +64,6 @@
       }
     });
   </script>
-
 
   <script>
     // MQTT message serial number
@@ -67,8 +76,8 @@
     let buf = {};
 
     // Class labels
-    const numClasses = Object.keys(class_labels).length
-    const class_labels_name = Object.values(class_labels).reverse();
+    const numClasses = Object.keys(classLabels).length
+    const classLabelsName = Object.values(classLabels).reverse();
 
     // Create Chart object
 		let ctx = document.getElementById('Log').getContext('2d');
@@ -99,7 +108,7 @@
           yAxes: [{
             ticks: {
               callback: function(value, index, values) {
-                return class_labels_name[index] + '(' + value + ')';
+                return classLabelsName[index] + '(' + value + ')';
               },
               min: 0,
               max: numClasses - 1,
@@ -124,46 +133,50 @@
       let data = msg.payloadString;
       console.log(data);
       data = data.split(',')
-      app.device_name = data[0];
-      let epoch_time = parseFloat(data[1]) * 1000;  // milliseconds
-      let date_time = new Date(epoch_time);
-      app.timestamp = date_time;
-      let class_label = data[2];
-      let class_label_int = parseInt(class_label);
-      let name = to_name(class_label_int);
-      app.message = name + "(" + class_label + ")";
-      sno = sno + 1;
-      app.sno = sno;
+      let device_name = data[0];
+      if (device_name == app.device_name) { 
 
-      // Buffering
-      if (class_label_int in buf) {
-        buf[class_label_int]++;
-      } else {
-        buf[class_label_int] = 1;
-      }
+        let epoch_time = parseFloat(data[1]) * 1000;  // milliseconds
+        let date_time = new Date(epoch_time);
+        app.timestamp = date_time;
+        let classLabel = data[2];
+        let classLabelInt = parseInt(classLabel);
+        let name = classLabels[classLabelInt];
+        app.message = name + "(" + classLabel + ")";
+        sno = sno + 1;
+        app.sno = sno;
 
-      if ((sno % INTERVAL) == 0) {
-        win = -1;
-        // Frequency of appearance
-        Object.keys(buf).forEach(key => {
-          if (win == -1) {
-            win = key;
-          } else if (buf[key] > buf[win]) {
-            win = key;
+        // Buffering
+        if (classLabelInt in buf) {
+          buf[classLabelInt]++;
+        } else {
+          buf[classLabelInt] = 1;
+        }
+
+        if ((sno % INTERVAL) == 0) {
+          win = -1;
+          // Frequency of appearance
+          Object.keys(buf).forEach(key => {
+            if (win == -1) {
+              win = key;
+            } else if (buf[key] > buf[win]) {
+              win = key;
+            }
+          }); 
+
+          // Put in FIFO buffer and update Chart 
+          chart.data.datasets[0].data.push(win);
+          chart.data.labels.push(date_time.toLocaleTimeString());
+          if (!reached && chart.data.datasets[0].data.length > NUM_RECORDS) {
+            reached = true;
           }
-        }); 
+          else if (reached) {
+            chart.data.datasets[0].data.shift();
+            chart.data.labels.shift();
+          }
+          chart.update();
+        }
 
-        // Put in FIFO buffer and update Chart 
-        chart.data.datasets[0].data.push(win);
-        chart.data.labels.push(date_time.toLocaleTimeString());
-        if (!reached && chart.data.datasets[0].data.length > NUM_RECORDS) {
-          reached = true;
-        }
-        else if (reached) {
-          chart.data.datasets[0].data.shift();
-          chart.data.labels.shift();
-        }
-        chart.update();
       }
     }
 
