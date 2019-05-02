@@ -26,9 +26,15 @@
 
     <div id="title">{{title}}</div>
 
-    <br>
+		<br>
 
-    <div id="current">
+    <div id="operation">
+
+			<form action="">
+				<input type="radio" name="operation" value="current" checked="checked"> Current<br>
+				<input type="radio" name="operation" value="past"> Past<br>
+			</form>
+
       Device name: 
       <select id="devices" v-model="device_name">
         <option disabled value="">Please select one</option>
