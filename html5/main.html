@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <title>Inference visualization</title>
 
+  <link href="css/css.css" rel="stylesheet" type="text/css">
+
   <!-- Vue.js and paho-mqtt -->
   <script src="https://jp.vuejs.org/js/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
@@ -22,17 +24,23 @@
 
 	<div id="app">
 
-    <h2>{{title}}</h2>
+    <div id="title">{{title}}</div>
 
-    Device name: 
-    <select id="devices" v-model="device_name">
-      <option disabled value="">Please select one</option>
-    </select>
     <br>
 
-    Time stamp: {{timestamp}}<br>
-    Inference: [#{{sno}}] {{message}}
+    <div id="current">
+      Device name: 
+      <select id="devices" v-model="device_name">
+        <option disabled value="">Please select one</option>
+      </select>
+      <br>
+
+      Time stamp: {{timestamp}}<br>
+      Inference: [#{{sno}}] {{message}}
+    </div>
   </div>
+
+  <br>
 
   <canvas id="Log"></canvas>
 
