@@ -1,5 +1,7 @@
 # Chart GUI SPA (Single Page Application)
 
+(Work in progress)
+
 ## IoT platform
 
 This SPA works on the following iot platform:
