@@ -19,13 +19,15 @@ body {
   color: darkslateblue; 
 }
 
-#operation {
+.widget {
   padding: 1%;
   background-color: seashell;
 }
 
-canvas {
-  background-color: seashell;
+#past {
+  display: none;
 }
 
-
+canvas {
+  width: 900;
+}

@@ -28,28 +28,62 @@
 
 		<br>
 
-    <div id="operation">
+    <div class="widget">
+      <form id="select" onchange="onButtonChecked()">
+        <input type="radio" name="operation" value="current" checked="checked"> Current log<br>
+        <input type="radio" name="operation" value="past"> Past log<br>
+      </form>
+    </div>
 
-			<form action="">
-				<input type="radio" name="operation" value="current" checked="checked"> Current<br>
-				<input type="radio" name="operation" value="past"> Past<br>
-			</form>
+    <br>
 
+    <div class="widget">
       Device name: 
       <select id="devices" v-model="device_name">
         <option disabled value="">Please select one</option>
       </select>
       <br>
 
-      Time stamp: {{timestamp}}<br>
-      Inference: [#{{sno}}] {{message}}
+      <div id="current">
+        Time stamp: {{timestamp}}<br>
+        Inference: [#{{sno}}] {{message}}
+      </div>
+      <div id="past">
+        <form>
+          From:
+          <input type="datetime-local" name="from">
+          To:
+          <input type="datetime-local" name="to">
+          <br>
+          <input type="submit" value="Show">
+        </form>
+      </div>
+    </div>
+
     </div>
   </div>
 
   <br>
 
-  <canvas id="Log"></canvas>
+  <script>
+    function onButtonChecked() {
+      let form = document.getElementById("select");
+      let current = document.getElementById("current");
+      let past = document.getElementById("past");
+      if (form.operation.value == "current") {
+        current.style.display = "block";
+        past.style.display = "none";
+      } else {
+        current.style.display = "none";
+        past.style.display = "block";
+      }
+    }
 
+  </script>
+
+  <div class="widget">
+    <canvas id="Log"></canvas>
+  </div>
   <script>
     let select = document.getElementById("devices");
     devices.forEach(it => {
