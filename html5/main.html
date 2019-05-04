@@ -28,6 +28,7 @@
 
 		<br>
 
+    <!-- Current/past selection widget -->
     <div class="widget">
       <form id="select" onchange="onButtonChecked()">
         <input type="radio" name="operation" value="current" checked="checked"> Current log<br>
@@ -37,6 +38,7 @@
 
     <br>
 
+    <!-- Parameters widget -->
     <div class="widget">
       Device name: 
       <select id="devices" v-model="device_name">
@@ -49,7 +51,7 @@
         Inference: [#{{sno}}] {{message}}
       </div>
       <div id="past">
-        <form>
+        <form onsubmit="onDateTimeEntered()">
           From:
           <input type="datetime-local" name="from">
           To:
@@ -58,13 +60,16 @@
           <input type="submit" value="Show">
         </form>
       </div>
-    </div>
 
     </div>
+
   </div>
 
   <br>
 
+  <!-- Initialization -->
+
+  <!-- Form events handling -->
   <script>
     function onButtonChecked() {
       let form = document.getElementById("select");
@@ -73,14 +78,34 @@
       if (form.operation.value == "current") {
         current.style.display = "block";
         past.style.display = "none";
-      } else {
+      } else if (form.operation.value == "past") {
         current.style.display = "none";
         past.style.display = "block";
+        // Set default datetime
+        let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+        let now = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 16);
+        document.querySelector('input[name="from"]').value = now;
+        document.querySelector('input[name="to"]').value = now;
       }
+    }
+
+    function onDateTimeEntered() {
+      const host = window.location.hostname
+      const port = 18080;
+      const ApiServerUri = "http://" + host + ":" + port + "/log/" + app.device_name;
+      alert(ApiServerUri);
+      let from = document.querySelector('input[name="from"]');
+      let to = document.querySelector('input[name="to"]');
+      from = new Date(from.value).getTime()/1000.0;  // Epoch time in seconds
+      to = new Date(to.value).getTime()/1000.0;  // Epoch time in seconds
+      //alert(from);
+      // GET /log/{device}
+      // {"from": <epoch time> , "to": <epoch time>}
     }
 
   </script>
 
+  <!-- Log widget (line chart)  -->
   <div class="widget">
     <canvas id="Log"></canvas>
   </div>
@@ -91,12 +116,13 @@
     });
   </script>
 
+  <!-- Messaging and chart -->
   <script>
     // Chirt 
     const NUM_RECORDS = 20;
     const INTERVAL = 10; 
 
-    // MQTT
+    // MQTT parameters
     const host = window.location.hostname
     console.log(host)
     const port = 11883  // MQTT over WebSocket
