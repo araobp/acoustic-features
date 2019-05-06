@@ -164,6 +164,7 @@
           win = key;
         }
       });
+      //console.log(buf);
       return win;
     } 
 
@@ -291,6 +292,7 @@
             localeTime = parseFloat(it.timestamp) * 1000;
             localeTime = new Date(localeTime).toLocaleTimeString();
             labels.push(localeTime);
+            buf = {};
           }
         })
         //console.log(data, labels);
