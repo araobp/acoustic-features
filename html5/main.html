@@ -15,6 +15,7 @@
 
   <!-- Local libraries -->
   <script src="./lib/uuid.js"></script>
+  <script src="./lib/rest.js"></script>
 
   <!-- Edge AI class definition -->
   <script src="./use_cases/class_labels_my_home.js"></script>
@@ -51,7 +52,7 @@
         Inference: [#{{sno}}] {{message}}
       </div>
       <div id="past">
-        <form onsubmit="onDateTimeEntered()">
+        <form onsubmit="return onDateTimeEntered()">
           From:
           <input type="datetime-local" name="from">
           To:
@@ -69,42 +70,6 @@
 
   <!-- Initialization -->
 
-  <!-- Form events handling -->
-  <script>
-    function onButtonChecked() {
-      let form = document.getElementById("select");
-      let current = document.getElementById("current");
-      let past = document.getElementById("past");
-      if (form.operation.value == "current") {
-        current.style.display = "block";
-        past.style.display = "none";
-      } else if (form.operation.value == "past") {
-        current.style.display = "none";
-        past.style.display = "block";
-        // Set default datetime
-        let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-        let now = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 16);
-        document.querySelector('input[name="from"]').value = now;
-        document.querySelector('input[name="to"]').value = now;
-      }
-    }
-
-    function onDateTimeEntered() {
-      const host = window.location.hostname
-      const port = 18080;
-      const ApiServerUri = "http://" + host + ":" + port + "/log/" + app.device_name;
-      alert(ApiServerUri);
-      let from = document.querySelector('input[name="from"]');
-      let to = document.querySelector('input[name="to"]');
-      from = new Date(from.value).getTime()/1000.0;  // Epoch time in seconds
-      to = new Date(to.value).getTime()/1000.0;  // Epoch time in seconds
-      //alert(from);
-      // GET /log/{device}
-      // {"from": <epoch time> , "to": <epoch time>}
-    }
-
-  </script>
-
   <!-- Log widget (line chart)  -->
   <div class="widget">
     <canvas id="Log"></canvas>
@@ -116,17 +81,10 @@
     });
   </script>
 
-  <!-- Messaging and chart -->
   <script>
     // Chirt 
     const NUM_RECORDS = 20;
     const INTERVAL = 10; 
-
-    // MQTT parameters
-    const host = window.location.hostname
-    console.log(host)
-    const port = 11883  // MQTT over WebSocket
-    const topic = 'sensor'
   </script>
 
   <script>
@@ -199,14 +157,13 @@
 
     // Connected to MQTT server
     function onConnect() {
-    	console.log('connected');
+      const topic = 'sensor'
+      console.log('Connected to MQTT server');
       mqtt.subscribe(topic);
     }
 
     // MQTT message
     function onMessageArrived(msg) {
-
-      let win = -1;
 
       let data = msg.payloadString;
       console.log(data);
@@ -232,7 +189,7 @@
         }
 
         if ((sno % INTERVAL) == 0) {
-          win = -1;
+          let win = -1;
           // Frequency of appearance
           Object.keys(buf).forEach(key => {
             if (win == -1) {
@@ -241,6 +198,7 @@
               win = key;
             }
           }); 
+          buf = {};
 
           // Put in FIFO buffer and update Chart 
           chart.data.datasets[0].data.push(win);
@@ -260,16 +218,90 @@
 
     // Connection to MQTT server
     function connect() {
+      const host = window.location.hostname
+      const port = 11883  // MQTT over WebSocket
     	mqtt = new Paho.MQTT.Client(host, port, uuidv4());
+
       let options = {
       	timeout: 3,
         onSuccess: onConnect,
       };
       mqtt.onMessageArrived = onMessageArrived
       mqtt.connect(options);
-      console.log('connecting...');
+      console.log('Connecting to MQTT server: ' + host)
     }
 
+  </script>
+
+  <!-- Form events handling -->
+  <script>
+    function onButtonChecked() {
+      let form = document.getElementById("select");
+      let current = document.getElementById("current");
+      let past = document.getElementById("past");
+      if (form.operation.value == "current") {
+        current.style.display = "block";
+        past.style.display = "none";
+      } else if (form.operation.value == "past") {
+        current.style.display = "none";
+        past.style.display = "block";
+        // Set default datetime
+        let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+        let now = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 16);
+        document.querySelector('input[name="from"]').value = now;
+        document.querySelector('input[name="to"]').value = now;
+      }
+    }
+
+    function onDateTimeEntered() {
+      let from = document.querySelector('input[name="from"]');
+      let to = document.querySelector('input[name="to"]');
+      from = new Date(from.value).getTime()/1000.0;  // Epoch time in seconds
+      to = new Date(to.value).getTime()/1000.0;  // Epoch time in seconds
+
+      get('/log/BLE1' + queryParams({from: from, to: to}), doc => {
+        console.log(doc);
+        // Update chart
+        let data = [];
+        let labels = [];
+        let localeTime;
+        let cnt = 0;
+        doc.forEach(it => {
+          let classLabelInt = parseInt(it.data); 
+          if (classLabelInt in buf) {
+            buf[classLabelInt]++;
+          } else {
+            buf[classLabelInt] = 1;
+          }
+          if ((++cnt % INTERVAL) == 0) { 
+            let win = -1;
+            // Frequency of appearance
+            Object.keys(buf).forEach(key => {
+              if (win == -1) {
+                win = key;
+              } else if (buf[key] > buf[win]) {
+                win = key;
+              }
+            }); 
+            buf = {};
+            data.push(win);
+            localeTime = parseFloat(it.timestamp) * 1000;
+            localeTime = new Date(localeTime).toLocaleTimeString();
+            labels.push(localeTime);
+          }
+        })
+        console.log(data, labels);
+        chart.data.datasets[0].data = data;
+        chart.data.labels = labels;
+        chart.update();
+      });
+
+      return false;
+    }
+
+  </script>
+
+  <script>
     // Connect to MQTT server over WebSocket
     connect();
   </script>
