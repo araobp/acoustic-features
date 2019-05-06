@@ -25,9 +25,9 @@ This SPA works on the following iot platform:
 
 ## Screen shots
 
-<img src="./screenshot.jpg" width=300>
+<img src="./screencapture.jpg" width=300>
 
-<img src="./screenshot2.jpg" width=300>
+<img src="./screencapture2.jpg" width=300>
 
 ## References
 
