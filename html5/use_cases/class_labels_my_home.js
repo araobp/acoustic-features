@@ -1,7 +1,5 @@
 const useCase = "My home";
 
-const devices = ["BLE1", "BLE2", "BLE3"];
-
 const classLabels = {
   0: "chatting",
   1: "reading a book",

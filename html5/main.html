@@ -74,9 +74,11 @@
   </div>
 
   <script>
-    let select = document.getElementById("devices");
-    devices.forEach(it => {
-      select.options[select.options.length] = new Option(it);
+    get('/devices', devices => {
+      let select = document.getElementById("devices");
+      devices.forEach(it => {
+        select.options[select.options.length] = new Option(it);
+      });
     });
   </script>
 
@@ -271,7 +273,7 @@
       from = new Date(from.value).getTime()/1000.0;  // Epoch time in seconds
       to = new Date(to.value).getTime()/1000.0;  // Epoch time in seconds
 
-      get('/log/BLE1' + queryParams({from: from, to: to}), doc => {
+      get('/log/' + app.device_name + queryParams({from: from, to: to}), doc => {
         //console.log(doc);
         // Update chart
         let data = [];
