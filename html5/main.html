@@ -23,11 +23,11 @@
 
 <body>
 
-	<div id="app">
+  <div id="app">
 
     <div id="title">{{title}}</div>
 
-		<br>
+    <br>
 
     <!-- Current/past selection widget -->
     <div class="widget">
@@ -68,12 +68,11 @@
 
   <br>
 
-  <!-- Initialization -->
-
   <!-- Log widget (line chart)  -->
   <div class="widget">
     <canvas id="Log"></canvas>
   </div>
+
   <script>
     let select = document.getElementById("devices");
     devices.forEach(it => {
@@ -82,7 +81,14 @@
   </script>
 
   <script>
-    // Chirt 
+    // MQTT topic
+    const TOPIC = 'sensor';
+
+    // Class labels
+    const numClasses = Object.keys(classLabels).length
+    const classLabelsName = Object.values(classLabels).reverse();
+
+    // Chirt
     const NUM_RECORDS = 20;
     const INTERVAL = 10; 
   </script>
@@ -102,21 +108,8 @@
   </script>
 
   <script>
-    // MQTT message serial number
-    let sno = 0;
-
-    // FIFO buffer for logging 
-    let reached = false;
-
-    // Buffer for taking an frequency of appearance 
-    let buf = {};
-
-    // Class labels
-    const numClasses = Object.keys(classLabels).length
-    const classLabelsName = Object.values(classLabels).reverse();
-
     // Create Chart object
-		let ctx = document.getElementById('Log').getContext('2d');
+    let ctx = document.getElementById('Log').getContext('2d');
     let chart = new Chart(ctx, {
       type: 'line',
 
@@ -157,16 +150,37 @@
 
     // Connected to MQTT server
     function onConnect() {
-      const topic = 'sensor'
       console.log('Connected to MQTT server');
-      mqtt.subscribe(topic);
+      mqtt.subscribe(TOPIC);
     }
+
+    function mostFrequent(buf) {
+      let win = -1;
+      // Frequency of appearance
+      Object.keys(buf).forEach(key => {
+        if (win == -1) {
+          win = key;
+        } else if (buf[key] > buf[win]) {
+          win = key;
+        }
+      });
+      return win;
+    } 
+
+    // MQTT message serial number
+    let sno = 0;
+
+    // FIFO buffer for logging 
+    let reached = false;
+
+    // Buffer for taking an frequency of appearance 
+    let buf = {};
 
     // MQTT message
     function onMessageArrived(msg) {
 
       let data = msg.payloadString;
-      console.log(data);
+      //console.log(data);
       data = data.split(',')
       let device_name = data[0];
       if (device_name == app.device_name) { 
@@ -189,15 +203,7 @@
         }
 
         if ((sno % INTERVAL) == 0) {
-          let win = -1;
-          // Frequency of appearance
-          Object.keys(buf).forEach(key => {
-            if (win == -1) {
-              win = key;
-            } else if (buf[key] > buf[win]) {
-              win = key;
-            }
-          }); 
+          let win = mostFrequent(buf);
           buf = {};
 
           // Put in FIFO buffer and update Chart 
@@ -240,9 +246,14 @@
       let current = document.getElementById("current");
       let past = document.getElementById("past");
       if (form.operation.value == "current") {
+        mqtt.subscribe(TOPIC);
         current.style.display = "block";
         past.style.display = "none";
+        chart.data.datasets[0].data = [];
+        chart.data.labels = [];
+        chart.update();
       } else if (form.operation.value == "past") {
+        mqtt.unsubscribe(TOPIC);
         current.style.display = "none";
         past.style.display = "block";
         // Set default datetime
@@ -260,12 +271,13 @@
       to = new Date(to.value).getTime()/1000.0;  // Epoch time in seconds
 
       get('/log/BLE1' + queryParams({from: from, to: to}), doc => {
-        console.log(doc);
+        //console.log(doc);
         // Update chart
         let data = [];
         let labels = [];
         let localeTime;
         let cnt = 0;
+        let buf = {};
         doc.forEach(it => {
           let classLabelInt = parseInt(it.data); 
           if (classLabelInt in buf) {
@@ -274,23 +286,14 @@
             buf[classLabelInt] = 1;
           }
           if ((++cnt % INTERVAL) == 0) { 
-            let win = -1;
-            // Frequency of appearance
-            Object.keys(buf).forEach(key => {
-              if (win == -1) {
-                win = key;
-              } else if (buf[key] > buf[win]) {
-                win = key;
-              }
-            }); 
-            buf = {};
+            let win = mostFrequent(buf);
             data.push(win);
             localeTime = parseFloat(it.timestamp) * 1000;
             localeTime = new Date(localeTime).toLocaleTimeString();
             labels.push(localeTime);
           }
         })
-        console.log(data, labels);
+        //console.log(data, labels);
         chart.data.datasets[0].data = data;
         chart.data.labels = labels;
         chart.update();

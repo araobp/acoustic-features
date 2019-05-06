@@ -11,7 +11,7 @@ function queryParams(params) {
 
 function get(path, callback) {
 	let xhr = new XMLHttpRequest();
-	let url = "http://" + host + ":" + port + path;
+	let url = "http://" + host + ':' + port + path;
 	xhr.open('GET', url, true);
 	xhr.onload = function() {
 		let doc = JSON.parse(xhr.responseText);
