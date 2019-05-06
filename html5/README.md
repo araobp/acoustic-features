@@ -1,7 +1,5 @@
 # Chart GUI SPA (Single Page Application)
 
-(Work in progress)
-
 ## IoT platform
 
 This SPA works on the following iot platform:
@@ -24,6 +22,12 @@ This SPA works on the following iot platform:
 |./main.html                        |Main                         |
 |./use_cases/class_labels_xxxxxx.js |Config file for each use case|
 |./lib/xxxxx.js                     |Local libraries              |
+
+## Screen shots
+
+<img src="./screencapture.jpg" width=400>
+
+<img src="./screencapture2.jpg" width=400>
 
 ## References
 
