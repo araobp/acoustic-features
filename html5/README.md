@@ -17,11 +17,9 @@ This SPA works on the following iot platform:
 
 ## SPA code
 
-|File                               |Description                  |
-|-----------------------------------|-----------------------------|
-|./main.html                        |Main                         |
-|./use_cases/class_labels_xxxxxx.js |Config file for each use case|
-|./lib/xxxxx.js                     |Local libraries              |
+The code is maintained in the "iot-wireless" project.
+
+==> **[code](https://github.com/araobp/iot-wireless/html5)
 
 ## Screen shots
 
