@@ -19,17 +19,10 @@ This SPA works on the following iot platform:
 
 The code is maintained in the "iot-wireless" project.
 
-==> **[code](https://github.com/araobp/iot-wireless/html5)
+==> **[code](https://github.com/araobp/iot-wireless/tree/master/html5)
 
 ## Screen shots
 
 <img src="./screencapture.jpg" width=400>
 
 <img src="./screencapture2.jpg" width=400>
-
-## References
-
-- [Vue.js](https://vuejs.org/)
-- [Chart.js](https://www.chartjs.org/)
-- [MQTT over WebSocket](http://www.steves-internet-guide.com/using-javascript-mqtt-client-websockets/)
-
