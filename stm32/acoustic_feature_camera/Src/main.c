@@ -204,6 +204,7 @@ bool uart_tx(float32_t *in, mode mode, bool dma_start) {
     HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
     printing = false;
   } else if (dma_start) {
+    HAL_UART_Transmit_DMA(&huart2, (uint8_t *) uart_buf, idx);
     idx = 0;
     printing = true;
   } else {

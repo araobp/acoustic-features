@@ -34,7 +34,7 @@ extern bool start_inference;
 /**
  * Enable inference by X-CUBE-AI
  */
-#define INFERENCE
+//#define INFERENCE
 
 /**
  * Logger output format
