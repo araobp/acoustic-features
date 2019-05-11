@@ -6,6 +6,9 @@
 
 ## Demo video on YouTube
 
+Acoustic features acquired by my Acoustic Feature Camera:
+- [video](https://youtu.be/UvSJ3fOOCXc)
+
 Inference using X-CUBE-AI on STM32L476RG:
 - [video](https://www.youtube.com/watch?v=wbkjt2Bl5TY)
 
@@ -21,6 +24,7 @@ I have discoverd that **low-end edge AI works very well** as long as the conditi
 
 ## Use cases in this project
 
+- life log
 - always-on key word detection (e.g., "OK Google" or "Alexa!")
 - musical instrument classification
 - acoustic scene classification
