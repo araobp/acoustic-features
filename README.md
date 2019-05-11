@@ -24,6 +24,7 @@ I have discoverd that **low-end edge AI works very well** as long as the conditi
 
 ## Use cases in this project
 
+- life log
 - always-on key word detection (e.g., "OK Google" or "Alexa!")
 - musical instrument classification
 - acoustic scene classification
