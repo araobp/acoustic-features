@@ -6,6 +6,9 @@
 
 ## Demo video on YouTube
 
+Acoustic features acquired by my Acoustic Feature Camera:
+- [video](https://youtu.be/UvSJ3fOOCXc)
+
 Inference using X-CUBE-AI on STM32L476RG:
 - [video](https://www.youtube.com/watch?v=wbkjt2Bl5TY)
 
