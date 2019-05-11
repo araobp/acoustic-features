@@ -19,7 +19,7 @@ This SPA works on the following iot platform:
 
 The code is maintained in the "iot-wireless" project.
 
-==> **[code](https://github.com/araobp/iot-wireless/tree/master/html5)
+==> **[code](https://github.com/araobp/iot-wireless/tree/master/html5)**
 
 ## Screen shots
 
