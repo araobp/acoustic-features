@@ -2,6 +2,8 @@
 
 ## Chirp as a test signal
 
+Note that aliasing caused by acoustic resonance can be seen on the pictures below.
+
 ![](./oscilloscope/screenshots/spectrogram_chirp.png)
 
 ![](./oscilloscope/screenshots/mfsc_chirp.png)
