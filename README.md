@@ -20,7 +20,7 @@ Inference using Keras/TensorFlow on PC instead of X-CUBE-AI on STM32L476RG:
 
 I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied. If simple classification is a requirment, think of low-cost AI based on MCU before MPU/FPGA/GPU!
 
- I find the "life-log" use case (dataset: "my home") in this project works very well, but the problem is that it takes a lot of efforts (= cost) to train a neural network. This is my hobboy project, and I do not need to worry about if this can make a profit or not.
+ I find the "life-log" use case (dataset: "my home") in this project works very well, but the problem is that it takes a lot of efforts -- three hours for acquiring dataset at each room in my house. This is my hobboy project, and I do not need to worry about if this can make a profit or not.
 
 [Garnter hype cycle 2018](https://www.gartner.com/smarterwithgartner/5-trends-emerge-in-gartner-hype-cycle-for-emerging-technologies-2018/)
 
