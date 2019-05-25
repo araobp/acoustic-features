@@ -16,7 +16,7 @@ Inference using Keras/TensorFlow on PC instead of X-CUBE-AI on STM32L476RG:
 - [video 1](https://youtu.be/RV7oED41P2w)
 - [video 2](https://youtu.be/4BaBL-gmQBk)
 
-## Motivation
+## Review on this project
 
 I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied. If simple classification is a requirment, think of low-cost AI based on MCU before MPU/FPGA/GPU!
 
