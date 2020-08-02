@@ -1,5 +1,7 @@
 # Acoustic features for low-end edge AI
 
+([On August 8th, 2020] After one and a half years blank, I have started improving this work with STMicro's SensorTile Kit that STMicro gave me at a trade show free of charge. Thanks to STMicro.)
+
 <img src="./oscilloscope/screenshots/spectrogram_framenco.png" width="700">
 
 **=> [Acoustic feature gallery (2D images)](./GALLERY.md)**
