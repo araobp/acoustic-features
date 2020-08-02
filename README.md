@@ -1,6 +1,16 @@
 # Acoustic features for low-end edge AI
 
-([On August 8th, 2020] After one and a half years blank, I have started improving this work with STMicro's SensorTile Kit that STMicro gave me at a trade show for free. Thanks to STMicro!)
+([On August 8th, 2020]
+
+After one and a half years blank, I have started improving this work with STMicro's SensorTile Kit that STMicro gave me at a trade show for free. Thanks to STMicro! 
+
+The goal of re-work:
+
+- Use SensorTile (STML476RG) Kit instead of the bulkey Nucleo board.
+- Work with the Android-version of this project: https://github.com/araobp/android-aed
+- Use an Android smart phone as an IoT hub, not RasPi.
+
+)
 
 <img src="./oscilloscope/screenshots/spectrogram_framenco.png" width="700">
 
