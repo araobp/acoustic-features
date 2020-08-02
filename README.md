@@ -20,6 +20,8 @@ Inference using Keras/TensorFlow on PC instead of X-CUBE-AI on STM32L476RG:
 
 ## Review on this project
 
+(This was a review back in March, 2019. Now, I have started working on STMicro's SensorTile Kit.)
+
 I have discoverd that **low-end edge AI works very well** as long as the conditions described in this README are satisfied. If simple classification is a requirment, think of low-cost AI based on MCU before MPU/FPGA/GPU!
 
  I find the "life log" use case (dataset: "my home") in this project works very well, but the problem is that it takes a lot of efforts -- three hours for acquiring dataset at each room in my house. This is my hobboy project, and I do not need to worry about if this can make a profit or not.
