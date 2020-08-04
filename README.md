@@ -2,13 +2,13 @@
 
 ([On August 8th, 2020]
 
-After one and a half years blank, I have started improving this work with STMicro's SensorTile Kit that STMicro gave me at a trade show for free. Thanks to STMicro! 
+After one and a half years blank, I have started adding SensorTile Kit in addition to the Arduino shield on the Nucleo board.
 
 The goal of re-work:
 
-- Use SensorTile (STML476RG) Kit instead of the bulkey Nucleo board.
+- Develop another implementation based on [SensorTile Kit](https://www.st.com/en/evaluation-tools/steval-stlkt01v1.html).
 - Work with the Android-version of this project: https://github.com/araobp/android-aed
-- Use an Android smart phone as an IoT hub, not RasPi.
+- Use an Android smart phone as an IoT hub, in addition to the implementation based on RasPi.
 
 )
 
