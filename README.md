@@ -38,9 +38,7 @@ I have discoverd that **low-end edge AI works very well** as long as the conditi
  
 "key word detection" use case is also not so bad. It can be used as voice commands to controll home applicances, such as "turn on!" or "turn off!".
 
-"acoustic scene classification" is the hardest. I think it is not useful in a real world.
-
-[Garnter hype cycle 2018](https://www.gartner.com/smarterwithgartner/5-trends-emerge-in-gartner-hype-cycle-for-emerging-technologies-2018/)
+"acoustic scene classification" is the hardest due to the disturbance from surrounding noises. I think it is not useful in a real world.
 
 ## Use cases in this project
 
