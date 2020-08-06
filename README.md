@@ -1,17 +1,5 @@
 # Acoustic features for low-end edge AI
 
-([On August 8th, 2020]
-
-After one and a half years blank, I have started adding SensorTile Kit in addition to the Arduino shield on the Nucleo board.
-
-The goal of re-work:
-
-- Develop another implementation based on [SensorTile Kit](https://www.st.com/en/evaluation-tools/steval-stlkt01v1.html).
-- Work with the Android-version of this project: https://github.com/araobp/android-aed
-- Use an Android smart phone as an IoT hub, in addition to the implementation based on RasPi.
-
-)
-
 <img src="./oscilloscope/screenshots/spectrogram_framenco.png" width="700">
 
 **=> [Acoustic feature gallery (2D images)](./GALLERY.md)**
